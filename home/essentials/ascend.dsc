@@ -1,14 +1,14 @@
-top_command:
+ascend_command:
   type: command
-  name: top
+  name: ascend
   debug: false
   description: Takes you to the top!
-  usage: /top
+  usage: /ascend
   permission: behr.essentials.top
   script:
   # % ██ [ check if typing more than nothing   ] ██
     - if !<context.args.is_empty>:
-      - narrate "<&c>Invalid usage - /top"
+      - narrate "<&c>Invalid usage - /ascend"
 
   # % ██ [ check if they're already at the top ] ██
     - if <player.location.y> > <player.location.highest.y>:
