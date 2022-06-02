@@ -92,8 +92,8 @@ emoji_board:
       - define credit_page_header "<list_single[<script.parsed_key[data.page_header]>].include_single[<n><&f>🥇💖🥇 <red>Credits <&f>🏆💖🏆<n>]>"
       - define lines <list>
 
-      - if !<server.has_flag[behr.emoji_board.contributors]>:
-        - flag server "behr.emoji_board.contributors.<server.match_player[_behr]>:->:<&color[#F3FFAD]>● <&color[#C1F2F7]>Primary project coordinator"
+      #- if !<server.has_flag[behr.emoji_board.contributors]>:
+      #  - flag server "behr.emoji_board.contributors.<server.match_player[_behr]>:->:<&color[#F3FFAD]>● <&color[#C1F2F7]>Primary project coordinator"
 
       # add known player contributors
       - foreach <server.flag[behr.emoji_board.contributors]> key:player as:contributions:
@@ -151,12 +151,6 @@ emoji_board:
       - define pages <[pages].include_single[<[page]>]>
     - adjust <player> show_book:<item[written_book].with_map[<map.with[book].as[<map[author=_Behr;title=howdy].with[pages].as[<[pages]>]>]>]>
 
-listening:
-  type: world
-  debug: false
-  events:
-    on script generates error:
-      - narrate targets:<Server.match_player[_behr]> "<&4>Error at <&c><&ns><context.line.if_null[invalid].on_hover[<&4>error<&6><&co><context.message.if_null[invalid]>]>"
 
 emoji_book:
   type: book
@@ -232,18 +226,19 @@ emoji_startup_flag_fixer_thing_for_other_servers:
   type: world
   events:
     after server start:
-      - if <server.flag[behr.emoji_board.initiated]>:
+      - if <server.has_flag[behr.emoji_board.initiated]>:
         - yaml id:emoji_list load:Denizen/plugins/data/emoji_board/emoji_lang_file.json
 
       - else:
-        - define url https://raw.githubusercontent.com/BehrRiley/TinyEmojiFontResource/main/assets/twemoji/lang/en_us.json
-        - ~webget <[url]> save:lang_file
-        - if <entry[lang_file].failed>:
-          - announce to_console "<&[warning]>Warning<&co> the yaml file did not download from the github source<&co><[url]><n>Download the file, save to `Denizen/plugins/data/emoji_board/` as `emoji_lang_file.json` to resolve loading this yaml file"
-          - stop
-        - yaml id:emoji_list create
-        - yaml id:emoji_list set <empty>:<util.parse_yaml[<entry[lang_file].result>]>
-        - yaml id:emoji_list savefile:data/emoji_board/emoji_lang_file.json
+        - if !<server.has_file[data/emoji_board/emoji_lang_file.json]>:
+          - define url https://raw.githubusercontent.com/BehrRiley/TinyEmojiFontResource/main/assets/twemoji/lang/en_us.json
+          - ~webget <[url]> save:lang_file
+          - if <entry[lang_file].failed>:
+            - announce to_console "<&[warning]>Warning<&co> the yaml file did not download from the github source<&co><[url]><n>Download the file, save to `Denizen/plugins/data/emoji_board/` as `emoji_lang_file.json` to resolve loading this yaml file"
+            - stop
+          - yaml id:emoji_list create
+          - yaml id:emoji_list set <empty>:<util.parse_yaml[<entry[lang_file].result>]>
+          - yaml id:emoji_list savefile:data/emoji_board/emoji_lang_file.json
 
       - if !<server.match_player[_behr].if_null[null].is_truthy>:
         - definemap behr:
@@ -269,17 +264,3 @@ emoji_startup_flag_fixer_thing_for_other_servers:
                   contributions:
                   - <&color[#F3FFAD]>● <&color[#C1F2F7]>Helped with <&dq>the essential emojis<&dq>
         - flag server behr:<[behr]>
-
-
-quick_fix:
-  type: task
-  script:
-  - flag server behr:!
-  - execute as_op "project add bread_factory a gui minigame for players to own their own bread factory"
-  - execute as_op "add_contributor _Behr bread_factory Primary project coordinator"
-  - execute as_op "add_contributor Nimsy bread_factory Giving me the bread theme to reflect his original idea of Bread Clicker"
-  - execute as_op "project add emoji_board an emoji gui made for copying and pasting emojis into the chat"
-  - execute as_op "add_contributor _Behr emoji_board Primary project coordinator"
-  - execute as_op "add_contributor HalbFettKaese emoji_board Creator of the animated text core shader, even if discovering it were on accident lol"
-  - execute as_op "add_contributor Mergu emoji_board Suggested page numbers - on the to-do list!"
-  - execute as_op "add_contributor apademide emoji_board Helped with <&dq>the essential emojis<&dq>"
