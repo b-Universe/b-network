@@ -22,3 +22,6 @@ This resource pack is found on GitHub with credit to [`[AmberWat/TinyEmojiFontRe
 This is a resource pack that includes negative and positive spacing utilities snagged from my [`[Fade animations]`](https://forum.denizenscript.com/resources/fade-animations.55/) script on the resource page
 
 The negative spacing font is found on GitHub with credit to [`[AmberWat/NegativeSpaceFont]`](https://github.com/AmberWat/NegativeSpaceFont) for allowing us to use this within our resource packs (again)
+
+### emoji_lang_file.json
+Tweaked [`[lang file]`](https://github.com/BehrRiley/TinyEmojiFontResource/blob/main/assets/twemoji/lang/en_us.json) from [`[AmberWat]`](https://github.com/AmberWat/TinyEmojiFontResource)'s fork
