@@ -20,7 +20,7 @@ fly_command:
         - narrate "<&c>Invalid player by the name of <context.args.first>"
         - stop
 
-    - adjust <[player]> can_fly:!<[player].can_fly>
+    - adjust <[player]> can_fly:<[player].can_fly.not>
     - if <[player]> != <player>:
       - if <[player].can_fly>:
         - narrate "<&a><[player].name> flight enabled"
