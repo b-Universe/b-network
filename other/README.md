@@ -25,3 +25,5 @@ The negative spacing font is found on GitHub with credit to [`[AmberWat/Negative
 
 ### emoji_lang_file.json
 Tweaked [`[lang file]`](https://github.com/BehrRiley/TinyEmojiFontResource/blob/main/assets/twemoji/lang/en_us.json) from [`[AmberWat]`](https://github.com/AmberWat/TinyEmojiFontResource)'s fork
+
+this file gets saved at `plugins/Denizen/data` as `emoji_lang_file.json`
