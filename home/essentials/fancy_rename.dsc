@@ -120,33 +120,3 @@ fancy_npc:
 
 
 #main case to look out for is the base npc spawning and enters proximity will fire after that happens (give it a generous radius)
-
-listen:
-  type: world
-  events:
-    after player steers entity:
-      - narrate <context.sideways>
-    #after mythickeys key pressed:
-    #  - narrate	<context.id>
-    #after mythickeys key pressed id:minecraft:right:
-    #  - adjust <player> velocity:<player.location.sub[<player.location.left[0.3]>]>
-    #after mythickeys key pressed id:minecraft:left:
-    #  - adjust <player> velocity:<player.location.sub[<player.location.right[0.3]>]>
-
-
-
-birds_eye:
-  type: task
-  debug: false
-  script:
-    - spawn armor_stand[visible=false] <player.location.with_pitch[90]> save:ent
-    #- fakeequip <player> hand:feather[display=<&a>;custom_model_data=3] duration:10s
-    - adjust <player> spectate:<entry[ent].spawned_entity>
-    - repeat 120:
-      - adjust <entry[ent].spawned_entity> velocity:0,1,0
-      - look <entry[ent].spawned_entity> <server.flag[test_loc]>
-      - wait 1t
-    - adjust <entry[ent].spawned_entity> gravity:false
-    - wait 5s
-    - adjust <player> spectate:<player>
-    - remove <entry[ent].spawned_entity>
