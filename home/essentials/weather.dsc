@@ -20,11 +20,18 @@ weather_command:
       - narrate "<&a>The weather is currently <[weather]>"
       - stop
 
+    - if <context.args.first> == clear:
+      - define weather sunny
+    - else:
+      - define weather <context.args.first>
+
     - else if <context.args.size> > 1:
-      - narrate "<&c>Invalid usage - /weather <&lt>weather<&gt>"
+      - narrate "<&c>Invalid usage - <&6>/<&e>weather <&6><&lt><&e>weather<&6><&gt>"
+      - stop
 
-    - else if !<context.args.first.advanced_matches[sunny|storm|thunder]>:
-      - narrate "<&c>Invalid usage - the only valid weathers are clear, sunny, storm, and thunder"
+    - else if !<[weather].advanced_matches[sunny|storm|thunder|clear]>:
+      - narrate "<&c>Invalid usage - the only valid weathers are clear or sunny, storm, and thunder"
+      - stop
 
-    - weather <context.args.first> <player.world>
-    - announce "<&a>Weather changed to <context.args.first.to_titlecase>"
+    - weather <[weather]> <player.world>
+    - announce "<&a>Weather changed to <[weather].to_titlecase>"
