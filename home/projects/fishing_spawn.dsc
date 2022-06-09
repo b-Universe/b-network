@@ -78,30 +78,6 @@ fishing_spawn:
         - playsound <player.location> sound:ENTITY_FISHING_BOBBER_THROW pitch:0 volume:0.2
         - adjust <[hook]> velocity:<[hook].velocity.add[<player.location.forward[0.5].up[0.5].sub[<player.location>]>]>
 
-#fishing_spawn_debug:
-#  type: world
-#  debug: true
-#  events:
-
-move_fish:
-  type: task
-  script:
-  - define fish <server.flag[behr.playing_fish.fish]>
-  - define location <cuboid[fishing_area_fish_spawn].blocks.random>
-  - define rate 10
-
-  - repeat <[rate]>:
-  # percent is 0 -1, eases from location a to location b, with a type (sine, quad, cubic, quart, quint, exp, circ, back, elastic, bounce) and a direction (in, out, inout)
-      - define loc1 <[fish].location>
-      - define loc2 <proc[lib_ease_location].context[<[value].div[<[rate]>]>|<[fish].location.above>|<[location].above>|quad|inout]>
-      - define vector <[loc2].sub[<[loc1]>].normalize.mul[0.5].with_y[0]>
-      - playeffect at:<[loc1].above[0.5]> effect:bubble offset:0.3,0,0.3 quantity:5 visibility:100
-      - playeffect at:<[loc1].above[0.3]> effect:WATER_SPLASH offset:0.4,0,0.4 quantity:15 visibility:100
-      - adjust <[fish]> velocity:<[vector]>
-      #- teleport <[fish]> <proc[lib_ease_location].context[<[value].div[<[rate]>]>|<[fish].location>|<[location]>|quad|in]>
-      #- playeffect effect:redstone at:<proc[lib_ease_location].context[<[value].div[<[rate]>]>|<[fish].location.above>|<[location].above>|quad|inout]> offset:0 special_data:4|<color[red].with_hue[<element[255].div[<[value].div[<[rate]>]>].round_down>]> visibility:100
-      - wait 2t
-
 its_fishing_time:
   type: task
   debug: false
@@ -169,3 +145,145 @@ light_that_boy_up:
     marker: true
     is_small: true
     visible: false
+
+# | rewards
+# blows bubbles ...
+pufferfish_bubble_blower:
+  type: item
+  material: stick
+
+pufferfish_sponge:
+  type: item
+  material: bucket
+
+pufferfish_sponge_filled:
+  type: item
+  material: bucket
+
+pufferfish_hat:
+  type: item
+  material: carved_pumpkin
+
+fish_tank:
+  type: item
+  material: glass
+
+pufferfish_sticky_grenade_cosmetic:
+  type: item
+  material: totem
+
+pufferfish_fish_baggie:
+  type: item
+  material: bundle
+
+pescetarian_puffman:
+  type: assignment
+  debug: true
+  actions:
+    on assignment:
+      - trigger click state:true
+    on click:
+      - inventory open d:pescetarian_puffman_dialogue
+
+pescetarian_puffman_dialogue:
+  type: inventory
+  inventory: chest
+  size: 27
+  gui: true
+  title: <script.parsed_key[data.title].unseparated>
+  data:
+    title:
+      # gui background
+      - <&f><proc[negative_spacing].context[8].font[utility:spacing]>
+      - <&chr[2002].font[gui]>
+      # "Yeah!" button
+      - <proc[negative_spacing].context[127].font[utility:spacing]>
+      - <&chr[2004].font[gui]>
+      # "Nah..." button
+      - <proc[positive_spacing].context[18].font[utility:spacing]>
+      - <&chr[2005].font[gui]>
+
+      - <proc[negative_spacing].context[92].font[utility:spacing]>
+      - <&color[#3488A6]><&font[minecraft_4]>Pescetarian Puffman<&co>
+      - <proc[negative_spacing].context[106].font[utility:spacing]>
+      - <black><&font[minecraft_8]>Hey there! Welcome
+      - <proc[negative_spacing].context[95].font[utility:spacing]>
+      - <black><&font[minecraft_12]>to the fishing area;
+      - <proc[negative_spacing].context[98].font[utility:spacing]>
+      - <black><&font[minecraft_16]>Want a quick run-
+      - <proc[negative_spacing].context[89].font[utility:spacing]>
+      - <black><&font[minecraft_20]>down of stuff here?
+  definitions:
+    #head: pescetarian_puffman_head[lore=<empty.repeat_as_list[160]>]
+    head: pescetarian_puffman_head_temp[lore=<empty.repeat_as_list[160]>]
+  slots:
+    - [head] [] [] [] [] [] [] [] []
+    - [] [] [] [] [] [] [] [] []
+    - [] [] [] [air] [air] [] [air] [air] []
+
+pescetarian_puffman_dialogue_handler:
+  type: world
+  events:
+    on player clicks item in pescetarian_puffman_dialogue:
+      - choose <context.raw_slot>:
+        - case 1 2 10 11:
+          - random:
+            - narrate "<&e>Pescetarian Puffman<&6>: <&b>Ow!"
+            - narrate "<&e>Pescetarian Puffman<&6>: <&b>Hey! Quit that!"
+            - narrate "<&e>Pescetarian Puffman<&6>: <&b>That's my head, can I help you?"
+            - narrate "<&e>Pescetarian Puffman<&6>: <&b>That's not a button!"
+            - narrate "<&e>Pescetarian Puffman<&6>: <&b>NOT THE GUMDROP BUTTONS"
+            - narrate "<&e>Pescetarian Puffman<&6>: <&b>Click the buttons, not me!"
+            - narrate "<&e>Pescetarian Puffman<&6>: <&b>pspspsp!"
+
+        - case 22 23:
+          - narrate accept
+
+        - case 25 26:
+          - narrate swish
+
+        - default:
+          - narrate <context.raw_slot>
+
+          #_behr head
+#pescetarian_puffman_head_temp:
+#  type: item
+#  material: player_head
+#  display name: <&b>Hey! Don't poke me!
+#  mechanisms:
+#    custom_model_data: 1
+#    skull_skin:
+#      - _behr
+#      - ewogICJ0aW1lc3RhbXAiIDogMTY1NDcyODQ1MDc1NSwKICAicHJvZmlsZUlkIiA6ICI1ODkwNjAyNDYyMzE0ZGFjODM0NWQ3YjI4MmExZDI4ZiIsCiAgInByb2ZpbGVOYW1lIiA6ICJXeW5uY3JhZnRHYW1pbmciLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjkzYjhlNzYzOGZmNGM2YWEyODRjOTkxMjI3MDdlODU3NzdjNGQ0N2Q4Mzg4YzA4ODhjMmNjMjViNDA0YTkzOCIKICAgIH0KICB9Cn0=
+
+#_breadcrumb head
+#pescetarian_puffman_head_temp:
+#  type: item
+#  material: player_head
+#  display name: <&b>Hey! Don't poke me!
+#  mechanisms:
+#    custom_model_data: 1
+#    skull_skin:
+#      - bcba4da7-9e02-4d82-b17d-3a14406657f9
+#      - ewogICJ0aW1lc3RhbXAiIDogMTY1NDcxODk1NDE2OSwKICAicHJvZmlsZUlkIiA6ICI1MjhlYzVmMmEzZmM0MDA0YjYwY2IwOTA5Y2JiMjdjYiIsCiAgInByb2ZpbGVOYW1lIiA6ICJQdWxpenppIiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlL2U4ZDA1MDc3MGMwZDFjZjUyMzc2NTQyZDY5ZjAyMjkzZjE3YjcyZjA3OWU0NTU4NDFlOTQ0ZGY5YWVmNDkxOTIiCiAgICB9CiAgfQp9
+
+#hydro-fuck it
+pescetarian_puffman_head_temp:
+  type: item
+  material: player_head
+  display name: <&b>Hey! Don't poke me!
+  mechanisms:
+    custom_model_data: 1
+    skull_skin:
+      - b15fdebe-4d92-414a-b543-29bc59f85110
+      - ewogICJ0aW1lc3RhbXAiIDogMTY1NDcxOTk1NTA1NiwKICAicHJvZmlsZUlkIiA6ICI1NjY3NWIyMjMyZjA0ZWUwODkxNzllOWM5MjA2Y2ZlOCIsCiAgInByb2ZpbGVOYW1lIiA6ICJUaGVJbmRyYSIsCiAgInNpZ25hdHVyZVJlcXVpcmVkIiA6IHRydWUsCiAgInRleHR1cmVzIiA6IHsKICAgICJTS0lOIiA6IHsKICAgICAgInVybCIgOiAiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS9kMjE2MzEyZmMwNTkyMzZjYzYwYjlmNmRmN2Y3ZjFlNTNkYzY4NDRmMTBlZmU3NWU5MzllMTI4Mzk0MmI0M2MiCiAgICB9CiAgfQp9
+
+pescetarian_puffman_head:
+  type: item
+  material: player_head
+  display name: <&b>Hey! Don't poke me!
+  mechanisms:
+    custom_model_data: 1
+    skull_skin:
+      - 0386e456-ca39-45b3-a53f-ec895493da1b
+      - ewogICJ0aW1lc3RhbXAiIDogMTY1NDcxOTI4NDA2MiwKICAicHJvZmlsZUlkIiA6ICIxNmFkYTc5YjFjMDk0MjllOWEyOGQ5MjgwZDNjNjE5ZiIsCiAgInByb2ZpbGVOYW1lIiA6ICJMYXp1bGl0ZV9adG9uZSIsCiAgInNpZ25hdHVyZVJlcXVpcmVkIiA6IHRydWUsCiAgInRleHR1cmVzIiA6IHsKICAgICJTS0lOIiA6IHsKICAgICAgInVybCIgOiAiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS9hNTNjMTA2Mjc0ZTY4NWY3ZjUwMzU5MzNkYzhhNDMwM2IyZjhhYjNlYjFhYzY4YjcyNTEwNjA0ZjM4Mzg0ZjVkIgogICAgfQogIH0KfQ==
