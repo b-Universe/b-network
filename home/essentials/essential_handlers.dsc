@@ -1,6 +1,6 @@
 essentials:
   type: world
-  debug: true
+  debug: false
   events:
     on player kicked:
       - if <context.reason> == "Illegal characters in chat":
@@ -20,4 +20,4 @@ essentials:
         - wait 1t
         - adjust <context.entity> leash_holder:<player>
         - take iteminhand
-      - determine passively cancelled
+      - determine cancelled
