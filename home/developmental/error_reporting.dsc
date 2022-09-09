@@ -21,7 +21,7 @@ error_reporting:
 
       # % ██ [ collect basic context ] ██
       - define context.server <bungee.server>
-      - define context.message <context.message>
+      - define context.message <context.message.if_null[invalid]>
       - define context.queue.name <[queue].id>
       - define context.queue.definition_map:<[queue].definition_map> if:!<[queue].definition_map.is_empty.if_null[true]>
 
@@ -41,14 +41,31 @@ error_reporting:
         - define context.npc.id:<npc.id>
         - define context.npc.name:<npc.name>
 
+      # % ██ [ track errors ] ██
+      - define flag behr.essentials.error_listening.<[queue].id>.<[context.script.name]>
+      - flag server behr.essentials.error_listening.<[context.script.name]>:->:<util.time_now> expire:1h
+      - flag server <[flag]>.<[context.script.line]>:->:<[context.message]> expire:15s
+      - stop if:<server.has_flag[<[flag]>.runtime]>
+      - flag server <[flag]>.runtime expire:15s
+      - waituntil <[queue].state> != running rate:1s max:3s
+      - flag server <[flag]>.runtime:!
+      
+      # % ██ [ provide ratelimit ] ██
+      - define context.rate <server.flag[behr.essentials.error_listening.<[context.script.name]>].size>
+      - if <[context.rate]> > 60:
+        - define context.rate_limited true
+        - flag server behr.essentials.error_listening.ratelimited_scripts.<[context.script.name]>:<[context.time]> expire:5m
+        - stop
+      
+      # % ██ [ submit errors ] ██
       - bungeerun server:relay error_report def:<[context]>
       
 error_report:
   type: task
   definitions: context
   script:
-    # % ██ [ define base definitions             ] ██
-    - define development_guild <discord_group[a_bot,631199819817549825]>
+    # % ██ [ define base definitions ] ██
+    - define guild <discord_group[b,631199819817549825]>
     - define embed <discord_embed>
     - definemap embed_data:
         title: __`<&lb>Click for log<&rb>`__ | `<&lb><[context.server]><&rb>` | Error response<&co>
