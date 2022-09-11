@@ -1,10 +1,12 @@
 error_reporting:
   type: world
+  debug: false
   events:
-  	after script generates error:
+    after script generates error:
       # % ██ [ disable headless queues ] ██
-      - define queue <context.queue.if_null[null]>
-      - stop if:!<[queue].is_truthy>:
+      - define queue <context.queue.if_null[invalid]>
+      - if <[queue]> == invalid:
+        - stop
 
       # % ██ [ disable /ex reporting   ] ██
       - stop if:<[queue].id.starts_with[excommand]>
@@ -12,7 +14,7 @@ error_reporting:
       # % ██ [ verify enabled          ] ██
       - stop if:!<server.has_flag[behr.essentials.error_reporting]>
 
-      # % ██ [ verify enabled          ] ██
+      # % ██ [ save time ] ██
       - define context.time <util.time_now>
 
       # % ██ [ verify bungee connection ] ██
@@ -37,9 +39,9 @@ error_reporting:
         - define context.player.name:<player.name>
 
       # % ██ [ collect npc context ] ██
-      - if <npc.exists>:
-        - define context.npc.id:<npc.id>
-        - define context.npc.name:<npc.name>
+      - if <[queue].npc.exists>:
+        - define context.npc.id:<[queue].npc.id>
+        - define context.npc.name:<[queue].npc.name>
 
       # % ██ [ track errors ] ██
       - define flag behr.essentials.error_listening.<[queue].id>.<[context.script.name]>
@@ -47,24 +49,26 @@ error_reporting:
       - flag server <[flag]>.<[context.script.line]>:->:<[context.message]> expire:15s
       - stop if:<server.has_flag[<[flag]>.runtime]>
       - flag server <[flag]>.runtime expire:15s
+      - wait 1t
       - waituntil <[queue].state> != running rate:1s max:3s
       - flag server <[flag]>.runtime:!
-      
+
       # % ██ [ track ratelimit ] ██
       - define context.rate <server.flag[behr.essentials.error_listening.<[context.script.name]>].filter[is_after[<util.time_now.sub[1h]>]].size>
       - if <[context.rate]> > 60:
         - define context.rate_limited true
         - flag server behr.essentials.error_listening.ratelimited_scripts.<[context.script.name]>:<[context.time]> expire:5m
         - stop
-      
+
       # % ██ [ collect error information ] ██
       - define context.queue.errors <server.flag[behr.essentials.error_listening.<[queue].id>]>
-      
+
       # % ██ [ submit errors ] ██
-      - bungeerun server:relay error_report def:<[context]>
+      - bungeerun server:home error_report def:<[context]>
 
 error_report:
   type: task
+  debug: false
   definitions: context
   script:
     # % ██ [ define base definitions ] ██
@@ -72,49 +76,50 @@ error_report:
     - define embed <discord_embed>
     - definemap embed_data:
         title: __`<&lb>Click for log<&rb>`__ | `<&lb><[context.server]><&rb>` | Error response<&co>
+        title_url: https://behr.dev/error_report_<util.random.duuid>
         color: <color[0,255,254]>
 
     # % ██ [ check if the channel exists if creating new ] ██
     - if <server.has_flag[behr.essentials.error_listening.settings.channel_specific]>:
-      - if !<[guild].channels.parse[name].contains[📒<[data.server]>]>:
+      - if !<[guild].channels.parse[name].contains[📒<[context.server]>]>:
         - ~discordcreatechannel id:b group:<[guild]> name:📒<[context.server]> "description:Error reporting for <[context.server]>" type:text category:901618453746712660 save:new_channel
         - define channel <entry[new_channel].channel>
       - else:
-        - define channel <[guild].channel[📒<[data.server]>]>
+        - define channel <[guild].channel[📒<[context.server]>]>
     - else:
       - define channel <discord_channel[b,976029737094901760]>
 
     # % ██ [ check if the thread exists ] ██
     - define date <util.time_now.format[MMMM-dd-u]>
     - if <[channel].active_threads.is_empty> || !<[channel].active_threads.parse[name].contains[📒<[date]>]>:
-      - ~discordcreatethread id:a_bot name:📒<[date]> parent:<[channel]> save:new_thread
+      - ~discordcreatethread id:b name:📒<[date]> parent:<[channel]> save:new_thread
       - define thread <entry[new_thread].created_thread>
     - else:
       - define thread <[channel].active_threads.highest[id]>
 
     # % ██ [ construct footer, check ratelimits ] ██
     - if !<[context.rate_limited].exists>:
-      - define embed_data.footer "Script error count (*/hr)<&co> <[context.rate]>]>"
+      - define embed_data.footer "Script error count (*/hr)<&co> <[context.rate]>"
     - else:
-      - define embed_data.footer "<&lb>Rate-limited<&rb> Script error count (*/hr)<&co> <[context.rate]>]>"
+      - define embed_data.footer "<&lb>Rate-limited<&rb> Script error count (*/hr)<&co> <[context.rate]>"
       - define embed_data.footer_icon https://cdn.discordapp.com/emojis/901634983867842610.gif?size=56&quality=lossless
 
     # % ██ [ construct player content ] ██
     - if <[context.player].exists>:
-      - define embed_data.author_name "Player attached<&co> <[context.player.name]>"
+      - define embed_data.author_name "Player attached<&co> <[context.player.name]> (<[context.player.uuid]>)"
       - define embed_data.author_icon_url https://crafatar.com/avatars/<[context.player.uuid].replace_text[-]>
-      - define embed "<[embed].add_inline_field[player name<&co>].value[`<[context.player.name]>`]>"
-      - define embed "<[embed].add_inline_field[player uuid<&co>].value[`<[context.player.uuid]>`]>"
 
     # % ██ [ construct npc content ] ██
     - if <[context.npc].exists>:
-      - define embed_data.author_name "npc attached<&co> <[context.npc.name]>" if:!<[embed_data.author_name].exists>
-      - define embed_data.author_icon_url https://crafatar.com/avatars/<[context.player.uuid].replace_text[-]> if:!<[embed_data.author_icon_url].exists>
-      - define embed "<[embed].add_inline_field[npc name<&co>].value[`<[context.npc.name]>`]>"
-      - define embed "<[embed].add_inline_field[npc id<&co>].value[`<[context.npc.id]>`]>"
+      - if !<[embed_data.author_name].exists>:
+        - define embed_data.author_name "npc attached<&co> <[context.npc.name]>" if:!<[embed_data.author_name].exists>
+        - define embed_data.author_icon_url https://crafatar.com/avatars/<[context.player.uuid].replace_text[-]> if:!<[embed_data.author_icon_url].exists>
+      - else:
+        - define embed "<[embed].add_inline_field[npc name<&co>].value[`<[context.npc.name]>`]>"
+        - define embed "<[embed].add_inline_field[npc id<&co>].value[`<[context.npc.id]>`]>"
 
     # % ██ [ construct error content ] ██
-    - if <[data.content].exists>:
+    - if <[context.queue.errors].exists>:
       - define description <list>
       - foreach <[context.queue.errors]> key:script as:content:
         # % ██ [ define the file and link ] ██
@@ -122,12 +127,12 @@ error_report:
         - define context.script.short_file_name <[context.script.file_path].after_last[/]>
 
         # % ██ [ format link if lines evident ] ██
-        - if <[data.script_data.line]> != invalid:
-          - define context.script.file_link <[context.script_data.file_link]><&ns>L<[context.script.line]>
+        - if <[context.script.line]> != invalid:
+          - define context.script.file_link <[context.script.file_link]><&ns>L<[context.script.line]>
         - define context.script.formatted_file **<&lb>`<&lb><[context.script.file_path]><&rb>`<&rb>(<[context.script.file_link]>)**
 
         # % ██ [ add error content ] ██
-        - define description "<[description].include_single[**`<[context.script.name]>`** | <[context.script.formatted_file]><&co>]>"
+        - define description "<[description].include_single[**`<[context.script.name]>`** | <&lb><[context.script.formatted_file]><&rb>(<[context.script.file_link]>)<&co>]>"
         - foreach <[content]> key:line as:message:
           - define error_content "<list_single[<&co>warning<&co> `Line <[line]>`<&co>]>"
           - if !<[message].is_empty>:
@@ -144,7 +149,7 @@ error_report:
             - foreach stop
 
     # % ██ [ construct description content ] ██
-      - define embed_data.description <[description].separated_by[<n>]>]>
+      - define embed_data.description <[description].separated_by[<n>]>
     - else:
       - define embed_data.description "<&co>warning<&co>**No error content** - Consider providing better context."
 
@@ -162,7 +167,7 @@ error_report:
 
     # % ██ [ send embed ] ██
     - ~discordmessage id:b channel:<[thread]> <[embed]>
-    
+
 error_formatter:
   type: procedure
   debug: false
@@ -186,20 +191,90 @@ error_formatter:
       - define parse_value "<[text].after_last[' was<&co> '].before_last['.]>"
       - determine "The returned value from initial tag fragment<&co> `<&lt><[tag]><&gt>` returned<&co> `<[parse_value]>`"
 
+    - else if "<[text].after[ ].starts_with[is an invalid command! Are you sure it loaded?]>":
+      - define command "<[text].before[ ]>"
+      - if <script[external_denizen_commands].data_key[commands].contains[<[command]>]>:
+        - determine "`<[command]>` failed to register as a valid command. Verify that <script[external_denizen_commands].data_key[commands.<[command]>].parse_tag[`<[parse_value]>`].formatted> loaded properly."
+      - else:
+        - determine "`<[command]>` is an invalid command."
+
+    # % ██ [ ie: Debug.echoError("No tag-base handler for '" + event.getName() + "'."); ] ██
+    - if "<[text].starts_with[No tag-base handler for ']>":
+      - define tag "<[text].after[no tag-base handler for '].before_last['.]>"
+      - determine "No tag-base handler for `<[tag]>`."
+
+    # % ██ [ ie: attribute.echoError("Tag-base '" + base + "' returned null."); ] ██
+    - if "<[text].starts_with[Tag-base ']>" && "<[text].ends_with[' returned null.]>":
+      - define tag "<[text].after[Tag-base '].before_last[' returned null.]>"
+      - determine "Tag-base `<[tag]>` returned null."
+
     # % ██ [ ie: Debug.echoError(context, "'ObjectTag' notation is for documentation purposes, and not to be used literally." ] ██
     - else if "<[text].starts_with['ObjectTag' notation is for documentation purposes]>":
       - determine "<&co>warning<&co> **<[text]>**"
 
     # % ██ [ ie: Debug.echoError(event.getScriptEntry(), "Almost matched but failed (missing [context] parameter?): " + almost); ] ██
     # % ██ [ ie: Debug.echoError(event.getScriptEntry(), "Almost matched but failed (possibly bad input?): " + almost); ] ██
-    
+
     # % ██ [ ie: Debug.echoError(context, "(Initial detection) Tag processing failed: " + ex.getMessage()); ] ██
 
-    # % ██ [ ie: attribute.echoError("Tag-base '" + base + "' returned null."); ] ██
 
-    # % ██ [ ie: Debug.echoError("No tag-base handler for '" + event.getName() + "'."); ] ██
     # % ██ [ ie: Debug.echoError("Tag filling was interrupted!"); ] ██
     # % ██ [ ie: Debug.echoError("Tag filling timed out!"); ] ██
 
     - else:
       - determine <[text]>
+
+external_denizen_commands:
+  type: data
+  commands:
+    bungee:
+      - depenizen
+      - depenizenbungee
+      - bungeecord
+    bungeeexecute:
+      - depenizen
+      - depenizenbungee
+      - bungeecord
+    bungeerun:
+      - depenizen
+      - depenizenbungee
+      - bungeecord
+    bungeetag:
+      - depenizen
+      - depenizenbungee
+      - bungeecord
+
+    mythicsignal:
+      - depenizen
+      - mythicmobs
+    mythicskill:
+      - depenizen
+      - mythicmobs
+    mythicspawn:
+      - depenizen
+      - mythicmobs
+    mythicthreat:
+      - depenizen
+      - mythicmobs
+    worldedit:
+      - depenizen
+      - worldedit
+
+    discord:
+      - dDiscordBot
+    discordcommand:
+      - dDiscordBot
+    discordconnect:
+      - dDiscordBot
+    discordcreatechannel:
+      - dDiscordBot
+    discordcreatethread:
+      - dDiscordBot
+    discordinteraction:
+      - dDiscordBot
+    discordmessage:
+      - dDiscordBot
+    discordmodal:
+      - dDiscordBot
+    discordreact:
+      - dDiscordBot
