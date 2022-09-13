@@ -40,13 +40,28 @@ command_syntax_format:
       - define text <[text].replace_text[<[symbol]>].with[<&color[#ffb84d]><[symbol]>]>
     - determine <[text]>
 
+offline_player_verification:
+  type: task
+  definitions: player
+  script:
+    - if !<server.match_offline_player[<[player_name]>].if_null[null].is_truthy>:
+      - define text "<&[yellow]><[player_name]> <&[red]>does not match a valid player"
+      - define hover "<&[red]>You entered<&co> <&[yellow]><underline>/<context.alias> <context.raw_args>"
+      - narrate <[text].on_hover[<[hover]>]>
+      - stop
+    - else:
+      - define player <server.match_offline_player[<[player]>]>
+
 player_verification:
   type: task
   definitions: player
   script:
-    - if !<server.match_offline_player[<[player]>].if_null[null].is_truthy>:
-      - define text "<&[yellow]><[player]> <&[red]>does not match a valid player"
-      - define hover "<&[red]>You entered<&co> <&[yellow]><underline>/<context.alias> <context.raw_args>"
+    - if !<server.match_player[<[player_name]>].if_null[null].is_truthy>:
+      - if !<server.match_offline_player[<[player_name]>].if_null[null].is_truthy>:
+        - define text "<&[yellow]><[player_name]> <&[red]>does not match a valid player"
+      - else:
+        - define text "<&[yellow]><[player_name]> <&[red]>is not or did not match a valid player"
+      - define hover "<&[red]>You entered<&co> <&[yellow]><underline>/contxt.alias> <context.raw_args>"
       - narrate <[text].on_hover[<[hover]>]>
       - stop
     - else:
