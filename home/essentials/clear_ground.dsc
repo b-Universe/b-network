@@ -11,10 +11,9 @@ clear_ground_command:
   script:
   # % ██ [ if emptying  ] ██
     - if !<context.args.is_empty>:
-      - narrate "<&c>Invalid usage - /clear_ground"
-      - stop
+      - inject command_syntax_error
 
   # % ██ [ Find Entnties ] ██
     - define entities <player.location.find_entities[DROPPED_ITEM].within[128]>
     - remove <[entities]>
-    - narrate "<&a>Removed <[entities].size> items on the ground"
+    - narrate "<&[green]>Removed <&[yellow]><[entities].size> <&[green]>items on the ground"

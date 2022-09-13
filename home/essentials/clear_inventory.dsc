@@ -17,17 +17,15 @@ clear_inventory_command:
 
   # % ██ [ check if player is truthy  ] ██
     - else if <context.args.size> == 1:
-      - define player <server.match_offline_player[<context.args.first>].if_null[null]>
-      - if !<[player].is_truthy>:
-        - narrate "<&c>Invalid player by the name of <context.args.first>"
-        - stop
+      - define player <context.args.first>
+      - inject player_verification
 
   # % ██ [ player typed it wrongly    ] ██
     - else:
-      - narrate "<&c>Invalid usage - /clear_inventory (player)"
+      - inject command_syntax_error
 
   # % ██ [ clear the inventory        ] ██
     - inventory clear d:<[player].inventory>
     - if <[player]> != <player>:
-      - narrate targets:<player> "<&a><[player].name>'s Inventory was cleared"
-    - narrate targets:<[player]> "<&a>Inventory cleared"
+      - narrate targets:<player> "<&[yellow]><[player].name><&[green]>'s Inventory was cleared"
+    - narrate targets:<[player]> "<&[green]>Inventory cleared"

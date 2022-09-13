@@ -1,4 +1,4 @@
-time_Command:
+time_command:
   type: command
   name: time
   debug: false
@@ -10,7 +10,9 @@ time_Command:
   script:
   # % ██ [ Check Args ] ██
     - if <context.args.is_empty>:
-      - narrate "<&a>The current world time of day is <player.world.time>"
+      - define text "<&[green]>The current world time of day is <&[yellow]><player.world.time>"
+      - define hover "<&[green]>Click to insert<&co><n><script.parsed_key[usage].proc[command_syntax_format]>"
+      - narrate "<[text].on_hover[<[hover]>].on_click[/time ].type[suggest_command]>"
       - stop
 
   # % ██ [ Check if Arg is a number ] ██
@@ -19,66 +21,64 @@ time_Command:
 
     # % ██ [ Check if number is a valid number for usage ] ██
       - if <[time]> < 0:
-        - narrate "<&c>Time cannot be negative"
-        - stop
+        - define reason "Time cannot be negative"
+        - inject command_error
 
-      - if <[time]> >= 24000:
-        - narrate "<&c>Time cannot exceed 23999"
-        - stop
+      - if <[time]> > 23999:
+        - define reason "Time cannot exceed 23999"
+        - inject command_error
 
       - if <[time].contains[.]>:
-        - narrate "<&c>Time cannot contain decimals"
-        - stop
+        - define reason "Time cannot contain decimals"
+        - inject command_error
 
       - time <[time]>t
       - define time_name <[time]>
-      - narrate "Time set to <[time]>"
 
   # % ██ [ Match time with time of day by name ] ██
     - else:
-      - define Arg <context.args.first>
-      - choose <[Arg]>:
+      - choose <context.args.first>:
         - case start:
           - time 0
-          - define name Start
+          - define time Start
 
         - case day:
           - time 1000t
-          - define name Day
+          - define time Day
 
         - case noon:
           - time 6000t
-          - define name Noon
+          - define time Noon
 
         - case sunset:
           - time 11615t
-          - define name Sunset
+          - define time Sunset
 
         - case bedtime:
           - time 12542t
-          - define name Bedtime
+          - define time Bedtime
 
         - case dusk:
           - time 12786t
-          - define name Dusk
+          - define time Dusk
 
         - case night:
           - time 13000t
-          - define name Night
+          - define time Night
 
         - case midnight:
           - time 18000t
-          - define name Midnight
+          - define time Midnight
 
         - case sunrise:
           - time 22200t
-          - define name Sunrise
+          - define time Sunrise
 
         - case dawn:
           - time 23216t
-          - define name Dawn
+          - define time Dawn
 
         - default:
-          - inject Command_Syntax
+          - inject command_syntax_error
 
-      - narrate "<&a>Time set to <[name]>"
+    - narrate "<&[green]>Time set to <&[yellow]><[time]>"

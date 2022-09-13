@@ -187,7 +187,7 @@ error_formatter:
 
     # % ██ [ ie: Debug.echoError(event.getScriptEntry(), "The returned value from initial tag fragment '<LG>" + attribute.filledString() + "<W>' was: '<LG>" + attribute.lastValid.debuggable() + "<W>'."); ] ██
     - else if "<[text].starts_with[The returned value from initial tag fragment]>":
-      - define tag "<[text].after[fragment '].before[' was<&co> ']>"
+      - define tag "<[text].after[fragment '].before[' was<&co> '].replace[`].with[']>"
       - define parse_value "<[text].after_last[' was<&co> '].before_last['.]>"
       - determine "The returned value from initial tag fragment<&co> `<&lt><[tag]><&gt>` returned<&co> `<[parse_value]>`"
 

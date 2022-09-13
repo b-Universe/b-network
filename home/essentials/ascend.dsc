@@ -8,13 +8,13 @@ ascend_command:
   script:
   # % ██ [ check if typing more than nothing   ] ██
     - if !<context.args.is_empty>:
-      - narrate "<&c>Invalid usage - /ascend"
+      - inject command_syntax_error
 
   # % ██ [ check if they're already at the top ] ██
     - if <player.location.y> > <player.location.highest.y>:
-      - narrate "<&e>Nothing interesting happens"
+      - narrate "<&[yellow]><element[Nothing interesting happens].on_hover[<&[yellow]>You're already at the top.]>"
       - stop
 
     - else:
-      - narrate "<&a>Taking you to the top"
-      - teleport <player> <player.location.highest.add[0,2,0]>
+      - narrate "<&[green]>Taking you to the top"
+      - teleport <player> <player.location.highest.above[2]>
