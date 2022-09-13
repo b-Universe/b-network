@@ -6,7 +6,6 @@ clear_console_command:
   description: Clears the console for a blank screen
   permission: behr.essentials.clear_console
   script:
-  # % ██ [ if emptying  ] ██
     - if !<context.args.is_empty>:
       - inject command_syntax_error
 
