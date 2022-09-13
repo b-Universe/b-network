@@ -9,27 +9,24 @@ fly_command:
     1: <server.online_players.exclude[<player>].parse[name]>
   script:
     - if <context.args.size> > 1:
-      - narrate "<&c>Invalid usage. /fly (player)"
-      - stop
+      - inject command_syntax_error
 
     - if <context.args.is_empty>:
       - define player <player>
     - else:
-      - define player <server.match_offline_player[<context.args.first>].if_null[null]>
-      - if !<[player].is_truthy>:
-        - narrate "<&c>Invalid player by the name of <context.args.first>"
-        - stop
+      - define player_name <context.args.first>
+      - inject player_verification
 
     - adjust <[player]> can_fly:<[player].can_fly.not>
     - if <[player]> != <player>:
       - if <[player].can_fly>:
-        - narrate "<&a><[player].name> flight enabled"
-        - narrate "<&a> Flight enabled" targets:<[player]>
+        - narrate "<&[yellow]><[player_name]><&[green]>'s flight enabled"
+        - narrate "<&[green]>Flight enabled" targets:<[player]>
       - else:
-        - narrate "<&a><[player].name> flight disabled"
-        - narrate "<&a>Flight disabled" targets:<[player]>
+        - narrate "<&[yellow]><[player_name]><&[green]>'s flight disabled"
+        - narrate "<&[green]>Flight disabled" targets:<[player]>
     - else:
       - if <player.can_fly>:
-        - narrate "<&a>Flight enabled"
+        - narrate "<&[green]>Flight enabled"
       - else:
-        - narrate "<&a>Flight disabled"
+        - narrate "<&[green]>Flight disabled"
