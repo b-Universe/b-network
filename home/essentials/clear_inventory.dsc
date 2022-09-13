@@ -17,8 +17,8 @@ clear_inventory_command:
 
   # % ██ [ check if player is truthy  ] ██
     - else if <context.args.size> == 1:
-      - define player <context.args.first>
-      - inject player_verification
+      - define player_name <context.args.first>
+      - inject offline_player_verification
 
   # % ██ [ player typed it wrongly    ] ██
     - else:
@@ -27,5 +27,5 @@ clear_inventory_command:
   # % ██ [ clear the inventory        ] ██
     - inventory clear d:<[player].inventory>
     - if <[player]> != <player>:
-      - narrate targets:<player> "<&[yellow]><[player].name><&[green]>'s Inventory was cleared"
+      - narrate targets:<player> "<&[yellow]><[player_name]><&[green]>'s Inventory was cleared"
     - narrate targets:<[player]> "<&[green]>Inventory cleared"
