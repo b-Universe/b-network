@@ -8,24 +8,25 @@ fly_speed_command:
     1: <server.online_players.exclude[<player>].parse[name]>
   script:
     - if <context.args.is_empty>:
-      - narrate "<&a>Your fly speed is <player.fly_speed.mul[10].round_to[2]>"
+      - narrate "<&[green]>Your fly speed is <&[yellow]><player.fly_speed.mul[10].round_to[2]>"
       - stop
 
     - else if <context.args.size> > 2:
-      - narrate "<&c>Invalid syntax - /fly (player) <&lt>speed<&gt>"
-      - stop
+      - inject command_syntax_error
 
     - else if <context.args.size> == 2:
-      - define player <server.match_player[<context.args.first>].if_null[null]>
-      - if !<[player].is_truthy>:
-        - narrate "<&c>Invalid player by the name <context.args.first>"
-        - stop
+      - define player_name <context.args.first>
+      - inject player_verification
 
       - define speed <context.args.last>
 
     - else if <context.args.size> == 1:
-      - define player <player>
-      - define speed <context.args.first>
+      - if <server.match_player[<context.args.first>].if_null[null].is_truthy>:
+        - narrate "<&[yellow]><server.match_player[<context.args.first>].name><&[green]>'s fly speed is <&[yellow]><player.fly_speed.mul[10].round_to[2]>"
+        - stop
+      - else:
+        - define player <player>
+        - define speed <context.args.first>
 
     - else if !<[speed].is_decimal>:
       - choose <[speed]>:
@@ -42,27 +43,30 @@ fly_speed_command:
           - define speed_name "<element[Plaid speed].rainbow[ca]>"
 
         - default:
-          - narrate "<&c>Invalid usage - fly speed must be a number"
-          - stop
+          - inject command_syntax_error
 
-      - adjust <[player]> walk_speed:<[speed]>
+      - adjust <[player]> fly_speed:<[speed]>
       - if <[player]> != <player>:
-        - narrate "<&a>You sent <[player].name> flying at <[speed_name]><&a>!"
-      - narrate targets:<[player]> "<&a>Now flying at <[speed_name]><&a>!"
+        - narrate "<&[green]>You sent <&[yellow]><[player_name]><&[green]>'s flying at <[speed_name]><&a>!"
+      - narrate targets:<[player]> "<&[green]>Now flying at <[speed_name]><&a>!"
 
-    - if <[speed]> > 10:
-      - narrate "<&c>Invalid fly speed - Fly speed must be below 10"
-      - stop
+    - else:
+      - if <[speed]> > 10:
+        - define reason "Fly speed must be below 10"
+        - inject command_error
 
-    - else if <[speed]> < 0:
-      - narrate "<&c>Invalid fly speed - Fly speed must be at or above 0"
-      - stop
+      - else if <[speed]> < 0:
+        - define reason "Fly speed can't be negative"
+        - inject command_error
 
-    - else if <[speed]> == <[player].fly_speed.mul[10]>:
-      - narrate "<&e>Nothing interesting happens"
-      - stop
+      - else if <[speed]> == <[player].fly_speed.mul[10]>:
+        - if <[player]> != <player>:
+          - narrate "<element[<&[yellow]>Nothing interesting happens].on_hover[<&[yellow]><[player_name]><&[green]>'s fly speed is already <&[yellow]><[speed]>]>"
+        - else:
+          - narrate "<element[<&[yellow]>Nothing interesting happens].on_hover[<&[green]>Your fly speed is already <&[yellow]><[speed]>]>"
+        - stop
 
-    - adjust <[player]> fly_speed:<[speed].div[10]>
-    - if <[player]> != <player>:
-      - narrate "<&a><[player].name>s fly speed set to <[speed]>"
-    - narrate targets:<[player]> "<&a>Fly speed set to <[speed]>"
+      - adjust <[player]> fly_speed:<[speed].div[10]>
+      - if <[player]> != <player>:
+        - narrate "<&[yellow]><[player_name]><&[green]>'s fly speed set to <&[yellow]><[speed]>"
+      - narrate targets:<[player]> "<&[green]>Fly speed set to <&[yellow]><[speed]>"
