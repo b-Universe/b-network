@@ -42,7 +42,7 @@ command_syntax_format:
 
 offline_player_verification:
   type: task
-  definitions: player
+  definitions: player_name
   script:
     - if !<server.match_offline_player[<[player_name]>].if_null[null].is_truthy>:
       - define text "<&[yellow]><[player_name]> <&[red]>does not match a valid player"
@@ -54,14 +54,14 @@ offline_player_verification:
 
 player_verification:
   type: task
-  definitions: player
+  definitions: player_name
   script:
     - if !<server.match_player[<[player_name]>].if_null[null].is_truthy>:
       - if !<server.match_offline_player[<[player_name]>].if_null[null].is_truthy>:
         - define text "<&[yellow]><[player_name]> <&[red]>does not match a valid player"
       - else:
         - define text "<&[yellow]><[player_name]> <&[red]>is not or did not match a valid player"
-      - define hover "<&[red]>You entered<&co> <&[yellow]><underline>/contxt.alias> <context.raw_args>"
+      - define hover "<&[red]>You entered<&co> <&[yellow]><underline>/<context.alias> <context.raw_args>"
       - narrate <[text].on_hover[<[hover]>]>
       - stop
     - else:
