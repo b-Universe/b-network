@@ -28,7 +28,7 @@ fly_speed_command:
         - define player <player>
         - define speed <context.args.first>
 
-    - else if !<[speed].is_decimal>:
+    - if !<[speed].is_decimal>:
       - choose <[speed]>:
         - case lightspeed:
           - define speed 6
