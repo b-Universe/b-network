@@ -10,16 +10,13 @@ ping_command:
   script:
   # % ██ [ check if player is typing too much    ] ██
     - if <context.args.size> > 1:
-      - narrate "<&c>Invalid usage - /ping (player)"
+      - inject command_syntax_error
 
   # % ██ [ check if typing another player or not ] ██
     - if <context.args.is_empty>:
-      - narrate "<&a>Your ping is <player.ping>"
+      - narrate "<&[green]>Your ping is <player.ping>"
 
     - else:
-      - define player <server.match_player[<context.args.first>].if_null[null]>
-      - if !<[player].is_truthy>:
-        - narrate "<&c>Invalid player by the name of <context.args.first>"
-        - stop
-
-      - narrate "<[player].name><&sq>s ping is <[player].ping>"
+      - define player_name <context.args.first>
+      - inject player_verification
+      - narrate "<&[yellow]><[player_name]><&[green]><&sq>s ping is <[player].ping>"
