@@ -8,7 +8,7 @@ rules_command:
   script:
   # % ██ [ check if typing arguments ] ██
     - if !<context.args.is_empty>:
-      - narrate "<&c>Invalid usage - /rules"
+      - inject command_syntax_error
 
   # % ██ [ narrate the rules for b   ] ██
-    - narrate "<&e>1<&6>. <&a>Use common sense."
+    - narrate "<&[yellow]>1. <&[green]>Use common sense."
