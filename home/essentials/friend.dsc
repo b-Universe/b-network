@@ -28,7 +28,7 @@ friend_command:
 
   # % ██ [ check if removing from friends list    ] ██
     - if <context.args.size> == 2:
-      - if !<context.args.last.advanced_matches[remove|delete|defriend]>:
+      - if !<list[remove|delete|defriend].contains[<context.args.last]>>:
         - inject command_syntax_error
 
   # % ██ [ check if removing someone not a friend ] ██
