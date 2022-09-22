@@ -40,7 +40,7 @@ max_oxygen_command:
       - oxygen <[oxygen].mul[20]> type:maximum player:<[player]>
       - oxygen <[oxygen].mul[20]> mode:set player:<[player]>
       - if <[player]> != <player>:
-        - narrate "<&[green]><[player_name]><&sq>s maximum oxygen was deflated"
+        - narrate "<&[yellow]><[player_name]><&[green]><&sq>s maximum oxygen was deflated"
       - narrate "<&[red]>Your oxygen deflates and is now lower capacity" targets:<[player]>
 
     - else:
@@ -48,4 +48,4 @@ max_oxygen_command:
       - oxygen <[oxygen].mul[20]> mode:set player:<[player]>
       - if <[player]> != <player>:
         - narrate "<&[yellow]><[player_name]><&[green]><&sq>s maximum oxygen was inflated"
-      - narrate "<&[red]>Your oxygen replenishes and is now higher capacity" targets:<[player]>
+      - narrate "<&[green]>Your oxygen replenishes and is now higher capacity" targets:<[player]>
