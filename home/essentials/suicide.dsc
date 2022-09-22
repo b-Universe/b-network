@@ -8,7 +8,7 @@ suicide_command:
   script:
   # % ██ [ Check Args ] ██
     - if !<context.args.is_empty>:
-      - narrate "<&c>Invalid usage - /suicide"
+      - inject command_syntax_error
 
   # % ██ [ Check player's Gamemode ] ██
     - if <player.gamemode.advanced_matches[spectator|creative]>:
@@ -20,7 +20,10 @@ suicide_command:
   # % ██ [ Kill Self ] ██
     - else:
       - define gamemode <player.gamemode>
-      - while ( <player.health> > 0 || <player.is_online> ) && <player.gamemode> == <[gamemode]>:
+      - while <player.health> > 0 || <player.is_online>:
+        - if <player.gamemode> != <[gamemode]>:
+          - kill <player>
+          - while stop
         - adjust <player> no_damage_duration:1t
         - hurt 1
         - wait 2t
