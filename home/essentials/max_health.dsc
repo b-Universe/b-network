@@ -12,15 +12,12 @@ max_health_command:
   script:
   # % ██ [ check if typing too many or no arguments ] ██
     - if <context.args.is_empty> || <context.args.size> > 2:
-      - narrate "<&c>Invalid usage - /max_health (player) <&lt>1-100<&gt>"
-      - stop
+      - inject command_syntax_error
 
   # % ██ [ check if specifying another player       ] ██
     - if <context.args.size> == 2:
-      - define player <server.match_player[<context.args.first>].if_null[null]>
-      - if !<[player].is_truthy>:
-        - narrate "<&c>Invalid player by the name of <context.args.first>"
-        - stop
+      - define player_name <context.args.first>
+      - inject player_verification
       - define max_hp <context.args.last>
 
     # % ██ [ default to using themself              ] ██
@@ -31,23 +28,23 @@ max_health_command:
 
   # % ██ [ check maximum health input               ] ██
     - if !<[max_hp].is_integer>:
-      - narrate "<&c>Invalid usage - Health is measured as a number."
-      - stop
+      - define reason "Health is measured as a number."
+      - inject command_error
 
     - if <[max_hp]> < 1:
-      - narrate "<&c>Invalid usage - Health cannot be negative or below 1."
-      - stop
+      - define reason "Health cannot be negative or below 1."
+      - inject command_error
 
     - if <[max_hp].contains[.]>:
-      - narrate "<&c>Invalid usage - Health cannot have a decimal."
-      - stop
+      - define reason "Health cannot have a decimal."
+      - inject command_error
 
     - if <[max_hp]> > 100:
-      - narrate "<&c>Invalid usage - Health can range up to 100."
-      - stop
+      - define reason "Health can range up to 100."
+      - inject command_error
 
   # % ██ [ adjust player's maximum health           ] ██
     - adjust <[player]> max_health:<[max_hp]>
     - if <[player]> != <player>:
-      - narrate "<[player].name><&sq>s maximum health adjusted to <[max_hp]>"
-    - narrate targets:<[player]> "Maximum health adjusted to <[max_hp]>"
+      - narrate "<&[yellow]><[player_name]><&[green]><&sq>s maximum health adjusted to <&[yellow]><[max_hp]>"
+    - narrate targets:<[player]> "<&[green]>Maximum health adjusted to <&[yellow]><[max_hp]>"
