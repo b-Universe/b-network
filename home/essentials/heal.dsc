@@ -12,17 +12,14 @@ heal_command:
       - define player <player>
 
     - else if <context.args.size> == 1:
-      - define player <server.match_player[<context.args.first>].if_null[null]>
-      - if !<[player].is_truthy>:
-        - narrate "<&c>Invalid player by the name of <context.args.first>"
-        - stop
+      - define player_name <context.args.first>
+      - inject player_verification
 
     - else:
-      - narrate "<&c>Invalid syntax - /heal (player)"
-      - stop
+      - inject command_syntax_error
 
     - heal <[player]>
     - adjust <[player]> food_level:20
     - if <[player]> != <player>:
-        - narrate "<[player].name> was healed"
-    - narrate targets:<[player]> "You were healed"
+        - narrate "<&[yellow]><[player_name]> <&[green]>was healed"
+    - narrate targets:<[player]> "<&[green]>You were healed"
