@@ -3,18 +3,17 @@ rename_item_command:
   name: rename_item
   debug: false
   description:  Applies a custom display bame to the item in hand
-  usage: /rename_item <&lt>Display Name<&gt>
+  usage: /rename_item <&lt>Display name<&gt>
   permission: behr.essentials.rename_item
   script:
   # % ██ [ check if not typing anything ] ██
     - if <context.args.is_empty>:
-      - narrate "<&c>Invalid usage - type lore to add to an item"
-      - stop
+      - inject command_syntax_error
 
   # % ██ [ check if holding an item     ] ██
     - if <player.item_in_hand.material.name> == air:
-      - narrate "<&c>Invalid usage - hold an item to add lore to"
-      - stop
+      - define error "Hold an item to add lore to"
+      - inject command_error
 
   # % ██ [ format lore to add           ] ██
     - define display_name <context.raw_args.parse_color>
