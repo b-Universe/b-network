@@ -90,13 +90,13 @@ builder_mode_handler_testing:
             - if <[new_fly_speed]> == 1:
               - inventory adjust d:<player.open_inventory> slot:2 "lore:<&[red]>Maximum fly speed"
             - else:
-              - inventory adjust d:<player.open_inventory> slot:2 "lore:<&[green]>to<&co> <&[yellow]><[new_increase]>"
+              - inventory adjust d:<player.open_inventory> slot:2 "lore:<&[green]>Increase to<&co> <&[yellow]><[new_increase]>"
             - inventory adjust d:<player.open_inventory> slot:3 "display:<&[green]>Fly speed<&co>"
             - if <[new_fly_speed]> == 0.2:
-              - inventory adjust d:<player.open_inventory> slot:3 "lore:<&[green]>Speed<&co> <&[yellow]><[new_fly_speed].mul[10]>|<&[yellow]>Default"
+              - inventory adjust d:<player.open_inventory> slot:3 "lore:<&[green]>Speed<&co> <&[yellow]><[new_fly_speed].mul[10]>|<&[yellow]>(Default)"
             - else:
               - inventory adjust d:<player.open_inventory> slot:3 "lore:<&[green]>Speed<&co> <&[yellow]><[new_fly_speed].mul[10]>|<&[yellow]>Click to reset"
-            - inventory adjust d:<player.open_inventory> slot:4 "lore:<&[green]>to<&co> <&[yellow]><[new_fly_speed].sub[0.05].mul[10].max[0]>"
+            - inventory adjust d:<player.open_inventory> slot:4 "lore:<&[green]>Decrease to<&co> <&[yellow]><[new_fly_speed].sub[0.05].mul[10].max[0]>"
 
         - case decrease:
           - define new_fly_speed <[player_flight_speed].sub[0.05]>
@@ -106,28 +106,28 @@ builder_mode_handler_testing:
             - adjust <player> fly_speed:<[new_fly_speed]>
             - narrate "<&[green]>Fly speed decreased to <&[yellow]><[new_fly_speed].mul[10]>"
             - define new_decrease <[new_fly_speed].sub[0.05].mul[10].max[0]>
-            - inventory adjust d:<player.open_inventory> slot:2 "lore:<&[green]>to<&co> <&[yellow]><[new_fly_speed].add[0.05].mul[10].min[10]>"
+            - inventory adjust d:<player.open_inventory> slot:2 "lore:<&[green]>Increase to<&co> <&[yellow]><[new_fly_speed].add[0.05].mul[10].min[10]>"
             - inventory adjust d:<player.open_inventory> slot:3 "display:<&[green]>Fly speed<&co>"
             - if <[new_fly_speed]> == 0.2:
-              - inventory adjust d:<player.open_inventory> slot:3 "lore:<&[green]>Speed<&co> <&[yellow]><[new_fly_speed].mul[10]>|<&[yellow]>Default"
+              - inventory adjust d:<player.open_inventory> slot:3 "lore:<&[green]>Speed<&co> <&[yellow]><[new_fly_speed].mul[10]>|<&[yellow]>(Default)"
             - else:
               - inventory adjust d:<player.open_inventory> slot:3 "lore:<&[green]>Speed<&co> <&[yellow]><[new_fly_speed].mul[10]>|<&[yellow]>Click to reset"
             - if <[player_flight_speed].sub[0.05].mul[10].max[0]> == 0:
               - inventory adjust d:<player.open_inventory> slot:4 "lore:<&[red]>Minimum fly speed"
             - else:
-              - inventory adjust d:<player.open_inventory> slot:4 "lore:<&[green]>to<&co> <&[yellow]><[new_decrease]>"
+              - inventory adjust d:<player.open_inventory> slot:4 "lore:<&[green]>Decrease to<&co> <&[yellow]><[new_decrease]>"
 
         - case enable:
           - flag player behr.essentials.builder_mode.flight_disabled:!
           - if !<player.can_fly>:
             - adjust <player> can_fly:true
 
-            - inventory adjust d:<player.open_inventory> slot:2 "display:increase flight speed"
-            - inventory adjust d:<player.open_inventory> slot:2 "lore:<&[green]>to<&co> <&[yellow]><[player_flight_speed].add[0.05].round_to_precision[0.05].min[1].mul[10]>"
+            - inventory adjust d:<player.open_inventory> slot:2 "display:<&[green]>increase flight speed"
+            - inventory adjust d:<player.open_inventory> slot:2 "lore:<&[green]>Increase to<&co> <&[yellow]><[player_flight_speed].add[0.05].round_to_precision[0.05].min[1].mul[10]>"
             - inventory adjust d:<player.open_inventory> slot:3 "display:<&[green]>Fly speed<&co>"
             - inventory adjust d:<player.open_inventory> slot:3 "lore:<&[yellow]><[player_flight_speed].mul[10]>|<&[yellow]>Click to reset"
-            - inventory adjust d:<player.open_inventory> slot:4 "display:decrease flight speed"
-            - inventory adjust d:<player.open_inventory> slot:4 "lore:<&[green]>to<&co> <&[yellow]><[player_flight_speed].sub[0.05].round_to_precision[0.05].max[0].mul[10]>"
+            - inventory adjust d:<player.open_inventory> slot:4 "display:<&[green]>decrease flight speed"
+            - inventory adjust d:<player.open_inventory> slot:4 "lore:<&[green]>Decrease to<&co> <&[yellow]><[player_flight_speed].sub[0.05].round_to_precision[0.05].max[0].mul[10]>"
             - narrate "<&[green]>Flight enabled"
           - else:
             - narrate "<&[red]>Flight is already enabled"
@@ -137,7 +137,7 @@ builder_mode_handler_testing:
             - adjust <player> can_fly:false
             - narrate "<&[green]>Flight disabled"
             - flag player behr.essentials.builder_mode.flight_disabled
-            - inventory set slot:2 d:<player.open_inventory> "o:<item[book].with[display=Flight Disabled].with_flag[flight:enable].repeat_as_list[3]>"
+            - inventory set slot:2 d:<player.open_inventory> "o:<item[book].with[display=<&[green]>Flight Disabled].with_flag[flight:enable].repeat_as_list[3]>"
           - else:
             - narrate "<&[red]>Flight is already disabled"
 
@@ -146,10 +146,114 @@ builder_mode_handler_testing:
             - narrate "<&[red]>Your fly speed is already the default"
           - else:
             - adjust <player> fly_speed:0.2
-            - inventory adjust d:<player.open_inventory> slot:2 "lore:<&[green]>to<&co> <&[yellow]><[player_flight_speed].add[0.05].round_to_precision[0.05].min[1].mul[10]>"
+            - inventory adjust d:<player.open_inventory> slot:2 "lore:<&[green]>Increase to<&co> <&[yellow]>2.5"
             - inventory adjust d:<player.open_inventory> slot:3 "lore:<&[green]>Speed<&co> <&[yellow]>2"
-            - inventory adjust d:<player.open_inventory> slot:4 "lore:<&[green]>to<&co> <&[yellow]><[player_flight_speed].sub[0.05].round_to_precision[0.05].max[0].mul[10]>"
+            - inventory adjust d:<player.open_inventory> slot:4 "lore:<&[green]>Decrease to<&co> <&[yellow]>1.5"
             - narrate "<&[green]>Fly speed set to <&[yellow]>2"
+
+    after player clicks item in walk_menu_gui:
+      - stop if:!<context.item.has_flag[walk]>
+      - define player_walk_speed <player.walk_speed.round_to_precision[0.05]>
+      - choose <context.item.flag[walk]>:
+        - case increase:
+          - define new_walk_speed <[player_walk_speed].add[0.05]>
+          - if <[new_walk_speed]> > 1:
+            - narrate "<&[red]>Walk speed is already maximized"
+          - else:
+            - adjust <player> walk_speed:<[new_walk_speed]>
+            - narrate "<&[green]>walk speed increased to <&[yellow]><[new_walk_speed].mul[10]>"
+            - define new_increase <[new_walk_speed].add[0.05].mul[10].min[10]>
+
+            - if <[new_walk_speed]> == 1:
+              - inventory adjust d:<player.open_inventory> slot:4 "lore:<&[red]>Maximum walk speed"
+            - else:
+              - inventory adjust d:<player.open_inventory> slot:4 "lore:<&[green]>Increase to<&co> <&[yellow]><[new_increase]>"
+
+            - inventory adjust d:<player.open_inventory> slot:5 "display:<&[green]>walk speed<&co>"
+            - if <[new_walk_speed]> == 0.2:
+              - inventory adjust d:<player.open_inventory> slot:5 "lore:<&[green]>Speed<&co> <&[yellow]><[new_walk_speed].mul[10]>|<&[yellow]>(Default)"
+            - else:
+              - inventory adjust d:<player.open_inventory> slot:5 "lore:<&[green]>Speed<&co> <&[yellow]><[new_walk_speed].mul[10]>|<&[yellow]>Click to reset"
+
+            - inventory adjust d:<player.open_inventory> slot:6 "lore:<&[green]>Decrease to<&co> <&[yellow]><[new_walk_speed].sub[0.05].mul[10].max[0]>"
+
+        - case decrease:
+          - define new_walk_speed <[player_walk_speed].sub[0.05]>
+          - if <[player_walk_speed].sub[0.05]> < 0:
+            - narrate "<&[red]>Walk speed is already minimized"
+          - else:
+            - adjust <player> walk_speed:<[new_walk_speed]>
+            - narrate "<&[green]>Walk speed decreased to <&[yellow]><[new_walk_speed].mul[10]>"
+            - define new_decrease <[new_walk_speed].sub[0.05].mul[10].max[0]>
+            - inventory adjust d:<player.open_inventory> slot:4 "lore:<&[green]>Increase to<&co> <&[yellow]><[new_walk_speed].add[0.05].mul[10].min[10]>"
+            - inventory adjust d:<player.open_inventory> slot:4 "display:<&[green]>walk speed<&co>"
+            - if <[new_walk_speed]> == 0.2:
+              - inventory adjust d:<player.open_inventory> slot:5 "lore:<&[green]>Speed<&co> <&[yellow]><[new_walk_speed].mul[10]>|<&[yellow]>(Default)"
+            - else:
+              - inventory adjust d:<player.open_inventory> slot:5 "lore:<&[green]>Speed<&co> <&[yellow]><[new_walk_speed].mul[10]>|<&[yellow]>Click to reset"
+            - if <[player_walk_speed].sub[0.05].mul[10].max[0]> == 0:
+              - inventory adjust d:<player.open_inventory> slot:6 "lore:<&[red]>Minimum walk speed"
+            - else:
+              - inventory adjust d:<player.open_inventory> slot:6 "lore:<&[green]>Decrease to<&co> <&[yellow]><[new_decrease]>"
+
+        - case default:
+          - if <player.walk_speed> == 0.2:
+            - narrate "<&[red]>Your walk speed is already the default"
+          - else:
+            - adjust <player> walk_speed:0.2
+            - inventory adjust d:<player.open_inventory> slot:4 "lore:<&[green]>Increase to<&co> <&[yellow]>2.5"
+            - inventory adjust d:<player.open_inventory> slot:5 "lore:<&[green]>Speed<&co> <&[yellow]>2"
+            - inventory adjust d:<player.open_inventory> slot:6 "lore:<&[green]>Decrease to<&co> <&[yellow]>1.5"
+            - narrate "<&[green]>walk speed set to <&[yellow]>2"
+
+    on player clicks in time_menu_gui:
+      - stop if:!<context.item.has_flag[set_time]>
+      - define time <context.item.flag[set_time]>
+
+      - choose <[time]>:
+        - case Bedtime:
+          - define tick_time 0t
+        - case Dawn:
+          - define tick_time 1000t
+        - case Day:
+          - define tick_time 6000t
+        - case Dusk:
+          - define tick_time 11615t
+        - case Midnight:
+          - define tick_time 12542t
+        - case Night:
+          - define tick_time 12786t
+        - case Noon:
+          - define tick_time 13000t
+        - case Start:
+          - define tick_time 18000t
+        - case Sunrise:
+          - define tick_time 22200t
+        - case Sunset:
+          - define tick_time 23216t
+
+        - case lock:
+          - if <player.world.gamerule[doDaylightCycle]>:
+            - gamerule <player.world> doDaylightCycle false
+            - narrate "<&[green]>Time locked"
+          - else:
+            - narrate "<&[red]>Time already locked"
+          - stop
+
+        - case unlock:
+          - if !<player.world.gamerule[doDaylightCycle]>:
+            - gamerule <player.world> doDaylightCycle true
+            - narrate "<&[green]>Time unlocked"
+          - else:
+            - narrate "<&[red]>Time is not locked"
+          - stop
+
+      - if <[tick_time]> == <player.world.time>t:
+        - narrate "<&[red]>Time is already set to <[time]>"
+        - stop
+
+      - time <[tick_time]>
+      - narrate "<&[green]>Time set to <&[yellow]><[time]>"
 
     on player clicks in weather_menu_gui:
       - stop if:!<context.item.has_flag[weather]>
@@ -243,6 +347,7 @@ builder_mode_handler_testing:
       - determine passively 0
       - determine <context.item.with[display=<context.item.display.parse_color.if_null[<&f>]>]>
 
+
 open_commands_menu:
   type: task
   script:
@@ -266,11 +371,10 @@ builder_command_menu_inventory:
     night_vision: inventory_item[material=golden_carrot;display=Toggle night vision;flag=menu:night_vision]
     spectator: inventory_item[material=feather;display=Toggle spectator;flag=menu:spectator]
 
-    time: book
-    #inventory_item[material=crafting_table;display=time control;flag=menu:time]
+    time: inventory_item[material=compass;display=Time;flag=menu:time]
     weather: inventory_item[material=compass;display=Weather;flag=menu:weather]
-    flight: inventory_item[material=feather;display=flight settings;flag=menu:flight]
-    walk: book
+    flight: inventory_item[material=feather;display=flight speed settings;flag=menu:flight]
+    walk: inventory_item[material=nautilus_shell;display=walk speed settings;flag=menu:walk]
     bedit: book
     item_pickup: book
     settings: book
@@ -281,6 +385,7 @@ builder_command_menu_inventory:
 
 open_materials_menu:
   type: task
+  debug: false
   script:
     - if !<player.has_flag[behr.essentials.builder.settings.material_list_verbose]>:
       - inventory open d:material_list_inventory_simple
@@ -290,6 +395,7 @@ open_materials_menu:
 
 material_list_inventory_simple:
   type: inventory
+  debug: false
   inventory: chest
   title: <script.parsed_key[data.title].unseparated>
   size: 27
@@ -331,6 +437,7 @@ material_list_inventory_simple:
 
 material_list_inventory_verbose:
   type: inventory
+  debug: false
   inventory: chest
   title: <script.parsed_key[data.title].unseparated>
   size: 27
@@ -370,6 +477,7 @@ material_list_inventory_verbose:
 
 open_crafting_table_menu:
   type: task
+  debug: false
   script:
     - define location <player.location.with_y[-64]>
     - define previous_material <[location].material>
@@ -391,6 +499,7 @@ open_spectator_menu:
 
 open_night_vision_menu:
   type: task
+  debug: false
   script:
     - if <player.effects_data.parse[get[type]].contains[night_vision]>:
       - cast night_vision remove <player>
@@ -401,11 +510,13 @@ open_night_vision_menu:
 
 open_weather_menu:
   type: task
+  debug: false
   script:
     - inventory open d:weather_menu_gui
 
 weather_menu_gui:
   type: inventory
+  debug: false
   inventory: chest
   title: <script.parsed_key[data.title].unseparated>
   size: 9
@@ -413,47 +524,88 @@ weather_menu_gui:
   data:
     title:
       - <&f><proc[negative_spacing].context[9].font[utility:spacing]>
-      #- <&chr[].font[gui]>
+      - <&chr[1032].font[gui]>
   definitions:
-    clear: book[display=clear;flag=weather:clear]
-    stormy: book[display=stormy;flag=weather:stormy]
-    sunny: book[display=sunny;flag=weather:sunny]
-    thunder: book[display=thunder;flag=weather:thunder]
-    lock: book[display=lock;flag=weather:lock]
+    clear: book[display=<&[green]>Clear;flag=weather:clear]
+    stormy: book[display=<&[green]>Stormy;flag=weather:stormy]
+    sunny: book[display=<&[green]>Sunny;flag=weather:sunny]
+    thunder: book[display=<&[green]>Thunder;flag=weather:thunder]
+    lock: book[display=<&[green]>Lock;flag=weather:lock]
     command_menu: inventory_item[display=back;custom_model_data=1;flag=menu:commands]
   slots:
     - [] [] [clear] [stormy] [sunny] [thunder] [lock] [] [command_menu]
 
+open_time_menu:
+  type: task
+  debug: false
+  script:
+    - inventory open d:time_menu_gui
+
+time_menu_gui:
+  type: inventory
+  debug: false
+  inventory: chest
+  title: <script.parsed_key[data.title].unseparated>
+  size: 18
+  gui: true
+  data:
+    title:
+      - <&f><proc[negative_spacing].context[9].font[utility:spacing]>
+      - <&chr[1034].font[gui]>
+  definitions:
+    bedtime: book[display=<&[green]>Bedtime;lore=<&[yellow]>Click to set;flag=set_time:Bedtime]
+    dawn: book[display=<&[green]>Dawn;lore=<&[yellow]>Click to set;flag=set_time:Dawn]
+    day: book[display=<&[green]>Day;lore=<&[yellow]>Click to set;flag=set_time:Day]
+    dusk: book[display=<&[green]>Dusk;lore=<&[yellow]>Click to set;flag=set_time:Dusk]
+    midnight: book[display=<&[green]>Midnight;lore=<&[yellow]>Click to set;flag=set_time:Midnight]
+
+    night: book[display=<&[green]>Night;lore=<&[yellow]>Click to set;flag=set_time:Night]
+    noon: book[display=<&[green]>Noon;lore=<&[yellow]>Click to set;flag=set_time:Noon]
+    start: book[display=<&[green]>Start;lore=<&[yellow]>Click to set;flag=set_time:Start]
+    sunrise: book[display=<&[green]>Sunrise;lore=<&[yellow]>Click to set;flag=set_time:Sunrise]
+    sunset: book[display=<&[green]>Sunset;lore=<&[yellow]>Click to set;flag=set_time:Sunset]
+    clear: book[display=<&[green]>Clear;flag=weather:clear]
+
+    lock: book[display=<&[green]>lock;lore=<&[yellow]>Click to lock;flag=set_time:lock]
+    unlock: book[display=<&[green]>unlock;lore=<&[yellow]>Click to unlock;flag=set_time:unlock]
+
+    command_menu: inventory_item[display=Back;custom_model_data=1;flag=menu:commands]
+  slots:
+    - [] [start] [day] [noon] [sunset] [bedtime] [lock] [] []
+    - [] [dusk] [night] [midnight] [sunrise] [dawn] [unlock] [] [command_menu]
+
 open_flight_menu:
   type: task
+  debug: false
   script:
     - define player_fly_speed <player.fly_speed.round_to_precision[0.05]>
     - define inventory <inventory[flight_menu_gui]>
     - if !<player.has_flag[behr.essentials.builder_mode.flight_disabled]>:
       - define new_increased_flight_speed <[player_fly_speed].add[0.05].mul[10]>
       - if <[new_increased_flight_speed]> > 10:
-        - define controls "<list_single[<item[book].with[display=Increase fly speed;lore=<&[red]>Maximum fly speed].with_flag[flight:Increase]>]>"
+        - define controls "<list_single[<item[book].with[display=<&[green]>Increase fly speed;lore=<&[red]>Maximum fly speed].with_flag[flight:Increase]>]>"
 
       - else:
-        - define controls "<list_single[<item[book].with[display=Increase fly speed;lore=<&[green]>to<&co> <&[yellow]><[new_increased_flight_speed]>].with_flag[flight:Increase]>]>"
+        - define controls "<list_single[<item[book].with[display=<&[green]>Increase fly speed;lore=<&[green]>Increase to<&co> <&[yellow]><[new_increased_flight_speed]>].with_flag[flight:Increase]>]>"
       - if <[player_fly_speed]> == 0.2:
-        - define controls "<[controls].include_single[<item[book].with[display=<&[green]>Fly speed<&co>;lore=<&[green]>Speed<&co> <&[yellow]>Default (2)]>]>"
+        - define controls "<[controls].include_single[<item[book].with[display=<&[green]>Fly speed<&co>;lore=<&[green]>Speed<&co> <&[yellow]>Default (2)].with_flag[flight:default]>]>"
       - else:
-        - define controls "<[controls].include_single[<item[book].with[display=fly speed<&co>;lore=<&[green]>Fly speed<&co> <&[yellow]><[player_fly_speed].mul[10]>|<&[yellow]>Click to reset].with_flag[flight:default]>]>"
+        - define controls "<[controls].include_single[<item[book].with[display=<&[green]>Fly speed<&co>;lore=<&[green]>Speed<&co> <&[yellow]><[player_fly_speed].mul[10]>|<&[yellow]>Click to reset].with_flag[flight:default]>]>"
 
       - define new_decreased_flight_speed <[player_fly_speed].sub[0.05].mul[10]>
       - if <[new_decreased_flight_speed]> < 0:
-        - define controls "<[controls].include_single[<item[book].with[display=Decrease fly speed;lore=<&[red]>Minimum fly speed].with_flag[flight:Decrease]>]>"
+        - define controls "<[controls].include_single[<item[book].with[display=<&[green]>Decrease fly speed;lore=<&[red]>Minimum fly speed].with_flag[flight:Decrease]>]>"
       - else:
-        - define controls "<[controls].include_single[<item[book].with[display=Decrease fly speed;lore=<&[green]>to<&co> <&[yellow]><[new_decreased_flight_speed]>].with_flag[flight:Decrease]>]>"
+        - define controls "<[controls].include_single[<item[book].with[display=<&[green]>Decrease fly speed;lore=<&[green]>Decrease to<&co> <&[yellow]><[new_decreased_flight_speed]>].with_flag[flight:Decrease]>]>"
       - inventory set slot:2 d:<[inventory]> o:<[controls]>
 
     - else:
-      - inventory set slot:2 d:<[inventory]> "o:<item[book].with[display=Flight Disabled].with_flag[flight:enable].repeat_as_list[3]>"
+      - inventory set slot:2 d:<[inventory]> "o:<item[book].with[display=<&[green]>Flight Disabled].with_flag[flight:enable].repeat_as_list[3]>"
     - inventory open d:<[inventory]>
 
 flight_menu_gui:
   type: inventory
+  debug: false
   inventory: chest
   title: <script.parsed_key[data.title].unseparated>
   size: 9
@@ -461,7 +613,7 @@ flight_menu_gui:
   data:
     title:
       - <&f><proc[negative_spacing].context[9].font[utility:spacing]>
-      #- <&chr[].font[gui]>
+      - <&chr[1031].font[gui]>
   definitions:
     enable: book[display=Enable;flag=flight:enable]
     disable: book[display=Disabled;flag=flight:disable]
@@ -469,10 +621,54 @@ flight_menu_gui:
     command_menu: inventory_item[display=back;custom_model_data=1;flag=menu:commands]
   slots:
     #- [] [increase] [preview] [decrease] [] [enable] [disable] [] [command_menu]
-    - [] [] [] [] [] [enable] [disable] [] [command_menu]
+    - [] [] [] [] [] [] [enable] [disable] [command_menu]
+
+open_walk_menu:
+  type: task
+  debug: false
+  script:
+    - define player_walk_speed <player.walk_speed.round_to_precision[0.05]>
+    - define inventory <inventory[walk_menu_gui]>
+    - define new_increased_walk_speed <[player_walk_speed].add[0.05].mul[10]>
+    - if <[new_increased_walk_speed]> > 10:
+      - define controls "<list_single[<item[book].with[display=<&[green]>Increase walk speed;lore=<&[red]>Maximum walk speed].with_flag[walk:Increase]>]>"
+
+    - else:
+      - define controls "<list_single[<item[book].with[display=<&[green]>Increase walk speed;lore=<&[green]>Increase to<&co> <&[yellow]><[new_increased_walk_speed]>].with_flag[walk:Increase]>]>"
+    - if <[player_walk_speed]> == 0.2:
+      - define controls "<[controls].include_single[<item[book].with[display=<&[green]>walk speed<&co>;lore=<&[green]>Speed<&co> <&[yellow]>Default (2)].with_flag[walk:default]>]>"
+    - else:
+      - define controls "<[controls].include_single[<item[book].with[display=<&[green]>walk speed<&co>;lore=<&[green]>Speed<&co> <&[yellow]><[player_walk_speed].mul[10]>|<&[yellow]>Click to reset].with_flag[walk:default]>]>"
+
+    - define new_decreased_walk_speed <[player_walk_speed].sub[0.05].mul[10]>
+    - if <[new_decreased_walk_speed]> < 0:
+      - define controls "<[controls].include_single[<item[book].with[display=<&[green]>Decrease walk speed;lore=<&[red]>Minimum walk speed].with_flag[walk:Decrease]>]>"
+    - else:
+      - define controls "<[controls].include_single[<item[book].with[display=<&[green]>Decrease walk speed;lore=<&[green]>Decrease to<&co> <&[yellow]><[new_decreased_walk_speed]>].with_flag[walk:Decrease]>]>"
+    - inventory set slot:4 d:<[inventory]> o:<[controls]>
+
+    - inventory open d:<[inventory]>
+
+walk_menu_gui:
+  type: inventory
+  debug: false
+  inventory: chest
+  title: <script.parsed_key[data.title].unseparated>
+  size: 9
+  gui: true
+  data:
+    title:
+      - <&f><proc[negative_spacing].context[9].font[utility:spacing]>
+      - <&chr[1035].font[gui]>
+
+  definitions:
+    command_menu: inventory_item[display=back;custom_model_data=1;flag=menu:commands]
+  slots:
+    - [] [] [] [] [] [] [] [] [command_menu]
 
 
 inventory_item:
+  debug: false
   type: item
   material: leather_horse_armor
 

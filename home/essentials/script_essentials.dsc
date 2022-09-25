@@ -35,10 +35,10 @@ command_syntax_format:
   debug: false
   definitions: text
   script:
-    - define text <[text].color_gradient[from=#e6e600;to=#ffff1a;style=rgb]>
+    - define text <&[yellow]><[text]>
     - foreach (|)|<&lb>|<&rb>|<&gt>|<&lt>|/|-|<&ns> as:symbol:
-      - define text <[text].replace_text[<[symbol]>].with[<&color[#ffb84d]><[symbol]>]>
-    - determine <[text]>
+      - define text <[text].replace_text[<[symbol]>].with[<&color[#ffb84d]><[symbol]><&[yellow]>]>
+    - determine <[text].replace_text[|].with[<&b>|<&[green]>]>
 
 offline_player_verification:
   type: task

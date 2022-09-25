@@ -126,7 +126,7 @@ spawn_fish:
   entity_type: vex
   mechanisms:
     is_aware: false
-    equipment: air|air|air|stick[custom_model_data=3000]
+    equipment: air|air|air|stick[custom_model_data=3001]
     item_in_hand: torch
     invulnerable: true
     silent: true
@@ -147,7 +147,6 @@ light_that_boy_up:
     visible: false
 
 # | rewards
-# blows bubbles ...
 pufferfish_bubble_blower:
   type: item
   material: stick

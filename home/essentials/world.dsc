@@ -6,7 +6,7 @@ world_command:
   usage: /world (create/destroy/help/list/list_unloaded/load/unload/teleport (player)) <&lt>worldname<&gt>
   permission: behr.essentials.world
   tag_data:
-    valid_folders: <server.list_files[../../].exclude[<script[worldfilelist].data_key[blacklist]>].filter_tag[<server.list_files[../../<[filter_value]>].contains[level.dat].if_null[<empty>]>]>
+    valid_folders: <util.list_files[../../].filter_tag[<util.list_files[../../<[filter_value]>].contains[level.dat].if_null[<empty>]>]>
   tab complete:
     - define commands <list[create|destroy|list|list_unloaded|load|unload|teleport].include[<server.worlds.parse[name]>]>
     - define loaded_worlds <server.worlds.parse[name]>
@@ -20,7 +20,7 @@ world_command:
     - if <[arg_count]> == 1:
       - determine <[commands].filter[starts_with[<context.args.first>]]>
 
-    - else if <[arg_count]> == 2 && <context.args.first.advanced_matches_text[destroy|unload]>:
+    - else if <[arg_count]> == 2 && <list[destroy|unload].contains[<context.args.first>]>:
       - determine <[loaded_worlds].filter[starts_with[<context.args.get[2].if_null[<empty>]>]]>
 
     - else if <[arg_count]> == 2 && <context.args.first> == load:
@@ -32,7 +32,16 @@ world_command:
 
     - else if <[arg_count]> == 3 && <context.args.first> == teleport && <server.match_player[<context.args.get[2]>].is_truthy>:
       - determine <[loaded_worlds].filter[starts_with[<context.args.get[3].if_null[<empty>]>]]>
-
+  data:
+    syntax:
+      - /world help | Shows you this helpful list
+      - /world create <&lt>world_name<&gt> | Creates a world
+      - /world destroy <&lt>world_name<&gt> | Permanently deletes a world
+      - /world list | Lists the loaded worlds
+      - /world list_unloaded | Lists the unloaded worlds
+      - /world load <&lt>world_name<&gt> | Loads a world
+      - /world unload <&lt>world_name<&gt> | Unloads a world
+      - /world teleport (player_name) <&lt>world_name<&gt> | Teleports you or a player to a world
   script:
     # % ██ [  check args ] ██
     - if <context.args.is_empty> || <context.args.size> > 3:
@@ -48,41 +57,38 @@ world_command:
       - case 1:
         - choose <[world_name]>:
           - case help:
-            - narrate "<&6>/<&e>world help <&b>| <&a>Shows you this helpful list"
-            - narrate "<&6>/<&e>world create <&6><&lt><&e>world_name<&6><&gt> <&b>| <&a>Creates a world"
-            - narrate "<&6>/<&e>world destroy <&6><&lt><&e>world_name<&6><&gt> <&b>| <&a>Permanently deletes a world"
-            - narrate "<&6>/<&e>world list <&b>| <&a>Lists the loaded worlds"
-            - narrate "<&6>/<&e>world list_unloaded <&b>| <&a>Lists the unloaded worlds"
-            - narrate "<&6>/<&e>world load <&6><&lt><&e>world_name<&6><&gt> <&b>| <&a>Loads a world"
-            - narrate "<&6>/<&e>world unload <&6><&lt><&e>world_name<&6><&gt> <&b>| <&a>Unloads a world"
-            - narrate "<&6>/<&e>world teleport <&6>(<&e>player_name<&6>) <&lt>world_name<&6><&gt><&b>| <&a>Teleports you or a player to a world"
+            - narrate <script.parsed_key[data.syntax].parse[proc[command_syntax_format]].separated_by[<n>]>
 
           - case list:
+            - define world_list <list>
             - foreach <[loaded_worlds]> as:world_name:
-              - define hover "<proc[colorize].context[Click to teleport to world:|green]> <&e><[world_name]>"
-              - define text <&e><[world_name]>
+              - define hover "<&[green]>Click to teleport to world<&co><n><&[yellow]><[world_name]>"
+              - define text "<&[green]><&lb><&chr[2714]><&rb> <&[yellow]><[world_name]>"
               - define command "world teleport <[world_name]>"
-              - define world_list:->:<proc[msg_cmd].context[<[hover]>|<[text]>|<[command]>]>
+              - define world_list <[world_list].include[<[text].on_hover[<[hover]>].on_click[/<[command]>].type[RUN_COMMAND]>]>
 
-            - narrate "<proc[colorize].context[Loaded worlds (<[loaded_worlds].size>):|green]> <&e><[world_list].separated_by[<&f>, <&e>]>"
+            - narrate "<&[green]>Loaded worlds <&[yellow]>(<[loaded_worlds].size>)<&co>"
+            - narrate <[world_list].separated_by[<n>]>
+            # "
 
           - case list_unloaded:
             - define valid_folders <script.parsed_key[tag_data.valid_folders].exclude[<[loaded_worlds]>]>
             - define unloaded_worlds <[valid_folders].exclude[<[loaded_worlds]>]>
+            - define world_list <list>
             - foreach <[unloaded_worlds]> as:world_name:
-              - define hover "<proc[colorize].context[Click to load:|green]> <&e><[world_name]>"
-              - define text <&e><[world_name]>
+              - define hover "<&[green]>Click to load<&co><n><&[yellow]><[world_name]>"
+              - define text <&[yellow]><[world_name]>
               - define command "world load <[world_name]>"
-              - define world_list:->:<proc[msg_cmd].context[<[hover]>|<[text]>|<[command]>]>
+              - define world_list <[world_list].include_single[<[text].on_hover[<[hover].on_click[/<[command]>]>]>]>
 
-              - narrate "<proc[colorize].context[Unloaded worlds (<[unloaded_worlds].size>):|green]> <&e><[world_list].separated_by[<&f>, <&e>]>"
+            - narrate "Unloaded worlds (<[unloaded_worlds].size>)<&co><n><[world_list].separated_by[<&f>, ]>"
 
           - default:
             - if !<server.worlds.parse[name].contains[<[world_name]>]>:
               - define valid_folders <script.parsed_key[tag_data.valid_folders].exclude[<[loaded_worlds]>]>
 
               - if <[valid_folders].contains[<[world_name]>]>:
-                - narrate format:colorize_red "This world is not loaded."
+                - narrate "<&[red]>This world is not loaded."
                 - inject world_command.load_world
                 - stop
 
@@ -92,7 +98,7 @@ world_command:
             - flag player behr.essentials.teleport.back.location:<player.location>
             - flag player behr.essentials.teleport.back.name:<player.world.name>
             - define location <world[<context.args.first>].spawn_location>
-            - narrate format:colorize_green "Teleported you to <[location].simple>"
+            - narrate "<&[green]>Teleported you to <[location].simple>"
             - teleport <[location]>
 
       # @ possibilities:
@@ -108,11 +114,11 @@ world_command:
             - define valid_folders <script.parsed_key[tag_data.valid_folders].exclude[<[loaded_worlds]>]>
 
             - if <[loaded_worlds].contains[<[world_name]>]>:
-              - narrate "<&c>World already exists and is loaded"
+              - narrate "<&[red]>World already exists and is loaded"
               - stop
 
             - if <[valid_folders].contains[<[world_name]>]>:
-              - narrate format:colorize_red "This world already exists."
+              - narrate "<&[red]>This world already exists."
               - inject world_command.load_world
               - stop
 
@@ -131,28 +137,28 @@ world_command:
             # % ██ [  Check if they're serious ] ██
             - if !<player.has_flag[behrry.essentials.world.prompt.destroy.0]>:
               - flag player behrry.essentials.world.prompt.destroy.0 duration:10s
-              - define hover "<proc[colorize].context[Click to destroy:|red]><&nl><&e><[world_name]>"
-              - define text <&a>[<&2><&l><&chr[2714]><&r><&a>]
+              - define hover "<&[red]>Click to destroy:<&nl><&[yellow]><[world_name]>"
+              - define text <&[green]>[<&chr[2714]>]
               - define command "world destroy <[world_name]>"
               - define accept <proc[msg_cmd].context[<[hover]>|<[text]>|<[command]>]>
-              - narrate "<&b>| <[accept]> <&b>| <proc[colorize].context[Destroy world?:|green]> <&e><[world_name]>"
+              - narrate "<&b>| <[accept]> <&b>| <&[green]>Destroy world?: <&[yellow]><[world_name]>"
               - stop
 
             # % ██ [  Check if they're really serious ] ██
             - if !<player.has_flag[behrry.essentials.world.prompt.destroy.1]>:
               - flag player behrry.essentials.world.prompt.destroy.1 duration:10s
-              - define hover "<proc[colorize].context[Click to destroy:|red]><&nl><&e><[world_name]>"
-              - define text <&a>[<&2><&l><&chr[2714]><&r><&a>]
+              - define hover "<&[red]>Click to destroy:<&nl><&[yellow]><[world_name]>"
+              - define text <&[green]>[<&chr[2714]>]
               - define command "world destroy <[world_name]>"
               - define accept <proc[msg_cmd].context[<[hover]>|<[text]>|<[command]>]>
-              - narrate "<&b>| <[accept]> <&b>| <proc[colorize].context[Really really destroy world?:|green]> <&e><[world_name]>"
+              - narrate "<&b>| <[accept]> <&b>| <&[green]>Really really destroy world?: <&[yellow]><[world_name]>"
               - stop
 
             - flag player behrry.essentials.world.prompt.destroy:!
-            - narrate format:colorize_green "destroying world..."
+            - narrate "<&[green]>destroying world..."
             - adjust <world[<[world_name]>]> destroy
             - wait 1s
-            - narrate "<&c>world destroyed<&4>: <&6>[<&e><[world_name]><&6>]"
+            - narrate "<&[red]>world destroyed: <&[yellow]><[world_name]>"
 
           - case load:
             # % ██ [  Check if world is already loaded ] ██
@@ -164,7 +170,7 @@ world_command:
 
             # % ██ [  Check if world file exists ] ██
             - if !<[valid_folders].contains[<[world_name]>]>:
-              - narrate "<&c>World doesn't exist. Create instead?"
+              - narrate "<&[red]>World doesn't exist. Create instead?"
               - inject world_command.create_world
               - stop
 
@@ -179,18 +185,18 @@ world_command:
 
             - if !<player.has_flag[behrry.essentials.world.prompt.unload]>:
               - flag player behrry.essentials.world.prompt.unload duration:10s
-              - define hover "<proc[colorize].context[Click to unload:|green]><&nl><&e><[world_name]>"
-              - define text <&a>[<&2><&l><&chr[2714]><&r><&a>]
+              - define hover "<&[green]>Click to unload<&nl><&[yellow]><[world_name]>"
+              - define text <&[green]>[<&chr[2714]>]
               - define command "world unload <[world_name]>"
               - define accept <proc[msg_cmd].context[<[hover]>|<[text]>|<[command]>]>
-              - narrate "<&b>| <[accept]> <&b>| <proc[colorize].context[Unload world?:|green]> <[world_name]>"
+              - narrate "<&b>| <[accept]> <&b>| <&[green]>Unload world?: <[world_name]>"
               - stop
 
             - flag player behrry.essentials.world.prompt.unload:!
-            - narrate format:colorize_green "unloading world..."
+            - narrate "<&[green]>unloading world..."
             - adjust <world[<[world_name]>]> unload
             - wait 1s
-            - narrate "<&c>world unloaded<&4>: <&6>[<&e><[world_name]><&6>]"
+            - narrate "<&[green]>world unloaded: <&[yellow]><[world_name]>"
 
           - case teleport:
             # % ██ [  Check if world is loaded ] ██
@@ -201,7 +207,7 @@ world_command:
             - flag player behr.essentials.teleport.back.location:<player.location>
             - flag player behr.essentials.teleport.back.name:<player.world.name>
             - define location <world[<[world_name]>].spawn_location>
-            - narrate format:colorize_green "Teleported you to <[location].simple>"
+            - narrate "<&[green]>Teleported you to <[location].simple>"
             - teleport <[location]>
 
       # @ possibilities:
@@ -222,75 +228,38 @@ world_command:
         - flag player behr.essentials.teleport.back.location:<[player].location>
         - flag player behr.essentials.teleport.back.name:<[player].world.name>
         - define location <world[<[world_name]>].spawn_location>
-        - narrate format:colorize_green "Teleported <[player].name> to <[location].simple>"
-        - narrate format:colorize_green "Teleported you to <[location].simple>" targets:<[player]>
+        - narrate "<&[green]>Teleported <[player].name> to <[location].simple>"
+        - narrate "<&[green]>Teleported you to <[location].simple>" targets:<[player]>
         - teleport <[player]> <[location]>
 
   create_world:
     - if !<player.has_flag[behrry.essentials.world.prompt.create]>:
       - flag player behrry.essentials.world.prompt.create duration:10s
-      - define hover "<proc[colorize].context[Click to create:|green]><&nl><&e><[world_name]>"
-      - define text <&a>[<&2><&l><&chr[2714]><&r><&a>]
+      - define hover "<&[green]>Click to create<&nl><&[yellow]><[world_name]>"
+      - define text <&[green]>[<&chr[2714]>]
       - define command "world create <[world_name]>"
       - define accept <proc[msg_cmd].context[<[hover]>|<[text]>|<[command]>]>
-      - narrate "<&b>| <[accept]> <&b>| <proc[colorize].context[Create world?:|green]> <&e><[world_name]>"
+      - narrate "<&b>| <[accept]> <&b>| <&[green]>Create world?<&co> <&[yellow]><[world_name]>"
       - stop
 
     - flag player behrry.essentials.world.prompt.create:!
-    - narrate format:colorize_green "creating world..."
+    - narrate "<&[green]>creating world..."
     - createworld <[world_name]>
     - wait 1s
-    - narrate "<&a>world created<&2>: <&6>[<&e><[world_name]><&6>]"
+    - narrate "<&[green]>world created<&co> <&[yellow]><[world_name]>"
 
   load_world:
     - if !<player.has_flag[behrry.essentials.world.prompt.load]>:
       - flag player behrry.essentials.world.prompt.load duration:10s
-      - define hover "<proc[colorize].context[Click to load:|green]><&nl><&e><[world_name]>"
-      - define text <&a>[<&2><&l><&chr[2714]><&r><&a>]
+      - define hover "<&[green]>Click to load:<&nl><&[yellow]><[world_name]>"
+      - define text <&[green]>[<&chr[2714]>]
       - define command "world load <[world_name]>"
       - define accept <proc[msg_cmd].context[<[hover]>|<[text]>|<[command]>]>
-      - narrate "<&b>| <[accept]> <&b>| <proc[colorize].context[Load world?:|green]> <&e><[world_name]>"
+      - narrate "<&b>| <[accept]> <&b>| <&[green]>Load world<&co> <&[yellow]><[world_name]>"
       - stop
 
     - flag player behrry.essentials.world.prompt.load:!
-    - narrate format:colorize_green "loading world..."
+    - narrate "<&[green]>loading world..."
     - createworld <[world_name]>
     - wait 1s
-    - narrate "<&a>world loaded<&2>: <&6>[<&e><[world_name]><&6>]"
-
-worldfilelist:
-    type: data
-    worlds:
-        - world
-        - world_nether
-        - world_the_end
-        - hub
-        - creative
-        - runescape50px1
-
-        - gielinor3
-        - bandit-craft
-        - 04192020_import
-        - gaybabyjail
-    blacklist:
-        - banned-ips.json
-        - banned-players.json
-        - bukkit.yml
-        - cache
-        - commands.yml
-        - crash-reports
-        - data
-        - eula.txt
-        - help.yml
-        - logs
-        - ops.json
-        - paper.yml
-        - permissions.yml
-        - plugins
-        - server-icon.png
-        - server.properties
-        - spigot.yml
-        - usercache.json
-        - version_history.json
-        - wepif.yml
-        - whitelist.json
+    - narrate "<&[green]>world loaded<&co> <&[yellow]><[world_name]>"

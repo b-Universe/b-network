@@ -1,6 +1,6 @@
 contributor_arrival:
   type: world
-  debug: true
+  debug: false
   events:
     on player joins:
       - define uuid <player.uuid>
