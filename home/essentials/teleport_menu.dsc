@@ -23,7 +23,7 @@ teleport_menu_command:
 teleport_menu:
   type: task
   script:
-    - if !<server.has_flag[behr.essentials.teleport_menu_locations_last_update]> || <server.flag[behr.essentials.teleport_menu_locations_last_update].is_after[<server.flag[behr.essentials.teleport_menu_locations_last_update_cache]>]>:
+    - if !<server.has_flag[behr.essentials.teleport_menu_locations_last_update]> || <server.flag[behr.essentials.teleport_menu_locations_last_update].is_after[<server.flag[behr.essentials.teleport_menu_locations_last_update_cache].if_null[<util.time_now.sub[30d]>]>].if_null[true]>:
       - flag server behr.essentials.teleport_menu_locations_last_update:<util.time_now.sub[1t]>
       - flag server behr.essentials.teleport_menu_locations_last_update_cache:<util.time_now>
       - note <inventory[teleport_menu_template]> as:teleport_menu
@@ -34,7 +34,15 @@ teleport_menu_template:
   debug: true
   inventory: chest
   size: 54
-  title: <&f><proc[negative_spacing].context[8].font[utility:spacing]><&chr[1006].font[gui]><proc[negative_spacing].context[171].font[utility:spacing]><element[●<strikethrough><&sp.repeat[7]><reset><bold>(].color_gradient[from=#ff7200;to=#c8ff00]>  <black>Teleport Menu  <element[<bold>)<reset><strikethrough><&sp.repeat[7]><reset>●].color_gradient[from=#003cff;to=#ff0015]>
+  title: <script.parsed_key[data.title].unseparated>
+  data:
+    title:
+    - <&f><proc[negative_spacing].context[8].font[utility:spacing]>
+    - <&chr[1006].font[gui]>
+    - <proc[negative_spacing].context[171].font[utility:spacing]>
+    - <element[●<strikethrough><&sp.repeat[7]><reset><bold>(].color_gradient[from=#ff7200;to=#c8ff00]>
+    - <&sp.repeat[2]><black>Teleport Menu<&sp.repeat[2]>
+    - <element[<bold>)<reset><strikethrough><&sp.repeat[7]><reset>●].color_gradient[from=#003cff;to=#ff0015]>
   gui: true
   procedural items:
     - define items <list>

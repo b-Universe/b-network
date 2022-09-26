@@ -375,7 +375,7 @@ builder_command_menu_inventory:
     weather: inventory_item[material=compass;display=Weather;flag=menu:weather]
     flight: inventory_item[material=feather;display=flight speed settings;flag=menu:flight]
     walk: inventory_item[material=nautilus_shell;display=walk speed settings;flag=menu:walk]
-    bedit: book
+    bedit: stick[display=bEdit Menu;lore=<&8><&lb><&7>disabled<&8><&rb>;custom_model_data=15]
     item_pickup: book
     settings: book
   slots:
