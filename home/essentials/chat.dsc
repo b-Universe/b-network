@@ -1,11 +1,35 @@
 chat_formatting:
   type: world
-  debug: false
+  debug: true
   events:
     on player chats:
-      - announce to_console "<&6><&lb><&e>Event<&6><&co> <&a>player chats<&6><&rb> <&b>| <&6><&lt><&e>context<&6>.<&e>message<&6><&gt> <&b>| <&a><context.message>"
-      - determine passively cancelled
-      - narrate <context.message.proc[player_chat_format]> targets:<server.online_players> from:<player.uuid>
+      - determine cancelled passively
+      - define message <context.message.proc[player_chat_format]>
+      #- define message "<player.name><&co> <context.message.on_hover[hover text]>"
+      - flag server behr.essentials.chat.channel.player_chat.<util.time_now.epoch_millis>:<[message]>
+      - narrate player_chat/<[message]> targets:<server.online_players> from:<player.uuid>
+
+    on player receives message:
+      # ! DRAFT !
+      - define message <context.message>
+      - define message_channel <context.message.before[/]>
+      - define raw_message <[message].after[<[message_channel]>/]>
+
+      #- define player_channel <player.flag[behr.essentials.chat.channel].if_null[all]>
+
+      - define history <list>
+      - foreach <server.flag[behr.essentials.chat.channel].if_null[<list>]> key:channel as:content:
+        - if !<player.has_flag[behr.essentials.settings.chat.channel.<[channel]>.messages.disabled]>:
+          - define history <[history].include[<[content]>]>
+      - if !<[history].parse[values.first.strip_color].contains_single[<[raw_message].strip_color>]>:
+        - flag server behr.essentials.chat.channel.system.<util.time_now.epoch_millis>:->:system/<[message]>
+        - define history <[history].include_single[<map.with[system].as[<[raw_message]>]>]>
+
+#      - if ! <[history].contains[<[message]>]>:
+#        - if !<player.has_flag[behr.essentials.settings.chat.systen.disabled]>:
+
+      - determine message:<n.repeat[10]><[history].sort_by_value[highest].parse[values].separated_by[<&r><n>]>
+      #- determine message:<[history].separated_by[<&r><n>]>
 
 player_chat_format:
   type: procedure
@@ -22,7 +46,7 @@ player_chat_format:
       - define name <player.name>
 
     - define name_hover "<[name_hover].include_single[<&color[#F3FFAD]>Click to message].include_single[<&color[#F3FFAD]>Shift-Click to mention]>"
-    - define nameplate "<[name].on_hover[<[name_hover].separated_by[<n>]>].on_click[<[name_click]>].type[SUGGEST_COMMAND].with_insertion[<&at><player.name> ]>"
+    - define nameplate "<[name].on_hover[<[name_hover].separated_by[<n>]>].on_click[<[name_click]>].type[SUGGEST_COMMAND].with_insertion[@<player.name> ]>"
 
     # % ██ [ Check for Discord connection ] ██
     - if <player.has_flag[behr.essentials.discord.connected]>:
@@ -35,6 +59,7 @@ player_chat_format:
 
 chat_color_format:
   type: procedure
+  debug: false
   definitions: text
   script:
     - if <[text].contains_text[&]>:
@@ -99,3 +124,5 @@ chat_color_format:
     # @ no formatting
     - else:
       - determine <[text]>
+
+#- narrate <context.message.proc[player_chat_format]> targets:<server.online_players> from:<player.uuid>
