@@ -2,34 +2,46 @@ chat_formatting:
   type: world
   debug: true
   events:
+    on server start:
+      - yaml id:behr.essentials.chat.history create
+
     on player chats:
       - determine cancelled passively
       - define message <context.message.proc[player_chat_format]>
-      #- define message "<player.name><&co> <context.message.on_hover[hover text]>"
-      - flag server behr.essentials.chat.channel.player_chat.<util.time_now.epoch_millis>:<[message]>
+      - definemap chat_history:
+          message: player_chat/<[message]>
+          time: <util.time_now>
+          uuid: <util.random_uuid>
+          user: <player.uuid>
+      - yaml id:behr.essentials.chat.history set player_chat:->:<[chat_history]>
+      - if <yaml[behr.essentials.chat.history].read[player_chat].size> > 4:
+        - debug debug <yaml[behr.essentials.chat.history].read[player_chat]>
+        - yaml id:behr.essentials.chat.history set player_chat[1]:<-
+        - debug debug <yaml[behr.essentials.chat.history].read[player_chat]>
       - narrate player_chat/<[message]> targets:<server.online_players> from:<player.uuid>
 
     on player receives message:
       # ! DRAFT !
-      - define message <context.message>
-      - define message_channel <context.message.before[/]>
-      - define raw_message <[message].after[<[message_channel]>/]>
+      - define raw_message <context.message>
+      - define message_channel <[raw_message].before[/]>
+      - define message <[raw_message].after[/]>
 
-      #- define player_channel <player.flag[behr.essentials.chat.channel].if_null[all]>
+      - define player_channel <player.flag[behr.essentials.chat.channel].if_null[all]>
 
-      - define history <list>
-      - foreach <server.flag[behr.essentials.chat.channel].if_null[<list>]> key:channel as:content:
-        - if !<player.has_flag[behr.essentials.settings.chat.channel.<[channel]>.messages.disabled]>:
-          - define history <[history].include[<[content]>]>
-      - if !<[history].parse[values.first.strip_color].contains_single[<[raw_message].strip_color>]>:
-        - flag server behr.essentials.chat.channel.system.<util.time_now.epoch_millis>:->:system/<[message]>
-        - define history <[history].include_single[<map.with[system].as[<[raw_message]>]>]>
+      - if <[player_channel]> == all:
+        - define content <yaml[behr.essentials.chat.history].read[]>
 
-#      - if ! <[history].contains[<[message]>]>:
-#        - if !<player.has_flag[behr.essentials.settings.chat.systen.disabled]>:
+      - if !<[content].values.combine.parse[get[message].strip_color].contains[<[raw_message].strip_color>]>:
+        - definemap chat_history:
+            message: system/<[raw_message]>
+            time: <util.time_now>
+            uuid: <util.random_uuid>
+        - yaml id:behr.essentials.chat.history set system:->:<[chat_history]>
+        - if <yaml[behr.essentials.chat.history].read[system].size> > 4:
+          - yaml id:behr.essentials.chat.history set system[1]:<-
+        - define content <yaml[behr.essentials.chat.history].read[]>
 
-      - determine message:<n.repeat[10]><[history].sort_by_value[highest].parse[values].separated_by[<&r><n>]>
-      #- determine message:<[history].separated_by[<&r><n>]>
+      - determine message:<n.repeat[10]><[content].values.combine.sort_by_value[get[time].epoch_millis].parse[get[message].after[/]].separated_by[<&r><n>]>
 
 player_chat_format:
   type: procedure
