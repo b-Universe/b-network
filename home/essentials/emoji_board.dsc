@@ -8,8 +8,7 @@ emoji_board_command:
     - em
   script:
     - if !<context.args.is_empty>:
-      - narrate "<&c>Just use <&6>/<&e>emoji<&6>_<&e>board<&c> or <&6>/<&e>em"
-      - stop
+      - inject command_syntax_error
 
     - run emoji_board
 
@@ -34,21 +33,21 @@ emoji_board:
       - foreach <[category_map]> key:category as:emojis:
         - define category_pages <list>
 
-        # create header, category line, and the padding
+        # % ██ [ create header, category line, and the padding ] ██
         - define base_page "<list_single[<[page_header]>].include_single[<element[●<strikethrough><&sp.repeat[<[category_data.<[category]>.line_padding].first>]><reset><bold>].color_gradient[from=#ff7200;to=#c8ff00]> <yellow><proc[negative_spacing].context[2].font[utility:spacing]><bold><&chr[e630]> <red><[category]>  <proc[negative_spacing].context[3].font[utility:spacing]><&b><bold><&chr[e630]><proc[negative_spacing].context[3].font[utility:spacing]><element[<bold><reset><strikethrough><&sp.repeat[<[category_data.<[category]>.line_padding].last>]><reset>●].color_gradient[from=#55ffff;to=#ff0015]>].include[<n>]>"
 
-        # add emojis by category into the page list
+        # % ██ [ add emojis by category into the page list ] ██
         - foreach <[emojis].sub_lists[48]> as:page_emojis:
           - define pages "<[pages].include_single[<[base_page].separated_by[<n>]><&f><[page_emojis].parse_tag[<[parse_value].on_hover[Copy!].on_click[<[parse_value]>].type[COPY_TO_CLIPBOARD]>].sub_lists[8].parse[separated_by[ ]].separated_by[<p><&f>]>]>"
 
-      # add menu page - page 48
+      # % ██ [ add menu page - page 48 ] ██
       - define lines "<list_single[<element[●<strikethrough><&sp.repeat[2]><reset><bold>].color_gradient[from=#ff7200;to=#c8ff00]> <yellow><proc[negative_spacing].context[2].font[utility:spacing]><bold><&chr[e630]><red>Main Menu <proc[negative_spacing].context[3].font[utility:spacing]><&b><bold><&chr[e630]><proc[negative_spacing].context[3].font[utility:spacing]><element[<bold><reset><strikethrough><&sp.repeat[2]><reset>●].color_gradient[from=#55ffff;to=#ff0015]>]>"
       - define lines "<[lines].include_single[<element[<&f>🗒<red>Categories<&f>🗒<n>].on_hover[<element[Click to change to].color_gradient[from=#ff4d00;to=#04ff00]><n><element[the <bold>Categories<reset> page!].color_gradient[from=#ffb300;to=#00ff33]><n><element[(or click the next page)].color_gradient[from=#fff700;to=#00ffa2]>].on_click[49].type[CHANGE_PAGE]>]>"
       #- define lines "<[lines].include_single[<element[Favorites<n>].on_hover[<element[Click to change to].color_gradient[from=#ff4d00;to=#04ff00]><n><element[the <bold>Favorites<reset> page!].color_gradient[from=#ffb300;to=#00ff33]>].on_click[50].type[CHANGE_PAGE]>]>"
       - define lines "<[lines].include_single[<element[<&f>🏆<red>Credits<&f>🥇].on_hover[<element[Click to change to].color_gradient[from=#ff4d00;to=#04ff00]><n><element[the <bold>Credits<reset> page!].color_gradient[from=#ffb300;to=#00ff33]>].on_click[50].type[CHANGE_PAGE]><n>]>"
       - define pages <[pages].include_single[<[lines].separated_by[<p>]>]>
 
-      # add category page - page 49
+      # % ██ [ add category page - page 49 ] ██
       - definemap categories:
           People: <&f>😃 🥳 <black><bold>People <&f>👍 👏
           Nature: <&f>🦁 🐸 <black><bold>Nature <&f>🌈 🔥
@@ -73,33 +72,33 @@ emoji_board:
         - define lines "<[lines].include_single[<[text].on_hover[<element[Click to change to].color_gradient[from=#ff4d00;to=#04ff00]><n><element[the <bold><[category]><reset> category!].color_gradient[from=#ffb300;to=#00ff33]>].on_click[<[category_page].get[<[category]>]>].type[CHANGE_PAGE]>]>"
       - define pages <[pages].include_single[<&f><[lines].separated_by[<n>]>]>
 
-      ## add favorites page - page 50
+      # % ██ [ add favorites page - page 50 ] ██
       #- define lines <list_single[<[page_header]>].include_single[Favorites]>
       #- define pages <[pages].include_single[<[lines].separated_by[<p>]>]>
 
-      # add credits page - page 51, 50 without favorites
+      # % ██ [ add credits page - page 51, 50 without favorites ] ██
       - define lines "<list_single[<[page_header]>].include_single[<&f>🥇💖🥇 <red>Credits <&f>🏆💖🏆]>"
       - define lines "<[lines].include_single[A special thanks to these contributors for all of their contributions, big or small. Sharing ideas when building projects like these are what make them as great as they are!<&f><element[▶].on_hover[<element[Recognize the <&ns> contributors].color_gradient[from=#ff4d00;to=#04ff00]><n><element[on the next pages!].color_gradient[from=#ffb300;to=#00ff33]>].on_click[51].type[CHANGE_PAGE]>]>"
       - define pages <[pages].include_single[<[lines].separated_by[<p>]>]>
 
-      # save everything up to this point in a flag
+      # % ██ [ save everything up to this point in a flag ] ██
       - flag server behr.emoji_board.base_book_pages_cache:<[pages]>
 
-    # check for credits update
+    # % ██ [ check for credits update ] ██
     - if <server.flag[behr.emoji_board.contributor_last_update].if_null[<util.time_now.sub[29d]>].is_after[<server.flag[behr.emoji_board.contributor_last_update_cache].if_null[<util.time_now.sub[30d]>]>]>:
 
-      # foreach credits
+      # % ██ [ foreach credits ] ██
       - define credit_page_header "<list_single[<script.parsed_key[data.page_header]>].include_single[<n><&f>🥇💖🥇 <red>Credits <&f>🏆💖🏆<n>]>"
       - define lines <list>
 
       #- if !<server.has_flag[behr.emoji_board.contributors]>:
       #  - flag server "behr.emoji_board.contributors.<server.match_player[_behr]>:->:<&color[#F3FFAD]>● <&color[#C1F2F7]>Primary project coordinator"
 
-      # add known player contributors
+      # % ██ [ add known player contributors ] ██
       - foreach <server.flag[behr.emoji_board.contributors]> key:player as:contributions:
         - define lines <[lines].include_single[<&f>🏆<black><[player].name.on_hover[<[contributions].parse[split_lines_by_width[200].split[<n>]].combine.parse_tag[<[parse_value]>].separated_by[<n>]>]>]>
 
-      # add mysterious player contributors
+      # % ██ [ add mysterious player contributors ] ██
       - if <server.has_flag[behr.emoji_board.mystery_contributors]>:
         - foreach <server.flag[behr.emoji_board.mystery_contributors]> key:name as:data:
           - define lines <[lines].include_single[<&f>🏆<black><[name].on_hover[<[data.contributions].parse[split_lines_by_width[200].split[<n>]].combine.parse_tag[<[parse_value]>].separated_by[<n>]>]>]>
@@ -109,7 +108,7 @@ emoji_board:
       - define pages <server.flag[behr.emoji_board.base_book_pages_cache].include[<[credit_pages]>]>
       - flag server behr.emoji_board.book_item:<item[written_book].with_map[<map.with[book].as[<map[author=_Behr;title=howdy].with[pages].as[<[pages]>]>]>]>
 
-    # show the book
+    # % ██ [ show the book ] ██
     - adjust <player> show_book:<server.flag[behr.emoji_board.book_item]>
 
   category_page:
@@ -139,7 +138,7 @@ emoji_board:
       - define lines "<[lines].include_single[<[text].on_hover[<element[Click to change to].color_gradient[from=#ff4d00;to=#04ff00]><n><element[the <bold><[category]><reset> category!].color_gradient[from=#ffb300;to=#00ff33]>].on_click[<[category_page].get[<[category]>]>].type[CHANGE_PAGE]>]>"
     - define page <[page].include_single[<&f><[lines].separated_by[<p>]>]>
 
-    # show the book
+    # % ██ [ show the book ] ██
     - adjust <player> show_book:<item[written_book].with_map[<map.with[book].as[<map[author=_Behr;title=howdy].with[pages].as[<[page]>]>]>]>
 
   return all uncategorized:
@@ -220,7 +219,7 @@ page_data:
         - 4
         - 4
 
-# general notes
+# % ██ [ general notes ] ██
 
 emoji_startup_flag_fixer_thing_for_other_servers:
   type: world
@@ -240,27 +239,31 @@ emoji_startup_flag_fixer_thing_for_other_servers:
           - yaml id:emoji_list set <empty>:<util.parse_yaml[<entry[lang_file].result>]>
           - yaml id:emoji_list savefile:data/emoji_board/emoji_lang_file.json
 
-      - if !<server.match_player[_behr].if_null[null].is_truthy>:
-        - definemap behr:
-            projects:
-              emoji_board: an emoji gui made for copying and pasting emojis into the chat
-            emoji_board:
-              contributor_last_update: <time[2022/06/02_08:26:18:0445_-04:00]>
-              mystery_contributors:
-                _Behr:
-                  uuid: d82da59b-44fc-4a72-a20d-a7f7ae5ef382
-                  contributions:
-                  - <&color[#F3FFAD]>● <&color[#C1F2F7]>Primary project coordinator
-                HalbFettKaese:
-                  uuid: c5a4e97e-3a03-4e6b-979d-f971fb0ccb08
-                  contributions:
-                  - <&color[#F3FFAD]>● <&color[#C1F2F7]>Original creator of the animated text, even if discovering it were on accident lol
-                Mergu:
-                  uuid: 4f1e61de-6f0c-46aa-8c26-52354c4bd9cc
-                  contributions:
-                  - <&color[#F3FFAD]>● <&color[#C1F2F7]>Suggested page numbers - on the to-do list!
-                apademide:
-                  uuid: 9c10e6c0-b675-4b42-9197-9c77771eb1be
-                  contributions:
-                  - <&color[#F3FFAD]>● <&color[#C1F2F7]>Helped with <&dq>the essential emojis<&dq>
-        - flag server behr:<[behr]>
+contributors_for_emoji_book:
+  type: data
+  project: an emoji gui made for copying and pasting emojis into the chat
+  last_update: <time[2022/06/02_08:26:18:0445_-04:00]>
+  contributors:
+    _Behr:
+      uuid: d82da59b-44fc-4a72-a20d-a7f7ae5ef382
+      contributions:
+      - <&color[#F3FFAD]>● <&color[#C1F2F7]>Primary project coordinator
+
+    HalbFettKaese:
+      uuid: c5a4e97e-3a03-4e6b-979d-f971fb0ccb08
+      contributions:
+      - <&color[#F3FFAD]>● <&color[#C1F2F7]>Original creator of the animated text, even if discovering it were on accident lol
+
+    Mergu:
+      uuid: 4f1e61de-6f0c-46aa-8c26-52354c4bd9cc
+      contributions:
+      - <&color[#F3FFAD]>● <&color[#C1F2F7]>Suggested page numbers - on the to-do list!
+
+    apademide:
+      uuid: 9c10e6c0-b675-4b42-9197-9c77771eb1be
+      contributions:
+      - <&color[#F3FFAD]>● <&color[#C1F2F7]>Helped with <&dq>the essential emojis<&dq>
+
+    amber:
+      contributions:
+      - <&color[#F3FFAD]>● <&color[#C1F2F7]>constructed the emoji resource pack assets
