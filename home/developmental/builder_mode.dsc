@@ -1,3 +1,5 @@
+# begin start of horribly written draft, heavy cleaning to do
+
 builder_mode_command:
   type: command
   name: buildermode
@@ -167,15 +169,23 @@ builder_mode_handler_testing:
             - if <[new_walk_speed]> == 1:
               - inventory adjust d:<player.open_inventory> slot:4 "lore:<&[red]>Maximum walk speed"
             - else:
-              - inventory adjust d:<player.open_inventory> slot:4 "lore:<&[green]>Increase to<&co> <&[yellow]><[new_increase]>"
+              - if <[new_increase]> == 2:
+                - inventory adjust d:<player.open_inventory> slot:4 "lore:<&[green]>Increase to<&co> <&[yellow]>2|<&[yellow]>(Default)"
+              - else:
+                - inventory adjust d:<player.open_inventory> slot:4 "lore:<&[green]>Increase to<&co> <&[yellow]><[new_increase]>"
 
             - inventory adjust d:<player.open_inventory> slot:5 "display:<&[green]>walk speed<&co>"
             - if <[new_walk_speed]> == 0.2:
-              - inventory adjust d:<player.open_inventory> slot:5 "lore:<&[green]>Speed<&co> <&[yellow]><[new_walk_speed].mul[10]>|<&[yellow]>(Default)"
+              - inventory adjust d:<player.open_inventory> slot:5 "lore:<&[green]>Speed<&co> <&[yellow]>2|<&[yellow]>(Default)"
+            - else if <[new_walk_speed]> == 1:
+              - inventory adjust d:<player.open_inventory> slot:5 "lore:<&[red]>Maximum walk speed"
             - else:
               - inventory adjust d:<player.open_inventory> slot:5 "lore:<&[green]>Speed<&co> <&[yellow]><[new_walk_speed].mul[10]>|<&[yellow]>Click to reset"
 
-            - inventory adjust d:<player.open_inventory> slot:6 "lore:<&[green]>Decrease to<&co> <&[yellow]><[new_walk_speed].sub[0.05].mul[10].max[0]>"
+            - if <[new_walk_speed]> == 2:
+              - inventory adjust d:<player.open_inventory> slot:6 "lore:<&[green]>Decrease to<&co> <&[yellow]>2|<&[yellow]>(Default)"
+            - else:
+              - inventory adjust d:<player.open_inventory> slot:6 "lore:<&[green]>Decrease to<&co> <&[yellow]><[new_walk_speed].sub[0.05].mul[10].max[0]>"
 
         - case decrease:
           - define new_walk_speed <[player_walk_speed].sub[0.05]>
@@ -185,24 +195,36 @@ builder_mode_handler_testing:
             - adjust <player> walk_speed:<[new_walk_speed]>
             - narrate "<&[green]>Walk speed decreased to <&[yellow]><[new_walk_speed].mul[10]>"
             - define new_decrease <[new_walk_speed].sub[0.05].mul[10].max[0]>
-            - inventory adjust d:<player.open_inventory> slot:4 "lore:<&[green]>Increase to<&co> <&[yellow]><[new_walk_speed].add[0.05].mul[10].min[10]>"
+
             - inventory adjust d:<player.open_inventory> slot:4 "display:<&[green]>walk speed<&co>"
+            - if <[new_walk_speed]> == 0:
+              - inventory adjust d:<player.open_inventory> slot:4 "lore:<&[red]>Minimum walk speed"
+            - else if <[new_walk_speed]> == 0.2:
+              - inventory adjust d:<player.open_inventory> slot:4 "lore:<&[green]>Increase to<&co> <&[yellow]>2|<&[yellow]>(Default)"
+            - else:
+              - inventory adjust d:<player.open_inventory> slot:4 "lore:<&[green]>Increase to<&co> <&[yellow]><[new_walk_speed].add[0.05].mul[10].min[10]>"
+
             - if <[new_walk_speed]> == 0.2:
               - inventory adjust d:<player.open_inventory> slot:5 "lore:<&[green]>Speed<&co> <&[yellow]><[new_walk_speed].mul[10]>|<&[yellow]>(Default)"
+            - else if <[new_walk_speed]> == 0:
+              - inventory adjust d:<player.open_inventory> slot:4 "lore:<&[red]>Minimum walk speed"
             - else:
               - inventory adjust d:<player.open_inventory> slot:5 "lore:<&[green]>Speed<&co> <&[yellow]><[new_walk_speed].mul[10]>|<&[yellow]>Click to reset"
+
             - if <[player_walk_speed].sub[0.05].mul[10].max[0]> == 0:
               - inventory adjust d:<player.open_inventory> slot:6 "lore:<&[red]>Minimum walk speed"
+            - else if <[new_decrease]> == 2:
+              - inventory adjust d:<player.open_inventory> slot:6 "lore:<&[green]>Decrease to<&co> <&[yellow]>2|<&[yellow]>(Default)"
             - else:
               - inventory adjust d:<player.open_inventory> slot:6 "lore:<&[green]>Decrease to<&co> <&[yellow]><[new_decrease]>"
 
         - case default:
-          - if <player.walk_speed> == 0.2:
+          - if <[player_walk_speed]> == 0.2:
             - narrate "<&[red]>Your walk speed is already the default"
           - else:
             - adjust <player> walk_speed:0.2
             - inventory adjust d:<player.open_inventory> slot:4 "lore:<&[green]>Increase to<&co> <&[yellow]>2.5"
-            - inventory adjust d:<player.open_inventory> slot:5 "lore:<&[green]>Speed<&co> <&[yellow]>2"
+            - inventory adjust d:<player.open_inventory> slot:5 "lore:<&[green]>Speed<&co> <&[yellow]>2|<&[yellow]>(Default)"
             - inventory adjust d:<player.open_inventory> slot:6 "lore:<&[green]>Decrease to<&co> <&[yellow]>1.5"
             - narrate "<&[green]>walk speed set to <&[yellow]>2"
 
@@ -346,7 +368,8 @@ builder_mode_handler_testing:
       - stop if:!<context.inventory.script.exists>
       - determine passively 0
       - determine <context.item.with[display=<context.item.display.parse_color.if_null[<&f>]>]>
-
+    on player picks up item flagged:behr.essentials.item_pickup_disabled:
+      - determine cancelled
 
 open_commands_menu:
   type: task
@@ -359,6 +382,7 @@ builder_command_menu_inventory:
   title: <script.parsed_key[data.title].unseparated>
   size: 18
   data:
+
     title:
       - <&f><proc[negative_spacing].context[9].font[utility:spacing]>
       - <&chr[1030].font[gui]>
@@ -376,12 +400,21 @@ builder_command_menu_inventory:
     flight: inventory_item[material=feather;display=flight speed settings;flag=menu:flight]
     walk: inventory_item[material=nautilus_shell;display=walk speed settings;flag=menu:walk]
     bedit: stick[display=bEdit Menu;lore=<&8><&lb><&7>disabled<&8><&rb>;custom_model_data=15]
-    item_pickup: book
+    item_pickup: inventory_item[material=cauldron;display=Item pickup settings;flag=menu:item_pickup]
     settings: book
   slots:
     - [] [teleport] [material] [all_material] [favorite_materials] [crafting] [night_vision] [spectator] []
     - [] [time] [weather] [flight] [walk] [bedit] [item_pickup] [settings] []
 
+open_item_pickup_menu:
+  type: task
+  script:
+    - if <player.has_flag[behr.essentials.item_pickup_disabled]>:
+      - flag <player> behr.essentials.item_pickup_disabled:!
+      - narrate "<&[green]>Item pickup enabled"
+    - else:
+      - flag <player> behr.essentials.item_pickup_disabled
+      - narrate "<&[green]>Item pickup disabled"
 
 open_materials_menu:
   type: task
@@ -632,17 +665,25 @@ open_walk_menu:
     - define new_increased_walk_speed <[player_walk_speed].add[0.05].mul[10]>
     - if <[new_increased_walk_speed]> > 10:
       - define controls "<list_single[<item[book].with[display=<&[green]>Increase walk speed;lore=<&[red]>Maximum walk speed].with_flag[walk:Increase]>]>"
-
+    - else if <[new_increased_walk_speed]> == 2:
+      - define controls "<list_single[<item[book].with[display=<&[green]>Increase walk speed;lore=<&[green]>Increase to<&co> <&[yellow]>2|<&[yellow]>(Default)].with_flag[walk:Increase]>]>"
     - else:
       - define controls "<list_single[<item[book].with[display=<&[green]>Increase walk speed;lore=<&[green]>Increase to<&co> <&[yellow]><[new_increased_walk_speed]>].with_flag[walk:Increase]>]>"
+
     - if <[player_walk_speed]> == 0.2:
-      - define controls "<[controls].include_single[<item[book].with[display=<&[green]>walk speed<&co>;lore=<&[green]>Speed<&co> <&[yellow]>Default (2)].with_flag[walk:default]>]>"
+      - define controls "<[controls].include_single[<item[book].with[display=<&[green]>walk speed<&co>;lore=<&[green]>Speed<&co> <&[yellow]>2|<&[yellow]>(Default)].with_flag[walk:default]>]>"
+    - else if <[player_walk_speed]> == 0:
+      - define controls "<list_single[<item[book].with[display=<&[green]>Increase walk speed;lore=<&[red]>Minimum walk speed].with_flag[walk:Increase]>]>"
+    - else if <[player_walk_speed]> == 1:
+      - define controls "<[controls].include_single[<item[book].with[display=<&[green]>Decrease walk speed;lore=<&[red]>Maximum walk speed].with_flag[walk:Decrease]>]>"
     - else:
       - define controls "<[controls].include_single[<item[book].with[display=<&[green]>walk speed<&co>;lore=<&[green]>Speed<&co> <&[yellow]><[player_walk_speed].mul[10]>|<&[yellow]>Click to reset].with_flag[walk:default]>]>"
 
     - define new_decreased_walk_speed <[player_walk_speed].sub[0.05].mul[10]>
     - if <[new_decreased_walk_speed]> < 0:
       - define controls "<[controls].include_single[<item[book].with[display=<&[green]>Decrease walk speed;lore=<&[red]>Minimum walk speed].with_flag[walk:Decrease]>]>"
+    - else if <[new_decreased_walk_speed]> == 2:
+      - define controls "<[controls].include_single[<item[book].with[display=<&[green]>Decrease walk speed;lore=<&[green]>Decrease to<&co> <&[yellow]>2|<&[yellow]>].with_flag[walk:Decrease]>]>"
     - else:
       - define controls "<[controls].include_single[<item[book].with[display=<&[green]>Decrease walk speed;lore=<&[green]>Decrease to<&co> <&[yellow]><[new_decreased_walk_speed]>].with_flag[walk:Decrease]>]>"
     - inventory set slot:4 d:<[inventory]> o:<[controls]>
@@ -707,6 +748,14 @@ builder_mode_handler:
   events:
     after player joins flagged:behr.essentials.gamemode.builder_mode:
       - inject builder_mode_handler.set_inventory
+      - adjust <player> can_fly:true if:!<player.has_flag[behr.essentials.builder_mode.flight_disabled]>
+      - if <player.has_flag[behr.essentials.builder_mode.logged_flying]>:
+        - adjust <player> flying:true
+        - flag player behr.essentials.builder_mode.logged_flying:!
+
+    on player quits flagged:behr.essentials.gamemode.builder_mode:
+      - if <player.is_flying>:
+        - flag <player> behr.essentials.builder_mode.logged_flying
 
     on player closes inventory flagged:behr.essentials.gamemode.builder_mode:
       - inject builder_mode_handler.set_inventory
@@ -732,9 +781,80 @@ builder_mode_handler:
     on player drops item_flagged:builder_gamemode_item:
       - determine cancelled
 
+    on entity targets player flagged:behr.essentials.gamemode.builder_mode:
+      - determine cancelled
+
+    on player changes farmland into dirt flagged:behr.essentials.gamemode.builder_mode:
+      - determine cancelled
+
+    on player changes food level flagged:behr.essentials.gamemode.builder_mode:
+      - determine cancelled
+
+    on player combusts flagged:behr.essentials.gamemode.builder_mode:
+      - determine cancelled
+
+    on player damaged flagged:behr.essentials.gamemode.builder_mode:
+      - determine cancelled
+
+    on player changes xp flagged:behr.essentials.gamemode.builder_mode:
+      - determine cancelled
+
+    on player consumes item flagged:behr.essentials.gamemode.builder_mode:
+      - determine cancelled
+
+    on player empties lava_bucket flagged:behr.essentials.gamemode.builder_mode:
+      - determine cancelled
+
+    after player empties water_bucket flagged:behr.essentials.gamemode.builder_mode:
+      - if <player.item_in_hand.material.name> == water_bucket:
+        - inventory set slot:hand destination:<player.inventory> origin:water_bucket
+      - else if <player.item_in_offhand.material.name> == water_bucket:
+        - inventory set slot:offhand destination:<player.inventory> origin:water_bucket
+      - else:
+        - inventory set slot:<player.inventory.find_item[bucket]> origin:water_bucket
+
+    on player item takes damage flagged:behr.essentials.gamemode.builder_mode:
+      - determine cancelled
+
+    after player leaves bed flagged:behr.essentials.gamemode.builder_mode:
+      - narrate "<&[green]>Goodmorning cutie, happy building ;3"
+
+    after player locale change:
+      - if <context.new_locale> != en_us:
+        - narrate "<&[red]>Note<&co> <&[yellow]>Only english and pirate are supported currently."
+
+    on player picks up launched arrow flagged:behr.essentials.gamemode.builder_mode:
+      - determine cancelled
+
+    on player changes gamemode to creative|spectator flagged:behr.essentials.gamemode.builder_mode:
+      - flag <player> behr.essentials.builder_mode.was_flying
+    on player changes gamemode to survival flagged:behr.essentials.gamemode.builder_mode:
+      - inject builder_mode_handler.set_inventory
+      - adjust <player> can_fly:true if:!<player.has_flag[behr.essentials.builder_mode.flight_disabled]>
+      - if <player.has_flag[behr.essentials.builder_mode.was_flying]>:
+        - adjust <player> flying:true
+        - flag player behr.essentials.builder_mode.was_flying:!
     #on player clicks inventory_item in inventory:
     #  - if <context.inventory> == <player.open_inventory> && <list[1|2|3|4|5].contains[<context.raw_slot>]>:
     #    - determine cancelled
+
+nimsy_shit:
+  type: task
+  debug: false
+  definitions: spacing|spacing2
+  script:
+    - narrate <n.repeat[20]>
+    - define message <list>
+    - foreach <&chr[1001]>|<&chr[1002]>|<&chr[1003]>|<&chr[1004]>|<&chr[1005]>|<&chr[1006]> as:character:
+      - define backdrop <&chr[996].font[denizen:agents]>
+      - define icon <[character].font[denizen:agents]>
+      - define negative_spacing <proc[negative_spacing].context[33].font[utility:spacing]>
+      - define new_spacing <proc[positive_spacing].context[2].font[utility:spacing]>
+      - define message <[message].include_single[<[icon]><[negative_spacing]><[backdrop]><[new_spacing]>]>
+    - narrate <[message].unseparated>
+    - narrate <n.repeat[3]>
+
+#<proc[negative_spacing].context[40].font[utility:spaci].space_separated>
 
 material_list:
   type: data
