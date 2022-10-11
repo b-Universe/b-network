@@ -7,3 +7,5 @@ reload_command:
   description: Reloads Denizen scripts
   script:
     - reload
+    - if <context.args.size> == 1 && <context.args.first> == -c:
+      - narrate actions/reload

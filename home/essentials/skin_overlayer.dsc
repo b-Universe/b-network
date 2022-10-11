@@ -6,6 +6,7 @@
 # | eg: run skin_overlayer def:<player>|Pescetarian_Puffman
 skin_overlayer:
     type: task
+    debug: false
     definitions: target|default_name
     script:
       - if <server.has_flag[behr.essentials.saved_skins.<[target].name>.<[default_name]>.skin_blob]>:
@@ -135,6 +136,7 @@ skin_overlay_collection_command:
 
 default_skins:
   type: data
+  debug: false
   defaults:
     Pescetarian_Puffman:
       overlay_url: https://cdn.discordapp.com/attachments/980166207426670633/984184991128891492/puffer_overlay.png

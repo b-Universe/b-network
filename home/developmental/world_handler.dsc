@@ -15,6 +15,7 @@ world_handler_command:
 
 world_loading_handler:
   type: world
+  debug: false
   events:
     on server prestart:
       - stop if:!<server.has_flag[behr.essentials.world_settings]>
@@ -24,7 +25,7 @@ world_loading_handler:
 
 world_handler_gui_handler:
   type: world
-  debug: true
+  debug: false
   events:
     after player clicks world_load_handler_gui_button in world_handler_gui_main_menu:
       - inventory open d:world_handler_gui_world_load_gui
@@ -308,6 +309,7 @@ world_handler_gui_world_destroyer_gui:
 
 test_lego1_gui:
   type: inventory
+  debug: false
   inventory: chest
   size: 54
   gui: true
@@ -321,6 +323,7 @@ test_lego1_gui:
 
 test_lego2_gui:
   type: inventory
+  debug: false
   inventory: chest
   size: 36
   title: <script.parsed_key[data.title].unseparated>

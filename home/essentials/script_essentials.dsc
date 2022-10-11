@@ -23,6 +23,7 @@ command_syntax_error:
 
 command_usage:
   type: procedure
+  debug: false
   definitions: alias
   script:
     - if <script[<[alias]>_command].exists>:
@@ -42,6 +43,7 @@ command_syntax_format:
 
 offline_player_verification:
   type: task
+  debug: false
   definitions: player_name
   script:
     - if !<server.match_offline_player[<[player_name]>].if_null[null].is_truthy>:
@@ -54,6 +56,7 @@ offline_player_verification:
 
 player_verification:
   type: task
+  debug: false
   definitions: player_name
   script:
     - if !<server.match_player[<[player_name]>].if_null[null].is_truthy>:

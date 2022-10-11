@@ -1,6 +1,6 @@
 teleport_menu_command:
   type: command
-  debug: true
+  debug: false
   name: teleport_menu
   usage: /teleport_menu (force_update)
   description: Opens the teleport_menu menu, or teleports you to the named location
@@ -22,6 +22,7 @@ teleport_menu_command:
 
 teleport_menu:
   type: task
+  debug: false
   script:
     - if !<server.has_flag[behr.essentials.teleport_menu_locations_last_update]> || <server.flag[behr.essentials.teleport_menu_locations_last_update].is_after[<server.flag[behr.essentials.teleport_menu_locations_last_update_cache].if_null[<util.time_now.sub[30d]>]>].if_null[true]>:
       - flag server behr.essentials.teleport_menu_locations_last_update:<util.time_now.sub[1t]>
@@ -31,7 +32,7 @@ teleport_menu:
 
 teleport_menu_template:
   type: inventory
-  debug: true
+  debug: false
   inventory: chest
   size: 54
   title: <script.parsed_key[data.title].unseparated>
@@ -59,6 +60,7 @@ teleport_menu_template:
 
 teleport_menu_handler:
   type: world
+  debug: false
   events:
     on player clicks item in teleport_menu:
       - if <context.item.has_flag[location_data]>:
@@ -66,7 +68,7 @@ teleport_menu_handler:
 
 teleport_menu_edit_command:
   type: command
-  debug: true
+  debug: false
   name: teleport_menu_edit
   usage: /teleport_menu_edit <&lt>add/modify/remove<&gt> <&lt>name<&gt> (location) (center)
   description: Adds a teleport to the teleport menu

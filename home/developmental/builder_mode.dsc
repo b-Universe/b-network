@@ -520,6 +520,7 @@ open_crafting_table_menu:
 
 open_spectator_menu:
   type: task
+  debug: false
   script:
     - if <player.gamemode> != spectator:
       - adjust <player> gamemode:spectator
