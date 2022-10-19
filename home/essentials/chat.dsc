@@ -47,6 +47,11 @@ chat_formatting:
       - if <[player_channel]> == system:
         - define player_channel <player.flag[behr.essentials.chat.last_channel]>
 
+      - foreach <context.message.strip_color.split.filter[starts_with[@]]> as:ping:
+        - if <[ping].after[@]> in <server.online_players.parse[name]>:
+          - if !<player.has_flag[behr.essentials.chat.settings.pings_disabled]>:
+            - TOAST "<player.name> pinged you" targets:<[ping]> icon:emerald
+
       - clickable delete_player_message def:<[time]> usages:1 save:delete_button until:<duration[1d]>
       - define delete_button "<element[<&4><&lb><&c>✖<&4><&rb>].on_click[<entry[delete_button].command>].on_hover[click to delete]> <&b>| <&r>"
       - definemap chat_history:
@@ -68,7 +73,7 @@ chat_formatting:
     on player receives message:
       # % ██ [ create initial definitions ] ██
       - define raw_message <context.message>
-      - define message_channel <[raw_message].before[/]>
+      - define message_channel <[raw_message].before[/].strip_color>
       - define message <[raw_message].after[/]>
       - define time <util.time_now>
       - define player_channel <player.flag[behr.essentials.chat.channel].if_null[all]>
@@ -78,7 +83,7 @@ chat_formatting:
       # todo: remove .if_null because this is only for resetting the chat completely
         - define content <yaml[behr.essentials.chat.history].read[chat].if_null[<list>]>
       - else:
-        - define content <yaml[behr.essentials.chat.history].read[chat].filter_tag[<[filter_value].get[channel].equals[<[player_channel]>]>].if_null[<list>]>
+        - define content <yaml[behr.essentials.chat.history].read[chat].filter_tag[<[filter_value].get[channel].strip_color.equals[<[player_channel].if_null[false]>]>]>
 
       # % ██ [ manage debugging tools ] ██
       - if <[message_channel]> == narrate:
@@ -168,7 +173,7 @@ chat_formatting:
       - define content <[content].values.if_null[<list>]>
 
     # % ██ [ hide messages without permissions to see ] ██
-      - define content <[content].filter_tag[<player.has_flag[behr.essentials.permissions.read_chat_channel.<[filter_value].get[channel]>]>]>
+      - define content <[content].filter_tag[<player.has_flag[behr.essentials.permissions.read_chat_channel.<[filter_value].get[channel].if_null[null]>]>]>
 
     # % ██ [ show/hide deleted messages ] ██
       - if !<player.has_flag[behr.essentials.chat.settings.show_deleted_messages]> && <player.has_flag[behr.essentials.permissions.admin]>:
@@ -422,7 +427,7 @@ chat_settings_command:
   type: command
   name: chat_settings
   description: adjusts your chat settings
-  usage: /chat_settings show_deleted_messages
+  usage: /chat_settings
   tab completions:
     1: show_deleted_messages|show_delete_controls|show_dismiss_controls|hide_channel|show_channel|reset_chat
     2: all|chat|system|admin
@@ -430,6 +435,11 @@ chat_settings_command:
     - if <context.args.is_empty>:
       - inject command_syntax_error
     - choose <context.args.first>:
+      - case fix_perms:
+        - if <player.has_flag[behr.essentials.permissions.admin]>:
+          - foreach all|player_chat|chat|system|admin as:channel:
+            - flag <server.online_players> behr.essentials.permissions.read_chat_channel.<[channel]>
+
       - case reset_chat:
         - if <player.has_flag[behr.essentials.permissions.admin]>:
           - yaml id:behr.essentials.chat.history create
@@ -653,3 +663,31 @@ chat_channel_command:
       - narrate actions/reload
     - else:
       - narrate "<&[green]>You switched to the <&[yellow]><[channel]> <&[green]>channel"
+
+#something_test:
+#  type: item
+#  material: obsidian
+#  recipes:
+#    1:
+#      type: furnace
+#      cook_time: 5s
+#      experience: 5
+#      input: netherrack X
+#something_test:
+#  type: item
+#  material: obsidian
+#  recipes:
+#    1:
+#      type: furnace
+#      cook_time: 20s
+#      experience: 5
+#      input: nether_brick
+#e_test:
+#  type: world
+#  events:
+#    on player clicks in furnace:
+#      - define cursor_stack <player.item_on_cursor>
+#      - if <context.raw_slot> == 2 && <[cursor_stack].material.name> equals netherrack:
+#        - adjust <player> item_on_cursor:air
+#        - wait 1t
+#        - inventory set destination:<context.inventory> origin:<[cursor_stack]> slot:<context.raw_slot>

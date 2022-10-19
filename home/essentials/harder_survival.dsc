@@ -32,7 +32,7 @@ harder_essentials_handler:
 
     after hoglin spawns:
       - if <util.random_chance[10]>:
-        - if <context.entity.age> == adult
+        - if <context.entity.age> == adult:
           - if <util.random_chance[20]>:
             - mount hoglin_brute|<context.entity> save:entities
           - else:
