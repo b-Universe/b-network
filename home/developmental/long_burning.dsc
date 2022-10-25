@@ -64,25 +64,30 @@ warped_morel:
   recipes:
     1:
       type: furnace
+      cook_time: 5s
+      experience: 5
+      input: warped_roots|twisting_vines|warped_fungus
+    2:
+      type: furnace
       cook_time: 45s
       experience: 5
       input: warped_wart_block
-    2:
+    3:
       type: furnace
       cook_time: 60s
       experience: 5
       input: warped_stem
-    3:
+    4:
       type: furnace
       cook_time: 55s
       experience: 5
       input: stripped_warped_stem
-    4:
+    5:
       type: furnace
       cook_time: 70s
       experience: 5
       input: warped_hyphae
-    5:
+    6:
       type: furnace
       cook_time: 65s
       experience: 5
@@ -100,6 +105,49 @@ condensed_warped_morel:
       - warped_morel|warped_morel|warped_morel
       - warped_morel|warped_morel|warped_morel
       - warped_morel|warped_morel|warped_morel
+
+molten_iron:
+  type: item
+  material: obsidian
+  display name: <&f>Molten Iron
+  recipes:
+    1:
+      type: furnace
+      cook_time: 1s
+      experience: 100
+      input: iron_block
+
+reverse_molten_iron:
+  type: item
+  material: iron_ingot
+  no_id: true
+  mechanisms:
+    quantity: 5
+  recipes:
+    1:
+      type: shapeless
+      input: molten_iron
+
+steel_ingot:
+  type: item
+  material: iron_ingot
+  display name: <&f>Steel Ingot
+  recipes:
+    1:
+      type: shapeless
+      input: molten_iron|molten_iron|molten_iron|raw_copper_block|raw_copper_block
+
+steel_block:
+  type: item
+  material: obsidian
+  display name: <&f>Steel Block
+  recipes:
+    1:
+      type: shaped
+      input:
+      - steel_ingot|steel_ingot|steel_ingot
+      - steel_ingot|steel_ingot|steel_ingot
+      - steel_ingot|steel_ingot|steel_ingot
 
 long_burn:
   type: world
@@ -133,6 +181,7 @@ long_burn:
         smelting:
           warped_roots: 1
           twisting_vines: 1
+          warped_fungus: 2
 
           warped_wart_block: <util.random.int[6].to[9]>
           crimson_warped_stem: <util.random.int[9].to[12]>
@@ -154,6 +203,7 @@ long_burn:
 
       warped_roots: warped_nylium
       twisting_vines: warped_nylium
+      warped_fungus: warped_nylium
       warped_wart_block: warped_nylium
       warped_warped_stem: warped_nylium
       stripped_warped_stem: warped_nylium
