@@ -26,9 +26,14 @@ friend_command:
       - define player_name <context.args.first>
       - inject offline_player_verification
 
+  # % ██ [ check if trying to specify themselves  ] ██
+    - if <[player_name]> == <player.name>:
+      - define reason "You can't add or remove yourself as a friend"
+      - inject command_error
+
   # % ██ [ check if removing from friends list    ] ██
     - if <context.args.size> == 2:
-      - if !<list[remove|delete|defriend].contains[<context.args.last]>>:
+      - if !<list[remove|delete|defriend].contains[<context.args.last>]>:
         - inject command_syntax_error
 
   # % ██ [ check if removing someone not a friend ] ██
@@ -48,6 +53,6 @@ friend_command:
   # % ██ [ add a new friend to friends list       ] ██
       - else:
         - flag player behr.essentials.friends.<[player]>:<util.time_now>
-        - narrate "<&[yellow]>Added<[player_name]> <&g[green]>to your friends list"
+        - narrate "<&[yellow]>Added<[player_name]> <&[green]>to your friends list"
         - if <[player].flag[behr.essentials.friends].contains[<player>]>:
           - narrate "<&[green]>You're already on their friends list"
