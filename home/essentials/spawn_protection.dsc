@@ -62,9 +62,9 @@ spawn_protections:
     on entity changes block in:spawn:
       - if !<player.has_flag[test].if_null[true]>:
         - determine cancelled
-    on piston extends:
+    on piston extends in:spawn:
         - determine cancelled
-    on piston retracts:
+    on piston retracts in:spawn:
       - determine cancelled
     on liquid spreads type:lava in:spawn:
       - determine cancelled
