@@ -137,6 +137,39 @@ steel_ingot:
       type: shapeless
       input: molten_iron|molten_iron|molten_iron|raw_copper_block|raw_copper_block
 
+steel_bar:
+  type: item
+  material: obsidian
+  display name: <&f>Steel Bar
+  recipes:
+    1:
+      type: shaped
+      input:
+      - steel_ingot|steel_ingot|steel_ingot
+    2:
+      type: shaped
+      input:
+      - steel_ingot
+      - steel_ingot
+      - steel_ingot
+
+steel_plate:
+  type: item
+  material: obsidian
+  display name: <&f>Steel Plate
+  recipes:
+    1:
+      type: shaped
+      input:
+        - steel_ingot|steel_ingot|steel_ingot
+        - steel_ingot|steel_ingot|steel_ingot
+    2:
+      type: shaped
+      input:
+        - steel_ingot|steel_ingot
+        - steel_ingot|steel_ingot
+        - steel_ingot|steel_ingot
+
 steel_block:
   type: item
   material: obsidian
