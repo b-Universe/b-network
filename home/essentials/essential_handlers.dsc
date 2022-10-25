@@ -21,3 +21,11 @@ essentials:
         - adjust <context.entity> leash_holder:<player>
         - take iteminhand
       - determine cancelled
+
+    on ender_crystal spawns in:end_towers:
+      #- flag server behr.essentials.end_tower_locations:->:<context.location>
+      - announce to_console <n><context.entity.entity_type><n><context.location><n><context.reason>
+      - schematic paste name:end_tower <context.location>
+
+    after server start:
+      - schematic load name:end_tower
