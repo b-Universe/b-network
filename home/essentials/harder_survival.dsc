@@ -41,8 +41,8 @@ harder_essentials_handler:
         - else if <util.random_chance[5]>:
           - mount hoglin[age=baby]|<context.entity> save:entities
 
-    on shulker spawns:
-      - determine shulker[color=<script.data_key[data.dyes].random>]
+    after shulker spawns:
+      - adjust <context.entity> color:<script.data_key[data.dyes].random>
 
     on slime dies:
       - if <context.entity.fire_time.in_ticks> > 0:
@@ -56,13 +56,14 @@ harder_essentials_handler:
 
       - else:
         - spawn <context.entity.flag[death_location]> <entity[magma_cube[size=<context.entity.size.sub[2].max[1]>]].repeat_as_list[<util.random.decimal[0.8].to[2].round_up>]>
-        - determine <context.count.mul[<uti l.random.decimal[0.9].to[1.6].round_up>]>
+        - determine <context.count.mul[<util.random.decimal[0.9].to[1.6].round_up>]>
 
 
 # harder items
 
 diamond_nugget:
   type: item
+  debug: false
   material: iron_nugget
   display name: <&f>Diamond Nugget
   mechanisms:
@@ -76,6 +77,7 @@ diamond_nugget:
 
 diamond_ingot:
   type: item
+  debug: false
   material: iron_ingot
   display name: <&f>Diamond Ingot
   mechanisms:
@@ -91,6 +93,7 @@ diamond_ingot:
 
 reverse_diamond_block:
   type: item
+  debug: false
   material: iron_ingot
   display name: <&f>Diamond Ingot
   mechanisms:
@@ -104,6 +107,7 @@ reverse_diamond_block:
 
 new_diamond_block:
   type: item
+  debug: false
   material: diamond_block
   no_id: true
   recipes:
@@ -116,6 +120,7 @@ new_diamond_block:
 
 emerald_nugget:
   type: item
+  debug: false
   material: iron_nugget
   display name: <&f>Emerald Nugget
   mechanisms:
@@ -129,6 +134,7 @@ emerald_nugget:
 
 emerald_ingot:
   type: item
+  debug: false
   material: iron_ingot
   display name: <&f>Emerald Ingot
   mechanisms:
@@ -144,6 +150,7 @@ emerald_ingot:
 
 reverse_emerald_block:
   type: item
+  debug: false
   material: iron_ingot
   display name: <&f>Emerald Ingot
   mechanisms:
@@ -157,6 +164,7 @@ reverse_emerald_block:
 
 new_emerald_block:
   type: item
+  debug: false
   material: emerald_block
   no_id: true
   recipes:
@@ -169,6 +177,7 @@ new_emerald_block:
 
 redstone_ingot:
   type: item
+  debug: false
   material: iron_ingot
   display name: <&f>Redstone Ingot
   mechanisms:
@@ -184,6 +193,7 @@ redstone_ingot:
 
 reverse_redstone_block:
   type: item
+  debug: false
   material: iron_ingot
   display name: <&f>Redstone Ingot
   mechanisms:
@@ -198,6 +208,7 @@ reverse_redstone_block:
 
 new_redstone_block:
   type: item
+  debug: false
   material: redstone_block
   no_id: true
   recipes:
@@ -210,6 +221,7 @@ new_redstone_block:
 
 lapis_lazuli_ingot:
   type: item
+  debug: false
   material: iron_ingot
   display name: <&f>Lapis Lazuli Ingot
   mechanisms:
@@ -225,6 +237,7 @@ lapis_lazuli_ingot:
 
 reverse_lapis_lazuli_block:
   type: item
+  debug: false
   material: iron_ingot
   display name: <&f>Lapis Lazuli Ingot
   mechanisms:
@@ -238,6 +251,7 @@ reverse_lapis_lazuli_block:
 
 new_lapis_lazuli_block:
   type: item
+  debug: false
   material: lapis_block
   no_id: true
   recipes:

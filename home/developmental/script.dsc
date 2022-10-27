@@ -234,3 +234,43 @@ ender_dragon_npc_task:
 
     - if <[ender_dragon_slayer_npc].first.is_truthy>:
       - run ender_dragon_npc_task.refresh def:<[ender_dragon_slayer_npc].first>
+
+
+testing_events:
+  type: world
+  events:
+    on block destroyed by explosion in:end_spawn:
+      - determine cancelled
+
+    on player steers minecart:
+      - sidebar set_line scores:1 "values:<&e>Sideways<&6><&co> <&a><context.sideways.round_to_precision[0.0001]>"
+      - sidebar set_line scores:2 "values:<&e>Forward<&6><&co> <&a><context.forward.round_to_precision[0.0001]>"
+      - if <context.jump>:
+        - sidebar set_line scores:3 "values:<&e>Jump<&6><&co> <&a><context.jump>"
+      - else:
+        - sidebar set_line scores:3 "values:<&e>Jump<&6><&co> <&c><context.jump>"
+      - if <context.dismount>:
+        - sidebar set_line scores:4 "values:<&e>Dismount<&6><&co> <&a><context.dismount>"
+      - else:
+        - sidebar set_line scores:4 "values:<&e>Dismount<&6><&co> <&c><context.dismount>"
+
+minecart_connecting:
+  type: task
+  debug: false
+  script:
+    - remove <player.location.find_entities[minecart].within[10]>
+    - spawn minecart <player.location.up[0.0625]> save:first
+    - spawn minecart save:second
+    - spawn minecart save:third
+    - define first <entry[first].spawned_entity>
+    - define second <entry[second].spawned_entity>
+    - define third <entry[third].spawned_entity>
+    - if <[first].location.direction> in north|south:
+      - define offset <location[1,0,0]>
+    - else:
+      - define offset <location[0,0,1]>
+
+    - adjust <[first]>|<[second]>|<[third]> collidable:false
+
+    - attach <[second]> to:<[first]> offset:<[offset]> relative
+    - attach <[third]> to:<[first]> offset:<[offset].mul[2]> relative

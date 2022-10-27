@@ -1,6 +1,7 @@
 # ice cream
 eye_scream:
   type: item
+  debug: false
   material: cooked_chicken
   display name: <&f>Eye Scream
   mechanisms:
@@ -9,6 +10,7 @@ eye_scream:
 # desserts
 green_gummy_behr:
   type: item
+  debug: false
   material: cooked_chicken
   display name: <&f>Green Gummy Behr
   mechanisms:

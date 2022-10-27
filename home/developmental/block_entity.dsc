@@ -1,5 +1,6 @@
 block_entity_item:
   type: item
+  debug: false
   material: spawner
   mechanisms:
     spawner_type: block_entity
@@ -8,6 +9,7 @@ block_entity_item:
 
 block_entity:
   type: entity
+  debug: false
   entity_type: armor_stand
   mechanisms:
     marker: true
@@ -18,6 +20,7 @@ block_entity:
 
 custom_material_item:
   type: item
+  debug: false
   material: obsidian
   mechanisms:
     custom_model_data: 1000

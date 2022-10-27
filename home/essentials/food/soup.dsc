@@ -1,6 +1,7 @@
 
 broccoli_cream_soup:
   type: item
+  debug: false
   material: cooked_chicken
   display name: <&f>Broccoli Cream Soup
   mechanisms:
@@ -8,6 +9,7 @@ broccoli_cream_soup:
 
 broccoli_soup:
   type: item
+  debug: false
   material: cooked_chicken
   display name: <&f>Broccoli Soup
   mechanisms:
@@ -15,6 +17,7 @@ broccoli_soup:
 
 cheese_soup:
   type: item
+  debug: false
   material: cooked_chicken
   display name: <&f>Cheese Soup
   mechanisms:
@@ -22,6 +25,7 @@ cheese_soup:
 
 cream_soup:
   type: item
+  debug: false
   material: cooked_chicken
   display name: <&f>Cream Soup
   mechanisms:
@@ -29,6 +33,7 @@ cream_soup:
 
 pufferfish_soup:
   type: item
+  debug: false
   material: cooked_chicken
   display name: <&f>Pufferfish Soup
   mechanisms:
@@ -36,6 +41,7 @@ pufferfish_soup:
 
 tomato_soup:
   type: item
+  debug: false
   material: cooked_chicken
   display name: <&f>Tomato Soup
   mechanisms:
@@ -43,6 +49,7 @@ tomato_soup:
 
 tomato_cream_soup:
   type: item
+  debug: false
   material: cooked_chicken
   display name: <&f>Tomato Cream Soup
   mechanisms:

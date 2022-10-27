@@ -1,5 +1,6 @@
 adam_designated_driver:
   type: assignment
+  debug: false
   actions:
     on assignment:
       - trigger click state:true
@@ -9,6 +10,7 @@ adam_designated_driver:
 
 adam_designated_driver_temp_gui:
   type: inventory
+  debug: false
   inventory: chest
   size: 54
   gui: true
@@ -42,6 +44,7 @@ adam_designated_driver_temp_gui:
 
 good_soup_soup_shop_button:
   type: item
+  debug: false
   material: cooked_chicken
   display name: <element[Good Soup Soup Shop].color_gradient[from=#55ffff;to=#a7ffff]>
   lore:
@@ -51,6 +54,7 @@ good_soup_soup_shop_button:
 
 adams_good_soup_shop:
   type: inventory
+  debug: false
   inventory: chest
   size: 54
   gui: true
@@ -79,6 +83,7 @@ adams_good_soup_shop:
 
 adams_inventory_handler:
   type: world
+  debug: false
   events:
     on player clicks good_soup_soup_shop_button in adam_designated_driver_temp_gui:
       - inventory open d:adams_good_soup_shop

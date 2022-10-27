@@ -83,7 +83,7 @@ chat_formatting:
       # todo: remove .if_null because this is only for resetting the chat completely
         - define content <yaml[behr.essentials.chat.history].read[chat].if_null[<list>]>
       - else:
-        - define content <yaml[behr.essentials.chat.history].read[chat].filter_tag[<[filter_value].get[channel].strip_color.equals[<[player_channel].if_null[false]>]>]>
+        - define content <yaml[behr.essentials.chat.history].read[chat].filter_tag[<[filter_value].get[channel].strip_color.equals[<[player_channel].if_null[false]>].if_null[<list>]>]>
 
       # % ██ [ manage debugging tools ] ██
       - if <[message_channel]> == narrate:
@@ -271,7 +271,7 @@ discord_player_chat:
         Content-Type: application/json
 
     - definemap data:
-        username: Player Chat
+        username: <player[<[player_uuid]>].name>
         avatar_url: https://minotar.net/armor/bust/<[player_uuid].replace_text[-]>/100.png?date=<[time].format[MM-dd-hh]>
         content: <[message].strip_color.after[/].proc[discord_escape_simple_proc]>
 
@@ -663,31 +663,3 @@ chat_channel_command:
       - narrate actions/reload
     - else:
       - narrate "<&[green]>You switched to the <&[yellow]><[channel]> <&[green]>channel"
-
-#something_test:
-#  type: item
-#  material: obsidian
-#  recipes:
-#    1:
-#      type: furnace
-#      cook_time: 5s
-#      experience: 5
-#      input: netherrack X
-#something_test:
-#  type: item
-#  material: obsidian
-#  recipes:
-#    1:
-#      type: furnace
-#      cook_time: 20s
-#      experience: 5
-#      input: nether_brick
-#e_test:
-#  type: world
-#  events:
-#    on player clicks in furnace:
-#      - define cursor_stack <player.item_on_cursor>
-#      - if <context.raw_slot> == 2 && <[cursor_stack].material.name> equals netherrack:
-#        - adjust <player> item_on_cursor:air
-#        - wait 1t
-#        - inventory set destination:<context.inventory> origin:<[cursor_stack]> slot:<context.raw_slot>

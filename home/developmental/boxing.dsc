@@ -1,5 +1,6 @@
 random_names:
   type: data
+  debug: false
   names:
     - _neast
     - Arabela_OxO
@@ -39,6 +40,7 @@ random_names:
 
 test_create_audience:
   type: task
+  debug: false
   script:
     - define area <player.we_selection>
     - foreach <[area].blocks[quartz_stairs]> as:chair:

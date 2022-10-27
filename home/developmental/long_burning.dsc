@@ -1,5 +1,6 @@
 condensed_netherrack:
   type: item
+  debug: false
   material: obsidian
   display name: <&f>Condensed Netherrack
   recipes:
@@ -11,6 +12,7 @@ condensed_netherrack:
 
 crimson_morel:
   type: item
+  debug: false
   material: obsidian
   display name: <&f>Crimson Morel
   recipes:
@@ -47,6 +49,7 @@ crimson_morel:
 
 condensed_crimson_morel:
   type: item
+  debug: false
   material: obsidian
   display name: <&f>Condensed Crimson Morel
   recipes:
@@ -59,6 +62,7 @@ condensed_crimson_morel:
 
 warped_morel:
   type: item
+  debug: false
   material: obsidian
   display name: <&f>Warped Morel
   recipes:
@@ -96,6 +100,7 @@ warped_morel:
 
 condensed_warped_morel:
   type: item
+  debug: false
   material: obsidian
   display name: <&f>Condensed Warped Morel
   recipes:
@@ -108,6 +113,7 @@ condensed_warped_morel:
 
 molten_iron:
   type: item
+  debug: false
   material: obsidian
   display name: <&f>Molten Iron
   recipes:
@@ -119,6 +125,7 @@ molten_iron:
 
 reverse_molten_iron:
   type: item
+  debug: false
   material: iron_ingot
   no_id: true
   mechanisms:
@@ -130,6 +137,7 @@ reverse_molten_iron:
 
 steel_ingot:
   type: item
+  debug: false
   material: iron_ingot
   display name: <&f>Steel Ingot
   recipes:
@@ -139,6 +147,7 @@ steel_ingot:
 
 steel_bar:
   type: item
+  debug: false
   material: obsidian
   display name: <&f>Steel Bar
   recipes:
@@ -155,6 +164,7 @@ steel_bar:
 
 steel_plate:
   type: item
+  debug: false
   material: obsidian
   display name: <&f>Steel Plate
   recipes:
@@ -172,6 +182,7 @@ steel_plate:
 
 steel_block:
   type: item
+  debug: false
   material: obsidian
   display name: <&f>Steel Block
   recipes:
@@ -259,6 +270,7 @@ long_burn:
 
 stick_test:
   type: item
+  debug: false
   material: glass
   display name: Fancy Glass
   recipes:
