@@ -1,4 +1,4 @@
-create_webget_discord_command:
+create_webget_discordcommand:
   type: task
   debug: true
   script:
@@ -83,7 +83,7 @@ create_webget_discord_command:
 
     - ~discordcommand id:b create name:webget "description:Gets the contents of a web page or API response" group:901618453356630046 options:<[options]>
 
-webget_command_handler:
+webget_discordcommand_handler:
   type: world
   debug: true
   events:
