@@ -13,73 +13,73 @@ create_webget_discord_command:
           type: string
           description: webpage or API url to connect to
           required: true
-        3:
-          name: data
-          type: string
-          description: Set of data to send to the server (changes the default method from GET to POST)
-          required: false
-       4:
-          name: parsed_data
-          type: string
-          description: Parses tags and converts to data to send to the server (changes the default method from GET to POST)
-          required: false
-        5:
-          name: method
-          type: string
-          # choices:  GET|POST|HEAD|OPTIONS|PUT|DELETE|TRACE|PATCH
-          description: Specifies the HTTP method to use in your request (default GET)
-          required: false
-        6:
-          name: headers
-          type: string
-          description: Headers to submit to the server; Uses `key=value;...` format
-          required: false
-        7:
-          name: timeout
-          type: string
-          description: Sets how long the command should wait for a webpage to load before giving up (defaults to 10 seconds)
-          required: false
-       8:
-          name: log
-          type: boolean
-          description: Enables or disables logging the request query (Default disabled)
-          required: false
-        9:
-          name: extension
-          type: string
-          # choices: json|dsc|yml|txt|html
-          description: Determines the extension to save the request query if logged (Defaults to txt)
-          required: false
-       10:
-          name: fail_status
-          type: boolean
-          description: Indicates whether connection errors or any failure statuses return
-          required: false
-        11:
-          name: confirm
-          type: boolean
-          description: Follows-up with a confirmation after submitting a request made, useful for responses with longer delays
-          required: false
-        12:
-          name: result
-          type: boolean
-          description: Determines whether the result is returned (Default true)
-          required: false
       # todo: add secrettag urls for use and make the url arg not required, error if neither are used
-      # 13:
+      # 3:
           # name: secret_url
           # type: string
           # note: discord-hook; maybe bot-spam-discord-webhook or a discord-channel-webhook that returns whether a channel's hook exists? create it if not?
           # choices: discord-hook
           # description: Uses a secret url as the webpage or API url to connect to
           # required: false
-     # todo: queue controls
-     # 14:
-          # name: queue
-          # type: string
-          # choices: list|clear|stop
-          # description: Manages active webget queues
-          # required: false
+        4:
+          name: data
+          type: string
+          description: Set of data to send to the server (changes the default method from GET to POST)
+          required: false
+        5:
+          name: parsed_data
+          type: string
+          description: Parses tags and converts to data to send to the server (changes the default method from GET to POST)
+          required: false
+        6:
+          name: method
+          type: string
+          # choices:  GET|POST|HEAD|OPTIONS|PUT|DELETE|TRACE|PATCH
+          description: Specifies the HTTP method to use in your request (default GET)
+          required: false
+        7:
+          name: headers
+          type: string
+          description: Headers to submit to the server; Uses `key=value;...` format
+          required: false
+        8:
+          name: timeout
+          type: string
+          description: Sets how long the command should wait for a webpage to load before giving up (defaults to 10 seconds)
+          required: false
+      # 9:
+      #    name: log
+      #    type: boolean
+      #    description: Enables or disables logging the request query (Default disabled)
+      #    required: false
+      #  10:
+      #    name: extension
+      #    type: string
+      #    # choices: json|dsc|yml|txt|html
+      #    description: Determines the extension to save the request query if logged (Defaults to txt)
+      #    required: false
+        11:
+          name: fail_status
+          type: boolean
+          description: Indicates whether connection errors or any failure statuses return
+          required: false
+        12:
+          name: confirm
+          type: boolean
+          description: Follows-up with a confirmation after submitting a request made, useful for responses with longer delays
+          required: false
+        13:
+          name: result
+          type: boolean
+          description: Determines whether the result is returned (Default true)
+          required: false
+      #  todo: queue controls
+      #  14:
+      #    name: queue
+      #    type: string
+      #    # choices: list|clear|stop
+      #    description: Manages active webget queues
+      #    required: false
 
     - ~discordcommand id:b create name:webget "description:Gets the contents of a web page or API response" group:901618453356630046 options:<[options]>
 
@@ -96,6 +96,7 @@ webget_command_handler:
       - define description <list>
       - define error_list <list>
       - define response <list>
+      - define embed <discord_embed>
 
       # % ██ [ check if help was requested ] ██
       - if <context.options.contains[help]> && <context.options.get[help]>:
@@ -112,7 +113,7 @@ webget_command_handler:
               # - name: Controls & Page Index
               #   value: left_disabled ( 1 / 3 ) right | **Description** | Arguments (1/2) | Arguments (2/2)
 
-        - ~discordinteraction reply interaction:<context.interaction> <discord_embed.with_map[<[embed]>]>
+        - ~discordinteraction reply interaction:<context.interaction> <discord_embed.with_map[<[embed_data]>]>
         - stop
 
       # % ██ [ Check for url ] ██
@@ -140,6 +141,7 @@ webget_command_handler:
                 footer: Note<&co> use /webget help for more help
                 footer_icon: https://cdn.discordapp.com/emojis/901634983867842610.gif
             - ~discordinteraction reply interaction:<context.interaction> ephemeral <discord_embed.with_map[<[embed_data]>]>
+            - stop
 
         - else:
           - definemap embed_data:
@@ -165,7 +167,7 @@ webget_command_handler:
         - else if <context.options.contains[data]>:
           - define data <context.options.get[data]>
           - define method post
-          
+
         - else if <context.options.contains[parsed_data]>:
           - define data <context.options.get[parsed_data].parsed>
           - define method post
@@ -192,12 +194,11 @@ webget_command_handler:
           - define error_list "<[error_list].include_single[**Timeout Error**<&co> `<context.options.get[timeout]>` is an invalid duration. Defaulted to `<[timeout]>`]>"
 
       # % ██ [ Check for confirmation ] ██
-      - if <context.options.contains[confirmation]> && <context.options.get[confirmation]>:
-        - define embed.title "**Webget confirmation**"
-        - define description "<[description].include_single[Webget request submit with a timeout of <duration[<[timeout]>].formatted>]>"
-        - define description <[description].include[<[error_list]>]> if:!<[error_list].is_empty>
-        - define embed.description <[description].separated_by[<n>]>
-        - ~discordinteract reply interaction:<context.interaction> ephemeral <discord_embed.with_map[<[embed]>]>
+      - if <context.options.get[confirmation].is_truthy>:
+        - define confirm_embed_data.title "**Webget confirmation**"
+        - define confirm_embed_data.color <color[0,254,255]>
+        - define confirm_embed_data.description "<list_single[Webget request submit with a timeout of <duration[<[timeout]>].formatted>].include[<[error_list]>].separated_by[<n>]>"
+        - ~discordinteract reply interaction:<context.interaction> ephemeral <discord_embed.with_map[<[confirm_embed_data]>]>
       - else:
         - ~discordinteract delete interaction:<context.interaction>
 
@@ -207,44 +208,56 @@ webget_command_handler:
           - define <[headers].include[<context.options.get[headers]>]>
         - else:
           - define error_list "<[error_list].include_single[**Headers Error**<&co> `<context.options.get[headers]>` is an invalid header mapping. Format is `key=value;...` (ex<&co> `User-Agent=Champagne`]>"
-          
-
 
       # % ██ [ Create webget ] ██
       - if <[data].exists>:
         - ~webget <[ur]> data:<[data]> method:<[method]> headers:<[headers]> save:response
       - else:
         - ~webget <[url]> method:<[method]> headers:<[headers]> save:response
-        
-      # % ██ [ Check for fail status responses ] ██
-      - if <context.options.contains[fail_status]> && <context.options.get[fail_status]> && <entry[response].failed.if_null[false]>:
-       - definemap entry_responses:
-          failed:
-            name: **Failed**<&co>
-            value: `<entry[response].failed.if_null[invalid]>`
-            inline: true
-          status:
-            name: **HTTP status**<&co>
-            value: <entry[status].failed.if_null[invalid].proc[<[http_status_codes]>]>
-            inline: true
-          time_ran:
-            name: **Failed**<&co>
-            value: `<entry[time_ran].failed.if_null[invalid]>`
-            inline: true
-          result_headers:
-            name: **Failed**<&co>
-            value: ```<entry[result_headers].failed.if_null[invalid].replace_text[`].with[']>```
-          result:
-            name: **result**<&co>
-            value: ```<entry[result].failed.if_null[invalid].replace_text[`].with[']>```
-        
-        #- define entry_responses <list_single[]>
-        #- define entry_responses <[entry_responses].include_single[]>
-        - define response <[response].include_single[<[entry_responses]>
 
-      # % ██ [ Check for logging ] ██
-      # % ██ [ Check for extension ] ██
-      # % ██ [ Check for result ] ██
+      # % ██ [ Check for fail status responses ] ██
+      - if <context.options.get[fail_status].is_truthy> && <entry[response].failed.is_truthy>:
+        - definemap inline_fields:
+            failed:
+              name: **Failed**<&co>
+              value: `<entry[response].failed.if_null[invalid]>`
+              inline: true
+            status:
+              name: **HTTP status**<&co>
+              value: <entry[response].status.if_null[invalid].proc[<[http_status_codes]>]>
+              inline: true
+            time_ran:
+              name: **Time Ran**<&co>
+              value: `<entry[response].time_ran.if_null[invalid]>`
+              inline: true
+        - foreach <[inline_fields]> as:inline_field:
+          - define embed <[embed].add_inline_field[<[inline_field].get[name]>].value[<[inline_field].get[value]>]>
+        - define embed "<[embed].add_field[**Response Headers**<&co>].value[```<entry[response].result_headers.replace_text[`].with['].if_null[invalid]>```]>"
+      - define embed "<[embed].add_field[**Response**<&co>].value[```<entry[response].result.replace_text[`].with['].if_null[invalid]>```]>"
+
+      # % ██ [ Wrap description     ] ██
+      - define embed_data.description <[embed_data.description].include[<[error_list]>].separated_by[<n>]>
+
+      # % ██ [ Check for logging   ] ██
+      - if <context.options.get[log].is_truthy>:
+        - define uuid <util.random.duuid>
+        - yaml id:webget_logging create if:!<yaml.list.contains[webget_logging]>
+        - definemap yaml_data:
+            time: <util.time_now>
+            response: <[embed_data.description]>
+            user: <context.interaction.user>
+
+        - yaml id:webget_logging set <[uuid]>:<[yaml_data]>
+
+        # % ██ [ Check for extension ] ██
+        - if <context.options.get[extension].is_truthy>:
+          - define extension <context.options.get[extension].trim_to_character_set[ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz].to_lowercase>
+
+      # % ██ [ Check for result    ] ██
+      - if !<context.options.get[result].if_null[true]>:
+        - stop
+
+      - ~discordmessage id:b channel: <[embed].with_map[<[embed_data]>]>
 
 http_status_codes:
   type: procedure
@@ -268,13 +281,13 @@ http_status_codes:
       - default:
         - determine **<[code]>**
   codes:
-# @ ██ [1xx - Informational response   ] ██
+# % ██ [1xx - Informational response   ] ██
     100: "**`100`**` - Continue`"
     101: "**`101`**` - Switching Protocols`"
     102: "**`102`**` - Processing`"
     103: "**`103`**` - Early Hints`"
 
-# @ ██ [2xx - Success                  ] ██
+# % ██ [2xx - Success                  ] ██
     200: "**`200`**` - OK`"
     201: "**`201`**` - Created`"
     202: "**`202`**` - Accepted`"
@@ -286,7 +299,7 @@ http_status_codes:
     208: "**`208`**` - Already Reported`"
     226: "**`226`**` - IM Used`"
 
-# @ ██ [3xx - Redirection              ] ██
+# % ██ [3xx - Redirection              ] ██
     300: "**`300`**` - Multiple Choices`"
     301: "**`301`**` - Moved Permanently`"
     302: '**`302`**` - Found (Previously "Moved temporarily")`'
@@ -297,7 +310,7 @@ http_status_codes:
     307: "**`307`**` - Temporary Redirect`"
     308: "**`308`**` - Permanent Redirect`"
 
-# @ ██ [4xx - Client errors            ] ██`
+# % ██ [4xx - Client errors            ] ██`
     400: "**`400`**` - Bad Request`"
     401: "**`401`**` - Unauthorized`"
     402: "**`402`**` - Payment Required`"
@@ -334,7 +347,7 @@ http_status_codes:
     499: "**`499`**` - Client Closed Request`"
     451: "**`451`**` - Unavailable For Legal Reasons`"
 
-# @ ██ [5xx Server errors              ] ██
+# % ██ [5xx Server errors              ] ██
     500: "**`500`**` - Internal Server Error`"
     501: "**`501`**` - Not Implemented`"
     502: "**`502`**` - Bad Gateway`"
