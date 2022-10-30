@@ -6,8 +6,8 @@ condensed_netherrack:
   recipes:
     1:
       type: furnace
-      cook_time: 30s
-      experience: 5
+      cook_time: 1s
+      experience: 6
       input: nether_brick
 
 crimson_morel:
@@ -19,32 +19,32 @@ crimson_morel:
     1:
       type: furnace
       cook_time: 5s
-      experience: 5
+      experience: 2
       input: nether_wart|crimson_roots|weeping_vines|crimson_fungus
     2:
       type: furnace
       cook_time: 45s
-      experience: 5
+      experience: 6
       input: nether_wart_block
     3:
       type: furnace
       cook_time: 60s
-      experience: 5
+      experience: 8
       input: crimson_stem
     4:
       type: furnace
       cook_time: 55s
-      experience: 5
+      experience: 7
       input: stripped_crimson_stem
     5:
       type: furnace
       cook_time: 70s
-      experience: 5
+      experience: 10
       input: crimson_hyphae
     6:
       type: furnace
       cook_time: 65s
-      experience: 5
+      experience: 9
       input: stripped_crimson_hyphae
 
 condensed_crimson_morel:
@@ -68,33 +68,33 @@ warped_morel:
   recipes:
     1:
       type: furnace
-      cook_time: 5s
-      experience: 5
+      cook_time: 6s
+      experience: 3
       input: warped_roots|twisting_vines|warped_fungus
     2:
       type: furnace
-      cook_time: 45s
-      experience: 5
+      cook_time: 50s
+      experience: 7
       input: warped_wart_block
     3:
       type: furnace
-      cook_time: 60s
-      experience: 5
+      cook_time: 65s
+      experience: 9
       input: warped_stem
     4:
       type: furnace
-      cook_time: 55s
-      experience: 5
+      cook_time: 60s
+      experience: 8
       input: stripped_warped_stem
     5:
       type: furnace
-      cook_time: 70s
-      experience: 5
+      cook_time: 75s
+      experience: 11
       input: warped_hyphae
     6:
       type: furnace
-      cook_time: 65s
-      experience: 5
+      cook_time: 70s
+      experience: 10
       input: stripped_warped_hyphae
 
 
@@ -267,15 +267,3 @@ long_burn:
         - determine <script.data_key[data.material_types.<[type]>.output]>
       - else:
         - determine air
-
-stick_test:
-  type: item
-  debug: false
-  material: glass
-  display name: Fancy Glass
-  recipes:
-    1:
-      type: furnace
-      cook_time: 5s
-      experience: 50
-      input: glass

@@ -838,23 +838,6 @@ builder_mode_handler:
     #on player clicks inventory_item in inventory:
     #  - if <context.inventory> == <player.open_inventory> && <list[1|2|3|4|5].contains[<context.raw_slot>]>:
     #    - determine cancelled
-
-nimsy_shit:
-  type: task
-  debug: false
-  definitions: spacing|spacing2
-  script:
-    - narrate <n.repeat[20]>
-    - define message <list>
-    - foreach <&chr[1001]>|<&chr[1002]>|<&chr[1003]>|<&chr[1004]>|<&chr[1005]>|<&chr[1006]> as:character:
-      - define backdrop <&chr[996].font[denizen:agents]>
-      - define icon <[character].font[denizen:agents]>
-      - define negative_spacing <proc[negative_spacing].context[33].font[utility:spacing]>
-      - define new_spacing <proc[positive_spacing].context[2].font[utility:spacing]>
-      - define message <[message].include_single[<[icon]><[negative_spacing]><[backdrop]><[new_spacing]>]>
-    - narrate <[message].unseparated>
-    - narrate <n.repeat[3]>
-
 #<proc[negative_spacing].context[40].font[utility:spaci].space_separated>
 
 material_list:
