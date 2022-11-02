@@ -6,18 +6,18 @@ suicide_command:
   usage: /suicide
   permission: behr.essentials.suicide
   script:
-  # % ██ [ Check Args ] ██
+  # % ██ [ check args ] ██
     - if !<context.args.is_empty>:
       - inject command_syntax_error
 
-  # % ██ [ Check player's Gamemode ] ██
+  # % ██ [ check player's gamemode ] ██
     - if <player.gamemode.advanced_matches[spectator|creative]>:
       - repeat 10:
         - animate <player> animation:hurt
         - wait 2t
       - adjust <player> health:0
 
-  # % ██ [ Kill Self ] ██
+  # % ██ [ kill self ] ██
     - else:
       - define gamemode <player.gamemode>
       - while <player.health> > 0 || <player.is_online>:
