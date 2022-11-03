@@ -39,18 +39,21 @@ chat_formatting:
       - yaml id:behr.essentials.chat.history create
       - yaml id:behr.essentials.chat.history set chat.<util.time_now.epoch_millis>:<empty>
 
-    on player chats:
+    on player chats bukkit_priority:lowest:
       - determine cancelled passively
       - define message <context.message.proc[player_chat_format]>
       - define time <util.time_now>
       - define player_channel <player.flag[behr.essentials.chat.channel].if_null[all]>
+      - define uuid <util.random.duuid>
       - if <[player_channel]> == system:
         - define player_channel <player.flag[behr.essentials.chat.last_channel]>
+      - else if <[player_channel]> == all:
+        - define player_channel player_chat
 
       - foreach <context.message.strip_color.split.filter[starts_with[@]]> as:ping:
         - if <[ping].after[@]> in <server.online_players.parse[name]>:
           - if !<player.has_flag[behr.essentials.chat.settings.pings_disabled]>:
-            - TOAST "<player.name> pinged you" targets:<[ping]> icon:emerald
+            - toast "<player.name> pinged you" targets:<[ping]> icon:emerald
 
       - clickable delete_player_message def:<[time]> usages:1 save:delete_button until:<duration[1d]>
       - define delete_button "<element[<&4><&lb><&c>✖<&4><&rb>].on_click[<entry[delete_button].command>].on_hover[click to delete]> <&b>| <&r>"
@@ -61,13 +64,13 @@ chat_formatting:
           time: <[time]>
           player_uuid: <player.uuid>
 
+      - run discord_player_chat defmap:<[chat_history]>
       - if <[chat_history.player_uuid].if_null[invalid]> == <yaml[behr.essentials.chat.history].read[chat.<yaml[behr.essentials.chat.history].read[chat].keys.highest.if_null[invalid]>.player_uuid].if_null[invalid]>:
         - define chat_history.message <[player_channel]>/<[message].after[<&co>]>
 
       - yaml id:behr.essentials.chat.history set chat.<[time].epoch_millis>:<[chat_history]>
       - narrate <[chat_history.message]> targets:<server.online_players> from:<player.uuid>
 
-      - run discord_player_chat defmap:<[chat_history]>
 
 
     on player receives message:
@@ -80,36 +83,14 @@ chat_formatting:
 
       # % ██ [ check for channel to use ] ██
       - if <[player_channel]> == all:
-      # todo: remove .if_null because this is only for resetting the chat completely
         - define content <yaml[behr.essentials.chat.history].read[chat].if_null[<list>]>
       - else:
-        - define content <yaml[behr.essentials.chat.history].read[chat].filter_tag[<[filter_value].get[channel].strip_color.equals[<[player_channel].if_null[false]>].if_null[<list>]>]>
+        - define content <yaml[behr.essentials.chat.history].read[chat].filter_tag[<[filter_value].get[channel].strip_color.equals[<[player_channel]>].if_null[false]>].if_null[<list>]>
 
-      # % ██ [ manage debugging tools ] ██
+      # % ██ [ manage debugging tools                           ] ██
       - if <[message_channel]> == narrate:
-        - clickable dismiss_system_message def:<[time]>|<player.uuid> usages:1 save:dismiss_button
-        - define dismiss_button "<element[<&4><&lb><&c>✖<&4><&rb>].on_click[<entry[dismiss_button].command>].on_hover[click to dismiss]> <&b>| <&r>"
-        #- define dismiss_button "<element[✖.].proc[unselected_button_maker].context[<&f>|<&c>].on_click[<entry[dismiss_button].command>].on_hover[click to dismiss]><&r> "
-        - define command_text "<&color[#ffb84d]><&lb><&e>/ex narrate<&color[#ffb84d]><&rb>"
-        - define command_hover "<&[green]>Click to re-parse<n>Shift-Click to insert<&co><n><&r><element[/ex narrate <[message].after[narrate ]>].proc[command_syntax_format]>"
-        - define command_command "ex narrate <[message].after[narrate ]>"
-        - define command_message <[command_text].on_hover[<[command_hover]>].with_insertion[/<[command_command]>].on_click[/<[command_command]>]>
-
-        - define output_text <&r><[message].after[narrate ].split_args.parse[parsed].space_separated>
-        - define output_hover "<&[green]>Click to copy<n>Shift-click to insert<&co><n><[output_text]>"
-        - define output_message <[output_text].on_hover[<[output_hover]>].with_insertion[<[output_text].after[r]>].on_click[<[output_text].after[r]>].type[copy_to_clipboard]>
-        - definemap chat_history:
-            channel: system
-            #message: narrate/<&6><&lb><&e>/ex narrate<&6><&rb> <&r><[message].after[narrate ]>
-            message: narrate/<[command_message]> <[output_message]>
-            dismiss: <[dismiss_button]>
-            time: <[time]>
-            uuid: <util.random_uuid>
-
-        # % ██ [ add message to system channel ] ██
-        - yaml id:behr.essentials.chat.history set chat.<[time].epoch_millis>:<[chat_history]>
-        - if <[chat_history.channel]> in <[player_channel]> || <[player_channel]> == all:
-          - define content.<[time].epoch_millis>:<[chat_history]>
+        #- define message <yaml[behr.essentials.chat.history].read[chat.<[message]>.message]>
+        - define content <[content].include[<yaml[behr.essentials.chat.history].read[chat].filter_tag[<[filter_value].get[channel].equals[narrate]>].filter_tag[<[filter_value].get[targets].contains[<player>]>]>]>
 
       - else if <[raw_message].strip_color> in "Denizen debugger is now recording. Use /denizen submit to finish.|denizen debugger recording disabled.|Use /denizen debug -r  to record debug information to be submitted|Submitting...|Error while submitting.|Submit failed<&co> not recording." || "<[raw_message].strip_color.starts_with[Successfully submitted to https]>":
         - if <[raw_message].strip_color> == Submitting...:
@@ -141,29 +122,31 @@ chat_formatting:
 
         - definemap chat_history:
             channel: system
+            targets: <list_single[<player>]>
             message: system/<[message]>
             dismiss: <[dismiss_button]>
             time: <[time]>
             uuid: <util.random_uuid>
 
-        # % ██ [ add message to system channel ] ██
+        # % ██ [ add message to system channel                  ] ██
         - yaml id:behr.essentials.chat.history set chat.<[time].epoch_millis>:<[chat_history]>
         - if <[chat_history.channel]> in <[player_channel]> || <[player_channel]> == all:
           - define content.<[time].epoch_millis>:<[chat_history]>
 
-      # % ██ [ verify if a channel exists for incoming message ] ██
+      # % ██ [ verify if a channel exists for incoming message  ] ██
       - else if !<list[player_chat|actions].contains[<[message_channel]>]> && !<[content].values.parse[get[message].strip_color].contains[<[raw_message].strip_color>].if_null[false]>:
         - clickable dismiss_system_message def:<[time]>|<player.uuid> usages:1 save:dismiss_button
         - define dismiss_button "<element[<&4><&lb><&c>✖<&4><&rb>].on_click[<entry[dismiss_button].command>].on_hover[click to dismiss]> <&b>| <&r>"
         #- define dismiss_button "<element[✖.].proc[unselected_button_maker].context[<&f>|<&c>].on_click[<entry[dismiss_button].command>].on_hover[click to dismiss]><&r> "
         - definemap chat_history:
             channel: system
+            targets: <list_single[<player>]>
             message: system/<[raw_message]>
             dismiss: <[dismiss_button]>
             time: <[time]>
             uuid: <util.random_uuid>
 
-      # % ██ [ add message to system channel ] ██
+      # % ██ [ add message to system channel                    ] ██
         - yaml id:behr.essentials.chat.history set chat.<[time].epoch_millis>:<[chat_history]>
         - if <[chat_history.channel]> in <[player_channel]> || <[player_channel]> == all:
           - define content.<[time].epoch_millis>:<[chat_history]>
@@ -172,20 +155,21 @@ chat_formatting:
         - define content.<[content].keys.lowest>:!
       - define content <[content].values.if_null[<list>]>
 
-    # % ██ [ hide messages without permissions to see ] ██
+    # % ██ [ hide messages without permissions to see           ] ██
       - define content <[content].filter_tag[<player.has_flag[behr.essentials.permissions.read_chat_channel.<[filter_value].get[channel].if_null[null]>]>]>
+      - define content <[content].filter_tag[<[filter_value].get[targets].contains[<player>].if_null[true]>]>
 
-    # % ██ [ show/hide deleted messages ] ██
+    # % ██ [ show/hide deleted messages                         ] ██
       - if !<player.has_flag[behr.essentials.chat.settings.show_deleted_messages]> && <player.has_flag[behr.essentials.permissions.admin]>:
         - define content <[content].filter_tag[<[filter_value].contains[deleted].not>]>
 
-    # todo: % ██ [ remove dismissed messages ] ██
+    # % ██ [ show/hide dismissed messages                       ] ██
       - define content <[content].filter_tag[<[filter_value].get[dismissed].contains[<player.uuid>].not.if_null[true]>]>
 
-    # % ██ [ sort messages by time ] ██
+    # % ██ [ sort messages by time                              ] ██
       - define content <[content].sort_by_value[get[time].epoch_millis]>
 
-    # % ██ [ insert delete and dismissable buttons ] ██
+    # % ██ [ insert delete and dismissable buttons              ] ██
       - if <player.has_flag[behr.essentials.chat.settings.show_delete_controls]> && <player.has_flag[behr.essentials.permissions.admin]>:
         - if <player.has_flag[behr.essentials.chat.settings.show_dismiss_controls]>:
           - define content <[content].parse_tag[<[parse_value].get[delete].if_null[<empty>]><[parse_value].get[dismiss].if_null[<empty>]><[parse_value].get[message].after[/]>]>
@@ -197,10 +181,10 @@ chat_formatting:
         - else:
           - define content <[content].parse_tag[<[parse_value].get[message].after[/]>]>
 
-    # % ██ [ create channel buttons ] ██
+    # % ██ [ create channel buttons                   ] ██
       - if !<player.has_flag[behr.essentials.chat.settings.hide_channel_buttons]>:
         - define channel_buttons <list>
-        - foreach all|player_chat|system|admin|+ as:channel:
+        - foreach all|player_chat|system|admin as:channel:
           - if !<player.has_flag[behr.essentials.permissions.read_chat_channel.<[channel]>]>:
             - foreach next
           - if !<player.has_flag[behr.essentials.chat.settings.channel.<[channel]>.hide]>:
@@ -214,11 +198,52 @@ chat_formatting:
         - define channel_buttons "<n><&r><[channel_buttons].separated_by[ ]>"
 
       - determine message:<n.repeat[100]><[content].separated_by[<&r><n>]><[channel_buttons].if_null[<empty>]>
-
     on ex command:
       - if <context.args.first.if_null[invalid]> == narrate:
         - determine fulfilled passively
-        - narrate narrate/<context.raw_args>
+      - else:
+        - stop
+
+      - define time <util.time_now>
+
+      - if <context.args.filter[starts_with[targets<&co>]].is_empty>:
+        - define targets <list_single[<player>]>
+      - else if <context.source_type> in server|command_block|command_minecart:
+        - define targets <list>
+      - else:
+        - define targets <context.args.filter[starts_with[targets<&co>]].parse[after[targets<&co>].parsed].combine>
+
+      - define message <context.raw_args.split_args.remove[first].filter[starts_with[targets<&co>].not].parse[parsed].space_separated>
+
+      - clickable dismiss_system_message def:<[time]>|<player.uuid> usages:1 save:dismiss_button
+      - define dismiss_button "<element[<&4><&lb><&c>✖<&4><&rb>].on_click[<entry[dismiss_button].command>].on_hover[click to dismiss]> <&b>| <&r>"
+      - define command_text "<&color[#ffb84d]><&lb><&e>/ex narrate<&color[#ffb84d]><&rb>"
+      - define command_hover "<&[green]>Click to re-parse<n>Shift-Click to insert<&co><n><&r><element[/ex <context.raw_args>].proc[command_syntax_format]>"
+      - define command_command "ex <context.raw_args>"
+      - define command_message <[command_text].on_hover[<[command_hover]>].with_insertion[/<[command_command]>].on_click[/<[command_command]>]>
+
+      - define output_text <&r><[message]>
+      - define output_message <[output_text]>
+      - if !<[message].contains_case_sensitive_text[<&ss><&lb>hover=SHOW_TEXT;]>:
+        - define output_hover "<&[green]>Click to copy<n>Shift-click to insert<&co><n><[output_text]>"
+        - define output_message <[output_message].on_hover[<[output_hover]>]>
+      - if !<[message].contains_case_sensitive_text[<&ss><&lb>insertion=]>:
+        - define output_message <[output_message].with_insertion[<[output_text].after[r]>]>
+      - if !<[message].contains_case_sensitive_text[<&ss><&lb>click=copy_to_clipboard;]>:
+        - define output_message <[output_message].on_click[<[output_text].after[r]>].type[copy_to_clipboard]>
+
+      - definemap chat_history:
+          channel: narrate
+          targets: <[targets]>
+          message: narrate/<[command_message]> <[output_message]>
+          dismiss: <[dismiss_button]>
+          time: <[time]>
+
+      # % ██ [ add message to system channel ] ██
+      - yaml id:behr.essentials.chat.history set chat.<[time].epoch_millis>:<[chat_history]>
+      #- if <[chat_history.channel]> in <[player_channel]> || <[player_channel]> == all:
+      #  - define content.<[time].epoch_millis>:<[chat_history]>
+      - narrate narrate/<[time].epoch_millis> targets:<[targets]>
 
 delete_player_message:
   type: task
@@ -273,7 +298,7 @@ discord_player_chat:
     - definemap data:
         username: <player[<[player_uuid]>].name>
         avatar_url: https://minotar.net/armor/bust/<[player_uuid].replace_text[-]>/100.png?date=<[time].format[MM-dd-hh]>
-        content: <[message].strip_color.after[/].proc[discord_escape_simple_proc]>
+        content: <[message].strip_color.after[/].proc[discord_escape_simple_proc].after[<&co>]>
 
     #- webget <secret[discord_chat_webhook]> headers:<[headers]> data:<[data].to_json> save:response
     - ~webget <[hook_url]> headers:<[headers]> data:<[data].to_json> save:response
@@ -415,13 +440,6 @@ discord_player_join_task:
 
     - ~webget <secret[discord_test_webhook]> headers:<[headers]> data:<[data].to_json> save:response
 
-testing:
-  type: task
-  script:
-    - definemap test:
-        valuea: 1
-        valueb: 2
-    - announce to_console <[test]>
 
 chat_settings_command:
   type: command
@@ -429,15 +447,23 @@ chat_settings_command:
   description: adjusts your chat settings
   usage: /chat_settings
   tab completions:
-    1: show_deleted_messages|show_delete_controls|show_dismiss_controls|hide_channel|show_channel|reset_chat
+    1: show_deleted_messages|show_delete_controls|show_dismiss_controls|hide_channel|show_channel|reset_chat|hide_channel_buttons|fix_perms
     2: all|chat|system|admin
   script:
     - if <context.args.is_empty>:
       - inject command_syntax_error
     - choose <context.args.first>:
+      - case hide_channel_buttons:
+        - if <player.has_flag[behr.essentials.chat.settings.hide_channel_buttons]>:
+          - flag <player> behr.essentials.chat.settings.hide_channel_buttons:!
+          - narrate "<&[green]>Chat buttons will now be shown"
+        - else:
+          - flag <player> behr.essentials.chat.settings.hide_channel_buttons
+          - narrate "<&[green]>Chat buttons will now be hidden"
+
       - case fix_perms:
         - if <player.has_flag[behr.essentials.permissions.admin]>:
-          - foreach all|player_chat|chat|system|admin as:channel:
+          - foreach all|player_chat|chat|system|admin|narrate as:channel:
             - flag <server.online_players> behr.essentials.permissions.read_chat_channel.<[channel]>
 
       - case reset_chat:

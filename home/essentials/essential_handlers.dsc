@@ -7,8 +7,7 @@ essentials:
         - determine cancelled
 
     on player changes sign:
-      # todo: add &z and comic sans
-      - determine <context.new.parse[parse_color]>
+      - determine <context.new.proc[chat_color_format]>
 
     on player right clicks Villager with:lead:
       - if !<context.entity.has_flag[behr.essentials.interaction.lead]>:
@@ -29,3 +28,8 @@ essentials:
 
     after server start:
       - schematic load name:end_tower
+
+    on player changes farmland into dirt:
+      - define food_location <context.location.above>
+      - if <[food_location].material.supports[age]>:
+        - define food_level <[food_location].material.age>

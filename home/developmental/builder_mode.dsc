@@ -3,7 +3,7 @@
 builder_mode_command:
   type: command
   name: buildermode
-  debug: true
+  debug: false
   description: Adjusts another user or your gamemode
   usage: /buildermode (player (duration))
   permission: behr.essentials.gamemode.builder
@@ -31,6 +31,7 @@ builder_mode_command:
 
 open_inv:
   type: task
+  debug: false
   script:
     - define items <script[material_list].data_key[blocks.stairs_and_slabs].sub_lists[8]>
     - define inventory <inventory[material_list_inventory_testing]>
@@ -43,6 +44,7 @@ open_inv:
 
 material_list_inventory_testing:
   type: inventory
+  debug: false
   # Must be a valid inventory type.
   # Valid inventory types: ANVIL, BREWING, CHEST, DISPENSER, ENCHANTING, ENDER_CHEST, HOPPER, WORKBENCH
   # | All inventory scripts MUST have this key!
@@ -76,6 +78,7 @@ color_settings_menu:
 
 builder_mode_handler_testing:
   type: world
+  debug: false
   events:
     after player clicks item in flight_menu_gui:
       - stop if:!<context.item.has_flag[flight]>
