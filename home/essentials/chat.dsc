@@ -33,11 +33,21 @@
 
 chat_formatting:
   type: world
-  debug: false
+  debug: true
+  data:
+    debug_messages:
+      - Denizen debugger is now recording. Use /denizen submit to finish.
+      - Denizen debugger recording disabled.
+      - Use /denizen debug -r  to record debug information to be submitted
+      - Submitting...
+      - Error while submitting.
+      - Submit failed<&co> not recording.
+      - Denizen debugger is now<&co> ENABLED.
+      - Denizen debugger is now<&co> DISABLED.
+
   events:
     on server start:
       - yaml id:behr.essentials.chat.history create
-      - yaml id:behr.essentials.chat.history set chat.<util.time_now.epoch_millis>:<empty>
 
     on player chats bukkit_priority:lowest:
       - determine cancelled passively
@@ -89,10 +99,9 @@ chat_formatting:
 
       # % ██ [ manage debugging tools                           ] ██
       - if <[message_channel]> == narrate:
-        #- define message <yaml[behr.essentials.chat.history].read[chat.<[message]>.message]>
         - define content <[content].include[<yaml[behr.essentials.chat.history].read[chat].filter_tag[<[filter_value].get[channel].equals[narrate]>].filter_tag[<[filter_value].get[targets].contains[<player>]>]>]>
 
-      - else if <[raw_message].strip_color> in "Denizen debugger is now recording. Use /denizen submit to finish.|denizen debugger recording disabled.|Use /denizen debug -r  to record debug information to be submitted|Submitting...|Error while submitting.|Submit failed<&co> not recording." || "<[raw_message].strip_color.starts_with[Successfully submitted to https]>":
+      - else if <[raw_message].strip_color> in <script.parsed_key[data.debug_messages]> || "<[raw_message].strip_color.starts_with[Successfully submitted to https]>":
         - if <[raw_message].strip_color> == Submitting...:
           - determine cancelled
         - clickable dismiss_system_message def:<[time]>|<player.uuid> usages:1 save:dismiss_button
@@ -112,11 +121,17 @@ chat_formatting:
             - define message <[text].on_hover[<[hover]>].on_click[/denizen debug -r]>
 
           - case "Error while submitting." "Submit failed<&co> not recording.":
-            - define message "<&color[#ffb84d]><&lb><&e>Denizen Debug<&color[#ffb84d]><&rb> <&[red]>error while submitting"
+            - define message "<&color[#ffb84d]><&lb><&e>Denizen Debug<&color[#ffb84d]><&rb> <&[red]>Error while submitting"
+
+          - case "Denizen debugger is now<&co> ENABLED." "Denizen debugger is now<&co> ENABLED.":
+            - define message "<&color[#ffb84d]><&lb><&e>Denizen Debug<&color[#ffb84d]><&rb> <&[red]>Enabled"
+
+          - case "Denizen debugger is now<&co> ENABLED." "Denizen debugger is now<&co> DISABLED.":
+            - define message "<&color[#ffb84d]><&lb><&e>Denizen Debug<&color[#ffb84d]><&rb> <&[red]>Disabled"
 
           - default:
             - define url https<[raw_message].strip_color.after[https]>
-            - define text "<&color[#ffb84d]><&lb><&e>Denizen Debug<&color[#ffb84d]><&rb> <&[green]>Recording submitted to<&co> <underline><element[<&e><&lb><&b><underline><[url]><&e><underline><&rb>].on_click[<[url]>].type[open_url]>"
+            - define text "<&color[#ffb84d]><&lb><&e>Denizen Debug<&color[#ffb84d]><&rb> <&[green]>Recording submitted to<&co><n><&e><underline><element[<&b><underline><[url]>].on_click[<[url]>].type[open_url]><&e><underline><&rb>"
             - define hover "<&[green]>Click to open url<&co><n><&b><underline><[url]>"
             - define message <[text].on_hover[<[hover]>].on_click[<[url]>]>
 
@@ -160,7 +175,7 @@ chat_formatting:
       - define content <[content].filter_tag[<[filter_value].get[targets].contains[<player>].if_null[true]>]>
 
     # % ██ [ show/hide deleted messages                         ] ██
-      - if !<player.has_flag[behr.essentials.chat.settings.show_deleted_messages]> && <player.has_flag[behr.essentials.permissions.admin]>:
+      - if !<player.has_flag[behr.essentials.chat.settings.show_deleted_messages]> || !<player.has_flag[behr.essentials.permissions.admin]>:
         - define content <[content].filter_tag[<[filter_value].contains[deleted].not>]>
 
     # % ██ [ show/hide dismissed messages                       ] ██
@@ -199,17 +214,14 @@ chat_formatting:
 
       - determine message:<n.repeat[100]><[content].separated_by[<&r><n>]><[channel_buttons].if_null[<empty>]>
     on ex command:
-      - if <context.args.first.if_null[invalid]> == narrate:
-        - determine fulfilled passively
-      - else:
-        - stop
+      - stop if:<list[server|command_block|command_minecart].contains[<context.source_type>]>
+      - stop if:!<context.args.first.equals[narrate]>
+      - determine fulfilled passively
 
       - define time <util.time_now>
 
       - if <context.args.filter[starts_with[targets<&co>]].is_empty>:
         - define targets <list_single[<player>]>
-      - else if <context.source_type> in server|command_block|command_minecart:
-        - define targets <list>
       - else:
         - define targets <context.args.filter[starts_with[targets<&co>]].parse[after[targets<&co>].parsed].combine>
 

@@ -40,7 +40,7 @@ mobile_ad_test:
 
     - definemap data:
         #username: 
-        # avatar_url: 
+        #avatar_url: 
         embeds:
           - <[embed]>
 

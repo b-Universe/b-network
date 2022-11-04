@@ -1,10 +1,6 @@
 quick_fix:
   type: task
   debug: false
-  oook:
-    - chunkload <cuboid[spawn].chunks> duration:10m
-  heh:
-    - modifyblock <cuboid[spawn].blocks[sea_lantern]> verdant_froglight
   script:
   - flag server behr:!
   - yaml id:emoji_list load:data/emoji_board/emoji_lang_file.json
@@ -21,12 +17,12 @@ quick_fix:
   - note remove as:fishing_area_fish_spawn
   - note remove as:fishing_area_spawnable
   - note remove as:no_swim_zome
-  - note <cuboid[world,767,58,731,720,89,684]> as:fishing_area
-  - note <cuboid[world,751,63,715,733,63,697]> as:fishing_area_fish_spawn
-  - note <cuboid[world,696,55,660,777,89,741]> as:fishing_area_spawnable
-  - note <cuboid[world,1269,-500,1269,420,300,420]> as:spawn
+  - note <cuboid[home,767,58,731,720,89,684]> as:fishing_area
+  - note <cuboid[home,751,63,715,733,63,697]> as:fishing_area_fish_spawn
+  - note <cuboid[home,696,55,660,777,89,741]> as:fishing_area_spawnable
+  - note <cuboid[home,1269,-500,1269,420,300,420]> as:spawn
 
-  - note <cuboid[world,719,60,683,763,62,727]> as:no_swim_zone
+  - note <cuboid[home,719,60,683,763,62,727]> as:no_swim_zone
   - flag server behr.spawn.no_swim_zone_respawns:|:<script[behr_spawn_no_swim_zone_respawns].data_key[fishing_area.locations].parse_tag[<location[<[parse_value]>].face[<script[behr_spawn_no_swim_zone_respawns].data_key[fishing_area.aim_at]>]>]>
 
   - flag server behr.essentials.saved_skins.Pescetarian_Puffman.url:https://cdn.discordapp.com/attachments/980166207426670633/984184991128891492/puffer_overlay.png
@@ -35,37 +31,37 @@ quick_fix:
 behr_spawn_no_swim_zone_respawns:
   type: data
   fishing_area:
-    aim_at: 744,61,707,world
+    aim_at: 744,61,707,home
     locations:
-      - 758,64,722,world
-      - 760,64,720,world
-      - 762,64,718,world
-      - 764,64,716,world
-      - 764,64,713,world
-      - 764,64,710,world
-      - 764,64,707,world
-      - 760,63,707,world
-      - 756,63,707,world
-      - 764,64,704,world
-      - 764,64,701,world
-      - 764,64,698,world
-      - 760,63,694,world
-      - 756,63,694,world
-      - 752,64,687,world
-      - 748,64,686,world
-      - 743,63,692,world
-      - 736,63,687,world
-      - 723,63,699,world
-      - 728,63,707,world
-      - 723,64,712,world
-      - 723,64,716,world
-      - 726,63,720,world
-      - 730,63,720,world
-      - 734,64,728,world
-      - 737,64,728,world
-      - 743,64,720,world
-      - 743,64,724,world
-      - 746,64,728,world
-      - 749,64,728,world
-      - 754,64,726,world
-      - 756,64,724,world
+      - 758,64,722,home
+      - 760,64,720,home
+      - 762,64,718,home
+      - 764,64,716,home
+      - 764,64,713,home
+      - 764,64,710,home
+      - 764,64,707,home
+      - 760,63,707,home
+      - 756,63,707,home
+      - 764,64,704,home
+      - 764,64,701,home
+      - 764,64,698,home
+      - 760,63,694,home
+      - 756,63,694,home
+      - 752,64,687,home
+      - 748,64,686,home
+      - 743,63,692,home
+      - 736,63,687,home
+      - 723,63,699,home
+      - 728,63,707,home
+      - 723,64,712,home
+      - 723,64,716,home
+      - 726,63,720,home
+      - 730,63,720,home
+      - 734,64,728,home
+      - 737,64,728,home
+      - 743,64,720,home
+      - 743,64,724,home
+      - 746,64,728,home
+      - 749,64,728,home
+      - 754,64,726,home
+      - 756,64,724,home

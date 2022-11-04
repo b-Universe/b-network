@@ -18,7 +18,7 @@ enchant_command:
     - else if <context.args.size> > 2:
       - inject command_syntax_error
 
-    - else if !<player.item_in_hand.is_enchanted>:
+    - else if <context.args.size> == 1 && !<player.item_in_hand.is_enchanted>:
       - define reason "This item is not enchanted."
       - inject command_error
 
