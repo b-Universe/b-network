@@ -11,6 +11,11 @@ ascend_command:
       - inject command_syntax_error
 
   # % ██ [ check if they're already at the top ] ██
+    - if <player.has_flag[behr.essentials.gamemode.builder_mode]>:
+      - narrate "You can only do this in builder mode"
+      - stop
+
+  # % ██ [ check if they're already at the top ] ██
     - if <player.location.y> > <player.location.highest.y>:
       - narrate "<&[yellow]><element[Nothing interesting happens].on_hover[<&[yellow]>You're already at the top.]>"
       - stop

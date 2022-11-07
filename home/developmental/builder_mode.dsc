@@ -12,10 +12,6 @@ builder_mode_command:
   aliases:
     - gmb
   script:
-    - if !<player.has_flag[behr.essentials.permission.builder]>:
-      - narrate "<&[red]>You don't have permission to enter the builder gamemode"
-      - stop
-
     - if <player.has_flag[behr.essentials.gamemode.builder_mode]>:
       - flag <player> behr.essentials.gamemode.builder_mode:!
       - repeat 5 as:slot:
@@ -528,9 +524,9 @@ open_spectator_menu:
     - if <player.gamemode> != spectator:
       - adjust <player> gamemode:spectator
       - narrate "<&[green]>Spectator enabled"
-      - flag player builder_spectator
+      - flag player behr.essentials.builder.settings.builder_spectator
       - inventory close
-      - while <player.is_online> && <player.has_flag[builder_spectator]>:
+      - while <player.is_online> && <player.has_flag[behr.essentials.builder.settings.builder_spectator]>:
         - actionbar "<&[green]>Shift+click to exit Spectator mode"
         - wait 2s
 
@@ -832,6 +828,7 @@ builder_mode_handler:
 
     on player changes gamemode to creative|spectator flagged:behr.essentials.gamemode.builder_mode:
       - flag <player> behr.essentials.builder_mode.was_flying
+
     on player changes gamemode to survival flagged:behr.essentials.gamemode.builder_mode:
       - inject builder_mode_handler.set_inventory
       - adjust <player> can_fly:true if:!<player.has_flag[behr.essentials.builder_mode.flight_disabled]>

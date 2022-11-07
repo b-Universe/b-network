@@ -12,17 +12,14 @@ enchant_command:
       - define reason "You must hold something in your hand to enchant"
       - inject command_error
 
-    - else if <context.args.is_empty>:
-      - inject command_syntax_error
+    - else if <context.args.is_empty> && !<player.item_in_hand.is_enchanted>:
+      - define reason "This item is not enchanted."
+      - inject command_error
 
     - else if <context.args.size> > 2:
       - inject command_syntax_error
 
-    - else if <context.args.size> == 1 && !<player.item_in_hand.is_enchanted>:
-      - define reason "This item is not enchanted."
-      - inject command_error
-
-    - else:
+    - else if <context.args.size> == 1 && <player.item_in_hand.is_enchanted> && <player.item_in_hand.enchantment_map.contains[<context.args.first>]>:
       - narrate "<&[green]>This item is enchanted with<&co><n><player.item_in_hand.enchantment_map.parse_value_tag[<&[green]><[parse_key]><&co> <&[yellow]><[parse_value]>].values.separated_by[<n>]>"
       - stop
 
@@ -32,19 +29,15 @@ enchant_command:
       - define level <context.args.last>
 
     - if !<[level].is_integer>:
-      - define reason "Enchantment level must be a number"
+      - define reason "Enchantment level must be a whole number"
       - inject command_error
 
     - else if <[level]> < 1:
       - define reason "Enchantment level must be higher than zero"
       - inject command_error
 
-    - else if <[level].contains[.]>:
-      - define reason "Enchantment levels must be whole numbers"
-      - inject command_error
-
     - else if <[level]> > 1000:
-      - define reason "Enchantment level must be less than one thousand for now"
+      - define reason "Enchantment level must be less than one thousand"
       - inject command_error
 
     - define enchantment <context.args.first>

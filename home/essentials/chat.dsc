@@ -33,7 +33,7 @@
 
 chat_formatting:
   type: world
-  debug: true
+  debug: false
   data:
     debug_messages:
       - Denizen debugger is now recording. Use /denizen submit to finish.
@@ -202,7 +202,7 @@ chat_formatting:
         - foreach all|player_chat|system|admin as:channel:
           - if !<player.has_flag[behr.essentials.permissions.read_chat_channel.<[channel]>]>:
             - foreach next
-          - if !<player.has_flag[behr.essentials.chat.settings.channel.<[channel]>.hide]>:
+          - if !<player.has_flag[behr.essentials.chat.settings.channel.<[channel]>.hide_button]>:
             - if <[player_channel]> == <[channel]>:
               - define text <[channel].proc[selected_button_maker].context[<&a>|<&2>]>
             - else:
@@ -309,7 +309,7 @@ discord_player_chat:
 
     - definemap data:
         username: <player[<[player_uuid]>].name>
-        avatar_url: https://minotar.net/armor/bust/<[player_uuid].replace_text[-]>/100.png?date=<[time].format[MM-dd-hh]>
+        avatar_url: https://minotar.net/armor/bust/<[player_uuid].replace_text[-]>/100.png?date=<[time].format[MM-dd]>
         content: <[message].strip_color.after[/].proc[discord_escape_simple_proc].after[<&co>]>
 
     #- webget <secret[discord_chat_webhook]> headers:<[headers]> data:<[data].to_json> save:response
@@ -464,6 +464,7 @@ chat_settings_command:
   script:
     - if <context.args.is_empty>:
       - inject command_syntax_error
+
     - choose <context.args.first>:
       - case hide_channel_buttons:
         - if <player.has_flag[behr.essentials.chat.settings.hide_channel_buttons]>:
@@ -497,15 +498,27 @@ chat_settings_command:
           - yaml id:behr.essentials.chat.history set chat.<[time].epoch_millis>:<[chat_history]>
           - narrate "<&[green]>Chat history cleared and reset"
 
-      - case hide_channel:
+      # todo: replace hide/show for toggle, add _button to case name
+      - case toggle_channel_button:
         - if <context.args.size> != 2:
-          - define reason "You must specify a channel to hide"
+          - define reason "You must specify a channel button to hide"
           - inject command_error
         - define channel <context.args.last>
-        - if <player.has_flag[behr.essentials.chat.settings.channel.<[channel]>]>:
-          - narrate "<&[yellow]><[chanel]> <&[green]>will now shown"
+        - if <player.has_flag[behr.essentials.chat.settings.channel.<[channel]>.hide_button]>:
+          - narrate "<&[yellow]><[chanel]><&[green]> is already hidden"
         - else:
-          - narrate "<&[yellow]><[channel]> <&[green]>will now be hidden"
+          - narrate "<&[yellow]><[channel]><&[green]>'s button will now be hidden"
+
+      - case hide_channel:
+        - if <context.args.size> != 2:
+          - define reason "You must specify a channel button to hide"
+          - inject command_error
+        - define channel <context.args.last>
+        - if <player.has_flag[behr.essentials.chat.settings.channel.<[channel]>.hide_button]>:
+          - narrate "<&[yellow]><[chanel]><&[green]> is already hidden"
+        - else:
+          - narrate "<&[yellow]><[channel]><&[green]>'s button will now be hidden"
+          - flag <player> behr.essentials.chat.settings.channel.<[channel]>.hide_button
 
       - case show_channel:
         - if <context.args.size> != 2:
@@ -514,8 +527,9 @@ chat_settings_command:
         - define channel <context.args.last>
         - if <player.has_flag[behr.essentials.chat.settings.channel.<[channel]>]>:
           - narrate "<&[yellow]><[chanel]> <&[green]>will now shown"
+          - flag <player> behr.essentials.chat.settings.channel.<[channel]>.hide_button:!
         - else:
-          - narrate "<&[yellow]><[channel]> <&[green]>will now be hidden"
+          - narrate "<&[yellow]><[channel]> <&[green]>'s button is already visible"
 
       - case show_dismiss_controls:
         - if <player.has_flag[behr.essentials.chat.settings.show_dismiss_controls]>:
@@ -670,7 +684,7 @@ chat_channel_command:
   debug: false
   name: chat_channel
   description: changes chat channels
-  usage: /chat_channel <&lt>channel<&gt> (quietly)
+  usage: /chat_channel <&lt>channel<&gt>
   tab completions:
     1: all|chat|system|admin
     2: quietly
