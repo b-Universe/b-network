@@ -75,8 +75,8 @@
 | behr.essentials.teleport_menu_locations.<[name]>.world              | teleport_menu        | World of the <[name]> location available for teleport to with the teleport menu
 | behr.essentials.teleport_menu_locations_last_update                 | teleport_menu        | Time when the teleport menu was last updated, to re-cache the menu
 | behr.essentials.teleport_menu_locations_last_update_cache           | teleport_menu        | The last time the teleport menu was cached
-| behr.projects                                                       | emoji-board          | Map of active projects on B
-| behr.projects.<[project]>                                           | emoji-board          | Description of active <[project]>'s on B
+| behr.projects                                                       | emoji_board          | Map of active projects on B
+| behr.projects.<[project]>                                           | emoji_board          | Description of active <[project]>'s on B
 | behr.back_data.wait_for_player                                      | bread_factory        | Map of the projects waiting for myserious contributors to arrive
 | behr.back_data.wait_for_player.<[project]>.contributor              | bread_factory        | Map of the player UUIDs who contributed to the <[project]>s
 | behr.back_data.wait_for_player.<[project]>.contributor.<[uuid]>     | bread_factory        | List of the contributions provided by the mysterious player who owns the <[uuid]>
@@ -181,11 +181,11 @@ chat:
 | /max_health        | `/max_health (player) <1-100>`<br>Aliases: `/maxhp` | Adjusts another player's or your max health from 1 to 100
 | /max_oxygen        | `/max_oxygen (player) <#/default>`                  | Changes another player or your maximum oxygen capacity in seconds
 | /oxygen            | `/oxygen (player) <0-20>`                           | Replinishes or deflates yours or another player's oxygen
+| /rename_item       | `/rename_item <display name>`                       | Applies a custom display name to the item in hand
 
 ## Admin
 | Command            | Usage      | Description |
 | :----------------- | :--------- | :---------- |
 | /clear_console     | `/clear_console`                                                   | Clears the console for a blank screen
 | /gamemode          | `/gamemode <survival/creative/spectator/adventure/builder>`<br>Aliases: `/gms` \| `/gmc` \| `/gmsp` \| `/gma` \| `/gmb` | Changes your gamemode to any of `survival`, `creative`, `spectator`, `adventure`, or `builder`
-| /rename_item       | `/rename_item <display name>`                                      | Applies a custom display name to the item in hand
 | /restore_inventory | `/restore_inventory <player>`<br>Aliases: `/invrestore` \| `/invr` | Restores a previous inventory for a player after death
