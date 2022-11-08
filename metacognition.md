@@ -89,6 +89,7 @@
 | behr.<[project]>.contributor_last_update                            | bread_factory        | The last time the contribution list for the <[project]> was updated
 | behr.<[project]>.contributor_last_update_cache                      | bread_factory        | The last time the contribution list for the <[project]> was cached
 | behr.mysterious_player_heads                                        | bread_factory        | Map of mysterious contributors' player heads with their skull_skin applied cached
+
 ***`*`*** Current <[projects]>: bread_factory, emoji_board
 
 ## Entities
