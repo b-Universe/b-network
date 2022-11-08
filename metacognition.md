@@ -18,6 +18,9 @@
 | behr.essentials.fly                                             | `/fly`               | Toggles flight to yourself or another player
 | behr.essentials.fly_speed                                       | `/fly_speed`         | Changes yours or another player's fly speed
 | behr.essentials.friend                                          | `/friend`            | Adds or removes a player to or from your friends list
+| behr.essentials.friends                                         | friend               | Returns a list of players a player added as a friend
+| behr.essentials.friends.<[player]>                              | friend               | The <[player]> that the player added as a friend
+| behr.essentials.friends.<[player]>.<[time]>                     | friend               | Returns the time a player added <[player]> as a friend
 | behr.essentials.hat                                             | `/hat`               | Gives yours or another player's head
 | behr.essentials.head                                            | `/head`              | Gives yours or another player's head
 | behr.essentials.heal                                            | `/heal`              | Heals yourself or another player
@@ -110,7 +113,6 @@
 | behr.essentials.chat.settings.hide_channel_buttons            | false   | Determines if a player has the channel buttons hidden from chat, or not
 | behr.essentials.chat.settings.channel.<[channel]>.hide_button | false   | Determines if a player has the <[channel]> channel button hidden, or not
 | behr.essentials.friends                                       | null    | Returns a list of friends a player has added to their friends list
-| behr.essentials.friends.<[player]>:<time>                     | null    | Returns the time a player added <[player]> as a friend
 
 ### Server
 yaml: behr.essentials.chat.history | Map of data:
@@ -158,22 +160,22 @@ chat:
 | /fly_speed         | `/fly_speed (#)`                      | ***`*`*** Changes your fly speed<br>Moderators can optionally change other player's fly_speed<br>Speeds are from `0` to `10` or any of `lightspeed`, `ludicrous`, `plaid`, or `default`
 | /run_speed         | `/run_speed (#)`                      | ***`*`*** Adjusts your walking and running speed<br>Moderators can optionally specify another player to adjust
 | /teleport_menu     | `/teleport_menu`<br>Aliases: `/tm`    | ***`*`*** Opens the teleport menu for quick navigation teleportation
-| /time              | `/time <time of day / 0-23999>`       | ***`*`*** Changes the time of the world to a time of the day being any of `start`, `day`, `noon`, `sunset`, `bedtime`, `dusk`, `night`, `midnight`, `sunrise`, or `dawn` - or an integer time between `0` and `23999`
-| /weather           | `/weather <weather>`                  | ***`*`*** Changes the weather of the world to any of `thunder`, ``, or ``
+| /time              | `/time <time of day / 0-23999>`       | ***`*`*** Changes the time of the world to a time of the day<br>Times of day being any of `start`, `day`, `noon`, `sunset`, `bedtime`, `dusk`, `night`, `midnight`, `sunrise`, or `dawn`<br>Time can also be an integer time between `0` and `23999`
+| /weather           | `/weather <weather>`                  | ***`*`*** Changes the weather of the world<br>Weather is any of `sunny`, `storm`, `thunder`, or `clear`
 | /world             | `/world <world>`                      | ***`*`*** Teleports you to the specified world<br>Admins can manage worlds or teleport players to the specified world
-|                    | ***`*`*** Note: Builders can only use this under Builder restrictions
+|                    |                                       |***`*`*** Note: Builders can only use this under Builder restrictions
 
 ## Moderator
-| Command            | Usage           | Description |
-| :----------------- | :-------------- | :---------- |
-| /clear_ground      | `/clear_ground`                                   | Clears the ground of dropped items around you
-| /enchant           | `/enchant <enchantment> (level)`                  | Enchants an item in your hand
-| /heal              | `/heal (player)`                                  | Heals a player or yourself
-| /hunger            | `/hunger (player) <#>`                            | Hungers or satiates yours or another player's hunger
-| /lore              | `/lore <Lore line 1>(\|Lore line #n)*`            | Applies lore to the item in hand
-| /max_health        | `/max_health (player) <1-100>`<br>Aliases: /maxhp | Adjusts another player's or your max health from 1 to 100
-| /max_oxygen        | `/max_oxygen (player) <#/default>`                | Changes another player or your maximum oxygen capacity in seconds
-| /oxygen            | `/oxygen (player) <0-20>`                         | Replinishes or deflates yours or another player's oxygen
+| Command            | Usage                                               | Description |
+| :----------------- | :-------------------------------------------------- | :---------- |
+| /clear_ground      | `/clear_ground`                                     | Clears the ground of dropped items around you
+| /enchant           | `/enchant <enchantment> (level)`                    | Enchants an item in your hand
+| /heal              | `/heal (player)`                                    | Heals a player or yourself
+| /hunger            | `/hunger (player) <#>`                              | Hungers or satiates yours or another player's hunger
+| /lore              | `/lore <Lore line 1>(\|Lore line #n)*`              | Applies lore to the item in hand
+| /max_health        | `/max_health (player) <1-100>`<br>Aliases: `/maxhp` | Adjusts another player's or your max health from 1 to 100
+| /max_oxygen        | `/max_oxygen (player) <#/default>`                  | Changes another player or your maximum oxygen capacity in seconds
+| /oxygen            | `/oxygen (player) <0-20>`                           | Replinishes or deflates yours or another player's oxygen
 
 ## Admin
 | Command            | Usage      | Description |
