@@ -1,6 +1,6 @@
 # Permissions, flag-based permissions, and flags
 
-### Player
+## Player
 | Permission name                                                 | Command / Script     | Description |
 | :-------------------------------------------------------------- | :------------------: | :---------- |
 | behr.essentials.permissions.admin                               | `/builder_mode`      | Determines if a player has the administrative rights, or not
@@ -55,7 +55,7 @@
 | behr.essentials.weather                                         | `/weather`           | Adjusts the weather to sunny, clear, stormy, or thundery
 | behr.essentials.world                                           | `/world`             | Manages worlds or teleports youself or another player to the specified world
 
-### Server
+## Server
 | Permission name                                                     | Command / Script     | Description |
 | :------------------------------------------------------------------ | :------------------: | :---------- |
 | behr.essentials.weather.world.<[world]>.weather                     | weather              | Determines the weather manually set for <[world]> between `storm`, `thunder`, and `sunny`
@@ -91,7 +91,7 @@
 | behr.mysterious_player_heads                                        | bread_factory        | Map of mysterious contributors' player heads with their skull_skin applied cached
 | | | ***`*`*** Current <[projects]>: bread_factory, emoji_board
 
-### Entities
+## Entities
 | Flag name                                              | Script | Description |
 | :----------------------------------------------------- | :----: | :---------- |
 | behr.essentials.combat.grenade_stickied                | Determines the quantity of sticky grenades entity has been stuck with
@@ -114,15 +114,20 @@
 | behr.essentials.chat.settings.channel.<[channel]>.hide_button | false   | Determines if a player has the <[channel]> channel button hidden, or not
 | behr.essentials.friends                                       | null    | Returns a list of friends a player has added to their friends list
 
-### Server
+## Server
 yaml: behr.essentials.chat.history | Map of data:
 ```yml
 chat:
-  channel: The channel the message belongs to
-  message: <[data.channel]>/The raw message being sent
-  delete: The delete button available for players to delete for chat messages
-  time: The TimeTag this message was sent
-  player_uuid: The player's UUID who sent the message for supporting the Player Interaction GUI 
+  <[time].epoch_millis>:
+    channel: The channel the message belongs to
+    message: <[data.channel]>/The raw message being sent
+    delete: The delete button available for players to delete for chat messages
+    deleted: The time this message was deleted
+    dismiss: The dismiss button available for players to delete for system messages
+    dismissed: The list of players who have dismissed this system message
+    targets: The list of players who will receive this message
+    time: The TimeTag this message was sent
+    player_uuid: The player's UUID who sent the message for supporting the Player Interaction GUI 
 ```
 
 # Commands
