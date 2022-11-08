@@ -168,7 +168,7 @@ chat:
 | /teleport_menu     | `/teleport_menu`<br>Aliases: `/tm`    | ***`*`*** Opens the teleport menu for quick navigation teleportation
 | /time              | `/time <time of day / 0-23999>`       | ***`*`*** Changes the time of the world to a time of the day<br>Times of day being any of `start`, `day`, `noon`, `sunset`, `bedtime`, `dusk`, `night`, `midnight`, `sunrise`, or `dawn`<br>Time can also be an integer time between `0` and `23999`
 | /weather           | `/weather <weather>`                  | ***`*`*** Changes the weather of the world<br>Weather is any of `sunny`, `storm`, `thunder`, or `clear`
-| /world             | `/world <world>`<br>`/world create <world>`<br>`/world destroy <world>`<br>`/world help`<br>`/world list`<br>`/world list_unloaded`<br>`/world load <world>`<br>`/world unload <world>`<br>`/world teleport <world> (player)` | ***`*`*** Teleports you to the specified world<br>Admins can manage worlds or teleport players to the specified world
+| /world             | `/world <world>`<br>`/world help`<br>`/world list`<br>`/world list_unloaded`<br>`/world create <world>`<br>`/world destroy <world>`<br>`/world load <world>`<br>`/world unload <world>`<br>`/world teleport <world> (player)` | ***`*`*** Teleports you to the specified <[world]><br>Admins can manage worlds or teleport players to the specified <[world]>
 
 ***`*`*** Note: Builders can only use this under Builder restrictions
 

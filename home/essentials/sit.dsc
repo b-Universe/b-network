@@ -24,21 +24,21 @@ simplesit:
         - define location <context.location>
         #Check if the player is currently sitting or the stair the player clicked can't be sit on.
         - if <player.has_flag[simplesit]> || <[location].material.half> == TOP || <[location].above.material.is_solid>:
-            - narrate "<&[error]>This stair is occupied, upside down or you already sitting." format:simplesit_format
+            - narrate "<&[error]>This stair is occupied, upside down or you already sitting."
             - stop
         #Prevent the player from stand up immediately.
         - if <player.is_sneaking>:
-            - narrate "<&[error]>You can't sit while sneaking." format:simplesit_format
+            - narrate "<&[error]>You can't sit while sneaking."
             - stop
         #Check the config options.
         - define config <script.data_key[data.config]>
         - if !<[config.sit-on-corners]>:
             - if <[location].material.shape> != STRAIGHT:
-                - narrate "<&[error]>You can't sit on corners!" format:simplesit_format
+                - narrate "<&[error]>You can't sit on corners!"
                 - stop
         - if !<[config.players-reach-any-block]>:
             - if <[location].y> > <player.location.y.add[1]> || ( !<player.is_on_ground> && <[location].y.sub[0.24]> > <player.location.y> ):
-                - narrate "<&[error]>You can't reach the block!" format:simplesit_format
+                - narrate "<&[error]>You can't reach the block!"
                 - stop
         #Define the proper location of the armor stand to make the player sit in the correct direction.
         - choose <[location].material.direction>:
