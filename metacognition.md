@@ -1,59 +1,97 @@
 # Permissions, flag-based permissions, and flags
 
 ### Player
-| Permission name                                            | Command / Script     | Description |
-| :--------------------------------------------------------- | :------------------: | :---------- |
-| behr.essentials.permissions.admin                          | `/builder_mode`      | Determines if a player has the administrative rights, or not
-| behr.essentials.top                                        | `/ascend`            | Teleports a player to the highest block where they're standing 
-| behr.essentials.gamemode.builder                           | `/buildermode`       | Toggles the builder gamemode
-| behr.essentials.gamemode.builder_mode                      | builder_mode         | Permits builder permitted commands:<br>`ascend`, `clear_inventory`, `fly`, `fly_speed`, `run`, `run_speed`, `teleport_menu`, `time`, `weather`, `world`
-| behr.essentials.chat.channel                               | chat                 | Determines the chat channel a player is currently in, can be any of:<br>`player_chat`, `system`, `admin`, or `<[player].flag[behr.essentials.chat.<[channel]>]>` for any custom made chat channels
-| behr.essentials.chat.last_channel                          | chat                 | Determines the last channel a player was in
-| behr.essentials.clear_console                              | `/clear_console`     | Clears the console for a blank screen
-| behr.essentials.chat_settings                              | `/chat_settings`     | Changes various settings used in chat;<br> All players can configure: `show_dismiss_controls`, `toggle_channel_button`, <br>Sponsors can optionally configure: `hide_voters`<br>Admins can configure: `show_deleted_messages`, `show_delete_controls`, and `reset_chat`
-| behr.essentials.permissions.read_chat_channel.<[channel]>  | chat                 | Determines whether a player can read the chat within <[channel]>
-| behr.essentials.permissions.write_chat_channel.<[channel]> | chat                 | Determines whether a player can write in the chat within <[channel]>
-| behr.essentials.colors                                     | `/colors`            | Lists the colors in a click-menu for copying and pasting
-| behr.essentials.enchant                                    | `/enchant`           | Enchants an item in your hand
-| behr.essentials.fly                                        | `/fly`               | Toggles flight to yourself or another player
-| behr.essentials.fly_speed                                  | `/fly_speed`         | Changes yours or another player's fly speed
-| behr.essentials.friend                                     | `/friend`            | Adds or removes a player to or from your friends list
-| behr.essentials.hat                                        | `/hat`               | Gives yours or another player's head
-| behr.essentials.head                                       | `/head`              | Gives yours or another player's head
-| behr.essentials.heal                                       | `/heal`              | Heals yourself or another player
-| behr.essentials.hunger                                     | `/hunger`            | Hungers or satiates another player's or your own hunger
-| behr.essentials.lore                                       | `/lore`              | Applies basic lore to the item in hand
-| behr.essentials.max_health                                 | `/max_health`        | Adjusts yours or another player's max health from 1 to 100
-| behr.essentials.max_oxygen                                 | `/max_oxygen`        | Changes yours or another player's maximum oxygen capacity
-| behr.essentials.me                                         | `/me`                | me irl but outloud
-| behr.essentials.oxygen                                     | `/oxygen`            | Replinishes or deflates yours or another player's oxygen
-| behr.essentials.ping                                       | `/ping`              | Shows yours or another player's ping
-| behr.essentials.rename_item                                | `/rename_item`       | Applies a custom display name to the item in hand
-| behr.essentials.restore_inventory                          | `/restore_inventory` | Restores a previous inventory for a player after death
-| behr.essentials.rules                                      | `/rules`             | Lists the rules for b
-| behr.essentials.run_speed                                  | `run_speed`          | Adjusts your run-speed up to 10
-| behr.essentials.saved_skins.<[target].name>                            | skins    | Saved skins for <[target]>
-| behr.essentials.saved_skins.<[target].name>.<[default_name]>           | skins    | Saved skins for <[target]> for <[default_name]>
-| behr.essentials.saved_skins.<[target].name>.<[default_name]>.url       | skins    | The saved skin url for the entity <[target]> with the name <[default_name]>
-| behr.essentials.saved_skins.<[target].name>.<[default_name]>.skin_blob | skins    | The saved skin_blob for the entity <[target]> with the name <[default_name]>
-| behr.essentials.skins                                      | `/skin`              | Manages your player's skin
-| behr.essentials.saved_skins                                | skins                | The skins saved for a player
-| behr.essentials.saved_skins.<[skin_name]>                  | skins                | The <[skin_name]>'s skin blob
-| simplesit.armorstand.entity                                | sit                  | The chair entity for chairs
-| simplesit.armorstand.location                              | sit                  | The chair entity's location for chairs
-| behr.essentials.suicide                                    | `/suicide`           | Kills yourself
-| behr.essentials.teleport_menu                              | `/teleport_menu`     | Opens the teleport_menu menu, or teleports you to the named location
-| behr.essentials.time                                       | `/time`              | Changes the time of day
-| behr.essentials.weather                                    | `/weather`           | Adjusts the weather to sunny, clear, stormy, or thundery
-| behr.essentials.world                                      | `/world`             | Manages worlds or teleports youself or another player to the specified world
+| Permission name                                                 | Command / Script     | Description |
+| :-------------------------------------------------------------- | :------------------: | :---------- |
+| behr.essentials.permissions.admin                               | `/builder_mode`      | Determines if a player has the administrative rights, or not
+| behr.essentials.top                                             | `/ascend`            | Teleports a player to the highest block where they're standing 
+| behr.essentials.gamemode.builder                                | `/buildermode`       | Toggles the builder gamemode
+| behr.essentials.gamemode.builder_mode                           | builder_mode         | Permits builder permitted commands:<br>`ascend`, `clear_inventory`, `fly`, `fly_speed`, `run`, `run_speed`, `teleport_menu`, `time`, `weather`, `world`
+| behr.essentials.chat.channel                                    | chat                 | Determines the chat channel a player is currently in, can be any of:<br>`player_chat`, `system`, `admin`, or `<[player].flag[behr.essentials.chat.<[channel]>]>` for any custom made chat channels
+| behr.essentials.chat.last_channel                               | chat                 | Determines the last channel a player was in
+| behr.essentials.clear_console                                   | `/clear_console`     | Clears the console for a blank screen
+| behr.essentials.chat_settings                                   | `/chat_settings`     | Changes various settings used in chat;<br> All players can configure: `show_dismiss_controls`, `toggle_channel_button`, <br>Sponsors can optionally configure: `hide_voters`<br>Admins can configure: `show_deleted_messages`, `show_delete_controls`, and `reset_chat`
+| behr.essentials.permissions.read_chat_channel.<[channel]>       | chat                 | Determines whether a player can read the chat within <[channel]>
+| behr.essentials.permissions.write_chat_channel.<[channel]>      | chat                 | Determines whether a player can write in the chat within <[channel]>
+| behr.essentials.colors                                          | `/colors`            | Lists the colors in a click-menu for copying and pasting
+| behr.essentials.enchant                                         | `/enchant`           | Enchants an item in your hand
+| behr.essentials.fly                                             | `/fly`               | Toggles flight to yourself or another player
+| behr.essentials.fly_speed                                       | `/fly_speed`         | Changes yours or another player's fly speed
+| behr.essentials.friend                                          | `/friend`            | Adds or removes a player to or from your friends list
+| behr.essentials.hat                                             | `/hat`               | Gives yours or another player's head
+| behr.essentials.head                                            | `/head`              | Gives yours or another player's head
+| behr.essentials.heal                                            | `/heal`              | Heals yourself or another player
+| behr.essentials.hunger                                          | `/hunger`            | Hungers or satiates another player's or your own hunger
+| behr.essentials.lore                                            | `/lore`              | Applies basic lore to the item in hand
+| behr.essentials.max_health                                      | `/max_health`        | Adjusts yours or another player's max health from 1 to 100
+| behr.essentials.max_oxygen                                      | `/max_oxygen`        | Changes yours or another player's maximum oxygen capacity
+| behr.essentials.me                                              | `/me`                | me irl but outloud
+| behr.essentials.oxygen                                          | `/oxygen`            | Replinishes or deflates yours or another player's oxygen
+| behr.essentials.ping                                            | `/ping`              | Shows yours or another player's ping
+| behr.essentials.rename_item                                     | `/rename_item`       | Applies a custom display name to the item in hand
+| behr.essentials.restore_inventory                               | `/restore_inventory` | Restores a previous inventory for a player after death
+| behr.essentials.cached_inventories                              | restore_inventory    | Map of a player's cached inventories indexes, mostly from death
+| behr.essentials.cached_inventories.<[index]>                    | restore_inventory    | Map of a player's cached inventories, mostly from death
+| behr.essentials.cached_inventories.<[index]>.cause              | restore_inventory    | The cause of the player's cached inventory, like a death or a rollback
+| behr.essentials.cached_inventories.<[index]>.contents           | restore_inventory    | Map of a player's equipment and inventory contents
+| behr.essentials.cached_inventories.<[index]>.contents.equipment | restore_inventory    | Map of the player's equipment
+| behr.essentials.cached_inventories.<[index]>.contents.inventory | restore_inventory    | List of the player's inventory contents
+| behr.essentials.cached_inventories.<[index]>.damager            | restore_inventory    | Entity who killed the player, if any
+| behr.essentials.cached_inventories.<[index]>.location           | restore_inventory    | Location of where the player died
+| behr.essentials.cached_inventories.<[index]>.timestamp          | restore_inventory    | Time of when the inventory was cached
+| behr.essentials.cached_inventories.<[index]>.world              | restore_inventory    | Name of the world where this inventory was saved
+| behr.essentials.cached_inventories.<[index]>.xp                 | restore_inventory    | Experience of the player removed on death
+| behr.essentials.rules                                           | `/rules`             | Lists the rules for b
+| behr.essentials.run_speed                                       | `run_speed`          | Adjusts your run-speed up to 10
+| behr.essentials.skins                                           | `/skin`              | Managers your player's skin
+| simplesit.armorstand.entity                                     | sit                  | The chair entity for chairs
+| simplesit.armorstand.location                                   | sit                  | The chair entity's location for chairs
+| behr.essentials.suicide                                         | `/suicide`           | Kills yourself
+| behr.essentials.teleport_menu                                   | `/teleport_menu`     | Opens the teleport_menu menu, or teleports you to the named location
+| behr.essentials.time                                            | `/time`              | Changes the time of day
+| behr.essentials.weather                                         | `/weather`           | Adjusts the weather to sunny, clear, stormy, or thundery
+| behr.essentials.world                                           | `/world`             | Manages worlds or teleports youself or another player to the specified world
 
 ### Server
-| Flag name                                              | Description |
-| :----------------------------------------------------- | :---------- |
-| behr.essentials.weather.world.<[world]>.weather        | Determines the weather manually set for <[world]> between `storm`, `thunder`, and `sunny`
-| behr.essentials.weather.world.<[world]>.lock           | Determines if <[world]>'s weather is locked for the day
-| behr.essentials.saved_skins.<[overlay_name]>.url       | The <[overlay_name]>'s skin url applied
-| behr.essentials.saved_skins.<[overlay_name]>.skin_blob | The skin blob for <[overlay_name]>
+| Permission name                                                     | Command / Script     | Description |
+| :------------------------------------------------------------------ | :------------------: | :---------- |
+| behr.essentials.weather.world.<[world]>.weather                     | weather              | Determines the weather manually set for <[world]> between `storm`, `thunder`, and `sunny`
+| behr.essentials.weather.world.<[world]>.lock                        | weather              | Determines if <[world]>'s weather is locked for the day
+| behr.essentials.crafting                                            | crafting             | The quantity of netherrack or nylium stored in a furnace
+| behr.essentials.saved_skins                                         | skins                | Map of saved skins with their url and skin blobs
+| behr.essentials.saved_skins.<[name]>                                | skins                | Map of the url, the skin blob, and any skin overlays per player for the <[name]> skin
+| behr.essentials.saved_skins.<[name]>.url                            | skins                | URL of the saved skin for <[name]>
+| behr.essentials.saved_skins.<[name]>.skin_blob                      | skins                | Skin_blob of the saved skin for <[name]>
+| behr.essentials.saved_skins.<[player]>.<[name]>.url                 | skins                | URL of the saved skin for <[name]> overlaying <[player]>'s skin
+| behr.essentials.saved_skins.<[player]>.<[name]>.skin_blob           | skins                | Skin_blob of the saved skin for <[name]> overlaying <[player]>'s skin
+| behr.essentials.teleport_menu_locations                             | teleport_menu        | Map of names mapped to locations to teleport to with the teleport menu
+| behr.essentials.teleport_menu_locations.<[name]>.creator            | teleport_menu        | The player of the user who created the teleport  location for <[name]>
+| behr.essentials.teleport_menu_locations.<[name]>.icon               | teleport_menu        | The icon of the teleport location for <[name]>
+| behr.essentials.teleport_menu_locations.<[name]>.location           | teleport_menu        | Location of the <[name]> location available for teleporting to with the teleport menu
+| behr.essentials.teleport_menu_locations.<[name]>.time_created       | teleport_menu        | The time the location was saved for <[name]>
+| behr.essentials.teleport_menu_locations.<[name]>.world              | teleport_menu        | World of the <[name]> location available for teleport to with the teleport menu
+| behr.essentials.teleport_menu_locations_last_update                 | teleport_menu        | Time when the teleport menu was last updated, to re-cache the menu
+| behr.essentials.teleport_menu_locations_last_update_cache           | teleport_menu        | The last time the teleport menu was cached
+| behr.projects                                                       | emoji-board          | Map of active projects on B
+| behr.projects.<[project]>                                           | emoji-board          | Description of active <[project]>'s on B
+| behr.back_data.wait_for_player                                      | bread_factory        | Map of the projects waiting for myserious contributors to arrive
+| behr.back_data.wait_for_player.<[project]>.contributor              | bread_factory        | Map of the player UUIDs who contributed to the <[project]>s
+| behr.back_data.wait_for_player.<[project]>.contributor.<[uuid]>     | bread_factory        | List of the contributions provided by the mysterious player who owns the <[uuid]>
+| behr.back_data.wait_for_player.<[project]>.contributor              | bread_factory        | Map of player UUIDs who contributed to the <[project]>
+| behr.back_data.wait_for_player.<[project]>.contributor.<[uuid]>     | bread_factory        | List of contributions provided from the player who owns the <[uuid]>
+| behr.<[project]>.mystery_contributors.<[player_name]>.uuid          | bread_factory        | UUID of the mysterious contributor <[player_name]> to <[project]>
+| behr.<[project]>.mystery_contributors.<[player_name]>.contributions | bread_factory        | List of the mysterious contributor <[player_name]>'s contributions' to <[project]>
+| behr.<[project]>.contributors                                       | bread_factory        | Map of players who have contributed to <[project]>
+| behr.<[project]>.contributors.<[player]>                            | bread_factory        | List of contributions to <[project]>
+| behr.<[project]>.contributor_last_update                            | bread_factory        | The last time the contribution list for the <[project]> was updated
+| behr.<[project]>.contributor_last_update_cache                      | bread_factory        | The last time the contribution list for the <[project]> was cached
+| behr.mysterious_player_heads                                        | bread_factory        | Map of mysterious contributors' player heads with their skull_skin applied cached
+| | ***`*`*** | current <[projects]>: bread_factory, emoji_board
+
+### Entities
+| Flag name                                              | Script | Description |
+| :----------------------------------------------------- | :----: | :---------- |
+| behr.essentials.combat.grenade_stickied                | Determines the quantity of sticky grenades entity has been stuck with
 
 # Player and Server Settings flags
 
