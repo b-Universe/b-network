@@ -89,7 +89,7 @@
 | behr.<[project]>.contributor_last_update                            | bread_factory        | The last time the contribution list for the <[project]> was updated
 | behr.<[project]>.contributor_last_update_cache                      | bread_factory        | The last time the contribution list for the <[project]> was cached
 | behr.mysterious_player_heads                                        | bread_factory        | Map of mysterious contributors' player heads with their skull_skin applied cached
-| | ***`*`*** | current <[projects]>: bread_factory, emoji_board
+| | | ***`*`*** Current <[projects]>: bread_factory, emoji_board
 
 ### Entities
 | Flag name                                              | Script | Description |
@@ -172,7 +172,7 @@ chat:
 | /enchant           | `/enchant <enchantment> (level)`                    | Enchants an item in your hand
 | /heal              | `/heal (player)`                                    | Heals a player or yourself
 | /hunger            | `/hunger (player) <#>`                              | Hungers or satiates yours or another player's hunger
-| /lore              | `/lore <Lore line 1>(\|Lore line #n)*`              | Applies lore to the item in hand
+| /lore              | `/lore <lore line 1>(\|lore line #n)*`              | Applies lore to the item in hand
 | /max_health        | `/max_health (player) <1-100>`<br>Aliases: `/maxhp` | Adjusts another player's or your max health from 1 to 100
 | /max_oxygen        | `/max_oxygen (player) <#/default>`                  | Changes another player or your maximum oxygen capacity in seconds
 | /oxygen            | `/oxygen (player) <0-20>`                           | Replinishes or deflates yours or another player's oxygen
