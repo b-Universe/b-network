@@ -14,7 +14,7 @@ skin_command:
   type: command
   name: skin
   debug: false
-  description: Manages your player's skin.
+  description: Manages your player's skin
   usage: /skin reset/set <&lt>name<&gt>/save <&lt>player_name<&gt>/save <&lt>name<&gt> <&lt>URL<&gt> (slim)/list/delete <&lt>name<&gt>/rename <&lt>old name<&gt> <&lt>new name<&gt>
   tab complete:
     - define commands <list[delete|help|list|rename|reset|save|set]>
@@ -28,8 +28,8 @@ skin_command:
     - if <[arg_count]> == 1:
       - determine <[commands].filter[starts_with[<context.args.first>]]>
 
-    - else if <[arg_count]> == 2 && <context.args.first.advanced_matches[delete|rename|set]> && <player.has_flag[super_suit_saved_skins]>:
-      - determine <player.flag[super_suit_saved_skins].keys.filter[starts_with[<context.args.get[2]||>]]>
+    - else if <[arg_count]> == 2 && <context.args.first.advanced_matches[delete|rename|set]> && <player.has_flag[behr.essentials.saved_skins]>:
+      - determine <player.flag[behr.essentials.saved_skins].keys.filter[starts_with[<context.args.get[2]||>]]>
 
     - else if <[arg_count]> == 4 && <context.args.first> == save:
       - determine <list[slim|regular].filter[starts_with[<context.args.get[4]||>]]>
@@ -37,7 +37,7 @@ skin_command:
   syntax:
     - narrate "<&[base]>Available skin commands: <&[emphasis]><list[delete|list|rename|reset|save|set].separated_by[<&[base]>, <&[emphasis]>]> <&b><strikethrough>  <&[base]>or <&6>/<&[emphasis]>skin help<&[base]> for help!"
     - stop
-
+  permissions: behr.essentials.skins
   script:
   # @ ██ [ Check for args ] ██
     - if <context.args.is_empty>:
@@ -73,9 +73,9 @@ skin_command:
       # @ ██ [ Check if player saved skin ] ██
         - define skin_name <context.args.last>
         - define original_skin <player.skin_blob>
-        - if <player.has_flag[super_suit_saved_skins.<[skin_name]>]>:
+        - if <player.has_flag[behr.essentials.saved_skins.<[skin_name]>]>:
           # @ ██ [ Skin the owner player's skin if skin name not saved ] ██
-          - adjust <player> skin_blob:<player.flag[super_suit_saved_skins.<[skin_name]>]>
+          - adjust <player> skin_blob:<player.flag[behr.essentials.saved_skins.<[skin_name]>]>
           - narrate "<&[base]>Skin set to: <&[emphasis]><[skin_name]><&[base]>."
           - stop
         - else if !<[skin_name].matches_character_set[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_]>:
@@ -99,7 +99,7 @@ skin_command:
         - define skin_name <context.args.get[2]>
 
       # @ ██ [ Check if the player already has a skin saved as this name ] ██
-        - if <player.has_flag[super_suit_saved_skins.<[skin_name]>]>:
+        - if <player.has_flag[behr.essentials.saved_skins.<[skin_name]>]>:
           - narrate "<&[error]>You already have a skin saved under the name <&[emphasis]><[skin_name]><&[error]>."
           - stop
 
@@ -113,7 +113,7 @@ skin_command:
           - if <[original_skin]> == <player.skin_blob>:
             - narrate "<&[error]>An unexpected error occured using the player name <&[emphasis]><[skin_name]><&[error]>. Is it a valid player with a skin?"
           - else:
-            - flag player super_suit_saved_skins.<[skin_name]>:<player.skin_blob>
+            - flag player behr.essentials.saved_skins.<[skin_name]>:<player.skin_blob>
             - narrate "<&[base]>Skin saved and set to: <&[emphasis]><[skin_name]><&[base]>."
           - stop
 
@@ -155,13 +155,13 @@ skin_command:
         - if <[original_skin]> == <player.skin_blob>:
           - narrate "<&[error]>An unexpected error occured using the URL:<&[emphasis]><[skin_url]><&[error]>. Is it a valid URL?"
         - else:
-          - flag player super_suit_saved_skins.<[skin_name]>:<[skin_blob]>
+          - flag player behr.essentials.saved_skins.<[skin_name]>:<[skin_blob]>
           - narrate "<&[base]>Skin saved and set to: <&[emphasis]><[skin_name]>"
 
     # @ ██ [ /delete <skin_name> -  Deletes the player's saved skin by this name ] ██
       - case delete:
         - if <context.args.size> == 1:
-          - if <player.has_flag[super_suit_saved_skins]>:
+          - if <player.has_flag[behr.essentials.saved_skins]>:
             - narrate "<&[error]>You have to specify a skin name to delete."
           - else:
             - narrate "<&[error]>You have to specify a skin name to delete, but have no skins to delete anyways!"
@@ -171,16 +171,16 @@ skin_command:
 
       # @ ██ [ Check if name to delete even exists ] ██
         - define skin_name <context.args.get[2]>
-        - if <player.has_flag[super_suit_saved_skins]>:
-          - if !<player.flag[super_suit_saved_skins].contains[<[skin_name]>]>:
+        - if <player.has_flag[behr.essentials.saved_skins]>:
+          - if !<player.flag[behr.essentials.saved_skins].contains[<[skin_name]>]>:
             - narrate "<&[error]>There's no skin saved under the name <&[emphasis]><[skin_name]><&[error]>."
             - stop
         - else:
           - narrate "<&[error]>You have no skins saved."
           - stop
 
-        - define skin_blob <player.flag[super_suit_saved_skins.<[skin_name]>]>
-        - flag player super_suit_saved_skins.<[skin_name]>:!
+        - define skin_blob <player.flag[behr.essentials.saved_skins.<[skin_name]>]>
+        - flag player behr.essentials.saved_skins.<[skin_name]>:!
         - narrate "<&[base]>Deleted the skin saved under the name: <&[emphasis]><[skin_name]>"
 
     # @ ██ [ /skin list - Shows you the list of saved skins ] ██
@@ -189,11 +189,11 @@ skin_command:
           - inject skin_command.syntax
 
       # @ ██ [ Check if player even has skins ] ██
-        - if !<player.has_flag[super_suit_saved_skins]>:
+        - if !<player.has_flag[behr.essentials.saved_skins]>:
           - narrate "<&[error]>You have no saved skins."
           - stop
 
-        - narrate "<&[base]>Available skins saved: <&[emphasis]><player.flag[super_suit_saved_skins].keys.separated_by[<&[base]>, <&[emphasis]>]>"
+        - narrate "<&[base]>Available skins saved: <&[emphasis]><player.flag[behr.essentials.saved_skins].keys.separated_by[<&[base]>, <&[emphasis]>]>"
 
     # @ ██ [ /skin rename <old_name> <new_name> - Renames a skin from <old_name> to <new_name> ] ██
       - case rename:
@@ -201,27 +201,27 @@ skin_command:
           - inject skin_command.syntax
 
       # @ ██ [ Check if player even has skins ] ██
-        - if !<player.has_flag[super_suit_saved_skins]>:
+        - if !<player.has_flag[behr.essentials.saved_skins]>:
           - narrate "<&[error]>You have no saved skins."
           - stop
 
       # @ ██ [ Check if old skin name is valid ] ██
         - define old_skin_name <context.args.get[2]>
-        - if <player.has_flag[super_suit_saved_skins]>:
-          - if !<player.flag[super_suit_saved_skins].contains[<[old_skin_name]>]>:
+        - if <player.has_flag[behr.essentials.saved_skins]>:
+          - if !<player.flag[behr.essentials.saved_skins].contains[<[old_skin_name]>]>:
             - narrate "<&[error]>You don't have a skin saved under the name <&[emphasis]><[old_skin_name]><&[error]>"
             - stop
 
       # @ ██ [ Check if new skin name exists already ] ██
         - define new_skin_name <context.args.get[3]>
-        - if <player.flag[super_suit_saved_skins].contains[<[new_skin_name]>]>:
+        - if <player.flag[behr.essentials.saved_skins].contains[<[new_skin_name]>]>:
           - narrate "<&[base]>The specified skin name already exists: <&[emphasis]><[new_skin_name]><&[base]>."
           - stop
 
       # @ ██ [ Swaperonies ] ██
-        - define skin_blob <player.flag[super_suit_saved_skins.<[old_skin_name]>]>
-        - flag player super_suit_saved_skins.<[new_skin_name]>:<[skin_blob]>
-        - flag player super_suit_saved_skins.<[old_skin_name]>:!
+        - define skin_blob <player.flag[behr.essentials.saved_skins.<[old_skin_name]>]>
+        - flag player behr.essentials.saved_skins.<[new_skin_name]>:<[skin_blob]>
+        - flag player behr.essentials.saved_skins.<[old_skin_name]>:!
         - narrate "<&[base]>Renamed the skin: <&[emphasis]><[old_skin_name]> <&[base]>to: <&[emphasis]><[new_skin_name]><&[base]>."
 
     # @ ██ [ /skin <anything else> - This is when a player types a skin command that doesn't exist, like /skin lasagna ] ██

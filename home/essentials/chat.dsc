@@ -461,6 +461,7 @@ chat_settings_command:
   tab completions:
     1: show_deleted_messages|show_delete_controls|show_dismiss_controls|hide_channel|show_channel|reset_chat|hide_channel_buttons|fix_perms
     2: all|chat|system|admin
+  permission: behr.essentials.chat_settings
   script:
     - if <context.args.is_empty>:
       - inject command_syntax_error

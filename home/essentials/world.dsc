@@ -2,7 +2,7 @@ world_command:
   type: command
   name: world
   debug: false
-  description:  manages worlds or teleports youself or another player to the specified world
+  description: Manages worlds or teleports youself or another player to the specified world
   usage: /world (create/destroy/help/list/list_unloaded/load/unload/teleport (player)) <&lt>worldname<&gt>
   permission: behr.essentials.world
   tag_data:

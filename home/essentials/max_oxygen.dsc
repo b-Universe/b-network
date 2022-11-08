@@ -2,11 +2,12 @@ max_oxygen_command:
   type: command
   name: max_oxygen
   debug: false
-  description: Changes another player or your maximum oxygen capacity in seconds
+  description: Changes yours or another player's maximum oxygen capacity
   usage: /max_oxygen (player) <&lt><&ns>/default<&gt>
   tab completions:
     1: <server.online_players.exclude[<player>].parse[name].include[default]>
     2: default
+  permission: behr.essentials.max_oxygen
   script:
     - if <context.args.is_empty> || <context.args.size> > 2:
       - inject command_syntax_error

@@ -2,7 +2,7 @@ rename_item_command:
   type: command
   name: rename_item
   debug: false
-  description:  Applies a custom display bame to the item in hand
+  description:  Applies a custom display name to the item in hand
   usage: /rename_item <&lt>Display name<&gt>
   permission: behr.essentials.rename_item
   script:

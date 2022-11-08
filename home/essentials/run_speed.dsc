@@ -2,7 +2,7 @@ run_speed_command:
   type: command
   name: run_speed
   debug: false
-  description: adjusts your run-speed up to 10.
+  description: Adjusts your run-speed up to 10
   usage: /run_speed (player) <&lt><&ns><&gt>/default
   aliases:
     - walk_speed

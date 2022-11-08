@@ -5,6 +5,7 @@ restore_inventory_command:
   description: Restores a previous inventory for a player after death
   aliases:
     - invrestore
+    - invr
   usage: /restore_inventory <&lt>player<&gt>
   permission: behr.essentials.restore_inventory
   tab completions:

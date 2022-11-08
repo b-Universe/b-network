@@ -1,20 +1,59 @@
 # Permissions, flag-based permissions, and flags
 
 ### Player
-| Permission name                                           | Command     | Description |
-| :-------------------------------------------------------- | :---------: | :---------- |
-| behr.essentials.top                                       | ascend      | Teleports a player to the highest block where they're standing 
-| behr.essentials.gamemode.builder                          | buildermode | Toggles the builder gamemode
-| behr.essentials.gamemode.builder_mode                     | -           | Permits builder permitted commands:<br>`ascend`, `clear_inventory`, `fly`, `fly_speed`, `run`, `run_speed`, `teleport_menu`, `time`, `weather`, `world`
-| behr.essentials.chat.channel                              | -           | Determines the chat channel a player is currently in, can be any of:<br>`player_chat`, `system`, `admin`, or `<[player].flag[behr.essentials.chat.]>`
-| behr.essentials.chat.last_channel                         | -           | Determines the last channel a player was in
-| behr.essentials.permissions.admin                         | -           | Determines if a player has the administrative rights, or not
+| Permission name                                            | Command / Script     | Description |
+| :--------------------------------------------------------- | :------------------: | :---------- |
+| behr.essentials.permissions.admin                          | `/builder_mode`      | Determines if a player has the administrative rights, or not
+| behr.essentials.top                                        | `/ascend`            | Teleports a player to the highest block where they're standing 
+| behr.essentials.gamemode.builder                           | `/buildermode`       | Toggles the builder gamemode
+| behr.essentials.gamemode.builder_mode                      | builder_mode         | Permits builder permitted commands:<br>`ascend`, `clear_inventory`, `fly`, `fly_speed`, `run`, `run_speed`, `teleport_menu`, `time`, `weather`, `world`
+| behr.essentials.chat.channel                               | chat                 | Determines the chat channel a player is currently in, can be any of:<br>`player_chat`, `system`, `admin`, or `<[player].flag[behr.essentials.chat.<[channel]>]>` for any custom made chat channels
+| behr.essentials.chat.last_channel                          | chat                 | Determines the last channel a player was in
+| behr.essentials.clear_console                              | `/clear_console`     | Clears the console for a blank screen
+| behr.essentials.chat_settings                              | `/chat_settings`     | Changes various settings used in chat;<br> All players can configure: `show_dismiss_controls`, `toggle_channel_button`, <br>Sponsors can optionally configure: `hide_voters`<br>Admins can configure: `show_deleted_messages`, `show_delete_controls`, and `reset_chat`
+| behr.essentials.permissions.read_chat_channel.<[channel]>  | chat                 | Determines whether a player can read the chat within <[channel]>
+| behr.essentials.permissions.write_chat_channel.<[channel]> | chat                 | Determines whether a player can write in the chat within <[channel]>
+| behr.essentials.colors                                     | `/colors`            | Lists the colors in a click-menu for copying and pasting
+| behr.essentials.enchant                                    | `/enchant`           | Enchants an item in your hand
+| behr.essentials.fly                                        | `/fly`               | Toggles flight to yourself or another player
+| behr.essentials.fly_speed                                  | `/fly_speed`         | Changes yours or another player's fly speed
+| behr.essentials.friend                                     | `/friend`            | Adds or removes a player to or from your friends list
+| behr.essentials.hat                                        | `/hat`               | Gives yours or another player's head
+| behr.essentials.head                                       | `/head`              | Gives yours or another player's head
+| behr.essentials.heal                                       | `/heal`              | Heals yourself or another player
+| behr.essentials.hunger                                     | `/hunger`            | Hungers or satiates another player's or your own hunger
+| behr.essentials.lore                                       | `/lore`              | Applies basic lore to the item in hand
+| behr.essentials.max_health                                 | `/max_health`        | Adjusts yours or another player's max health from 1 to 100
+| behr.essentials.max_oxygen                                 | `/max_oxygen`        | Changes yours or another player's maximum oxygen capacity
+| behr.essentials.me                                         | `/me`                | me irl but outloud
+| behr.essentials.oxygen                                     | `/oxygen`            | Replinishes or deflates yours or another player's oxygen
+| behr.essentials.ping                                       | `/ping`              | Shows yours or another player's ping
+| behr.essentials.rename_item                                | `/rename_item`       | Applies a custom display name to the item in hand
+| behr.essentials.restore_inventory                          | `/restore_inventory` | Restores a previous inventory for a player after death
+| behr.essentials.rules                                      | `/rules`             | Lists the rules for b
+| behr.essentials.run_speed                                  | `run_speed`          | Adjusts your run-speed up to 10
+| behr.essentials.saved_skins.<[target].name>                            | skins    | Saved skins for <[target]>
+| behr.essentials.saved_skins.<[target].name>.<[default_name]>           | skins    | Saved skins for <[target]> for <[default_name]>
+| behr.essentials.saved_skins.<[target].name>.<[default_name]>.url       | skins    | The saved skin url for the entity <[target]> with the name <[default_name]>
+| behr.essentials.saved_skins.<[target].name>.<[default_name]>.skin_blob | skins    | The saved skin_blob for the entity <[target]> with the name <[default_name]>
+| behr.essentials.skins                                      | `/skin`              | Manages your player's skin
+| behr.essentials.saved_skins                                | skins                | The skins saved for a player
+| behr.essentials.saved_skins.<[skin_name]>                  | skins                | The <[skin_name]>'s skin blob
+| simplesit.armorstand.entity                                | sit                  | The chair entity for chairs
+| simplesit.armorstand.location                              | sit                  | The chair entity's location for chairs
+| behr.essentials.suicide                                    | `/suicide`           | Kills yourself
+| behr.essentials.teleport_menu                              | `/teleport_menu`     | Opens the teleport_menu menu, or teleports you to the named location
+| behr.essentials.time                                       | `/time`              | Changes the time of day
+| behr.essentials.weather                                    | `/weather`           | Adjusts the weather to sunny, clear, stormy, or thundery
+| behr.essentials.world                                      | `/world`             | Manages worlds or teleports youself or another player to the specified world
 
 ### Server
-| Flag name                                       | Description |
-| :---------------------------------------------- | :---------- |
-| behr.essentials.weather.world.<[world]>.weather | Determines the weather manually set for <[world]> between `storm`, `thunder`, and `sunny`
-| behr.essentials.weather.world.<[world]>.lock    | Determines if <[world]>'s weather is locked for the day
+| Flag name                                              | Description |
+| :----------------------------------------------------- | :---------- |
+| behr.essentials.weather.world.<[world]>.weather        | Determines the weather manually set for <[world]> between `storm`, `thunder`, and `sunny`
+| behr.essentials.weather.world.<[world]>.lock           | Determines if <[world]>'s weather is locked for the day
+| behr.essentials.saved_skins.<[overlay_name]>.url       | The <[overlay_name]>'s skin url applied
+| behr.essentials.saved_skins.<[overlay_name]>.skin_blob | The skin blob for <[overlay_name]>
 
 # Player and Server Settings flags
 
@@ -27,12 +66,13 @@
 | behr.essentials.builder.settings.material_list_verbose        | false   | Determines whether a player in builder mode sees a verbose material list or a more compact list
 | behr.essentials.builder.settings.builder_spectator            | false   | Determines if a player in builder mode is in spectator mode, or not
 | behr.essentials.settings.help_row_count                       | 7       | Determines the number of commands output from `/help`
-| behr.essentials.permissions.read_chat_channel.<[channel]>     | -       | Determines if a player is allowed to read this chat channel, or not
+| behr.essentials.permissions.read_chat_channel.<[channel]>     | false   | Determines if a player is allowed to read this chat channel, or not
 | behr.essentials.chat.settings.show_delete_controls            | true    | Determines if a player is opted into seeing chat message delete controls, or not
 | behr.essentials.chat.settings.show_dismiss_controls           | true    | Determines if a player is opted into seeing message dismiss controls, or not
 | behr.essentials.chat.settings.hide_channel_buttons            | false   | Determines if a player has the channel buttons hidden from chat, or not
 | behr.essentials.chat.settings.channel.<[channel]>.hide_button | false   | Determines if a player has the <[channel]> channel button hidden, or not
-
+| behr.essentials.friends                                       | null    | Returns a list of friends a player has added to their friends list
+| behr.essentials.friends.<[player]>:<time>                     | null    | Returns the time a player added <[player]> as a friend
 
 ### Server
 yaml: behr.essentials.chat.history | Map of data:
@@ -48,58 +88,59 @@ chat:
 # Commands
 
 ## Player defaults
-| Command            | Usage      | Description |
-| :----------------- | :--------- | :---------- |
-| /chat_channel       | 
-| /chat_settings      | 
-| /colors             | 
-| /emoji_board        | 
-| /friend             | 
-| /help               | 
-| /me                 | 
-| /ping               | 
-| /rules              | 
-| /suicide            | 
+| Command            | Usage       -                          | Description |
+| :----------------- | :------------------------------------- | :---------- |
+| /chat_channel      | `/chat_channel (<channel>)`            | Changes the chat channel you're talking in. Default enabled are `all`, `player_chat`, and `system`. Admins own `admin`
+| /chat_settings     | `/chat_settings (<setting>)`           | Changes various chat settings available for configuration
+| /colors            | `/colors`                              | Lists the colors in a click-menu for copying and pasting
+| /emoji_board       | -                                      | Opens the emoji-board for copying and pasting emojis
+| /friend            | `/friend <player> (remove)`            | Adds or removes a player to or from your friends list
+| /help              | `/help (#)`                            | Shows helpful command information
+| /me                | `/me (message)`                        | me irl but outloud
+| /ping              | `/ping (player>)`                      | Shows yours or another player's ping
+| /rules             | `/rules`                               | Lists the rules for b
+| /suicide           | `/suicide`                             | Kills yourself
 
 ## Sponsors
-| Command            | Usage      | Description |
-| :----------------- | :--------- | :---------- |
-| /hat                | 
-| /head               |
-| /skin               |
+| Command            | Usage            | Description |
+| :----------------- | :--------------- | :---------- |
+| /hat               | `/hat`           | Places a held item in your head as a hat
+| /head              | `/head (player)` | Gives yours or another player's head
+| /skin              | `/skin help`<br>`/skin set <name>`<br>`/skin reset`<br>`/skin rename <old_name> <new_name>`<br>`/skin save <player_name>`<br>`/skin save <name> <url> (slim)`<br>`/skin list`<br>` /skin delete <name>` | Manages your player's skin
+
+
 
 ## Builder
-| Command            | Usage      | Description |
-| :----------------- | :--------- | :---------- |
-| /ascend             |
-| /buildermode        |
-| /clear_inventory    |
-| /fly                |
-| /fly_speed          |
-| /run                |
-| /run_speed          |
-| /teleport_menu      |
-| /time               |
-| /weather            |
-| /world              |
+| Command            | Usage                                 | Description |
+| :----------------- | :------------------------------------ | :---------- |
+| /ascend            | `/ascend`                             | ***`*`*** Takes you to the highest block where you're standing
+| /buildermode       | `/buildermode`<br>Aliases: `/gmb`     | Toggles builder mode
+| /clear_inventory   | `/clear_inventory (player)`           | ***`*`*** Clears your inventory<br>Admins can optionally clear another player's inventory
+| /fly               | `/fly`                                | ***`*`*** Toggles your flight<br>Moderators can optionally toggle other player's flight 
+| /fly_speed         | `/fly_speed (#)`                      | ***`*`*** Changes your fly speed<br>Moderators can optionally change other player's fly_speed<br>Speeds are from `0` to `10` or any of `lightspeed`, `ludicrous`, `plaid`, or `default`
+| /run_speed         | `/run_speed (#)`                      | ***`*`*** Adjusts your walking and running speed<br>Moderators can optionally specify another player to adjust
+| /teleport_menu     | `/teleport_menu`<br>Aliases: `/tm`    | ***`*`*** Opens the teleport menu for quick navigation teleportation
+| /time              | `/time <time of day / 0-23999>`       | ***`*`*** Changes the time of the world to a time of the day being any of `start`, `day`, `noon`, `sunset`, `bedtime`, `dusk`, `night`, `midnight`, `sunrise`, or `dawn` - or an integer time between `0` and `23999`
+| /weather           | `/weather <weather>`                  | ***`*`*** Changes the weather of the world to any of `thunder`, ``, or ``
+| /world             | `/world <world>`                      | ***`*`*** Teleports you to the specified world<br>Admins can manage worlds or teleport players to the specified world
+|                    | ***`*`*** Note: Builders can only use this under Builder restrictions
 
 ## Moderator
-| Command            | Usage      | Description |
-| :----------------- | :--------- | :---------- |
-| /clear_ground       |
-| /enchant            |
-| /food               |
-| /heal               |
-| /hunger             |
-| /lore               |
-| /max_health         |
-| /max_oxygen         |
-| /oxygen             |
+| Command            | Usage           | Description |
+| :----------------- | :-------------- | :---------- |
+| /clear_ground      | `/clear_ground`                                   | Clears the ground of dropped items around you
+| /enchant           | `/enchant <enchantment> (level)`                  | Enchants an item in your hand
+| /heal              | `/heal (player)`                                  | Heals a player or yourself
+| /hunger            | `/hunger (player) <#>`                            | Hungers or satiates yours or another player's hunger
+| /lore              | `/lore <Lore line 1>(\|Lore line #n)*`            | Applies lore to the item in hand
+| /max_health        | `/max_health (player) <1-100>`<br>Aliases: /maxhp | Adjusts another player's or your max health from 1 to 100
+| /max_oxygen        | `/max_oxygen (player) <#/default>`                | Changes another player or your maximum oxygen capacity in seconds
+| /oxygen            | `/oxygen (player) <0-20>`                         | Replinishes or deflates yours or another player's oxygen
 
 ## Admin
 | Command            | Usage      | Description |
 | :----------------- | :--------- | :---------- |
-| /clear_console      | 
-| /gamemode           | 
-| /rename_item        | 
-| /restore_inventory  | 
+| /clear_console     | `/clear_console`                                                   | Clears the console for a blank screen
+| /gamemode          | `/gamemode <survival/creative/spectator/adventure/builder>`<br>Aliases: `/gms` \| `/gmc` \| `/gmsp` \| `/gma` \| `/gmb` | Changes your gamemode to any of `survival`, `creative`, `spectator`, `adventure`, or `builder`
+| /rename_item       | `/rename_item <display name>`                                      | Applies a custom display name to the item in hand
+| /restore_inventory | `/restore_inventory <player>`<br>Aliases: `/invrestore` \| `/invr` | Restores a previous inventory for a player after death

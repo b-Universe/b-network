@@ -6,6 +6,7 @@ fly_speed_command:
   description: Changes yours or another player<&dq>s fly speed
   tab completions:
     1: <server.online_players.exclude[<player>].parse[name]>
+  permission: behr.essentials.fly_speed
   script:
     - if <context.args.is_empty>:
       - narrate "<&[green]>Your fly speed is <&[yellow]><player.fly_speed.mul[10].round_to[2]>"

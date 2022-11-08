@@ -2,7 +2,7 @@ heal_command:
   type: command
   name: heal
   debug: false
-  description: Heals a player or yourself
+  description: Heals yourself or another player
   usage: /heal (player)
   permission: behr.essentials.heal
   tab completions:

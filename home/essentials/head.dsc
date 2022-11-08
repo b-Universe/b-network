@@ -2,7 +2,7 @@ head_command:
   type: command
   name: head
   debug: false
-  description: Gives yours or another player<&sq>s head.
+  description: Gives yours or another player<&sq>s head
   usage: /head (player)
   permission: behr.essentials.head
   script:

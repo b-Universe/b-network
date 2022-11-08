@@ -2,7 +2,7 @@ ping_command:
   type: command
   name: ping
   debug: false
-  description: Shows yours, or another player's ping
+  description: Shows yours or another player's ping
   usage: /ping (player)
   permission: behr.essentials.ping
   tab completions:

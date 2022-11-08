@@ -6,6 +6,7 @@ emoji_board_command:
   description: Opens the emoji board
   aliases:
     - em
+  permission: update
   script:
     - if !<context.args.is_empty>:
       - inject command_syntax_error

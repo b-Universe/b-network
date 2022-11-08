@@ -5,7 +5,8 @@ oxygen_command:
   description: Replinishes or deflates a player<&sq>s oxygen, or your own
   usage: /oxygen (player) <&lt>0-20<&gt>
   tab completions:
-    1: <server.online_players.exclude[<player>].parse[name]>
+    1: <server.online_players.exclude[<player>].parse[name]>\
+  permission: behr.essentials.oxygen
   script:
     - if <context.args.is_empty>:
       - oxygen <player.max_oxygen.sub[<player.oxygen.in_ticks>]> mode:add

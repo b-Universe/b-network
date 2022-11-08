@@ -52,7 +52,7 @@ friend_command:
 
   # % ██ [ add a new friend to friends list       ] ██
       - else:
-        - flag player behr.essentials.friends.<[player]>:<util.time_now>
+        - flag <player> behr.essentials.friends.<[player]>:<util.time_now>
         - narrate "<&[yellow]>Added<[player_name]> <&[green]>to your friends list"
         - if <[player].flag[behr.essentials.friends].contains[<player>]>:
           - narrate "<&[green]>You're already on their friends list"

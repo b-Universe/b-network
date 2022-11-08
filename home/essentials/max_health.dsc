@@ -2,7 +2,7 @@ max_health_command:
   type: command
   name: max_health
   debug: false
-  description: Adjusts another player's or your max health from 1 to 100.
+  description: Adjusts yours or another player's max health from 1 to 100
   usage: /max_health (player) <&lt>1-100<&gt>
   aliases:
     - maxhp
