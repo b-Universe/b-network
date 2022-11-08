@@ -88,14 +88,14 @@
 | behr.<[project]>.contributors.<[player]>                            | bread_factory        | List of contributions to <[project]>
 | behr.<[project]>.contributor_last_update                            | bread_factory        | The last time the contribution list for the <[project]> was updated
 | behr.<[project]>.contributor_last_update_cache                      | bread_factory        | The last time the contribution list for the <[project]> was cached
-| behr.mysterious_player_heads                                        | bread_factory        | Map of mysterious contributors' player heads with their skull_skin applied cached |
+| behr.mysterious_player_heads                                        | bread_factory        | Map of mysterious contributors' player heads with their skull_skin applied cached
 
 ***`*`*** Current <[projects]>: bread_factory, emoji_board
 
 ## Entities
-| Flag name                                              | Script | Description |
-| :----------------------------------------------------- | :----: | :---------- |
-| behr.essentials.combat.grenade_stickied                | Determines the quantity of sticky grenades entity has been stuck with
+| Flag name                                              | Script   | Description |
+| :----------------------------------------------------- | :------: | :---------- |
+| behr.essentials.combat.grenade_stickied                | grenades | Determines the quantity of sticky grenades entity has been stuck with
 
 # Player and Server Settings flags
 
@@ -169,6 +169,7 @@ chat:
 | /time              | `/time <time of day / 0-23999>`       | ***`*`*** Changes the time of the world to a time of the day<br>Times of day being any of `start`, `day`, `noon`, `sunset`, `bedtime`, `dusk`, `night`, `midnight`, `sunrise`, or `dawn`<br>Time can also be an integer time between `0` and `23999`
 | /weather           | `/weather <weather>`                  | ***`*`*** Changes the weather of the world<br>Weather is any of `sunny`, `storm`, `thunder`, or `clear`
 | /world             | `/world <world>`<br>`/world create <world>`<br>`/world destroy <world>`<br>`/world help`<br>`/world list`<br>`/world list_unloaded`<br>`/world load <world>`<br>`/world unload <world>`<br>`/world teleport <world> (player)` | ***`*`*** Teleports you to the specified world<br>Admins can manage worlds or teleport players to the specified world
+
 ***`*`*** Note: Builders can only use this under Builder restrictions
 
 ## Moderator
