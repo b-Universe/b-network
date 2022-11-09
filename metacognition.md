@@ -10,7 +10,7 @@
 | behr.essentials.chat.channel                                    | chat                 | Determines the chat channel a player is currently in, can be any of:<br>`player_chat`, `system`, `admin`, or `<[player].flag[behr.essentials.chat.<[channel]>]>` for any custom made chat channels
 | behr.essentials.chat.last_channel                               | chat                 | Determines the last channel a player was in
 | behr.essentials.clear_console                                   | `/clear_console`     | Clears the console for a blank screen
-| behr.essentials.chat_settings                                   | `/chat_settings`     | Changes various settings used in chat;<br> All players can configure: `show_dismiss_controls`, `toggle_channel_button`, <br>Sponsors can optionally configure: `hide_voters`<br>Admins can configure: `show_deleted_messages`, `show_delete_controls`, and `reset_chat`
+| behr.essentials.chat_settings                                   | `/chat_settings`     | Changes various settings used in chat;<br>All players can configure: `show_dismiss_controls`, `toggle_channel_button`,<br>Sponsors can optionally configure: `hide_voters`<br>Admins can configure: `show_deleted_messages`, `show_delete_controls`, and `reset_chat`
 | behr.essentials.permissions.read_chat_channel.<[channel]>       | chat                 | Determines whether a player can read the chat within <[channel]>
 | behr.essentials.permissions.write_chat_channel.<[channel]>      | chat                 | Determines whether a player can write in the chat within <[channel]>
 | behr.essentials.colors                                          | `/colors`            | Lists the colors in a click-menu for copying and pasting
@@ -115,21 +115,22 @@
 | behr.essentials.chat.settings.channel.<[channel]>.hide_button | false   | Determines if a player has the <[channel]> channel button hidden, or not
 | behr.essentials.friends                                       | null    | Returns a list of friends a player has added to their friends list
 
-## Server
-yaml: behr.essentials.chat.history | Map of data:
-```yml
-chat:
-  <[time].epoch_millis>:
-    channel: The channel the message belongs to
-    message: <[data.channel]>/The raw message being sent
-    delete: The delete button available for players to delete for chat messages
-    deleted: The time this message was deleted
-    dismiss: The dismiss button available for players to delete for system messages
-    dismissed: The list of players who have dismissed this system message
-    targets: The list of players who will receive this message
-    time: The TimeTag this message was sent
-    player_uuid: The player's UUID who sent the message for supporting the Player Interaction GUI 
-```
+# Chat yaml
+behr.essentials.chat.history:
+| key name                  | description |
+| :------------------------ | :---------- |
+| chat                      | A map of the messages in chat organized by epoch millis time
+| chat.<[time]>             | A map of the message data sent at <[time]>
+| chat.<[time]>.channel     | The channel the message belongs to
+| chat.<[time]>.message     | <[data.channel]>/The raw message being sent
+| chat.<[time]>.delete      | The delete button available for players to delete for chat messages
+| chat.<[time]>.deleted     | The time this message was deleted
+| chat.<[time]>.dismiss     | The dismiss button available for players to delete for system messages
+| chat.<[time]>.dismissed   | The list of players who have dismissed this system message
+| chat.<[time]>.targets     | The list of players who will receive this message
+| chat.<[time]>.time        | The TimeTag this message was sent
+| chat.<[time]>.player_uuid | The player's UUID who sent the message for supporting the Player Interaction GUI 
+
 
 # Commands
 
@@ -163,8 +164,8 @@ chat:
 | /buildermode       | `/buildermode`<br>Aliases: `/gmb`     | Toggles builder mode
 | /clear_inventory   | `/clear_inventory (player)`           | ***`*`*** Clears your inventory<br>Admins can optionally clear another player's inventory
 | /fly               | `/fly`                                | ***`*`*** Toggles your flight<br>Moderators can optionally toggle other player's flight 
-| /fly_speed         | `/fly_speed (#)`                      | ***`*`*** Changes your fly speed<br>Moderators can optionally change other player's fly_speed<br>Speeds are from `0` to `10` or any of `lightspeed`, `ludicrous`, `plaid`, or `default`
-| /run_speed         | `/run_speed (#)`                      | ***`*`*** Adjusts your walking and running speed<br>Moderators can optionally specify another player to adjust
+| /fly_speed         | `/fly_speed (#)`                      | ***`*`*** Adjusts your fly speed<br>Moderators can optionally change other player's flight speed<br>Speeds are from `0` to `10` or any of `lightspeed`, `ludicrous`, `plaid`, or `default`
+| /run_speed         | `/run_speed (#)`                      | ***`*`*** Adjusts your walking and running speed<br>Moderators can optionally specify another player's run speed<br>Speeds are from `0` to `10`
 | /teleport_menu     | `/teleport_menu`<br>Aliases: `/tm`    | ***`*`*** Opens the teleport menu for quick navigation teleportation
 | /time              | `/time <time of day / 0-23999>`       | ***`*`*** Changes the time of the world to a time of the day<br>Times of day being any of `start`, `day`, `noon`, `sunset`, `bedtime`, `dusk`, `night`, `midnight`, `sunrise`, or `dawn`<br>Time can also be an integer time between `0` and `23999`
 | /weather           | `/weather <weather>`                  | ***`*`*** Changes the weather of the world<br>Weather is any of `sunny`, `storm`, `thunder`, or `clear`
