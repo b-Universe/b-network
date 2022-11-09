@@ -1,7 +1,7 @@
 # Permissions, flag-based permissions, and flags
 
-## Player
-| Permission name                                                 | Command / Script     | Description |
+### Player
+| Permission / flag name                                          | Command / Script     | Description |
 | :-------------------------------------------------------------- | :------------------: | :---------- |
 | behr.essentials.permissions.admin                               | `/builder_mode`      | Determines if a player has the administrative rights, or not
 | behr.essentials.top                                             | `/ascend`            | Teleports a player to the highest block where they're standing 
@@ -55,8 +55,8 @@
 | behr.essentials.weather                                         | `/weather`           | Adjusts the weather to sunny, clear, stormy, or thundery
 | behr.essentials.world                                           | `/world`             | Manages worlds or teleports youself or another player to the specified world
 
-## Server
-| Permission name                                                     | Command / Script     | Description |
+### Server
+| flag name                                                           | Command / Script     | Description |
 | :------------------------------------------------------------------ | :------------------: | :---------- |
 | behr.essentials.weather.world.<[world]>.weather                     | weather              | Determines the weather manually set for <[world]> between `storm`, `thunder`, and `sunny`
 | behr.essentials.weather.world.<[world]>.lock                        | weather              | Determines if <[world]>'s weather is locked for the day
@@ -92,12 +92,12 @@
 
 ***`*`*** Current <[projects]>: bread_factory, emoji_board
 
-## Entities
+### Entities
 | Flag name                                              | Script   | Description |
 | :----------------------------------------------------- | :------: | :---------- |
 | behr.essentials.combat.grenade_stickied                | grenades | Determines the quantity of sticky grenades entity has been stuck with
 
-# Player and Server Settings flags
+## Player and Server Settings flags
 
 ### Player
 | Flag name                                                     | Default | Description |
@@ -135,7 +135,7 @@ behr.essentials.chat.history:
 # Commands
 
 ## Player defaults
-| Command            | Usage       -                          | Description |
+| Command            | Usage                                  | Description |
 | :----------------- | :------------------------------------- | :---------- |
 | /chat_channel      | `/chat_channel (<channel>)`            | Changes the chat channel you're talking in. Default enabled are `all`, `player_chat`, and `system`. Admins own `admin`
 | /chat_settings     | `/chat_settings (<setting>)`           | Changes various chat settings available for configuration
