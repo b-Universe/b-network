@@ -6,7 +6,7 @@
 | behr.essentials.permissions.admin                               | `/builder_mode`      | Determines if a player has the administrative rights, or not
 | behr.essentials.top                                             | `/ascend`            | Teleports a player to the highest block where they're standing 
 | behr.essentials.gamemode.builder                                | `/buildermode`       | Toggles the builder gamemode
-| behr.essentials.gamemode.builder_mode                           | builder_mode         | Permits builder permitted commands:<br>`ascend`, `clear_inventory`, `fly`, `fly_speed`, `run`, `run_speed`, `teleport_menu`, `time`, `weather`, `world`
+| behr.essentials.gamemode.builder_mode                           | builder_mode         | Permits builder permitted commands:<br>`ascend`, `clear_inventory`, `fly`, `fly_speed`, `run_speed`, `teleport_menu`, `time`, `weather`, `world`
 | behr.essentials.chat.channel                                    | chat                 | Determines the chat channel a player is currently in, can be any of:<br>`player_chat`, `system`, `admin`, or `<[player].flag[behr.essentials.chat.<[channel]>]>` for any custom made chat channels
 | behr.essentials.chat.last_channel                               | chat                 | Determines the last channel a player was in
 | behr.essentials.clear_console                                   | `/clear_console`     | Clears the console for a blank screen
