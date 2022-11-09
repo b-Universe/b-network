@@ -28,9 +28,9 @@ spawn_protections:
     on player damaged by player in:spawn:
       - if !<player.has_flag[test]>:
         - determine cancelled
-    on player opens inventory in:spawn:
-      - if !<player.has_flag[test]>:
-        - determine cancelled
+    #on player opens inventory in:spawn:
+    #  - if !<player.has_flag[test]>:
+    #    - determine cancelled
     on *item_frame damaged by player in:spawn:
         - determine cancelled
     on player teleports cause:CHORUS_FRUIT|ENDER_PEARL:

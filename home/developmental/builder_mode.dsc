@@ -74,7 +74,7 @@ color_settings_menu:
 
 builder_mode_handler_testing:
   type: world
-  debug: false
+  debug: true
   events:
     after player clicks item in flight_menu_gui:
       - stop if:!<context.item.has_flag[flight]>
@@ -827,7 +827,8 @@ builder_mode_handler:
       - determine cancelled
 
     on player changes gamemode to creative|spectator flagged:behr.essentials.gamemode.builder_mode:
-      - flag <player> behr.essentials.builder_mode.was_flying
+      - if <player.is_flying>:
+        - flag <player> behr.essentials.builder_mode.was_flying
 
     on player changes gamemode to survival flagged:behr.essentials.gamemode.builder_mode:
       - inject builder_mode_handler.set_inventory
