@@ -52,33 +52,33 @@ pack_entity_handler:
         - adjust <player> velocity:<player.velocity.add[0,1,0].mul[4]>
         #@ cowboy mode
         #- adjust <player> velocity:<player.velocity.add[0,2,0].with_yaw[<player.location.yaw>].forward[0.75]>
-    after mythickeys key pressed id:minecraft:jump:
-      - if <player.is_on_ground> || ( <player.location.with_pose[90,90].precise_cursor_on.distance[<player.location>].is_less_than[0.6].if_null[true]> && <player.fall_distance> < 0.4 ):
-        - stop
-
-      - define velocity <location[0,0,0].with_pose[<player>]>
-      - if <player.is_sprinting>:
-        - define velocity <[velocity].above[0.25]>
-        - define forward 1.5
-      - else:
-        - define velocity <[velocity].above>
-        - define forward 1
-          #<player.velocity
-      - foreach <player.flag[velocity]> key:direction as:magnitude:
-        - define velocity <[velocity].add[<[magnitude]>]>
-
-      - adjust <player> velocity:<[velocity].mul[0.95].mul[<[forward]>]>
-      - playeffect effect:EXPLOSION_large at:<player.location> offset:0.1 quantity:3
-      - playeffect effect:lava at:<player.location.above[0.2]> offset:0.1 quantity:6
-      - playsound sound:ENTITY_DRAGON_FIREBALL_EXPLODE <player.location> volume:0.2
-      - playsound sound:ENTITY_GENERIC_EXTINGUISH_FIRE <player.location> pitch:1 volume:0.2
-      - repeat 14:
-        - playeffect effect:redstone at:<player.location.above[0.2]> offset:0.3 special_data:2|gray quantity:20
-        - playeffect effect:flame at:<player.location.above[0.2]> offset:0.3
-        - wait 1t
-      - repeat 8:
-        - playeffect effect:redstone at:<player.location.above[0.2]> offset:0.2 special_data:1|gray quantity:5
-        - wait 1t
+#    after mythickeys key pressed id:minecraft:jump:
+#      - if <player.is_on_ground> || ( <player.location.with_pose[90,90].precise_cursor_on.distance[<player.location>].is_less_than[0.6].if_null[true]> && <player.fall_distance> < 0.4 ):
+#        - stop
+#
+#      - define velocity <location[0,0,0].with_pose[<player>]>
+#      - if <player.is_sprinting>:
+#        - define velocity <[velocity].above[0.25]>
+#        - define forward 1.5
+#      - else:
+#        - define velocity <[velocity].above>
+#        - define forward 1
+#          #<player.velocity
+#      - foreach <player.flag[velocity]> key:direction as:magnitude:
+#        - define velocity <[velocity].add[<[magnitude]>]>
+#
+#      - adjust <player> velocity:<[velocity].mul[0.95].mul[<[forward]>]>
+#      - playeffect effect:EXPLOSION_large at:<player.location> offset:0.1 quantity:3
+#      - playeffect effect:lava at:<player.location.above[0.2]> offset:0.1 quantity:6
+#      - playsound sound:ENTITY_DRAGON_FIREBALL_EXPLODE <player.location> volume:0.2
+#      - playsound sound:ENTITY_GENERIC_EXTINGUISH_FIRE <player.location> pitch:1 volume:0.2
+#      - repeat 14:
+#        - playeffect effect:redstone at:<player.location.above[0.2]> offset:0.3 special_data:2|gray quantity:20
+#        - playeffect effect:flame at:<player.location.above[0.2]> offset:0.3
+#        - wait 1t
+#      - repeat 8:
+#        - playeffect effect:redstone at:<player.location.above[0.2]> offset:0.2 special_data:1|gray quantity:5
+#        - wait 1t
 
 repeat_menu:
   type: task
@@ -91,67 +91,67 @@ repeat_menu:
     - sidebar remove
 
 
-test_flags:
-  type: world
-  debug: false
-  events:
-    #on mythickeys key pressed:
-    #  #- actionbar <context.id>
-    #  - actionbar <player.flag[velocity].keys.separated_by[<&sp.repeat[2]>|<&sp.repeat[2]>].if_null[<empty>]>
-    on mythickeys key pressed id:minecraft:left:
-      - flag player velocity.left:<location[0,0,0].with_yaw[<player.location.yaw>].left[2]>
-      - while <player.is_online> && <player.has_flag[velocity.left]>:
-        - if <player.has_flag[velocity.forward]> || <player.has_flag[velocity.back]>:
-          - flag player velocity.left:<location[0,0,0].with_yaw[<player.location.yaw>].left[0.5]>
-        - else:
-          - flag player velocity.left:<location[0,0,0].with_yaw[<player.location.yaw>].left[2]>
-        - wait 3t
-    on mythickeys key released id:minecraft:left:
-      - flag player velocity.left:!
-
-    on mythickeys key pressed id:minecraft:right:
-      - flag player velocity.right:<location[0,0,0].with_yaw[<player.location.yaw>].right[2]>
-      - while <player.is_online> && <player.has_flag[velocity.right]>:
-        - if <player.has_flag[velocity.forward]> || <player.has_flag[velocity.back]>:
-          - flag player velocity.right:<location[0,0,0].with_yaw[<player.location.yaw>].right[0.5]>
-        - else:
-          - flag player velocity.right:<location[0,0,0].with_yaw[<player.location.yaw>].right[2]>
-        - wait 3t
-    on mythickeys key released id:minecraft:right:
-      - flag player velocity.right:!
-
-    on mythickeys key pressed id:minecraft:back:
-      - flag player velocity.back:<location[0,0,0].with_yaw[<player.location.yaw>].backward_flat>
-      - while <player.is_online> && <player.has_flag[velocity.back]>:
-        - flag player velocity.back:<location[0,0,0].with_yaw[<player.location.yaw>].backward_flat>
-        - wait 3t
-    on mythickeys key released id:minecraft:back:
-      - flag player velocity.back:!
-
-    on mythickeys key pressed id:minecraft:forward:
-      - flag player velocity.forward:<location[0,0,0].with_yaw[<player.location.yaw>].forward_flat>
-      - while <player.is_online> && <player.has_flag[velocity.forward]>:
-        - flag player velocity.forward:<location[0,0,0].with_yaw[<player.location.yaw>].forward_flat>
-        - wait 3t
-    on mythickeys key released id:minecraft:forward:
-      - flag player velocity.forward:!
-
-
-    on player starts flying flagged:pack_entity:
-      - if !<player.passengers.filter[flag[pack_entity].equals[jump_pack]].is_empty>:
-        - determine passively cancelled
-        - playsound sound:ENTITY_GENERIC_EXTINGUISH_FIRE <player> pitch:1.5
-        #@cowboy mode
-        #- adjust <player> velocity:<player.velocity.add[0,1,0].with_yaw[<player.location.yaw>].forward[2]>
-        - define velocity <location[0,0.5,0]>
-        - if <player.velocity.x.abs> > <player.velocity.z.abs>:
-          - define velocity <[velocity].with_x[<element[2].div[<[velocity].x>]>]>
-          - define velocity <[velocity].with_z[<[velocity].z.mul[2]>]>
-        - else:
-          - define velocity <[velocity].with_z[<element[2].div[<[velocity].z>]>]>
-          - define velocity <[velocity].with_x[<[velocity].x.mul[2]>]>
-
-        - adjust <player> velocity:<[velocity]>
+#test_flags:
+#  type: world
+#  debug: false
+#  events:
+#    #on mythickeys key pressed:
+#    #  #- actionbar <context.id>
+#    #  - actionbar <player.flag[velocity].keys.separated_by[<&sp.repeat[2]>|<&sp.repeat[2]>].if_null[<empty>]>
+#    on mythickeys key pressed id:minecraft:left:
+#      - flag player velocity.left:<location[0,0,0].with_yaw[<player.location.yaw>].left[2]>
+#      - while <player.is_online> && <player.has_flag[velocity.left]>:
+#        - if <player.has_flag[velocity.forward]> || <player.has_flag[velocity.back]>:
+#          - flag player velocity.left:<location[0,0,0].with_yaw[<player.location.yaw>].left[0.5]>
+#        - else:
+#          - flag player velocity.left:<location[0,0,0].with_yaw[<player.location.yaw>].left[2]>
+#        - wait 3t
+#    on mythickeys key released id:minecraft:left:
+#      - flag player velocity.left:!
+#
+#    on mythickeys key pressed id:minecraft:right:
+#      - flag player velocity.right:<location[0,0,0].with_yaw[<player.location.yaw>].right[2]>
+#      - while <player.is_online> && <player.has_flag[velocity.right]>:
+#        - if <player.has_flag[velocity.forward]> || <player.has_flag[velocity.back]>:
+#          - flag player velocity.right:<location[0,0,0].with_yaw[<player.location.yaw>].right[0.5]>
+#        - else:
+#          - flag player velocity.right:<location[0,0,0].with_yaw[<player.location.yaw>].right[2]>
+#        - wait 3t
+#    on mythickeys key released id:minecraft:right:
+#      - flag player velocity.right:!
+#
+#    on mythickeys key pressed id:minecraft:back:
+#      - flag player velocity.back:<location[0,0,0].with_yaw[<player.location.yaw>].backward_flat>
+#      - while <player.is_online> && <player.has_flag[velocity.back]>:
+#        - flag player velocity.back:<location[0,0,0].with_yaw[<player.location.yaw>].backward_flat>
+#        - wait 3t
+#    on mythickeys key released id:minecraft:back:
+#      - flag player velocity.back:!
+#
+#    on mythickeys key pressed id:minecraft:forward:
+#      - flag player velocity.forward:<location[0,0,0].with_yaw[<player.location.yaw>].forward_flat>
+#      - while <player.is_online> && <player.has_flag[velocity.forward]>:
+#        - flag player velocity.forward:<location[0,0,0].with_yaw[<player.location.yaw>].forward_flat>
+#        - wait 3t
+#    on mythickeys key released id:minecraft:forward:
+#      - flag player velocity.forward:!
+#
+#
+#    on player starts flying flagged:pack_entity:
+#      - if !<player.passengers.filter[flag[pack_entity].equals[jump_pack]].is_empty>:
+#        - determine passively cancelled
+#        - playsound sound:ENTITY_GENERIC_EXTINGUISH_FIRE <player> pitch:1.5
+#        #@cowboy mode
+#        #- adjust <player> velocity:<player.velocity.add[0,1,0].with_yaw[<player.location.yaw>].forward[2]>
+#        - define velocity <location[0,0.5,0]>
+#        - if <player.velocity.x.abs> > <player.velocity.z.abs>:
+#          - define velocity <[velocity].with_x[<element[2].div[<[velocity].x>]>]>
+#          - define velocity <[velocity].with_z[<[velocity].z.mul[2]>]>
+#        - else:
+#          - define velocity <[velocity].with_z[<element[2].div[<[velocity].z>]>]>
+#          - define velocity <[velocity].with_x[<[velocity].x.mul[2]>]>
+#
+#        - adjust <player> velocity:<[velocity]>
 
 
 reset_thing:
@@ -274,3 +274,152 @@ minecart_connecting:
 
     - attach <[second]> to:<[first]> offset:<[offset]> relative
     - attach <[third]> to:<[first]> offset:<[offset].mul[2]> relative
+
+test_flamethrower_item:
+  type: item
+  material: crossbow
+  mechanisms:
+    custom_model_data: 8
+
+test_flamethrower:
+  type: world
+  debug: false
+  events:
+    on player clicks block with:test_flamethrower_item:
+      - determine passively cancelled
+      - define me <player>
+
+      - if <context.hand> == hand:
+        - define hand right
+      - else:
+        - define hand left
+
+      - repeat 10:
+        - define hand_location <[me].vivecraft.position[<[hand]>]>
+        #- playeffect at:<[hand_location].forward[0.3]> offset:0.1 quantity:3 effect:flame velocity:<[hand_location].direction.vector.div[2]>
+        #- playeffect at:<[hand_location].forward[0.3]> offset:0.1 effect:smoke velocity:<[hand_location].direction.vector.div[2]>
+
+        - repeat 10:
+          - define vector <[hand_location].face[<[hand_location].forward[10].random_offset[1,1,1]>].direction.vector>
+          - playeffect at:<[hand_location]> effect:flame velocity:<[vector].div[1.5]> offset:0.1 quantity:2
+          - playeffect at:<[hand_location]> effect:smoke velocity:<[vector].div[1.5]> offset:0.2 quantity:3
+
+        - wait 1t
+
+    on player loads crossbow:
+      - stop if:!<context.crossbow.script.exists>
+      - stop if:!<context.crossbow.script.name.equals[test_flamethrower_item]>
+      - determine passively cancelled
+      - if <context.hand> == hand:
+        - define hand right
+      - else:
+        - define hand left
+
+      - define me <player>
+      - repeat 10:
+        - define hand_location <[me].vivecraft.position[<[hand]>]>
+        # -
+
+        - repeat 10:
+          - define vector <[hand_location].face[<[hand_location].forward[10].random_offset[1,1,1]>].direction.vector.div[2]>
+          - playeffect at:<[hand_location]> effect:flame velocity:<[vector]> offset:0.1 quantity:2
+          - playeffect at:<[hand_location]> effect:smoke velocity:<[vector]> offset:0.2
+
+        - wait 1t
+
+
+flame_test:
+  type: task
+  script:
+    - define me <server.match_player[_Behr__].if_null[<player>]>
+    - repeat 1:
+      #- define hand_location <[me].vivecraft.position[left]>
+      - define hand_location <[me].eye_location>
+      - repeat 10:
+        - define vector <[hand_location].face[<[hand_location].forward[10].random_offset[1,1,1]>].direction.vector.div[2]>
+        - playeffect at:<[hand_location]> effect:flame velocity:<[vector]> offset:0.1 quantity:2
+        - playeffect at:<[hand_location]> effect:smoke velocity:<[vector]> offset:0.2
+      - wait 1t
+
+dance_for_me:
+  type: task
+  debug: false
+  data:
+    npcs:
+      28: Hydroxycobalamin
+      31: mcmonkey4eva
+      32: Techjar
+      33: ayalaandtal
+      34: Wahrheit
+      35: Mergu
+      36: acikek
+      37: Zozer_Firehood
+      38: Eutherin
+      39: Xeane
+      40: Nimsy
+      42: _Breadcrumb
+      43: Jumpsplat120
+      44: funky493
+      47: Behrrance
+      48: Behrry
+      50: InquisitorOfGods
+      51: Mwthorn
+      52: calicokid
+      53: Fullwall
+
+  sneak_test:
+    - define npcs <script[dance_for_me].data_key[data.npcs].keys.parse_tag[<npc[<[parse_value]>]>]>
+    - repeat 10:
+      - sneak <[npcs]> start
+      - wait 5t
+      - sneak <[npcs]> stop
+      - wait 5t
+  script:
+  #  - flag server testing
+  #  - while <server.has_flag[testing]>:
+
+    - define me <server.match_player[_behr__]>
+    - define npcs <script.data_key[data.npcs].keys>
+    - repeat 400:
+      - foreach <[npcs]> as:npc_id:
+        - vivemirror <npc[<[npc_id]>]> mirror:<[me].vivecraft> targets:<[me]>
+      - wait 1t
+
+# /ex look <script[dance_for_me].data_key[data.npcs].keys.parse_tag[<npc[<[parse_value]>]>]> <player.cursor_on.center>
+## press button to start recording
+#waiting_for_dance_recital:
+#  type: world
+#  events:
+#    after player clicks stone_button location_flagged:start_recorder:
+#      - stop if:!<server.has_flag[recording_dance]>
+# 
+#    # | temp testing one dance "recording_dance" for now
+#      - flag server recording_dance:dance_test
+#      - repeat 3 as:loop_index:
+#        - title title:<[loop_index]>
+#        - wait 1s
+#
+#      - while <server.has_flag[recording_dance]>:
+#        - foreach head|left|right as:controller:
+#          - define poses.step.<[loop_index]>.<[controller]>:<player.position[<[controller]>]>
+#        - wait 1t
+#
+#    # | temp testing one dance "recording_dance" for now
+#      - flag server recording_dance:<[poses]>
+#
+#    after player clicks stone_button location_flagged:end_recorder:
+#      - stop if:!<server.has_flag[recording_dance]>
+#      - flag server recording_dance:!
+#      - title "title:<&[red]>Dance Recital Stopped"
+#
+#play_dance:
+#  type: task
+#  script:
+#    # | temp testing one dance"recording_dance" for now
+#    - foreach <server.flag[recording_dance]> key:pose as:step:
+#      - vivepose <npc> left_arm:<[pose.<[step]>.left_hand]> right_arm:<[pose.<[step]>.right_hand]> head:<[pose.<[step]>.head]>
+#      - wait 1t
+
+# This is a task script that defines multiple tags and plays particle effects
+
+# This is a task script that defines multiple tags and plays particle effects

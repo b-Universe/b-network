@@ -18,6 +18,8 @@ world_loading_handler:
   debug: false
   events:
     on server prestart:
+      # todo: fix hardcode here
+      - createworld hub generator:denizen:void
       - stop if:!<server.has_flag[behr.essentials.world_settings]>
       - foreach <server.flag[behr.essentials.world_settings]> key:world:
         - if <server.has_flag[behr.essentials.world_settings.<[world]>.settings.load_on_restart]>:

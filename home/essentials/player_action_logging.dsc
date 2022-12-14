@@ -1,5 +1,6 @@
 player_action_logging:
   type: world
+  debug: false
   events:
     on player places block:
       - define time <util.time_now>

@@ -94,7 +94,7 @@ new_enchantments:
         - define level <player.item_in_hand.enchantment_map.get[flame]>
         - wait 2t
 
-        - define location <context.projectile.location.above[0.1]>
+        - define location <context.projectile.location.above[0.1]> if:<context.projectile.is_truthy>
         - while <context.projectile.is_truthy> && !<context.projectile.is_on_ground>:
           - define location <context.projectile.location.above[0.1]>
           - playeffect at:<[location]> effect:flame visibility:100 quantity:<[level].mul[3]> offset:0.1
