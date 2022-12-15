@@ -29,6 +29,10 @@
   <a href=https://unlicense.org>
     <img src=https://img.shields.io/badge/License-unlicense-lightgrey.svg>
   </a>
+  </a>
+  <!--- Resource Pack ---->
+	<a href="https://github.com/bGielinor/b-resource"><img src="https://img.shields.io/badge/Resource%20Pack-b-c70039?logo=blueprint" alt="Resource Pack">
+  </a>
 </p>
 
 B is a network based on, well, just having a good time. The theme for the network is futuristic / modern, and there really is no back-story. The scripts made for this network range from simple vanilla gameplay to advanced minigames and optionally modded content.
