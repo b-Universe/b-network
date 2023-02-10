@@ -142,24 +142,3 @@ discord_mute_handler:
 
         #- define embed "<[embed].with[footer].as[]>"
         #- inject discord_mute_handler.sub_paths.error_response
-
-discord_api_mute_user:
-  type: task
-  definitions: user_id|time|reason
-  debug: false
-  script:
-    # hardcode my guild ID
-    - define guild_id 901618453356630046 if:!<[guild_id].exists>
-
-    # create headers
-    - definemap headers:
-        Authorization: <secret[cbot]>
-        Content-Type: application/json
-
-    - definemap data:
-    #   format: 2023-01-08T06:49:00.996+0200
-        communication_disabled_until: <util.time_now.add[<[time]>].format[yyyy-MM-dd'T'HH:mm:ss.s'Z']>
-
-    - define headers <[headers].with[X-Audit-Log-Reason].as[<map.with[reason].as[<[reason]>]>]> if:<[reason].exists>
-
-    - ~webget https://discord.com/api/guilds/<[guild_id]>/members/<[user_id]> data:<[data].to_json> method:PATCH headers:<[headers]> save:response
