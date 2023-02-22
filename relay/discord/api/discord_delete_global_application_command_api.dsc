@@ -15,6 +15,7 @@ discord_delete_global_application_command_api:
     # % ██ [ send the delete request ] ██
     - ~webget https://discord.com/api/applications/<[application_id]>/commands/<[command_id]> method:delete headers:<[headers]> save:response
     - inject web_debug.webget_response
+# ex run discord_delete_global_application_command_api def:905309299524382811|1073043734259843122
 
 discord_delete_guild_application_command_api:
   type: task
@@ -33,3 +34,4 @@ discord_delete_guild_application_command_api:
     # % ██ [ send the delete request ] ██
     - ~webget https://discord.com/api/applications/<[application_id]>/guilds/<[guild_id]>/commands/<[command_id]> method:delete headers:<[headers]> save:response
     - inject web_debug.webget_response
+# ex run discord_delete_guild_application_command_api def:756231724127748256|1073043734259843122

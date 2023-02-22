@@ -165,7 +165,7 @@ chat_formatting:
         - yaml id:behr.essentials.chat.history set chat.<[time].epoch_millis>:<[chat_history]>
         - if <[chat_history.channel]> in <[player_channel]> || <[player_channel]> == all:
           - define content.<[time].epoch_millis>:<[chat_history]>
-      - if <yaml[behr.essentials.chat.history].read[chat].size.if_null[0]> > 30:
+      - if <yaml[behr.essentials.chat.history].read[chat].size.if_null[0]> > 30 && !<[content].is_empty>:
         - yaml id:behr.essentials.chat.history set chat.<[content].keys.lowest>:!
         - define content.<[content].keys.lowest>:!
       - define content <[content].values.if_null[<list>]>
