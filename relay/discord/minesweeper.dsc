@@ -57,7 +57,8 @@ minesweeper_command:
       # The [first loop] or [<[width].add[1]>] .modular[<[width]>] will always return one
       - if <[loop_index].mod[<[width]>]> == 1:
         - define row:++
-        - define colorful_border_emoji <script[minesweeper_emoji].data_key[colorful_border.<[row].mod[6]>]>
+        - define colorful_border_emoji <&co><script[minesweeper_emoji].data_key[colorful_border.<[row].mod[6]>]><&co>
+        #- define colorful_border_emoji <script[minesweeper_emoji].data_key[colorful_border.<[row].mod[6]>]>
         - define board_emojis.<[row]>:->:<[colorful_border_emoji]>
       - if !<[tile].has_flag[minesweeper.bomb]>:
         - define bomb_count <[tile].center.find_blocks_flagged[minesweeper.bomb].within[1.415].size>
@@ -122,9 +123,16 @@ minesweeper_emoji:
     8: eight
     0: zero
   colorful_border:
-    1: 🟥
-    2: 🟧
-    3: 🟨
-    4: 🟩
-    5: 🟦
-    0: 🟪
+    1: red_square
+    2: orange_square
+    3: yellow_square
+    4: green_square
+    5: blue_square
+    0: purple_square
+  #colorful_border:
+  #  1: 🟥
+  #  2: 🟧
+  #  3: 🟨
+  #  4: 🟩
+  #  5: 🟦
+  #  0: 🟪
