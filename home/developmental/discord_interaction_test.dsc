@@ -6,7 +6,7 @@ get_user_of_interaction_from_other_bot_interaction:
         Authorization: <secret[bbot]>
         Content-Type: application/json
         User-Agent: B
-    - ~webget https://discord.com/api/channels/<[channel_id]>/messages/<[message_id]> headers:<[headers]> save:response
+    - ~webget <script[bdata].parsed_key[api.Discord.endpoint]>/channels/<[channel_id]>/messages/<[message_id]> headers:<[headers]> save:response
     - if <entry[response].failed.if_null[true]>:
       - debug debug "Webget failed"
       - stop

@@ -271,7 +271,7 @@ delete_player_message:
       - define message_id <[content.discord.message_id]>
       - define channel_id <[content.discord.channel_id]>
       - if <discord_message[b,<[channel_id]>,<[message_id]>].text.exists>:
-        - define url https://discord.com/api/channels/<[channel_id]>/messages/<[message_id]>
+        - define url <script[bdata].parsed_key[api.Discord.endpoint]>/channels/<[channel_id]>/messages/<[message_id]>
         - definemap headers:
             User-Agent: dDiscordBot
             Content-Type: application/json
