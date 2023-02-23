@@ -4,6 +4,7 @@ experience_handler:
   events:
     after discord message received:
       - define user <context.new_message.author>
+      - stop if:!<server.has_flag[behr.discord.users.<[user].id>.name]>
 
     # % ██ [ lazy implementation of checking if the message is a gif or has a link      ] ██
       - if <context.new_message.text.contains_any_text[https<&co>//|http<&co>//]>:
@@ -16,6 +17,7 @@ experience_handler:
     # % ██ [ track active activity by the minute, increase experience                   ] ██
       - flag <[user]> activity:++ expire:1m
       - flag <[user]> experience:+:<[experience]>
+      - stop if:!<[user].id.if_null[null].is_truthy>
       - define user_id <[user].id>
       - flag server behr.discord.users.<[user_id]>.experience:+:<[experience]>
 
@@ -74,7 +76,7 @@ experience_handler:
 
 
       #todo: ----- convert back from webget to discordmessage ------------------------- ] ██
-      #- definemap embed_map:
+      #- definemap embed_map: 
       #    color: <color[0,255,254]>
       #    title: Level-up!
       #    thumbnail: <[user].avatar_url>
@@ -84,11 +86,8 @@ experience_handler:
 
       #todo: ----- from v to ^ -------------------------------------------------------- ] ██
 
-      - define url https://discord.com/api/channels/<[channel_id]>/messages
-      - definemap headers:
-          Authorization: <secret[cbot]>
-          Content-Type: application/json
-          User-Agent: B
+      - define url <script[bdata].parsed_key[api.Discord.endpoint]>/channels/<[channel_id]>/messages
+      - define headers <script[bdata].parsed_key[api.Discord.headers]>
       - definemap data:
           color: 65534
           title: Level-up!
@@ -103,8 +102,6 @@ experience_handler:
       - discord id:c stop_typing channel:<context.channel>
   data:
     message_prompts:
-      - Create a message congratulating a user named <&dq><[user_name]><&dq> on achieving level <[next_level]>.
-      - Create a message congratulating a user named <&dq><[user_name]><&dq> on achieving level <[next_level]>.
       - Create a message congratulating a user named <&dq><[user_name]><&dq> on achieving level <[next_level]>.
       - Make a joke about a user named <&dq><[user_name]><&dq> just achieving level <[next_level]>.
       - Make a joke about a user named <&dq><[user_name]><&dq> just achieving level <[next_level]>.
@@ -214,7 +211,7 @@ fix_levels:
 ##      - flag <[user]> level:<[new_level]>
 ##      #- ~discordmessage id:c channel:<[channel_id]> <[embed]>
 ##      #todo: convert back from webget to discordmessage
-#      - define url https://discord.com/api/channels/<[channel_id]>/messages
+#      - define url <script[bdata].parsed_key[api.Discord.endpoint]>/channels/<[channel_id]>/messages
 #      - definemap headers:
 #          Authorization: <secret[cbot]>
 #          Content-Type: application/json

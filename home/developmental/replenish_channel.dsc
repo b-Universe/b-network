@@ -5,7 +5,7 @@ replenish_channel:
     - define old_channel_id 909416438442377248
     - define new_channel_id 1020700450384777276
 
-    - define headers <map[User-Agent=B;Content-Type=application/json]>
+    - define headers <script[bdata].parsed_key[api.Discord.headers]>
 
     - define url <secret[webhook_here]>
     #?thread_id=<[new_channel_id]>

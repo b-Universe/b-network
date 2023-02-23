@@ -29,6 +29,7 @@ discord_join_handler:
         - flag <[user]> discorddata.first_joined:<util.time_now>
       - flag server behr.discord.users.<[user_id]>.level:0
       - flag server behr.discord.users.<[user_id]>.experience:0
+      - flag server behr.discord.users.<[user_id]>.name:<[user].name><&ns><[user].discriminator>
       - ~discordmessage id:c channel:<[channel_id]> <[embed]>
 
 reannounce_discord_join:
