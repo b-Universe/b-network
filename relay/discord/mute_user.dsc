@@ -97,7 +97,6 @@ discord_mute_handler:
       - define embed "<discord_embed.with[footer].as[You must specify a discord user]>"
       - inject discord_mute_handler.sub_paths.error_response
 
-
     - define embed <discord_embed.with[color].as[<color[0,254,255]>]>
 
     # check if the duration is valid
