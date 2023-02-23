@@ -17,13 +17,13 @@
     <img src=https://img.shields.io/discord/901618453356630046?logo=discord>
   </a>
   <!--- Active Version ---->
-	<a href="https://github.com/bGielinor/b-resource/archive/refs/heads/main.zip"><img src="https://img.shields.io/badge/Minecraft%20Version-1.19.2-c70039?logo=blueprint" alt="Minecraft Version">
+	<a href="https://github.com/bGielinor/b-network/archive/refs/heads/main.zip"><img src="https://img.shields.io/badge/Minecraft%20Version-1.19.2-c70039?logo=blueprint" alt="Minecraft Version">
   </a>
 </p>
 <p align=center>
 	<!--- Commit Activity ---->
   <a href=https://github.com/Adriftus-Studios/network-script-data/pulse>
-    <img src=https://img.shields.io/github/commit-activity/m/bGielinor/b-resource?logo=read-the-docs>
+    <img src=https://img.shields.io/github/commit-activity/m/bGielinor/b-network?logo=read-the-docs>
   </a>
 	<!--- License ---->
   <a href=https://unlicense.org>
@@ -31,7 +31,7 @@
   </a>
   </a>
   <!--- Resource Pack ---->
-	<a href="https://github.com/bGielinor/b-resource"><img src="https://img.shields.io/badge/Resource%20Pack-b-c70039?logo=blueprint" alt="Resource Pack">
+	<a href="https://github.com/bGielinor/b-network"><img src="https://img.shields.io/badge/Resource%20Pack-b-c70039?logo=blueprint" alt="Resource Pack">
   </a>
 </p>
 
