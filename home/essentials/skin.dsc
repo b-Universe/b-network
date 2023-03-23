@@ -125,12 +125,12 @@ skin_command:
                     - stop
                 - wait 1s
             - if <entry[new_queue].created_queue.determination.first.if_null[null]> == null:
-                    - narrate "<&[error]>Failed to retrieve the skin from the provided link. Is the url valid?"
-                    - stop
+                - narrate "<&[error]>Failed to retrieve the skin from the provided link. Is the url valid?"
+                - stop
             - define result_data <util.parse_yaml[<entry[new_queue].created_queue.determination.first>]>
             - if !<[result_data].contains[data]>:
-                    - narrate "<&[error]>An unexpected error occurred while retrieving the skin data. Please try again."
-                    - stop
+                - narrate "<&[error]>An unexpected error occurred while retrieving the skin data. Please try again."
+                - stop
 
         # @ ██ [ Save & adjust the player's skin ] ██
             - define original_skin <player.skin_blob>
