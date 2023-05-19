@@ -64,7 +64,7 @@ discord_delete_bulk_messages_api:
 
       - else:
         - announce to_console "<&4>Warning<&6><&co> <&c>Cannot exceed 100 messages to bulk delete, defaulting to first 100. Enable the setting flag `behr.discord.settings.mass_deletion_enabled` to bypass."
-        - define message_ids <[message_ids].get[1].to[100]>
+      - define message_ids <[message_ids].get[1].to[100]>
 
     # % ██ [ Send the delete request   ] ██
     - ~webget <script[bdata].parsed_key[api.Discord.endpoint]>/channels/<[channel_id]>/messages/bulk-delete data:<[data].to_json> method:post headers:<[headers]> save:response
