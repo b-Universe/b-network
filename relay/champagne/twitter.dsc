@@ -70,7 +70,7 @@ twitter_reminder:
       - ~webget <[url]> data:<[data].to_json[native_types=true]> headers:<[headers]> save:response
       - inject web_debug.webget_response
 
-      ## ██ [ Return the response                                   ] ██
+      # ██ [ Return the response                                   ] ██
       - define embed_map.description <util.parse_yaml[<entry[response].result>].get[choices].last.get[text].replace_text[Champagne<&co> ].replace_text[Champagne<&co>]>
       - if !<[embed_map.description].is_truthy>:
         - flag server behr.champagne.brain.has_already_asked_about_tweeting:!
