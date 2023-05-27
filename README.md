@@ -22,7 +22,7 @@
 </p>
 <p align=center>
 	<!--- Commit Activity ---->
-  <a href=https://github.com/Adriftus-Studios/network-script-data/pulse>
+  <a href=https://github.com/b-universe/b-network/pulse>
     <img src=https://img.shields.io/github/commit-activity/m/b-universe/b-network?logo=read-the-docs>
   </a>
 	<!--- License ---->
