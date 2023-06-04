@@ -17,7 +17,7 @@
     <img src=https://img.shields.io/discord/901618453356630046?logo=discord>
   </a>
   <!--- Active Version ---->
-	<a href="https://github.com/b-universe/b-network/archive/refs/heads/main.zip"><img src="https://img.shields.io/badge/Minecraft%20Version-1.19.2-c70039?logo=blueprint" alt="Minecraft Version">
+	<a href="https://github.com/b-universe/b-network/archive/refs/heads/main.zip"><img src="https://img.shields.io/badge/Minecraft%20Version-1.19.4-c70039?logo=blueprint" alt="Minecraft Version">
   </a>
 </p>
 <p align=center>
