@@ -37,6 +37,7 @@ experience_handler:
     # % ██ [ determine if we're leveling up, or not                                     ] ██
       - if <[current_experience]> < <[next_experience]>:
         - stop
+      - define new_level <[next_level]>
 
     # % ██ [ set the new data; increase the level, halt more level-up prompts           ] ██
       - stop if:<server.has_flag[behr.discord.temp.level_up.<[user_id]>]>
@@ -76,7 +77,7 @@ experience_handler:
 
 
       #todo: ----- convert back from webget to discordmessage ------------------------- ] ██
-      #- definemap embed_map: 
+      #- definemap embed_map:
       #    color: <color[0,255,254]>
       #    title: Level-up!
       #    thumbnail: <[user].avatar_url>
@@ -122,32 +123,6 @@ experience_handler:
       - https<&co>//tenor.com/view/level-up-oh-yeah-happy-dance-happy-woo-gif-14637361
       - https<&co>//media.tenor.com/BPhfT0r2VpMAAAAC/bawr-levelup.gif
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 fix_levels:
   type: task
   debug: false
@@ -177,7 +152,8 @@ fix_levels:
 
     - narrate "<n><n><&e><[users].parse_tag[<&e><[parse_value].name><&6><&co> <&a><[parse_value].flag[level].if_null[0]> <&b>| <&a><[parse_value].flag[experience]>].separated_by[<n>]>"
     #- narrate "<n><n><&e><discord_group[c,901618453356630046].members.filter[id.exists].parse_tag[<&e><[parse_value].name><&6><&co> <&a><[parse_value].flag[level].if_null[0]>].separated_by[<n>]>"
-#
+
+# i have no idea what this is but it should probably be deleted now, 6/4
 #levelup_check:
 #  type: task
 #  debug: true
@@ -237,12 +213,25 @@ bad_json_proc:
   script:
   - determine <[text].replace_text[<&sq>].with[\<&sq>].replace_text[<&dq>].with[\<&dq>]>
 
-
 leaderboards_command_create:
   type: task
   debug: false
   script:
-    - ~discordcommand id:c create name:leaderboards "description:Serves the leaderboards link for user experience and level data" group:901618453356630046
+    - definemap options:
+        1:
+          type: string
+          name: Board
+          description: Determines the leaderboard to obtain data for
+          choices:
+            1:
+              name: experience
+              value: experience
+            2:
+              name: mutes
+              value: mutes
+          required: true
+
+    - ~discordcommand id:c create name:leaderboards options:<[options]> "description:Serves the leaderboard for user experience and rankings" group:901618453356630046
 
 leaderboards_command_handler:
   type: world
@@ -252,23 +241,45 @@ leaderboards_command_handler:
       - define description <list>
 
       - define users <server.flag[behr.discord.users]>
-      - define users <[users].sort_by_value[get[experience]].reverse>
-      - define new_list <list>
+      - choose <context.options.get[board].if_null[experience]>:
+        - case experience:
+          - define users <[users].sort_by_value[get[experience]].reverse>
+          - define new_list <list>
 
-      - foreach <[users]> key:user as:data:
-        - define experience <[data].get[experience]>
-        - if <[loop_index]> > 10 || <[experience]> == 0:
-          - foreach stop
-        - define discord_user <discord_user[c,<[user]>]>
-        - define new_list <[new_list].include_single[Rank <[loop_index]> - <[discord_user].mention> | `(<[discord_user].name>)`<&co> Level<&co> **<[discord_user].flag[level]>** (Exp<&co> **<[discord_user].flag[experience].format_number>**)]>
+          - foreach <[users]> key:user as:data:
+            - define experience <[data].get[experience]>
+            - if <[loop_index]> > 10 || <[experience]> == 0:
+              - foreach stop
+            - define discord_user <discord_user[c,<[user]>]>
+            - define new_list <[new_list].include_single[Rank <[loop_index]> - <[discord_user].mention> | `(<[discord_user].name>)`<&co> Level<&co> **<[discord_user].flag[level]>** (Exp<&co> **<[discord_user].flag[experience].format_number>**)]>
 
-      - define description <[description].include[<[new_list]>]>
+          - define description <[description].include[<[new_list]>]>
 
-      - definemap embed_data:
-          title: "`<&lb>IceBear Leveling Dashboard for B<&rb>`"
-          title_url: https://stat.icecapa.de/grafana/public-dashboards/90a220f38928488a8a091d7f377b4548?orgId=1
-          color: <color[0,254,255]>
-          description: <[description].separated_by[<n>]>
+          - definemap embed_data:
+              title: "`<&lb>IceBear Leveling Dashboard for B<&rb>`"
+              title_url: https://stat.icecapa.de/grafana/public-dashboards/90a220f38928488a8a091d7f377b4548?orgId=1
+              color: <color[0,254,255]>
+              description: <[description].separated_by[<n>]>
+
+        - case mutes:
+          - define users <[users].sort_by_value[get[mutes]].reverse.filter[mutes.equals[0].not]>
+          - define new_list <list>
+
+          - foreach <[users]> key:user as:data:
+            - define mutes <[data].get[mutes].size>
+            - if <[loop_index]> > 10 || <[mutes]> == 0:
+              - foreach stop
+            - define discord_user <discord_user[c,<[user]>]>
+            - define new_list <[new_list].include_single[Rank <[loop_index]> - <[discord_user].mention> | `(<[discord_user].name>)`<&co> Mutes<&co> **<[discord_user].flag[level]>** (Exp<&co> **<[discord_user].flag[experience].format_number>**)]>
+
+          - define description <[description].include[<[new_list]>]>
+
+          - definemap embed_data:
+              title: "`<&lb>IceBear Leveling Dashboard for B<&rb>`"
+              title_url: https://stat.icecapa.de/grafana/public-dashboards/90a220f38928488a8a091d7f377b4548?orgId=1
+              color: <color[0,254,255]>
+              description: <[description].separated_by[<n>]>
+
 
       - ~discordinteraction reply interaction:<context.interaction> <discord_embed.with_map[<[embed_data]>]>
 
@@ -312,7 +323,6 @@ rank_command_handler:
       - define embed <[embed].add_inline_field[Rank].value[`<[rank]>`]>
 
       - ~discordinteraction reply interaction:<context.interaction> <[embed]>
-
 
 level_chart:
     type: data
