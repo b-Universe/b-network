@@ -1,13 +1,8 @@
 create_webget_discordcommand:
   type: task
-  debug: true
+  debug: false
   script:
     - definemap options:
-        1:
-          name: help
-          type: boolean
-          description: Shows helpful information on how to use this command correctly
-          required: false
         2:
           name: url
           type: string
@@ -34,7 +29,31 @@ create_webget_discordcommand:
         6:
           name: method
           type: string
-          # choices:  GET|POST|HEAD|OPTIONS|PUT|DELETE|TRACE|PATCH
+          choices:
+            GET:
+              name: GET
+              value: GET
+            POST:
+              name: POST
+              value: POST
+            HEAD:
+              name: HEAD
+              value: HEAD
+            OPTIONS:
+              name: OPTIONS
+              value: OPTIONS
+            PUT:
+              name: PUT
+              value: PUT
+            DELETE:
+              name: DELETE
+              value: DELETE
+            TRACE:
+              name: TRACE
+              value: TRACE
+            PATCH:
+              name: PATCH
+              value: PATCH
           description: Specifies the HTTP method to use in your request (default GET)
           required: false
         7:
@@ -43,66 +62,92 @@ create_webget_discordcommand:
           description: Headers to submit to the server; Uses `key=value;...` format
           required: false
         8:
+          name: parsed_headers
+          type: string
+          description: Headers to parse and submit to the server; Uses `key=value;...` format
+          required: fals
+        9:
           name: timeout
           type: string
           description: Sets how long the command should wait for a webpage to load before giving up (defaults to 10s)
           required: false
-      # 9:
-      #    name: log
-      #    type: boolean
-      #    description: Enables or disables logging the request query (Default disabled)
-      #    required: false
-      #  10:
-      #    name: extension
-      #    type: string
-      #    # choices: json|dsc|yml|txt|html
-      #    description: Determines the extension to save the request query if logged (Defaults to txt)
-      #    required: false
+        10:
+          name: log
+          type: boolean
+          description: Enables or disables logging the request query (Default disabled)
+          required: false
         11:
+          name: extension
+          type: string
+          choices:
+            json:
+              name: json
+              value: json
+            dsc:
+              name: dsc
+              value: dsc
+            yml:
+              name: yml
+              value: yml
+            txt:
+              name: txt
+              value: txt
+            html:
+              name: html
+              value: html
+          description: Determines the extension to save the request query if logged (Defaults to txt)
+          required: false
+        12:
           name: fail_status
           type: boolean
           description: Indicates whether connection errors or any failure statuses return
           required: false
-        12:
+        13:
           name: confirm
           type: boolean
           description: Responds with confirmation after submitting a request made, useful for responses with longer delays
           required: false
-        13:
+        14:
           name: result
           type: boolean
           description: Determines whether the result is returned (Default true)
           required: false
       #  todo: queue controls
-      #  14:
+      #  15:
       #    name: queue
       #    type: string
-      #    # choices: list|clear|stop
+      #    choices:
+      #      list:
+      #        name: list
+      #        value: list
+      #      clear:
+      #        name: clear
+      #        value: clear
+      #      stop:
+      #        name: stop
+      #        value: stop
       #    description: Manages active webget queues
       #    required: false
-        15:
+        16:
           name: parse_response
           type: string
           description: Parses tags against the response received
           required: false
 
-    - ~discordcommand id:b create name:webget "description:Gets the contents of a web page or API response" group:901618453356630046 options:<[options]>
+    - ~discordcommand id:c create name:webget "description:Gets the contents of a web page or API response" group:901618453356630046 options:<[options]>
 
 webget_discordcommand_handler:
   type: world
   debug: true
   data:
     help_args:
-      misc_args:
-        name: **Misc Arguments**<&co>
-        value: <&sp>`/webget help` - Provides helpful information on how to use this command
       url:
         name: <&lb>url/secret_url<&co><&lt>url<&gt>/name<&rb>
         value: Specifies the webpage or API url to query, or the secret named url to query
 
       queue_controls:
-        name: Queue Controls<&co>
-        value: <&sp>`/webget queue<&co>list` - Displays a list of all active webget query queues<n>`/webget queue<&co>clear` - Clears all active webget query queues<n>`/webget queue<&co>stop x` - Stops the webget query by the ID <&dq>`x`<&dq>
+        name: ~~Queue Controls<&co>~~
+        value: ~~<&sp>`/webget queue<&co>list` - Displays a list of all active webget query queues<n>`/webget queue<&co>clear` - Clears all active webget query queues<n>`/webget queue<&co>stop x` - Stops the webget query by the ID <&dq>`x`<&dq>~~
         inline: true
 
       data:
@@ -111,7 +156,7 @@ webget_discordcommand_handler:
         inline: true
 
       headers:
-        name: (data/parsed_data<&co><&lt>data<&gt>)
+        name: (headers / parsed_headers<&co> <&lt>headers<&gt>)
         value: Headers to submit to the server; Uses `key=value;...` format
       method:
         name: (method<&co><&lt>method<&gt>)
@@ -122,7 +167,7 @@ webget_discordcommand_handler:
 
       confirm:
         name: (confirm<&co>true/false)
-        value: Responds with confirmation after submitting a request made, useful for responses with longer delays
+        value: Responds with confirmation after submitting a request
       failed_status:
         name: (failed_status<&co>true/false)
         value: Indicates whether connection errors or any failure statuses return
@@ -132,13 +177,14 @@ webget_discordcommand_handler:
 
       log:
         name: (log<&co>true/false)
-        value: Enables or disables logging the request query (Default disabled)
+        value: Enables or disables logging the request query (Default disabled)~~
       extension:
         name: (extension<&co><&lt>txt/yml/json/bin/etc<&gt>)
         value: Determines the extension to save the request query if logged (Defaults to txt)
       parse_response:
         name: (parse_response<&co><&lt>tags<&gt>)
         value: Parses tags against the response received
+
 
   events:
     on discord slash command name:webget:
@@ -153,10 +199,10 @@ webget_discordcommand_handler:
       - define embed <discord_embed>
 
       # % ██ [ check if help was requested        ] ██
-      - if <context.options.get[help].is_truthy>:
-        - ~discordinteraction defer interaction:<context.interaction>
-        - define embed_data.title "Discord Command | `/webget <&lt>url<&gt> (args)`"
-        - define embed_data.description "Connects to a webpage or API and returns or saves it's contents and response.<n>**Command Usage**<&co><n>`/webget <&lb>url<&co><&lt>url<&gt><&rb> (data/parsed_data<&co><&lt>data<&gt>) (headers<&co><&lt>header=value(;...)+<&gt>) (method<&co><&lt>method<&gt>) (timeout<&co><&lt>duration<&gt>) (confirm<&co>true/false) (failed_status<&co>true/false) (result<&co>true/false) (log<&co>true/false) (extension<&co><&lt>txt/yml/json/html/etc<&gt>) (parse_response<&co><&lt>tag(s)<&gt>)`"
+      - if <context.options.get[help].is_truthy> || <context.options.is_empty>:
+        #- define embed_data.title "# Discord Command | `/webget <&lt>url<&gt> (args)`"
+        # `<&lt>url<&gt> (args)`
+        - define embed_data.description "<&ns> Discord Command | **<&lt>/webget<&co>1035293399655399444<&gt>**<n>Connects to a webpage or API and returns or saves it's contents and response.<n><&ns><&ns> **Command Usage**<&co><n>`/webget <&lb>url<&co><&lt>url<&gt><&rb> (data/parsed_data<&co><&lt>data<&gt>) (headers/parsed_headers<&co><&lt>header=value(;...)+<&gt>) (method<&co><&lt>method<&gt>) (timeout<&co><&lt>duration<&gt>) (confirm<&co>true/false) (failed_status<&co>true/false) (result<&co>true/false)` ~~`(log<&co>true/false) (extension<&co><&lt>txt/yml/json/html/etc<&gt>)`~~ `(parse_response<&co><&lt>tag(s)<&gt>)`"
         - foreach <script.parsed_key[data.help_args]> as:field_data:
           - if !<[field_data].contains[inline]>:
             - define embed <[embed].add_inline_field[<[field_data].get[name]>].value[<[field_data].get[value]>]>
@@ -245,13 +291,11 @@ webget_discordcommand_handler:
         - else:
           - define error_list "<[error_list].include_single[**Timeout Error**<&co> `<context.options.get[timeout]>` is an invalid duration. Defaulted to `<[timeout]>`]>"
 
-      - ~discordinteraction defer interaction:<context.interaction>
-
       # % ██ [ Check for confirmation            ] ██
       - if <context.options.get[confirmation].is_truthy>:
         - define confirm_embed_data.title "**Webget confirmation**"
         - define confirm_embed_data.color <color[0,254,255]>
-        - define confirm_embed_data.description "<list_single[Webget request submit with a timeout of <duration[<[timeout]>].formatted>].include[<[error_list]>].separated_by[<n>]>"
+        - define confirm_embed_data.description <list_single[Webget request submit with a timeout of <duration[<[timeout]>].formatted>].include[<[error_list]>].separated_by[<n>]>
         - ~discordinteraction reply interaction:<context.interaction> ephemeral <discord_embed.with_map[<[confirm_embed_data]>]>
       - else:
         - ~discordinteraction delete interaction:<context.interaction>
@@ -261,7 +305,15 @@ webget_discordcommand_handler:
         - if <map.include[<context.options.get[headers]>].is_truthy>:
           - define <[headers].include[<context.options.get[headers]>]>
         - else:
-          - define error_list "<[error_list].include_single[**Headers Error**<&co> `<context.options.get[headers]>` is an invalid header mapping. Format is `key=value;...` (ex<&co> `User-Agent=Champagne`]>"
+          - define error_list <[error_list].include_single[**Headers Error**<&co> `<context.options.get[headers]>` is an invalid header mapping. Format is `key=value;...` (ex<&co> `User-Agent=Champagne`]>
+
+      - if <context.options.contains[parsed_headers]>:
+        - if <map.include[<context.options.get[parsed_headers].parsed>].is_truthy>:
+          - define <[headers].include[<context.options.get[parsed_headers]>]>
+        - else:
+          - define error_list <[error_list].include_single[**Headers Error**<&co> `<context.options.get[parsed_headers]>` is an invalid header mapping. Format is `key=value;...` (ex<&co> `User-Agent=Champagne`]>
+
+      - ~discordinteraction delete interaction:<context.interaction>
 
       # % ██ [ Create webget                     ] ██
       - if <[data].exists>:
@@ -288,14 +340,6 @@ webget_discordcommand_handler:
           - define embed <[embed].add_inline_field[<[inline_field].get[name]>].value[<[inline_field].get[value]>]>
         - define embed "<[embed].add_field[**Response Headers**<&co>].value[```<entry[response].result_headers.replace_text[`].with['].if_null[invalid]>```]>"
 
-      # % ██ [ Wrap description and response     ] ██
-      - define response <entry[response].result.replace_text[`].with['].if_null[invalid]>
-      - if <context.options.get[parse_response].is_truthy>:
-        - define response <&lt>element[<[response]>].<context.options.get[parse_response]><&gt>
-        - define response <[response].parsed.split[<n>].include[<[error_list]>].separated_by[<n>]>
-      - define embed <[embed].add_field[**Response**<&co>].value[```<[response]>```]>
-
-      - define embed_data.description <[embed_data.description].include[<[error_list]>].separated_by[<n>]>
 
       # % ██ [ Check for logging                 ] ██
       - if <context.options.get[log].is_truthy>:
@@ -307,16 +351,29 @@ webget_discordcommand_handler:
             user: <context.interaction.user>
 
         - yaml id:webget_logging set <[uuid]>:<[yaml_data]>
+        - define embed_data.description <[embed_data.description].include[<&co>floppy_disk<&co> **Save name**<&co> `<[uuid]>`]>
 
         # % ██ [ Check for extension             ] ██
         - if <context.options.get[extension].is_truthy>:
           - define extension <context.options.get[extension].trim_to_character_set[ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz].to_lowercase>
+        - yaml id:webget_logging savefile:webget_responses/<[uuid]>.<[extension].if_null[txt]>
+
+      # % ██ [ Wrap description and response     ] ██
+      - define response <entry[response].result.replace_text[`].with['].if_null[invalid]>
+      - if <context.options.get[parse_response].is_truthy>:
+        - define response <&lt>element[<[response]>].<context.options.get[parse_response]><&gt>
+        - define response <[response].parsed.split[<n>].include[<[error_list]>].separated_by[<n>]>
+      - define embed <[embed].add_field[<&co>newspaper<&co> **Response**<&co>].value[```<[response]>```]>
+
+      - define embed_data.description <[embed_data.description].include[<[error_list].insert[<&co>bookmark<&co> Errors<&co>].at[first]>]> if:!<[error_list].is_empty>
+      - define embed_data.description <[embed_data.description].separated_by[<n>]>
+      - define embed_data.footer "📰 Request<&co> <context.options.parse_value_tag[<[parse_key]><&co><[parse_value]>].values.space_separated>"
 
       # % ██ [ Check for result                  ] ██
       - if !<context.options.get[result].if_null[true]>:
         - stop
 
-      - ~discordmessage id:b channel:901618453356630055 <[embed].with_map[<[embed_data]>]>
+      - discordmessage id:c channel:<context.channel> <[embed].with_map[<[embed_data]>]>
 
 http_status_codes:
   type: procedure
