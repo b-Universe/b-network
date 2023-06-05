@@ -84,6 +84,8 @@
 | /worldhandler             | behr.essentials.b                        | /worldhandler                                                                                                      | manages how worlds are handled                                                                                                | -
 </details>
 
+---
+
 
 ### All commands / Master list
 <details>
@@ -142,6 +144,9 @@
 | /worldhandler             | behr.essentials.b                        | /worldhandler                                                                                                      | manages how worlds are handled                                                                                                | -
 
 </details>
+
+---
+
 # Other flag data
 
 ## Player
