@@ -18,9 +18,9 @@ discord_delete_message_api:
     - if <server.has_flag[behr.discord.marked_for_delete]>:
       - define message_ids <server.flag[behr.discord.marked_for_delete]>
       - if <[reason].exists>:
-        - run delete_discord_bulk_messages_api def:<list_single[<[channel_id]>].include_single[<[message_ids]>]>
+        - run discord_delete_bulk_messages_api def:<list_single[<[channel_id]>].include_single[<[message_ids]>]>
       - else:
-        - run delete_discord_bulk_messages_api def:<list_single[<[channel_id]>].include_single[<[message_ids]>].include_single[<[reason]>]>
+        - run discord_delete_bulk_messages_api def:<list_single[<[channel_id]>].include_single[<[message_ids]>].include_single[<[reason]>]>
     - flag server behr.discord.marked_for_delete:!
 
     # % ██ [ Send the delete request ] ██
@@ -30,8 +30,8 @@ discord_delete_message_api:
 # | ██ [ Enable flag `behr.discord.settings.mass_deletion_enabled` to bypass 100 message delete limit                                      ] ██
 # | ██ [ usage:                                                                                                                            ] ██
 # % ██ [ - run delete_discord_message_api def:channel_id|message_ids(|reason)                                                              ] ██
-# - ██ [ run delete_discord_bulk_messages_api def:<list_single[<[channel_id]>].include_single[<[message_ids]>]>                            ] ██
-# - ██ [ run delete_discord_bulk_messages_api def:<list_single[<[channel_id]>].include_single[<[message_ids]>].include_single[<[reason]>]> ] ██
+# - ██ [ run discord_delete_bulk_messages_api def:<list_single[<[channel_id]>].include_single[<[message_ids]>]>                            ] ██
+# - ██ [ run discord_delete_bulk_messages_api def:<list_single[<[channel_id]>].include_single[<[message_ids]>].include_single[<[reason]>]> ] ██
 discord_delete_bulk_messages_api:
   type: task
   debug: false
@@ -57,9 +57,9 @@ discord_delete_bulk_messages_api:
       - if !<[mass_enabled].exists> && <server.has_flag[behr.discord.settings.mass_deletion_enabled]>:
         - repeat <[message_ids].size.div[100].round_up> as:loop_index:
           - if <[reason].is_truthy>:
-            - run delete_discord_bulk_messages_api def:<list_single[<[channel_id]>].include_single[<[message_ids]>].include_single[<[reason]>].include_single[true]>
+            - run discord_delete_bulk_messages_api def:<list_single[<[channel_id]>].include_single[<[message_ids]>].include_single[<[reason]>].include_single[true]>
           - else:
-            - run delete_discord_bulk_messages_api def:<list_single[<[channel_id]>].include_single[<[message_ids]>].include_single[true]>
+            - run discord_delete_bulk_messages_api def:<list_single[<[channel_id]>].include_single[<[message_ids]>].include_single[true]>
           - wait 5s
 
       - else:
