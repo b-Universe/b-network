@@ -1,8 +1,6 @@
 # Commands
 
-<details>
 ## Player defaults | Standard commands
-<summary>Show / Hide</summary>  
 | Command                   | Permission name                          | Usage                                                                                                              | Description |
 | :-----------------------: | :--------------------------------------- | :----------------------------------------------------------------------------------------------------------------- | :---------- |
 | /chat_channel             | -                                        | /chat_channel <channel>                                                                                            | changes chat channels                                                                                                         | -
@@ -69,6 +67,9 @@
 | /world                    | behr.essentials.world                    | /world (create/destroy/help/list/list_unloaded/load/unload/teleport (player)) <worldname>                          | Manages worlds or teleports youself or another player to the specified world                                                  | behr.essentials.world
 
 ## B / top level / probably testing
+<details>
+<summary>( Show / Hide )</summary>
+
 | Command                   | Permission name                          | Usage                                                                                                              | Description |
 | :-----------------------: | :--------------------------------------- | :----------------------------------------------------------------------------------------------------------------- | :---------- |
 | /add_contributor          | behr.essentials.contributor_coordinator  | /add_contributor <player> <project> <contributions>                                                                | Adds contributors or contributions for a contributor                                                                          | behr.essentials.contributor_coordinator
@@ -81,8 +82,13 @@
 | /skin_overlay_collection  | behr.essentials.skin_overlay_collection  | /skin_overlay_collection add/edit/remove <overlay_name> <url>                                                      | Manages skins for the skin overlaying system                                                                                  | behr.essentials.skin_overlay_collection
 | /text_width               | behr.essentials.text_width               | /text_width                                                                                                        | Checks the text width of a message                                                                                            | behr.essentials.text_width
 | /worldhandler             | behr.essentials.b                        | /worldhandler                                                                                                      | manages how worlds are handled                                                                                                | -
+</details>
+
 
 ### All commands / Master list
+<details>
+<summary>( Show / Hide )</summary>  
+
 | Command                   | Permission name                          | Usage                                                                                                              | Description |
 | :-----------------------: | :--------------------------------------- | :----------------------------------------------------------------------------------------------------------------- | :---------- |
 | //bwand                   | behr.essentials.admin                    | //bwand                                                                                                            | Gives the bWand                                                                                                               | -
