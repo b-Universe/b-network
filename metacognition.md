@@ -1,6 +1,8 @@
 # Commands
 
+<details>
 ## Player defaults | Standard commands
+<summary>Show / Hide</summary>  
 | Command                   | Permission name                          | Usage                                                                                                              | Description |
 | :-----------------------: | :--------------------------------------- | :----------------------------------------------------------------------------------------------------------------- | :---------- |
 | /chat_channel             | -                                        | /chat_channel <channel>                                                                                            | changes chat channels                                                                                                         | -
@@ -133,6 +135,7 @@
 | /world                    | behr.essentials.world                    | /world (create/destroy/help/list/list_unloaded/load/unload/teleport (player)) <worldname>                          | Manages worlds or teleports youself or another player to the specified world                                                  | behr.essentials.world
 | /worldhandler             | behr.essentials.b                        | /worldhandler                                                                                                      | manages how worlds are handled                                                                                                | -
 
+</details>
 # Other flag data
 
 ## Player
