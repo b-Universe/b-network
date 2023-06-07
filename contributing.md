@@ -12,14 +12,11 @@ Thanks for taking the time to contribute to the projects here. Whether it's just
 - [`[What to know before getting started]`](https://github.com/bUniverse/b-network/blob/master/contributing.md#What&20to&20know&20before&20getting&20started)
   - [`[Repositories and URLs]`]()
   - [`[Design Decisions]`]()
-
---- 
-> **_NOTE:_** The following is drafted contributing information not-yet written.
-  <details>
-  <summary> ( Show / Hide ) </summary>
-
 - [`[How can I contribute?]`]()
   - [`[Reporting bugs]`]()
+
+--- 
+
   - [`[Suggesting enhancements]`]()
   - [`[Your first code contribution]`]()
   - [`[Issues]`]()
@@ -31,7 +28,7 @@ Thanks for taking the time to contribute to the projects here. Whether it's just
   - [`[Documentation styleguide]`]()
 - [`[Additional notes]`]()
   - [`[Issue and pull request labels]`]()
-</details>
+
 
 ---
 
@@ -79,15 +76,35 @@ Lastly, while this guide is meant to be guideline for contribution, abiding cons
 When making a significant decision in how to maintain the projects and what we can or cannot support, we should document it in the [`[metacognition]`](https://github.com/b-Universe/b-network/blob/main/metacognition.md). Things like flags, sub-flags, "permissions"<sup>🌮4</sup>, and commands should be consistent in notating their names, descriptions, and optimally usage. If you have a question about how to be consistent, check to see if anything relevant may exist. If it is not documented there, asking in our [`[Development]`](https://discord.com/channels/901618453356630046/901618453746712656) Discord channel is probably the fastest way to determine how to document it. Else-wise, utilizing your best common sense and judgement will always be appreciated.
 
 ---
-  <!-- below is drafted placeholders -->
-> **_NOTE:_** The following is drafted contributing information not-yet written.
-
-<details>
-
-<summary>( Show / Hide )</summary>  
 
 ## **How can I contribute?**
+
 ### **Reporting bugs**
+
+This section guiides you through submitting bug reports. Following these guidelines helps maintainers and the community understand your report, verifiably replicate the issue if possible, and/or find related reports.
+
+Before creating a bug report, Verify against [`[this check-list]`](https://github.com/bUniverse/b-network/blob/master/contributing.md#Before%20submitting%20a%20bug%20report) to determine the type of bug this is. If this happens because you did something you noticed would explicitly fail to work properly, it's more appreciated to reference and indicate this bug before performing it and causing damage. Malicious intent is never helpful.
+
+#### Before submitting a bug report
+
+- Both check and reference syntax, meta, and any documentation.
+  - If the root cause is because of something such as \[\[uneven brackets] for example, we can indicate the syntax is being broken.
+  - If the meta indicates usage is not valid, is not documented, or is purely made up, this may be an indicator this is a valid bug.
+  - If the documentation explicitly states something should be used differently or it is not documented at all, this could indicate the problem was over-looked when we wrote it.
+- Verify script names, definition names, and flags used within scripts or files.
+  - For scripts, we can simply verify a script is both valid and exists, or is being used properly:
+    - The script referenced for `run` or `inject` commands both exist and are used correctly.
+    - Script definitions are at least truthy when attempted to use or will always function as needed.
+    - Flags exist when referenced unless checking to see if they exist first or are at least truthy.
+    - Flags are being used correctly (eg, a flag formatted as a [`[MapTag]`](https://meta.denizenscript.com/Docs/ObjectTypes/map#maptag) is being used as MapTag and not as some other object).
+  - For resource pack files, we can cross-reference the appropriate texture and model file references to verify:
+    - The file is formatted correctly (ie, lowercase-only filenames, correct extension(s)).
+    - The referenced model or texture file exists.
+    - The files referenced are appropriately targeted in the resource pack atlas.
+- For all other language files that utilize \<tag>opening and closing tags<\tag>, that they are correctly closed.
+
+--- 
+
 ### **Suggesting enhancements**
 ### **Your first code contribution**
 ### **Issues**
@@ -106,8 +123,6 @@ When making a significant decision in how to maintain the projects and what we c
 ## **Additional notes**
 
 ### **Issue and pull request labels**
-
-</details>
 
 ---
 
