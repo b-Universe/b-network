@@ -17,3 +17,5 @@ bdata:
         Authorization: <secret[ai]>
         Content-Type: application/json
         User-Agent: b
+    GitHub:
+      embed_image: https<&co>//cdn.discordapp.com/attachments/901618453746712665/911062223244374046/unknown.png
