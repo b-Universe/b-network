@@ -27,7 +27,7 @@ github_api_task:
             author_icon_url: <[data.sender.avatar_url]>
             title: "`[<[data.repository.name]>]` | <[data.commits].size.proc[commit_count_format]>"
             title_url: <[data.repository.html_url]>
-            thumbnail: https://cdn.discordapp.com/attachments/901618453746712665/911062223244374046/unknown.png
+            thumbnail: <script[bdata].parsed_key[api.GitHub.embed_image]>
 
         - define description <list>
         - define hash <[data.head_commit.id].substring[0,7]>
@@ -54,7 +54,7 @@ github_api_task:
             author_url: <[data.sender.html_url]>
             author_icon_url: <[data.sender.avatar_url]>
             title_url: <[data.repository.html_url]>
-            thumbnail: https://cdn.discordapp.com/attachments/901618453746712665/911062223244374046/unknown.png
+            thumbnail: <script[bdata].parsed_key[api.GitHub.embed_image]>
 
         - define description <list_single[<[data.repository.description]>]>
         - if <[data.repository.fork]>:
