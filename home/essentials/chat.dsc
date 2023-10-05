@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 #   @   ██ [ current features ] ██
 #   %   ██ chat history loaded on join
 #   %   ██ messages can be deleted
@@ -555,99 +556,270 @@ chat_settings_command:
         - else:
           - flag player behr.essentials.chat.settings.show_deleted_messages
           - narrate "<&[green]>Deleted messages will now be shown"
+=======
+#chat_formatting:
+#  type: world
+#  debug: false
+#  events:
+#  on player chats:
+#    - announce to_console "<&6><&lb><&e>Event<&6><&co> <&a>player chats<&6><&rb> <&b>| <&6><&lt><&e>context<&6>.<&e>message<&6><&gt> <&b>| <&a><context.message>"
+#    - determine passively cancelled
+#    - narrate <context.message.proc[player_chat_format]> targets:<server.online_players> from:<player.uuid>
+>>>>>>> Stashed changes
 
 player_chat_format:
   type: procedure
   debug: false
   definitions: message
   script:
-    # % ██ [ Format nameplate ] ██
-    - define name_click "/msg <player.name> "
-    - define name_hover <list>
-    - if <player.has_flag[behr.essentials.nickname]>:
-      - define name <player.flag[behr.essentials.nickname]>
-      - define name_hover "<[name_hover].include_single[<&color[#F3FFAD]>Real Name<&color[#26FFC9]><&co> <&color[#C1F2F7]><player.name>]>"
-    - else:
-      - define name <player.name>
+  # % ██ [ Format nameplate ] ██
+  - define name_click "/msg <player.name> "
+  - define name_hover <list>
+  - if <player.has_flag[behr.essentials.nickname]>:
+    - define name <player.flag[behr.essentials.nickname]>
+    - define name_hover "<[name_hover].include_single[<&color[#F3FFAD]>Real Name<&color[#26FFC9]><&co> <&color[#C1F2F7]><player.name>]>"
+  - else:
+    - define name <player.name>
 
+<<<<<<< Updated upstream
     - define name_hover "<[name_hover].include_single[<&color[#F3FFAD]>Click to message].include_single[<&color[#F3FFAD]>Shift-Click to mention]>"
     - define nameplate "<[name].on_hover[<[name_hover].separated_by[<n>]>].on_click[<[name_click]>].type[SUGGEST_COMMAND].with_insertion[@<player.name> ]>"
+=======
+  - define name_hover "<[name_hover].include_single[<&color[#F3FFAD]>Click to message].include_single[<&color[#F3FFAD]>Shift-Click to mention]>"
+  - define nameplate "<[name].on_hover[<[name_hover].separated_by[<n>]>].on_click[<[name_click]>].type[SUGGEST_COMMAND].with_insertion[<&at><player.name> ]>"
+>>>>>>> Stashed changes
 
-    # % ██ [ Check for Discord connection ] ██
-    - if <player.has_flag[behr.essentials.discord.connected]>:
-      - define name_hover "<[name_hover].include_single[<&color[#F3FFAD]>Discord<&color[#26FFC9]><&co> <&color[#C1F2F7]><player.flag[behr.essentials.discord.username]>]>"
+  # % ██ [ Check for Discord connection ] ██
+  - if <player.has_flag[behr.essentials.discord.connected]>:
+    - define name_hover "<[name_hover].include_single[<&color[#F3FFAD]>Discord<&color[#26FFC9]><&co> <&color[#C1F2F7]><player.flag[behr.essentials.discord.username]>]>"
 
-    - define text_hover "<&color[#F3FFAD]>Timestamp<&color[#26FFC9]><&co> <&color[#C1F2F7]><util.time_now.format[E, MMM d, y h:mm a].replace[,].with[<&color[#26FFC9]>,<&color[#C1F2F7]>]>"
-    - define message <[message].proc[chat_color_format].on_hover[<[text_hover]>].with_insertion[<[message]>]>
+  - define text_hover "<&color[#F3FFAD]>Timestamp<&color[#26FFC9]><&co> <&color[#C1F2F7]><util.time_now.format[E, MMM d, y h:mm a].replace[,].with[<&color[#26FFC9]>,<&color[#C1F2F7]>]>"
+  - define message <[message].proc[chat_color_format].on_hover[<[text_hover]>].with_insertion[<[message]>]>
 
-    - determine "<[nameplate]><&color[#C1F2F7]><&co> <[message]>"
+  - determine "<[nameplate]><&color[#C1F2F7]><&co> <[message]>"
 
 chat_color_format:
   type: procedure
   debug: false
   definitions: text
   script:
-    - if <[text].contains_text[&]>:
-      - if <[text].starts_with[&]>:
-        - if <color[<[text].char_at[2]>].is_truthy>:
-          - define new_text <list_single[<&color[<[text].char_at[2]>]><[text].split[&].first.substring[3,999]>]>
-        - else:
-          - define new_text <list_single[<[text].split[&].first>]>
-      - else:
-        - define new_text <list_single[<[text].split[&].first>]>
-
-      - foreach <[text].split[&].remove[first]> as:string:
-        # @ hex coloring via &# prefix, eg &#FFFFFFwhite
-        - if <[string].starts_with[<&ns>]> && <[string].length> > 8 && <[string].substring[2,7].matches_character_set[ABCDEFabcdef0123456789]>:
-          - if <color[<[string].substring[1,7]>].is_truthy>:
-            - define new_text <[new_text].include_single[<[string].substring[8,999].color[<[new_text].last.last_color.if_null[#C1F2F7]>].color[<[string].substring[1,7]>]>]>
-          - else:
-            - define new_text <[new_text].include_single[<[string].substring[8,999].color[<[new_text].last.last_color.if_null[#C1F2F7]>]>]>
-
-        - else:
-          - define tag <[string].char_at[1]>
-          - choose <[tag]>:
-
-        # @ standard &color-tags
-            - case 0 1 2 3 4 5 6 7 8 9 a b c d e:
-              - define last_format <[new_text].unseparated.last_color.if_null[<empty>]>
-
-              - define new_text <[new_text].include_single[<&color[<[tag]>]>]>
-              - foreach <bold>|<italic>|<strikethrough>|<underline> as:format:
-                - if <[last_format].contains_text[<[format]>]>:
-                  - define new_text <[new_text].include_single[<[format]>]>
-              - define new_text <[new_text].include_single[<[string].substring[2,999]>]>
-
-        # @ standard &format-tags
-            - case l m n o:
-              - if <[new_text].last.from_secret_colors.ends_with[rainbow].if_null[false]>:
-                - define new_text <[new_text].remove[last].include_single[<element[<[new_text].last><&color[<[tag]>]><[string].substring[2,999]>].hex_rainbow><element[rainbow].to_secret_colors>]>
-              - else:
-                - define new_text <[new_text].include_single[<&color[<[tag]>]><[string].substring[2,999]>]>
-
-        # @ return to my own white color-tag
-            - case r f:
-              - define new_text <[new_text].include_single[<reset><&color[#C1F2F7]><[string].substring[2,999]>]>
-
-        # @ custom &z rainbow color-tag
-            - case z:
-              - define new_text <[new_text].include_single[<[string].after[z].hex_rainbow><element[rainbow].to_secret_colors>]>
-
-        # @ custom &k comic sans color-tag
-            - case k:
-              - if <[new_text].last.from_secret_colors.ends_with[rainbow].if_null[false]>:
-                - define new_text <[new_text].remove[last].include_single[<element[<&font[utility:comic_sans]><[new_text].last><&color[<[tag]>]><[string].substring[2,999]>].hex_rainbow><element[rainbow].to_secret_colors>]>
-              - else:
-                - define new_text <[new_text].include_single[<&font[utility:comic_sans]><[string].substring[2,999]>]>
-
-        # @ default text
-            - default:
-              - define new_text <[new_text].include_single[<[new_text].last.last_color.if_null[<empty>]><[string]>]>
-
-      - determine <[new_text].unseparated>
-
-    # @ no formatting
+  - if <[text].contains_text[&]>:
+    - if <[text].starts_with[&]>:
+    - if <color[<[text].char_at[2]>].is_truthy>:
+      - define new_text <list_single[<&color[<[text].char_at[2]>]><[text].split[&].first.substring[3,999]>]>
     - else:
+      - define new_text <list_single[<[text].split[&].first>]>
+    - else:
+    - define new_text <list_single[<[text].split[&].first>]>
+
+    - foreach <[text].split[&].remove[first]> as:string:
+    # @ hex coloring via &# prefix, eg &#FFFFFFwhite
+    - if <[string].starts_with[<&ns>]> && <[string].length> > 8 && <[string].substring[2,7].matches_character_set[ABCDEFabcdef0123456789]>:
+      - if <color[<[string].substring[1,7]>].is_truthy>:
+      - define new_text <[new_text].include_single[<[string].substring[8,999].color[<[new_text].last.last_color.if_null[#C1F2F7]>].color[<[string].substring[1,7]>]>]>
+      - else:
+      - define new_text <[new_text].include_single[<[string].substring[8,999].color[<[new_text].last.last_color.if_null[#C1F2F7]>]>]>
+
+    - else:
+      - define tag <[string].char_at[1]>
+      - choose <[tag]>:
+
+    # @ standard &color-tags
+      - case 0 1 2 3 4 5 6 7 8 9 a b c d e:
+        - define last_format <[new_text].unseparated.last_color.if_null[<empty>]>
+
+        - define new_text <[new_text].include_single[<&color[<[tag]>]>]>
+        - foreach <bold>|<italic>|<strikethrough>|<underline> as:format:
+        - if <[last_format].contains_text[<[format]>]>:
+          - define new_text <[new_text].include_single[<[format]>]>
+        - define new_text <[new_text].include_single[<[string].substring[2,999]>]>
+
+    # @ standard &format-tags
+      - case l m n o:
+        - if <[new_text].last.from_secret_colors.ends_with[rainbow].if_null[false]>:
+        - define new_text <[new_text].remove[last].include_single[<element[<[new_text].last><&color[<[tag]>]><[string].substring[2,999]>].hex_rainbow><element[rainbow].to_secret_colors>]>
+        - else:
+        - define new_text <[new_text].include_single[<&color[<[tag]>]><[string].substring[2,999]>]>
+
+    # @ return to my own white color-tag
+      - case r f:
+        - define new_text <[new_text].include_single[<reset><&color[#C1F2F7]><[string].substring[2,999]>]>
+
+    # @ custom &z rainbow color-tag
+      - case z:
+        - define new_text <[new_text].include_single[<[string].after[z].hex_rainbow><element[rainbow].to_secret_colors>]>
+
+    # @ custom &k comic sans color-tag
+      - case k:
+        - if <[new_text].last.from_secret_colors.ends_with[rainbow].if_null[false]>:
+        - define new_text <[new_text].remove[last].include_single[<element[<&font[utility:comic_sans]><[new_text].last><&color[<[tag]>]><[string].substring[2,999]>].hex_rainbow><element[rainbow].to_secret_colors>]>
+        - else:
+        - define new_text <[new_text].include_single[<&font[utility:comic_sans]><[string].substring[2,999]>]>
+
+    # @ default text
+      - default:
+        - define new_text <[new_text].include_single[<[new_text].last.last_color.if_null[<empty>]><[string]>]>
+
+    - determine <[new_text].unseparated>
+
+  # @ no formatting
+  - else:
+    - determine <[text]>
+
+
+
+
+
+
+# todo: .proc[player_chat_format]> targets:<server.online_players> from:<player.uuid>
+ChatSystem:
+  type: world
+  debug: false
+  data:
+    parseables:
+      - [hand]
+      - [offhand]
+      - [helmet]
+      - [chestplate]
+      - [boots]
+      - [leggings]
+      - [c]
+      - [i]
+      - [g]
+      - [d]
+      - [e]
+
+  events:
+    on player chats:
+    - determine cancelled passively
+    - define message <context.message.proc[player_chat_format]>
+    ## Chat links
+
+    - if <[message].contains_any_text[<script.data_key[data.parseables]>]>:
+      - define equipment <player.equipment_map>
+      - definemap slots:
+        hand: <player.item_in_hand>
+        offhand: <player.item_in_offhand>
+        boots: <[equipment.boots].if_null[<item[air]>]>
+        leggings: <[equipment.leggings].if_null[<item[air]>]>
+        chestplate: <[equipment.chestplate].if_null[<item[air]>]>
+        helmet: <[equipment.helmet].if_null[<item[air]>]>
+      - definemap parseables:
+        [c]: <&chr[Eff1].font[economy-icons].color[white].on_hover[<&color[#be5935]>Kupfer]>
+        [i]: <&chr[Eff2].font[economy-icons].color[white].on_hover[<&color[#d4d4d4]>Eisen]>
+        [g]: <&chr[Eff3].font[economy-icons].color[white].on_hover[<&color[#f9f15e]>Gold]>
+        [d]: <&chr[Eff4].font[economy-icons].color[white].on_hover[<&color[#49e9d5]>Diamant]>
+        [e]: <&chr[Eff5].font[economy-icons].color[white].on_hover[<&color[#17d961]>Smaragd]>
+      - define message <[slots].include[<player.equipment_map>].proc[chat_link_parser].context[<list_single[<[message]>].include_single[<[parseables]>]>]>
+    ## Pings
+    - if <[message].advanced_matches[*@*]>:
+      - inject chat_ping_task
+    - define prefix <[message].char_at[1]>
+
+    # Output
+    - narrate <[message]> targets:<server.online_players>
+    - announce <[message]> to_console
+chat_log:
+  type: task
+  definitions: message
+  script:
+  - ~log type:info "<player.name> <[message]>" file:chat.log
+
+chat_link_parser:
+  type: procedure
+  debug: false
+  definitions: slots|message|coins
+  script:
+  - foreach <[slots]> key:type as:item:
+    - if <[message].contains_text[<[type]>]>:
+      - define display <[item].display.if_null[<[item].material.translated_name>]>
+      - define color <[item].display.exists.if_true[<[display].last_color>].if_false[white]>
+      - define message <[message].replace_text[[<[type]>]].with[<element[[<[display]>]].color[<[color]>].hover_item[<[item]>]>]>
+  - foreach <[coins]> key:type as:icon:
+    - define message <[message].replace_text[<[type]>].with[<[icon]>]>
+  - determine <[message]>
+chat_ping_task:
+  type: task
+  debug: false
+  script:
+  - define players <server.online_players.filter_tag[<[message].strip_color.split.contains[@<[filter_value].name>]>]>
+  - if <[players].any>:
+    - narrate targets:<[players]> "<&6><player.name><&b> hat dich erwähnt!"
+    - playsound <[players]> sound:block_note_block_bell
+    - toast targets:<[players]> "<&6><player.name><&b> hat dich erwähnt!" frame:goal
+  - define message <proc[chat_ping_parser].context[<list[<[message]>].include_single[<[players].parse_tag[@<[parse_value].name>]>]>]>
+trade_chat_format:
+  type: format
+  debug: false
+  format: <element[<gold>[Handel]].on_hover[<util.time_now.format[HH:MM:ss]>]> <player.chat_prefix.parsed> <red><&gt> <gold><[text]>
+default_chat_format:
+  type: format
+  debug: false
+  format: <element[<gray>[Chat]]> <player.chat_prefix.parsed><red><&gt> <gray><[text]>
+system_chat_format:
+  type: format
+  debug: false
+  format: <element[<gray>[System]].on_hover[<util.time_now.format[HH:MM:ss]>]> <&[darkey_gray]><[text]>
+chat_ping_parser:
+  type: procedure
+  debug: false
+  definitions: message|players
+  script:
+  - foreach <[players]>:
+    - define message <[message].replace_text[<[value]>].with[<[value].color[#ffcc00]>]>
+  - determine <[message]>
+
+chat_logger:
+  type: world
+  debug: false
+  data:
+    filters:
+      system:
+        - <&lb>System<&rb>
+        - <&lb>Angelturnier<&rb>
+        - <&lb>IceCraft<&rb>
+        - <&lb>Pay<&rb>
+        - <&lb>Money<&rb>
+        - <&lb>Trade<&rb>
+        - <&lb>Blocks<&rb>
+        - <&lb>Shop<&rb>
+        - <&lb>Vote<&rb>
+        - <&lb>Userhandel<&rb>
+        - <&lb>Halloween<&rb>
+        - <&lb>SimpleSit<&rb>
+        - <&lb>dPrevention<&rb>
+        - <&lb>Lexikon<&rb>
+        - <&lb>Enchant<&rb>
+        - <&lb>Campfire<&rb>
+        - <&lb>Horse<&rb>
+        - <&lb>Quest<&rb>
+        - <&lb>Warn<&rb>
+        - <&lb>Ban<&rb>
+      handel:
+        - <&lb>Handel<&rb>
+      chat:
+        - <&lb>Chat<&rb>
+      all:
+        - everything
+  events:
+    on player receives message:
+    - define data <script.parsed_key[data.filters]>
+    - define message <context.message>
+    - define first <[message].strip_color.split.first>
+    - define lines <n.repeat[100]>
+    - define player_filter <player.flag[filter].if_null[all]>
+    # Logging
+    - if !<player.has_flag[stop_log]>:
+      - foreach <[data]> key:filter as:string:
+        - if <[first]> in <[string]> || <[filter]> == all:
+          - flag <player> chat.<[filter]>:->:<[message]>
+          - define history <player.flag[chat.<[filter]>]>
+          - if <[history].size> > 30:
+            - flag <player> chat.<[filter]>[1]:<-
+          - if <[player_filter]> != <[filter]> && <[player_filter]> != all:
+            - flag <player> chat.unread.<[filter]>
+    - else:
+<<<<<<< Updated upstream
       - determine <[text]>
 
 #- narrate <context.message.proc[player_chat_format]> targets:<server.online_players> from:<player.uuid>
@@ -716,3 +888,98 @@ chat_channel_command:
       - narrate actions/reload
     - else:
       - narrate "<&[green]>You switched to the <&[yellow]><[channel]> <&[green]>channel"
+=======
+      - stop
+    # Prevent a player from receiving messages, when he's not in the correct channel.
+    - define filter <player.flag[filter].if_null[all]>
+    - if <[data].contains[<[filter]>]> && <[filter]> != all:
+      - if <[first]> not in <[data].get[<[filter]>]>:
+        - determine cancelled
+    - inject chat_create_menu
+    - define history <player.flag[chat.<[filter]>].include[<player.flag[chat.menu]>]>
+    - determine MESSAGE:<list[<[lines]>].include[<[history]>].separated_by[<&r><n>]> passively
+
+    on player joins:
+    - inject chat_create_menu
+    on player quits:
+    - flag <player> chat:!
+    - flag <player> filter:!
+    on player completes advancement:
+    - determine no_message
+    on player dies:
+    - determine no_message
+
+chat_change_filter:
+  type: task
+  debug: false
+  definitions: filter
+  script:
+  - flag <player> stop_log expire:1t
+  - flag <player> filter:<[filter]>
+  - flag <player> chat.unread.<[filter]>:!
+  # Generate menu
+  - inject chat_create_menu
+  # If the player haven't received a message of this channel yet stop.
+  - inject chat_output
+chat_generate_output:
+  type: procedure
+  debug: false
+  definitions: filter
+  script:
+  - define chat <player.flag[chat.<[filter]>].if_null[<list>]>
+  - define menu <player.flag[chat.menu]>
+  - define fill <n.repeat_as_list[<element[100].sub[<[chat].size>]>]>
+  - determine <[fill].include[<[chat]>].include[<[menu]>].separated_by[<&r><n>]>
+chat_output:
+  type: task
+  debug: false
+  definitions: filter
+  script:
+  - narrate <[filter].proc[chat_generate_output]>
+chat_create_menu:
+  type: task
+  debug: false
+  data:
+    used:
+      all: <&chr[Eff2].font[chat-icons].on_click[<empty>].type[SUGGEST_COMMAND]>
+      system: <&chr[Eff4].font[chat-icons]>
+      handel: <&chr[Eff6].font[chat-icons].on_click[$].type[SUGGEST_COMMAND]>
+      chat: <&chr[Eff8].font[chat-icons].on_click[<empty>].type[SUGGEST_COMMAND]>
+  script:
+  - foreach <script[chat_filter].parsed_key[data.filters]> key:filter as:icon:
+    - if <player.flag[filter].if_null[all]> == <[filter]>:
+      - define messag:->:<script.parsed_key[data.used.<[filter]>]>
+      - foreach next
+    - if <player.has_flag[chat.unread.<[filter]>]>:
+      - define "messag:->:<&color[#feffff]><[icon].on_click[/chat <[filter]>]>"
+      - foreach next
+    - define "messag:->:<white><[icon].on_click[/chat <[filter]>]>"
+  - flag <player> chat.menu:<[messag].separated_by[<&chr[F801].font[spaces]>]>
+chat_filter:
+  type: command
+  name: chat
+  debug: false
+  description: setup filter
+  usage: /chat [all/system/handel/chat]
+  tab completions:
+    1: system|all|handel|chat
+  data:
+    filters:
+      all: <&chr[Eff1].font[chat-icons]>
+      system: <&chr[Eff3].font[chat-icons]>
+      handel: <&chr[Eff5].font[chat-icons]>
+      chat: <&chr[Eff7].font[chat-icons]>
+  script:
+  - flag <player> stop_log expire:1t
+  - choose <context.args.size>:
+    - case 1:
+      - define filter <context.args.last>
+      - if !<script.data_key[data.filters].contains[<[filter]>]>:
+        - narrate "Dies ist kein valider Filter." format:system_chat_format
+        - stop
+      - run chat_change_filter def.filter:<[filter]>
+    - default:
+      - inject chat_create_menu
+      - define filter <player.flag[filter].if_null[all]>
+      - inject chat_output
+>>>>>>> Stashed changes
