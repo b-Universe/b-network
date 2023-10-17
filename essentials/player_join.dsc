@@ -22,7 +22,7 @@ player_join_handler:
         # ██ [ default profile flags and data ] ██:
         - flag player behr.essentials.profile.first_joined:<util.time_now>
         - flag player behr.essentials.profile.stats.construction.level:1
-        - flag player behr.essentials.profile.stats.construction.experience:1
+        - flag player behr.essentials.profile.stats.construction.experience:0
         - flag player behr.essentials.profile.data.names_owned.<player.name>:<util.time_now>
         - flag player behr.essentials.settings.playsounds
 

@@ -3,11 +3,15 @@ experience_handler:
   debug: false
   events:
     on player breaks block:
+      - if !<player.has_flag[behr.essentials.profile.stats.construction]>:
+        - flag player behr.essentials.profile.stats.construction.experience:0
+        - flag player behr.essentials.profile.stats.construction.level:1
+
       - flag player behr.essentials.profile.stats.construction.experience:+:<util.random.int[1].to[5]>
       - define construction <player.flag[behr.essentials.profile.stats.construction]>
 
       - define next_level <[construction.level].add[1]>
-      - if <[construction.experience]> > <script[level_chart].data_key[data.level.<[next_level]>]>:
+      - if <[construction.experience]> > <script[level_chart].data_key[level.<[next_level]>]>:
         - playsound <player> entity_player_levelup pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3
         - toast "<&a>Construction Levelup<&co> <&e><[next_level]>" frame:goal icon:bricks
         - narrate "<&a>You leveled up! Construction level<&co> <[next_level]>"
