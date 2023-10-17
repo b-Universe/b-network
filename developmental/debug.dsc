@@ -7,7 +7,7 @@ debugging_command:
   aliases:
     - /debug
   tab complete:
-    - if <player.has_flag[behr.developmental.debug_mode]>:
+    - if <server.has_flag[behr.developmental.debug_mode]>:
       - actionbar "<&e>Debug mode is currently <&a>enabled"
     - else:
       - actionbar "<&e>Debug mode is currently <&c>disabled"
