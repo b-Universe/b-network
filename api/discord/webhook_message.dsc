@@ -1,5 +1,6 @@
 discord_webhook_message:
   type: task
+  debug: false
   definitions: webhook_name|payload
   data:
     webhooks:
