@@ -18,7 +18,7 @@ reload_command:
             hover:
               - <&a>Reloaded successfully
               - <&b>Click to celebrate!
-              - <&e>Script types (<&a><[scripts].size>)<&co>
+              - <&e>Script types (<&a><[scripts].size><&e>)<&co>
               - <[scripts].parse_tag[<[parse_value].data_key[type]>].deduplicate.parse_tag[  <&e><[parse_value].to_titlecase><&co> <&a><util.scripts.filter[container_type.equals[<[parse_value]>]].size>].separated_by[<n>]>
 
         - narrate <[message.text].on_hover[<[message.hover].separated_by[<n>]>].on_click[yay]>
