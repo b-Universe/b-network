@@ -21,8 +21,7 @@ restart_handler:
       - run restart_task def:60s|5t
 
     on restart command:
-      - determine fulfilled passively
-      - stop if:!<context.source_type.equals[server]>
+      - determine fulfilled passively if:<context.source_type.equals[server]>
       - run restart_task def:<context.args>
 
     after server start:
@@ -37,7 +36,9 @@ restart_task:
       - if <[initial_duration]> == instant:
         - define initial_duration <duration[1t]>
       - else:
-        - define initial_duration <duration[<[initial_duration]>]>
+        - define duration_input <[initial_duration]>
+        - inject verify_duration
+        - define initial_duration <duration[<[duration]>]>
     - else:
       - define initial_duration <duration[10s]>
 
