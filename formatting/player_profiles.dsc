@@ -1,5 +1,6 @@
 player_profiles:
   type: procedure
+  debug: false
   definitions: uuid|type|time
   script:
     - define time <util.time_now> if:!<[time].format[MM-dd].is_truthy>

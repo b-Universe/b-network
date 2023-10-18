@@ -1,5 +1,6 @@
 verify_duration:
   type: task
+  debug: false
   definitions: duration_input
   script:
     # % ██ [ start with empty lists                                          ] ██:
