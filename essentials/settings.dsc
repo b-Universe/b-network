@@ -5,8 +5,55 @@ settings_command:
   usage: /settings
   description: Configures your b settings
   script:
-    - inventory open destination:settings_main_menu
-    - playsound <player> entity_player_levelup pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3 if:<player.has_flag[behr.essentials.settings.playsounds]>
+    # ██ [  open settings menu                             ] ██:
+    - if <context.args.is_empty>:
+      - inventory open destination:settings_main_menu
+      - playsound <player> entity_player_levelup pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3 if:<player.has_flag[behr.essentials.settings.playsounds]>
+      - stop
+
+    # ██ [  choose setting category to configure           ] ██:
+    - choose <context.args.first>:
+      - case commands:
+        # ██ [  choose the setting command to configure    ] ██:
+        - define command <context.args.first>
+        - choose <[command]>:
+          # ██ [  adjust whether players hear sounds when using commands, or not ] ██:
+          - case playsound:
+            - if <context.args.size> > 3:
+              - narrate "<&c>invalid usage - no command setting uses more than true/false values"
+              - stop
+
+            # ██ [  define the setting we're changing to   ] ██:
+            - if <context.args.size> == 2:
+              - define new_setting <player.has_flag[behr.essentials.settings.playsounds].not>
+            - else:
+              - define new_setting <context.args.last>
+              - if <[new_setting]> !in true|false:
+                - narrate "<&c>invalid usage - this can only be true or false"
+                - stop
+
+            # ██ [  base definitions based on new setting  ] ██:
+            - if <[new_setting]>:
+              - flag player behr.essentials.settings.playsounds:!
+              - definemap message:
+                  text: <&a>Commands and menu sounds disabled
+                  hover_1: <&b>Click to re-enable<n>command and menu sounds
+                  hover_2: <&b>Command and menu sounds are disabled
+                  click: /settings commands playsound true
+
+            - else:
+              - flag player behr.essentials.settings.playsounds
+              - definemap message:
+                  text: <&a>Commands and menu sounds enabled
+                  hover_1: <&b>Click to re-disable<n>command and menu sounds
+                  hover_2: <&b>Command and menu sounds are enabled
+                  click: /settings commands playsound false
+            - define message.hover_3 "<&e>*Excludes bEdit commands"
+
+            # ██ [  send confirmation                      ] ██:
+            - narrate <element[<&lb>⏺<&rb> ].on_hover[<[message.hover_1]>].on_click[<[message.click]>]><[message.text].on_hover[<[message.hover_2]>]><element[*].on_hover[<[message.hover_3]>]>
+            - playsound <player> entity_player_levelup pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3 if:<player.has_flag[behr.essentials.settings.playsounds]>
+
 
   data:
     categories:
@@ -23,6 +70,7 @@ settings_menu_handler:
   debug: true
   events:
     after player clicks settings_commands_button in settings_main_menu:
+      - narrate fire
       - define inventory <inventory[settings_commands_main_menu]>
       # playsound/others
       - if <player.has_flag[behr.essentials.settings.playsounds]>:
@@ -44,20 +92,22 @@ settings_menu_handler:
         - flag player behr.essentials.settings.playsounds:!
         - definemap message:
             text: <&a>Commands and menu sounds disabled
-            hover_1: <&b>Click to enable command<n>and menu sounds
+            hover_1: <&b>Click to re-enable<n>command and menu sounds
             hover_2: <&b>Command and menu sounds are disabled
+            click: /settings commands playsound true
         - inventory set origin:<item[settings_commands_playsound].with[material=red_stained_glass;display=<&b><italic>Command and Menu Sounds;lore=<&e>Setting<&co> <&a>disabled]> destination:<context.inventory> slot:1
 
       - else:
         - flag player behr.essentials.settings.playsounds
         - definemap message:
             text: <&a>Commands and menu sounds enabled
-            hover_1: <&b>Click to disable command<n>and menu sounds
+            hover_1: <&b>Click to re-disable<n>command and menu sounds
             hover_2: <&b>Command and menu sounds are enabled
+            click: /settings commands playsound false
         - inventory set origin:<item[settings_commands_playsound].with[material=green_stained_glass;display=<&b><italic>Command and Menu Sounds;lore=<&e>Setting<&co> <&a>enabled]> destination:<context.inventory> slot:1
 
       - define message.hover_3 "<&e>*Excludes bEdit commands"
-      - narrate <element[<&lb>⏺<&rb> ].on_hover[<[message.hover_1]>]><[message.text].on_hover[<[message.hover_2]>]><element[*].on_hover[<[message.hover_3]>]>
+      - narrate <element[<&lb>⏺<&rb> ].on_hover[<[message.hover_1]>].on_click[<[message.click]>]><[message.text].on_hover[<[message.hover_2]>]><element[*].on_hover[<[message.hover_3]>]>
 
       - playsound <player> entity_player_levelup pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3 if:<player.has_flag[behr.essentials.settings.playsounds]>
 
