@@ -5,12 +5,12 @@ gamemode_command:
   description: Adjusts your gamemode
   usage: /gamemode <&lt>adventure|builder|creative|survival|spectator<&gt>
   script:
-  # % ██ [ check if using too many arguments       ] ██
+  # % ██ [ check if using too many arguments       ] ██:
     - if <context.args.size> > 1:
       - narrate "<&c>Invalid usage"
       - stop
 
-  # % ██ [ check if opening the gui                ] ██
+  # % ██ [ check if opening the gui                ] ██:
     - if <context.args.is_empty>:
       - define items <list>
       - foreach adventure|builder|creative|survival|spectator as:gamemode:
@@ -31,9 +31,10 @@ gamemode_command:
         - flag server behr.essentials.guis.gamemode.pregenerated:<[inventory]>
         - inventory open d:<server.flag[behr.essentials.guis.gamemode.pregenerated]>
         - playsound <player> entity_player_levelup pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3 if:<player.has_flag[behr.essentials.settings.playsounds]>
+      - stop
 
     - define gamemodes <list[adventure|builder|creative|survival|spectator]>
-    - define current_gamemode <player.flag[behr.essentials.gamemode].if_null[survival]>
+    - define current_gamemode <player.flag[behr.essentials.gamemode]>
     - define new_gamemode <context.args.first>
 
     - choose <[new_gamemode]>:
@@ -44,14 +45,7 @@ gamemode_command:
           - narrate "<&c>That gamemode is unavailable"
 
       - case builder:
-        - if <player.has_flag[behr.essentials.permission.<[new_gamemode]>]>:
-          - adjust <player> gamemode:survival
-          - adjust <player> can_fly:true
-          - adjust <player> flying:!<player.is_on_ground>
-          - narrate "<&a>Changed gamemode to Builder"
-
-        - else:
-          - narrate "<&e>Nothing interesting happens"
+          - inject builder_gamemode_task
 
       - default:
         - narrate "<&c>Invalid usage - <&e>valid options are <[gamemodes].exclude[<[current_gamemode]>].filter_tag[<player.has_flag[behr.essentials.permission.<[filter_value]>]>]>"
@@ -73,33 +67,32 @@ gamemode_menu_handler:
 
       - if <[current_gamemode]> == <[new_gamemode]>:
         - narrate "<&c>You're already in <[new_gamemode]>"
-      - else:
-        - if <player.has_flag[behr.essentials.permission.<[new_gamemode]>]>:
-          - if <[new_gamemode]> != builder:
-            - definemap slot_map:
-                1: adventure
-                3: builder
-                5: creative
-                7: survival
-                9: spectator
-            - inventory adjust destination:<context.inventory> slot:<context.slot> material:lime_stained_glass
-            - inventory adjust destination:<context.inventory> slot:<context.slot> "lore:<&a>Current gamemode"
-            - define old_slot <[slot_map].invert.get[<[current_gamemode]>]>
-            - inventory adjust destination:<context.inventory> slot:<[old_slot]> material:white_stained_glass
-            - inventory adjust destination:<context.inventory> slot:<[old_slot]> "lore:<&a>Click to change to|<&a><[slot_map.<context.slot>]> gamemode"
+        - stop
 
-            - flag <player> behr.essentials.last_gamemode:<[current_gamemode]>
-            - flag <player> behr.essentials.gamemode:<[new_gamemode]>
-            - adjust <player> gamemode:<[new_gamemode]>
-            - narrate "<&a>Changed gamemode to <[new_gamemode]>"
-          - else:
-            - narrate "<&e>Nothing interesting happens"
-        - else:
-          - narrate "<&c>That gamemode is unavailable"
+      - if !<player.has_flag[behr.essentials.permission.<[new_gamemode]>]>:
+        - narrate "<&c>That gamemode is unavailable"
+        - stop
 
-    after server start:
-      - stop if:<server.has_flag[behr.essentials.guis.gamemode.pregenerated]>
-# /ex run "gamemode_menu_handler.events.after server start"
+      - if <[new_gamemode]> == builder:
+        - inject builder_gamemode_task
+
+      - definemap slot_map:
+          1: adventure
+          3: builder
+          5: creative
+          7: survival
+          9: spectator
+
+      - inventory adjust destination:<context.inventory> slot:<context.slot> material:lime_stained_glass
+      - inventory adjust destination:<context.inventory> slot:<context.slot> "lore:<&a>Current gamemode"
+      - define old_slot <[slot_map].invert.get[<[current_gamemode]>]>
+      - inventory adjust destination:<context.inventory> slot:<[old_slot]> material:white_stained_glass
+      - inventory adjust destination:<context.inventory> slot:<[old_slot]> "lore:<&a>Click to change to|<&a><[slot_map.<context.slot>]> gamemode"
+
+      - flag <player> behr.essentials.last_gamemode:<[current_gamemode]>
+      - flag <player> behr.essentials.gamemode:<[new_gamemode]>
+      - adjust <player> gamemode:<[new_gamemode]>
+      - narrate "<&a>Changed gamemode to <[new_gamemode]>"
 
     after player joins flagged:!behr.essentials.gamemode:
       - flag player behr.essentials.gamemode:survival
@@ -121,3 +114,102 @@ gamemode_button:
   material: stone
   mechanisms:
     hides: all
+
+gma_command:
+  type: command
+  name: gma
+  debug: false
+  description: Changes your gamemode to adventure
+  usage: /gma
+  script:
+    - inject gamemode_alias_task
+
+gmb_command:
+  type: command
+  name: gmb
+  debug: false
+  description: Changes your gamemode to builder
+  usage: /gmb
+  script:
+    - inject gamemode_alias_task
+
+gmc_command:
+  type: command
+  name: gmc
+  debug: false
+  description: Changes your gamemode to creative
+  usage: /gmc
+  script:
+    - inject gamemode_alias_task
+
+gms_command:
+  type: command
+  name: gms
+  debug: false
+  description: Changes your gamemode to survival
+  usage: /gms
+  script:
+    - inject gamemode_alias_task
+
+gmsp_command:
+  type: command
+  name: gmsp
+  debug: false
+  description: Changes your gamemode to spectator
+  usage: /gmsp
+  script:
+    - inject gamemode_alias_task
+
+
+gamemode_alias_task:
+  type: task
+  debug: false
+  data:
+    alias_map:
+      gma: adventure
+      gmb: builder
+      gmc: creative
+      gms: survival
+      gmsp: spectator
+  script:
+  # % ██ [ check if using too many arguments       ] ██
+    - if !<context.args.is_empty>:
+      - narrate "<&c>Invalid usage"
+      - stop
+
+    - define new_gamemode <context.args.first>
+    - define current_gamemode <player.flag[behr.essentials.gamemode]>
+    - define gamemodes <script.data_key[data.alias_map].values>
+
+    - if <[new_gamemode]> !in <[gamemodes]>:
+        - narrate "<&c>Invalid usage - <&e>valid options are <[gamemodes].exclude[<[current_gamemode]>].filter_tag[<player.has_flag[behr.essentials.permission.<[filter_value]>]>]>"
+        - stop
+
+    - if <[current_gamemode]> == <[new_gamemode]>:
+      - narrate "<&c>You're already in <[new_gamemode]>"
+      - stop
+
+    - if !<player.has_flag[behr.essentials.permission.<[new_gamemode]>]>:
+      - narrate "<&c>That gamemode is unavailable"
+      - stop
+
+    - if <[new_gamemode]> == builder:
+      - inject builder_gamemode_task
+
+    - flag <player> behr.essentials.last_gamemode:<[current_gamemode]>
+    - flag <player> behr.essentials.gamemode:<[new_gamemode]>
+    - adjust <player> gamemode:<[new_gamemode]>
+    - narrate "<&a>Changed gamemode to <[new_gamemode]>"
+
+builder_gamemode_task:
+  type: task
+  script:
+    - if !<player.has_flag[behr.essentials.permission.builder]>:
+      - narrate "<&e>Nothing interesting happens"
+      - stop
+
+    - adjust <player> gamemode:survival
+    - adjust <player> can_fly:true
+    - adjust <player> flying:!<player.is_on_ground>
+    - narrate "<&a>Changed gamemode to Builder"
+    - stop
