@@ -6,4 +6,15 @@ player_leave_handler:
       # ██ [ let everyone know they left, if they aren't constantly leaving ] ██:
       - determine cancelled if:<player.has_flag[behr.essentials.ratelimit.leave_announcement]>
       - flag player behr.essentials.ratelimit.leave_announcement expire:10s
-      - determine "<&b><player.name> left b"
+
+        # ██ [ base defintions            ] ██:
+      - define action leave
+      - define time <util.time_now>
+      - definemap player_data:
+          name: <player.name>
+          uuid: <player.uuid>
+      - define text "<&b><player.name> left b"
+
+      # ██ [ announce the player leave    ] ██:
+      - determine <[text]> passively
+      - inject discord_door_message
