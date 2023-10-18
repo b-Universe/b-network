@@ -56,6 +56,6 @@ web_header_formatting:
       - if <[values].size> == 1:
         - define formatted_headers <[formatted_headers].include_single[<&3><[header]><&e><&co> <&3><[values].unseparated>]>
       - else:
-        - define formatted_headers <[formatted_headers].include_single[<&3><[header]><&e><&co><n><&e>- <&3><[values].separated_by[<n><&e>- ]>]>
+        - define formatted_headers <[formatted_headers].include_single[<&3><[header]><&e><&co><n><&e>- <&3><[values].separated_by[<n><&e>- <&3>]>]>
 
     - determine <[formatted_headers].separated_by[<n>]>
