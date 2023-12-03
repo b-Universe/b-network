@@ -8,7 +8,7 @@ more_purple_dye:
   recipes:
     1:
       type: shapeless
-      input: red_dye|blue_dye/lapis_lazuli/cornflower
+      input: red_dye/poppy/red_tulip|blue_dye/lapis_lazuli/cornflower
 
 more_purple_dye_2:
   type: item
@@ -32,7 +32,7 @@ more_magenta_dye:
   recipes:
     1:
       type: shapeless
-      input: blue_dye/lapis_lazuli/cornflower|red_dye|pink_dye/pink_petals
+      input: blue_dye/lapis_lazuli/cornflower|red_dye/poppy/red_tulip|pink_dye/pink_petals
 
 more_magenta_dye_2:
   type: item
@@ -44,7 +44,7 @@ more_magenta_dye_2:
   recipes:
     2:
       type: shapeless
-      input: blue_dye/lapis_lazuli/cornflower|red_dye|red_dye|white_dye/bone_meal/lily_of_the_valley
+      input: blue_dye/lapis_lazuli/cornflower|red_dye/poppy/red_tulip|red_dye/poppy/red_tulip|white_dye/bone_meal/lily_of_the_valley
     3:
       type: shapeless
       input: blue_dye/lapis_lazuli/cornflower|rose_bush|white_dye/bone_meal/lily_of_the_valley
@@ -59,7 +59,7 @@ more_magenta_dye_3:
   recipes:
     4:
       type: shapeless
-      input: pitcher_plant|red_dye|red_dye|pink_dye/pink_petals|pink_dye/pink_petals
+      input: pitcher_plant|red_dye/poppy/red_tulip|red_dye/poppy/red_tulip|pink_dye/pink_petals|pink_dye/pink_petals
     5:
       type: shapeless
       input: pitcher_plant|rose_bush|pink_dye/pink_petals|pink_dye/pink_petals
@@ -68,13 +68,13 @@ more_magenta_dye_3:
       input: pitcher_plant|rose_bush|peony
     7:
       type: shapeless
-      input: blue_dye/lapis_lazuli/cornflower|blue_dye/lapis_lazuli/cornflower|red_dye|red_dye|peony
+      input: blue_dye/lapis_lazuli/cornflower|blue_dye/lapis_lazuli/cornflower|red_dye/poppy/red_tulip|red_dye/poppy/red_tulip|peony
     8:
       type: shapeless
       input: blue_dye/lapis_lazuli/cornflower|blue_dye/lapis_lazuli/cornflower|rose_bush|peony
     9:
       type: shapeless
-      input: pitcher_plant|red_dye|red_dye|peony
+      input: pitcher_plant|red_dye/poppy/red_tulip|red_dye/poppy/red_tulip|peony
 
 more_magenta_dye_4:
   type: item
@@ -86,16 +86,16 @@ more_magenta_dye_4:
   recipes:
     10:
       type: shapeless
-      input: pitcher_plant|red_dye|red_dye|red_dye|red_dye|white_dye/bone_meal/lily_of_the_valley|white_dye/bone_meal/lily_of_the_valley
+      input: pitcher_plant|red_dye/poppy/red_tulip|red_dye/poppy/red_tulip|red_dye/poppy/red_tulip|red_dye/poppy/red_tulip|white_dye/bone_meal/lily_of_the_valley|white_dye/bone_meal/lily_of_the_valley
     11:
       type: shapeless
-      input: blue_dye/lapis_lazuli/cornflower|blue_dye/lapis_lazuli/cornflower|red_dye|red_dye|red_dye|red_dye|white_dye/bone_meal/lily_of_the_valley|white_dye/bone_meal/lily_of_the_valley
+      input: blue_dye/lapis_lazuli/cornflower|blue_dye/lapis_lazuli/cornflower|red_dye/poppy/red_tulip|red_dye/poppy/red_tulip|red_dye/poppy/red_tulip|red_dye/poppy/red_tulip|white_dye/bone_meal/lily_of_the_valley|white_dye/bone_meal/lily_of_the_valley
     12:
       type: shapeless
       input: pitcher_plant|rose_bush|rose_bush
     13:
       type: shapeless
-      input: pitcher_plant|red_dye|red_dye|rose_bush|white_dye/bone_meal/lily_of_the_valley|white_dye/bone_meal/lily_of_the_valley
+      input: pitcher_plant|red_dye/poppy/red_tulip|red_dye/poppy/red_tulip|rose_bush|white_dye/bone_meal/lily_of_the_valley|white_dye/bone_meal/lily_of_the_valley
     14:
       type: shapeless
       input: blue_dye/lapis_lazuli/cornflower|blue_dye/lapis_lazuli/cornflower|rose_bush|rose_bush|white_dye/bone_meal/lily_of_the_valley|white_dye/bone_meal/lily_of_the_valley
@@ -110,7 +110,7 @@ more_pink_dye:
   recipes:
     1:
       type: shapeless
-      input: red_dye|white_dye/bone_meal/lily_of_the_valley
+      input: red_dye/poppy/red_tulip|white_dye/bone_meal/lily_of_the_valley
 
 more_pink_dye_2:
   type: item
@@ -127,7 +127,7 @@ more_pink_dye_2:
 more_red_dye:
   type: item
   debug: false
-  material: red_dye
+  material: red_dye/poppy/red_tulip
   no_id: true
   mechanisms:
     quantity: 2
@@ -148,7 +148,7 @@ more_orange_dye:
   recipes:
     1:
       type: shapeless
-      input: red_dye|yellow_dye/dandelion
+      input: red_dye/poppy/red_tulip|yellow_dye/dandelion
 
 more_orange_dye_2:
   type: item
@@ -166,7 +166,7 @@ more_orange_dye_2:
       input: rose_bush|yellow_dye/dandelion
     4:
       type: shapeless
-      input: red_dye|sunflower
+      input: red_dye/poppy/red_tulip|sunflower
 
 more_orange_dye_3:
   type: item
@@ -290,4 +290,4 @@ more_brown_dye_2:
   recipes:
     1:
       type: shapeless
-      input: black_dye/wither_rose/ink_sac|red_dye|yellow_dye
+      input: black_dye/wither_rose/ink_sac|red_dye/poppy/red_tulip|yellow_dye
