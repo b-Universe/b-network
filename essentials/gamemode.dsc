@@ -88,14 +88,15 @@ gamemode_main_menu:
 
 gamemode_button:
   type: item
+  debug: false
   material: stone
   mechanisms:
     hides: all
 
 gmb_command:
   type: command
-  name: gmb
   debug: false
+  name: gmb
   description: Changes your gamemode to builder
   usage: /gmb
   script:

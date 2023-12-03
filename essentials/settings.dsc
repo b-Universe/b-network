@@ -113,6 +113,7 @@ settings_menu_handler:
 
 settings_back_button:
   type: item
+  debug: false
   material: stone
   display name: Back
   mechanisms:
@@ -138,6 +139,7 @@ settings_main_menu:
 
 settings_commands_button:
   type: item
+  debug: false
   material: stone
   display name: Commands
   lore:
@@ -162,6 +164,7 @@ settings_commands_main_menu:
 
 settings_commands_playsound:
   type: item
+  debug: false
   material: stone
   display name: Play Sounds
   lore:
