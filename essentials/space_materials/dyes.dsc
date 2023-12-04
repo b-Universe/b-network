@@ -133,7 +133,7 @@ more_pink_dye_2:
 more_red_dye:
   type: item
   debug: false
-  material: red_dye/poppy/red_tulip
+  material: red_dye
   no_id: true
   mechanisms:
     quantity: 2
