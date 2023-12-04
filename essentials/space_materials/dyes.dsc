@@ -16,11 +16,17 @@ more_purple_dye_2:
   material: purple_dye
   no_id: true
   mechanisms:
-    quantity: 3
+    quantity: 4
   recipes:
     2:
       type: shapeless
       input: rose_bush|blue_dye/lapis_lazuli/cornflower|blue_dye/lapis_lazuli/cornflower
+    3:
+      type: shapeless
+      input: rose_bush|pitcher_plant
+    4:
+      type: shapeless
+      input: red_dye/poppy/red_tulip|red_dye/poppy/red_tulip|pitcher_plant
 
 more_magenta_dye:
   type: item
@@ -32,7 +38,7 @@ more_magenta_dye:
   recipes:
     1:
       type: shapeless
-      input: blue_dye/lapis_lazuli/cornflower|red_dye/poppy/red_tulip|pink_dye/pink_petals
+      input: blue_dye/lapis_lazuli/cornflower|red_dye/poppy/red_tulip|pink_dye/pink_tulip/pink_petals
 
 more_magenta_dye_2:
   type: item
@@ -59,10 +65,10 @@ more_magenta_dye_3:
   recipes:
     4:
       type: shapeless
-      input: pitcher_plant|red_dye/poppy/red_tulip|red_dye/poppy/red_tulip|pink_dye/pink_petals|pink_dye/pink_petals
+      input: pitcher_plant|red_dye/poppy/red_tulip|red_dye/poppy/red_tulip|pink_dye/pink_tulip/pink_petals|pink_dye/pink_tulip/pink_petals
     5:
       type: shapeless
-      input: pitcher_plant|rose_bush|pink_dye/pink_petals|pink_dye/pink_petals
+      input: pitcher_plant|rose_bush|pink_dye/pink_tulip/pink_petals|pink_dye/pink_tulip/pink_petals
     6:
       type: shapeless
       input: pitcher_plant|rose_bush|peony
@@ -278,7 +284,7 @@ more_brown_dye:
   recipes:
     1:
       type: shapeless
-      input: black_dye/wither_rose/ink_sac|orange_dye
+      input: black_dye/wither_rose/ink_sac|orange_dye/orange_tulip/torchflower
 
 more_brown_dye_2:
   type: item
@@ -288,6 +294,24 @@ more_brown_dye_2:
   mechanisms:
     quantity: 3
   recipes:
-    1:
+    2:
       type: shapeless
-      input: black_dye/wither_rose/ink_sac|red_dye/poppy/red_tulip|yellow_dye
+      input: black_dye/wither_rose/ink_sac|red_dye/poppy/red_tulip|yellow_dye/dandelion
+
+more_brown_dye_3:
+  type: item
+  debug: false
+  material: brown_dye
+  no_id: true
+  mechanisms:
+    quantity: 6
+  recipes:
+    3:
+      type: shapeless
+      input: black_dye/wither_rose/ink_sac|black_dye/wither_rose/ink_sac|rose_bush|yellow_dye/dandelion|yellow_dye/dandelion
+    4:
+      type: shapeless
+      input: black_dye/wither_rose/ink_sac|black_dye/wither_rose/ink_sac|red_dye/poppy/red_tulip|red_dye/poppy/red_tulip|sunflower
+    5:
+      type: shapeless
+      input: black_dye/wither_rose/ink_sac|black_dye/wither_rose/ink_sac|rose_bush|sunflower
