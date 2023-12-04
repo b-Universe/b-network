@@ -69,3 +69,12 @@ angry_pet_shop_inventory:
   size: 9
   slots:
   - [spider_spawn_egg] [cave_spider_spawn_egg] [shulker_spawn_egg]
+
+aquatic_shop_inventory:
+  type: inventory
+  inventory: chest
+  size: 27
+  slots:
+  - [] [bubble_coral] [brain_coral] [fire_coral] [horn_coral] [tube_coral] [cod_bucket] [salmon_bucket] []
+  - [] [bubble_coral_fan] [brain_coral_fan] [fire_coral_fan] [horn_coral_fan] [tube_coral_fan] [pufferfish_bucket] [tropical_fish_bucket] []
+  - [] [bubble_coral_block] [brain_coral_block] [fire_coral_block] [horn_coral_block] [tube_coral_block] [axolotl_bucket] [tadpole_bucket] []
