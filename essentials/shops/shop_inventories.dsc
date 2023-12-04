@@ -78,3 +78,10 @@ aquatic_shop_inventory:
   - [] [bubble_coral] [brain_coral] [fire_coral] [horn_coral] [tube_coral] [cod_bucket] [salmon_bucket] []
   - [] [bubble_coral_fan] [brain_coral_fan] [fire_coral_fan] [horn_coral_fan] [tube_coral_fan] [pufferfish_bucket] [tropical_fish_bucket] []
   - [] [bubble_coral_block] [brain_coral_block] [fire_coral_block] [horn_coral_block] [tube_coral_block] [axolotl_bucket] [tadpole_bucket] []
+
+misc_shop_inventory:
+  type: inventory
+  inventory: chest
+  size: 18
+  slots:
+  - [prismarine_shard] [prismarine_crystals] [slimeball] [magma_cream] [gunpowder] [nether_quartz_ore] [glowstone] [nautilus_shell] [heart_of_the_sea]
