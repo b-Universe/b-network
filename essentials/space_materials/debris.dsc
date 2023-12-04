@@ -7,6 +7,14 @@ space_material_mining_handler:
       - stop if:!<util.random_chance[<[efficiency].mul[16]>]>
       - define quantity <util.random.int[1].to[<[efficiency]>]>
       - determine andesite|ice_shard[quantity=<[quantity]>]
+    on player right clicks dirt with:grass_seeds:
+      - determine passively cancelled
+      - if <context.relative> != <context.location.above> || <context.location.above> !matches air:
+        - stop
+
+      - playeffect at:<context.relative.center.below[0.25]> effect:villager_happy quantity:3 offset:0.2,0.1,0.2
+      - playsound <context.relative> sound:block_grass_place
+      - modifyblock <context.location> grass_block
 
 ice_shard:
   type: item
@@ -51,3 +59,9 @@ add_magma_block:
     1:
       type: shapeless
       input: stone/andesite/granite/diorite/blackstone|lava_bucket
+
+grass_seeds:
+  type: item
+  debug: false
+  material: wheat_seeds
+  display name: <&f>Grass Seeds
