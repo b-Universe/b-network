@@ -1,6 +1,5 @@
 command_error:
   type: task
-  enabled: false
   debug: false
   definitions: reason
   script:
@@ -17,7 +16,6 @@ command_error:
 
 command_syntax_error:
   type: task
-  enabled: false
   debug: false
   script:
     - definemap message:
@@ -38,6 +36,7 @@ command_usage:
 
 command_syntax_format:
   type: procedure
+  debug: false
   definitions: syntax
   script:
     - define characters <list[/|\|(|)|,|.|<&ns>|<&lt>|<&gt>|<&lb>|<&rb>].include_single[|]>
