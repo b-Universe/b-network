@@ -7,26 +7,29 @@ fly_speed_command:
   tab completions:
     1: <server.online_players.exclude[<player>].parse[name]>
   script:
-    - if <context.args.is_empty>:
-      - narrate "<&a>Your fly speed is <&e><player.fly_speed.mul[10].round_to[2]>"
-      - stop
-
-    - else if <context.args.size> > 2:
-      - inject command_syntax_error
-
-    - else if <context.args.size> == 2:
-      - define player_name <context.args.first>
-      - inject player_verification
-
-      - define speed <context.args.last>
-
-    - else if <context.args.size> == 1:
-      - if <server.match_player[<context.args.first>].if_null[null].is_truthy>:
-        - narrate "<&e><server.match_player[<context.args.first>].name><&a>'s fly speed is <&e><player.fly_speed.mul[10].round_to[2]>"
+    - choose <context.args.size>:
+      - case 0:
+        - narrate "<&a>Your fly speed is <&e><player.fly_speed.mul[10].round_to[2]>"
         - stop
-      - else:
-        - define player <player>
-        - define speed <context.args.first>
+
+      - case 1:
+        - if <server.match_offline_player[<context.args.first>].exists>:
+          - define player <server.match_offline_player[<context.args.first>]>
+          - narrate "<&e><[player].name><&a>'s fly speed is <&e><[player].fly_speed.mul[10].round_to[2]>"
+          - stop
+
+        - else:
+          - define player <player>
+          - define speed <context.args.first>
+
+      - case 2:
+        - define player_name <context.args.first>
+        - inject command_player_verification
+
+        - define speed <context.args.last>
+
+      - default:
+        - inject command_syntax_error
 
     - if !<[speed].is_decimal>:
       - choose <[speed]>:
@@ -40,7 +43,7 @@ fly_speed_command:
 
         - case plaid:
           - define speed 10
-          - define speed_name "<element[Plaid speed].rainbow[ca]>"
+          - define speed_name <element[Plaid speed].rainbow[ca]>
 
         - default:
           - inject command_syntax_error
@@ -61,9 +64,9 @@ fly_speed_command:
 
       - else if <[speed]> == <[player].fly_speed.mul[10]>:
         - if <[player]> != <player>:
-          - narrate "<element[<&e>Nothing interesting happens].on_hover[<&e><[player_name]><&a>'s fly speed is already <&e><[speed]>]>"
+          - narrate <element[<&e>Nothing interesting happens].on_hover[<&e><[player_name]><&a>'s fly speed is already <&e><[speed]>]>
         - else:
-          - narrate "<element[<&e>Nothing interesting happens].on_hover[<&a>Your fly speed is already <&e><[speed]>]>"
+          - narrate <element[<&e>Nothing interesting happens].on_hover[<&a>Your fly speed is already <&e><[speed]>]>
         - stop
 
       - adjust <[player]> fly_speed:<[speed].div[10]>
