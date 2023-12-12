@@ -1,4 +1,4 @@
-shulker_coloring:
+shulker_hhandler:
   type: world
   debug: false
   events:
@@ -8,3 +8,6 @@ shulker_coloring:
 
     on shulker spawns:
       - adjust <context.entity> color:<server.flag[behr.essentials.shulker_color]>
+
+    on player potion effects added effect:levitation:
+      - determine cancelled
