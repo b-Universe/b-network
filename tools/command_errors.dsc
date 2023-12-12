@@ -24,6 +24,16 @@ command_syntax_error:
     - narrate <[message.text].on_hover[<[message.hover]>].on_click[/<context.alias> ].type[suggest_command]>
     - stop
 
+command_permission_error:
+  type: task
+  debug: false
+  script:
+    - definemap message:
+        text: <&c><[reason]>
+        hover: <&c>You don<&sq>t have permission to run that command
+    - narrate <[message.text].on_hover[<[message.hover]>]>
+    - stop
+
 command_usage:
   type: procedure
   debug: false
