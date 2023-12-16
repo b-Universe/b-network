@@ -2,7 +2,7 @@ experience_handler:
   type: world
   debug: false
   events:
-    on player breaks block:
+    on player breaks block in:!biome_mine:
       - if !<player.has_flag[behr.essentials.profile.stats.construction]>:
         - flag player behr.essentials.profile.stats.construction.experience:0
         - flag player behr.essentials.profile.stats.construction.level:1
@@ -14,7 +14,7 @@ experience_handler:
       - if <[construction.experience]> > <script[level_chart].data_key[level.<[next_level]>]>:
         - playsound <player> entity_player_levelup pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3
         - toast "<&a>Construction Levelup<&co> <&e><[next_level]>" frame:goal icon:bricks
-        - narrate "<&a>You leveled up! Construction level<&co> <[next_level]>"
+        - narrate "<&a>You leveled up! Construction level<&co> <&e><[next_level]>"
         - flag player behr.essentials.profile.stats.construction.level:++
 
       - definemap data:
