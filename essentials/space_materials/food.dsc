@@ -4,12 +4,12 @@ space_food_handler:
   events:
     on player teleports cause:chorus_fruit:
       - determine cancelled
-    on player consumes hydrated_space_fruit:
+    on player consumes space_fruit:
       - feed <player> amount:10 saturation:10
     on player consumes space_juice:
       - feed <player> amount:6 saturation:18
 
-hydrated_space_fruit:
+space_fruit:
   type: item
   debug: false
   material: chorus_fruit
@@ -32,4 +32,4 @@ space_juice:
   recipes:
     1:
       type: shapeless
-      input: bucket|hydrated_space_fruit
+      input: bucket|space_fruit

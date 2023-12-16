@@ -2,33 +2,36 @@ suit_handler:
   type: world
   debug: false
   events:
-    on player equips respira*:
+    on player damaged by fall flagged:behr.test.respira:
+      - determine cancelled
+
+    on player equips respira* flagged:!space_suit_ratelimit:
       - define respira_suit <script[space_suits].parsed_key[respira]>
       - if <player.equipment.parse[script.name].contains[<[respira_suit]>]>:
         - flag player behr.test.respira
-#       - flag server behr.test.respira:->:<player>
+        - flag server behr.test.respira:->:<player>
         - inject respira_equipment_task
 
     on player unequips respira*:
       - define respira_suit <script[space_suits].parsed_key[respira]>
       - if !<player.equipment.parse[script.name].contains[<[respira_suit]>]>:
         - flag player behr.test.respira:!
-#       - flag server behr.test.respira:<-:<player>
+        - flag server behr.test.respira:<-:<player>
         - cast jump remove
 
     after player joins flagged:behr.test.respira:
-#     - flag server behr.test.respira:->:<player>
+      - flag server behr.test.respira:->:<player>
       - define respira_suit <script[space_suits].parsed_key[respira]>
       - inject respira_equipment_task
 
 #    todo: change to a global cast
-#   after player quits flagged:behr.test.respira:
-#     - flag server behr.test.respira:<-:<player>
-#     - if !<server.flag[behr.test.respira].is_truthy>:
-#       - flag server behr.test.respira:!
-#    after delta time secondly every:7 server_flagged:behr.test.respira:
-#      - define players <server.online_players_flagged[behr.test.respira]>
-#      - cast jump duration:10s amplifier:2 <[players]> hide_particles no_icon no_clear
+    after player quits flagged:behr.test.respira:
+      - flag server behr.test.respira:<-:<player>
+      - if !<server.flag[behr.test.respira].is_truthy>:
+        - flag server behr.test.respira:!
+    after delta time secondly every:7 server_flagged:behr.test.respira:
+      - define players <server.online_players_flagged[behr.test.respira]>
+      - cast jump duration:10s amplifier:2 <[players]> hide_particles no_icon no_clear
 
 respira_equipment_task:
   type: task
@@ -51,15 +54,12 @@ respira_space_package:
   debug: false
   material: bundle
   display name: <&f>Respira Suit Package
-  lore:
-    - <&b>Note<&3><&co> Package container
-    - <&3>is one time use
   mechanisms:
     inventory_contents:
       - respira_space_suit_helmet_WC1
-      - hydrated_space_fruit[quantity=64]
-      - hydrated_space_fruit[quantity=64]
-      - hydrated_space_fruit[quantity=64]
+      - space_fruit[quantity=64]
+      - space_fruit[quantity=64]
+      - space_fruit[quantity=64]
 
       - respira_space_suit_top
       - space_juice
@@ -72,8 +72,10 @@ respira_space_package:
       - space_juice
 
       - respira_space_suit_boots
-      - normal_space_flare[quantity=16]
-      - normal_space_flare[quantity=16]
+      - space_pickaxe
+      - smooth_stone[quantity=64]
+      #- normal_space_flare[quantity=16]
+      #- normal_space_flare[quantity=16]
 
 neptunea_space_package:
   type: item
@@ -83,9 +85,9 @@ neptunea_space_package:
   mechanisms:
     inventory_contents:
       - neptunea_space_suit_helmet
-      - hydrated_space_fruit[quantity=64]
-      - hydrated_space_fruit[quantity=64]
-      - hydrated_space_fruit[quantity=64]
+      - space_fruit[quantity=64]
+      - space_fruit[quantity=64]
+      - space_fruit[quantity=64]
 
       - neptunea_space_suit_top
       - space_juice
