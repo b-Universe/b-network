@@ -13,9 +13,9 @@ ping_command:
 
   # % ██ [ check if typing another player or not ] ██
     - if <context.args.is_empty>:
-      - narrate "<&a>Your ping is <player.ping>"
+      - narrate "<&a>Your ping is <&e><player.ping><&6>ms"
 
     - else:
       - define player_name <context.args.first>
       - inject command_online_player_verification
-      - narrate "<&e><[player_name]><&a><&sq>s ping is <[player].ping>"
+      - narrate "<&e><[player_name]><&a><&sq>s ping is <&e><[player].ping><&6>ms"

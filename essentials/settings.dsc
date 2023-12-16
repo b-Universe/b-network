@@ -67,7 +67,7 @@ settings_command:
 
 settings_menu_handler:
   type: world
-  debug: true
+  debug: false
   events:
     after player clicks settings_commands_button in settings_main_menu:
       - narrate fire
