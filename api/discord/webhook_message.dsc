@@ -19,12 +19,10 @@ discord_webhook_message:
       - stop
 
     # ██ [ normalize embeds consistency   ] ██:
-      # note:{ defaults:{ color: <color[0,254,255].rgb_integer>,}}
-      # - if <[payload].contains[embeds]>:
-      #   - foreach <[payload.embeds]> as:embed:
-      #     - 
-      # - else:
-      #     - 
+    - if <[payload].contains[embeds]>:
+      - foreach <[payload.embeds]> as:embed:
+        - define embed.color <color[0,254,255].rgb_integer> if:!<[embed].contains[color]>
+        - define payload.embeds <[payload.embeds].set_single[<[embed]>].at[<[loop_index]>]>
     - define payload.allowed_mentions.parse <list> if:!<[payload].contains[allowed_mentions]>
 
     - definemap headers:
