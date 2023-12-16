@@ -5,5 +5,5 @@ group_level:
   script:
     - define player_groups <player.flag[behr.essentials.groups].if_null[newbie]>
     - define group_data <script[permission_data].data_key[groups]>
-    - define player_group_levels <[group_data].get[<[player_groups]>].parse[get[level]]>
+    - define player_group_levels <[group_data].get[<[player_groups]>].parse[get[level]].if_null[<list[1]>]>
     - determine <[player_group_levels].highest>

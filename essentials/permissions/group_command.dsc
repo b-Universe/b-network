@@ -15,6 +15,14 @@ group_command:
     - define player_name <context.args.first>
     - inject command_player_verification
 
+    # todo: temp: find the source of missing group placement
+    - if !<[player].has_flag[behr.essentials.groups]>:
+      - definemap data:
+          player: <[player]>
+          action: grant
+          group: newbie
+      - run group_permission_handler defmap:<[data]>
+
     - define action <context.args.get[2]>
     - if <[action]> !in grant|revoke:
       - define error "Specify to either grant or revoke the player's specified group"
@@ -71,31 +79,3 @@ group_command:
     - if <[player]> != <player>:
       - narrate "<&e><[player].name> <&a>was <[grammar]> the <&e><[group]> <&a>group"
     - narrate "<&a>You were <[grammar]> the <&e><[group]> <&a>group" targets:<[player]>
-
-group_permission_handler:
-  type: task
-  debug: false
-  definitions: player|action|group
-  script:
-    # Manage inherited permissions
-    - define player_groups <[player].flag[behr.essentials.groups]>
-    - define inheritances <script[permission_data].data_key[groups.<[group]>.permissions.inherits].if_null[null]>
-    - if <[inheritances].is_truthy>:
-      - foreach <[inheritances].exclude[<[player_groups]>]> as:inheritance:
-        - if <[action]> == revoke:
-          - foreach next
-        - definemap data:
-            player: <player>
-            action: <[action]>
-            group: <[inheritance]>
-        - run group_permission_handler defmap:<[data]>
-
-    - define permissions <script[permission_data].data_key[groups.<[group]>.permissions.commands].if_null[null]>
-    - stop if:!<[permissions].is_truthy>
-    - foreach <[permissions]> as:permission:
-      - if <[action]> == grant:
-        - flag <[player]> behr.essentials.permission.<[permission]>
-        - announce to_console "<&e><[player].name> <&b>permission<&3><&co><&a>+<&3><&co> <&e><[permission]>"
-      - else:
-        - flag <[player]> behr.essentials.permission.<[permission]>:!
-        - announce to_console "<&e><[player].name> <&b>permission<&3><&co><&c>-<&3><&co> <&e><[permission]>"
