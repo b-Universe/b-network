@@ -141,12 +141,18 @@ gamemode_alias_task:
       gmsp: spectator
   script:
   # % ██ [ check if using too many arguments       ] ██
-    - if !<context.args.is_empty>:
+    - if <context.args.size> > 1:
       - narrate "<&c>Invalid usage"
       - stop
 
+    - else if <context.args.is_empty>:
+      - define player <player>
+    - else:
+      - define player_name <context.args.first>
+      - inject command_player_verification
+
     - define new_gamemode <script.data_key[data.alias_map].get[<context.alias>]>
-    - define current_gamemode <player.flag[behr.essentials.gamemode]>
+    - define current_gamemode <[player].flag[behr.essentials.gamemode].if_null[survival]>
     - define gamemodes <script.data_key[data.alias_map].values>
 
     - if <[new_gamemode]> !in <[gamemodes]>:
@@ -154,30 +160,40 @@ gamemode_alias_task:
         - stop
 
     - if <[current_gamemode]> == <[new_gamemode]>:
-      - narrate "<&c>You're already in <[new_gamemode]>"
+      - if <[player]> == <player>:
+        - narrate "<&c>You're already in <[new_gamemode]>"
+      - else:
+        - narrate "<&e><[player_name]> <&c>is already in <[new_gamemode]>"
       - stop
 
     - if !<player.has_flag[behr.essentials.permission.<[new_gamemode]>]>:
-      - narrate "<&c>That gamemode is unavailable"
+      - if <[player]> == <player>:
+        - narrate "<&c>That gamemode is unavailable"
+      - else:
+        - narrate "<&c>That gamemode is unavailable for you to change"
       - stop
 
     - if <[new_gamemode]> == builder:
       - inject builder_gamemode_task
 
-    - flag <player> behr.essentials.last_gamemode:<[current_gamemode]>
-    - flag <player> behr.essentials.gamemode:<[new_gamemode]>
-    - adjust <player> gamemode:<[new_gamemode]>
-    - narrate "<&a>Changed gamemode to <[new_gamemode]>"
+    - flag <[player]> behr.essentials.last_gamemode:<[current_gamemode]>
+    - flag <[player]> behr.essentials.gamemode:<[new_gamemode]>
+    - adjust <[player]> gamemode:<[new_gamemode]>
+    - if <[player]> != <player>:
+      - narrate "<&e><[player_name]><&a>'s gamemode changed to <[new_gamemode]>"
+    - narrate "<&a>Changed gamemode to <[new_gamemode]>" targets:<[player]>
 
 builder_gamemode_task:
   type: task
   script:
-    - if !<player.has_flag[behr.essentials.permission.builder]>:
+    - if !<[player].has_flag[behr.essentials.permission.builder]>:
       - narrate "<&e>Nothing interesting happens"
       - stop
 
-    - adjust <player> gamemode:survival
-    - adjust <player> can_fly:true
-    - adjust <player> flying:!<player.is_on_ground>
-    - narrate "<&a>Changed gamemode to Builder"
+    - adjust <[player]> gamemode:survival
+    - adjust <[player]> can_fly:true
+    - adjust <[player]> flying:!<[player].is_on_ground>
+    - if <[player]> != <player>:
+      - narrate "<&e><[player_name]><&a>'s gamemode changed to builder"
+    - narrate "<&a>Changed gamemode to builder" targets:<[player]>
     - stop
