@@ -13,14 +13,19 @@ fly_speed_command:
         - stop
 
       - case 1:
-        - if <server.match_offline_player[<context.args.first>].exists>:
-          - define player <server.match_offline_player[<context.args.first>]>
-          - narrate "<&e><[player].name><&a>'s fly speed is <&e><[player].fly_speed.mul[10].round_to[2]>"
-          - stop
+        - define speed <context.args.first>
+        - if !<[speed].is_decimal>:
+          - define player <server.match_offline_player[<[speed]>].if_null[invalid]>
+          - if <[player]> != invalid:
+            - narrate "<&e><[player].name><&a>'s fly speed is <&e><[player].fly_speed.mul[10].round_to[2]>"
+            - stop
+
+          - else:
+            - define reason "Fly speed must be a number"
+            - inject command_error
 
         - else:
           - define player <player>
-          - define speed <context.args.first>
 
       - case 2:
         - define player_name <context.args.first>
