@@ -41,8 +41,26 @@ player_join_handler:
         - define text "<&c>🎊<&6>🎊<&e>🎉 <&b><player.name> joined B for the first time! <&e>🎉<&6>🎊<&c>🎊"
 
         - teleport <player> <server.flag[behr.essentials.spawn_location]>
-        - give respira_space_package
+        - give space_fruit quantity:256
+        - give space_juice quantity:6
+        - give space_pickaxe
+
+        - if <server.has_flag[behr.essentials.uniques.<player.uuid>.space_suit]>:
+          - if !<player.has_flag[behr.essentials.ratelimit.unique_space_suit_reward]>:
+            - flag <player> behr.essentials.ratelimit.unique_space_suit_reward expire:7d
+            - narrate "<&3>The Galactic Federation of B has gifted this unique space suit for your contribution here at B. We thank you for your support."
+          - define equipment_map <server.flag[behr.essentials.uniques.<player.uuid>.space_suit]>
+
+        - else:
+          - definemap equipment_map:
+              helmet: respira_space_suit_helmet_WC1
+              chest: respira_space_suit_top
+              legs: respira_space_suit_boots
+
+        - equip head:<[equipment_map.helmet]> chest:<[equipment_map.chest]> boots:<[equipment_map.legs]>
+
         - adjust <player> max_health:40
+        - heal <player>
 
       # ██ [ announce the player join         ] ██:
       - playsound <server.online_players> entity_player_levelup pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3
