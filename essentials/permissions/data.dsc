@@ -77,6 +77,7 @@ permission_data:
           - gms
           - gmsp
           - world
+          - inventory_look
 
           - kick
     sponsor_1:
