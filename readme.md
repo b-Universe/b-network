@@ -30,7 +30,10 @@
   </a>
   </a>
   <!--- Resource Pack ---->
-	<a href="https://github.com/b-universe/b-network"><img src="https://img.shields.io/badge/Resource%20Pack-b-c70039?logo=blueprint&color=FFFF00" alt="Resource Pack">
+	<a href="https://github.com/b-universe/b-resource"><img src="https://img.shields.io/badge/Resource%20Pack-b-c70039?logo=blueprint&color=FFFF00" alt="Resource Pack">
+  </a>
+  <!--- Datapack ---->
+	<a href="https://github.com/b-universe/b-datapack"><img src="https://img.shields.io/badge/Datapack-b-c70039?logo=blueprint&color=FFFF00" alt="Datapack">
   </a>
 </p>
 
