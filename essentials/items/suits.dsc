@@ -2,106 +2,35 @@ suit_handler:
   type: world
   debug: false
   events:
-    on player damaged by fall flagged:behr.test.respira:
-      - determine cancelled
+    on player equips *_space_suit_* flagged:!behr.essentials.space_suit_ratelimit:
+      - if <player.equipment.filter[script.name.contains_text[_space_suit_]].size> < 3:
+        - flag <player> behr.essentials.space_suit_ratelimit expire:1t
+        - flag player behr.essentials.space_suit_equipped
 
-    on player equips respira* flagged:!space_suit_ratelimit:
-      - define respira_suit <script[space_suits].parsed_key[respira]>
-      - if <player.equipment.parse[script.name].contains[<[respira_suit]>]>:
-        - flag player behr.test.respira
-        - flag server behr.test.respira:->:<player>
-        - inject respira_equipment_task
-
-    on player unequips respira*:
-      - define respira_suit <script[space_suits].parsed_key[respira]>
-      - if !<player.equipment.parse[script.name].contains[<[respira_suit]>]>:
-        - flag player behr.test.respira:!
-        - flag server behr.test.respira:<-:<player>
+    on player unequips *_space_suit_*:
+      - if <player.equipment.filter[script.name.contains_text[_space_suit_]].size> < 3:
+        - flag player behr.essentials.space_suit_equipped:!
         - cast jump remove
 
-    after player joins flagged:behr.test.respira:
-      - flag server behr.test.respira:->:<player>
-      - define respira_suit <script[space_suits].parsed_key[respira]>
-      - inject respira_equipment_task
+    after player joins flagged:!behr.essentials.players_online:
+      - flag server behr.essentials.players_online
 
-#    todo: change to a global cast
-    after player quits flagged:behr.test.respira:
-      - flag server behr.test.respira:<-:<player>
-      - if !<server.flag[behr.test.respira].is_truthy>:
-        - flag server behr.test.respira:!
-    after delta time secondly every:7 server_flagged:behr.test.respira:
-      - define players <server.online_players_flagged[behr.test.respira]>
+    after player quits:
+      - if <server.online_players.is_empty>:
+        - flag server behr.essentials.players_online:!
+
+    after delta time secondly every:2:
+      - define players <server.online_players_flagged[!behr.essentials.space_suit_equipped].filter[is_truthy].filter[location.is_within[biome_mine].not]>
+      - stop if:<[players].is_empty>
+      # todo: remove
+      - define players <[players].filter[gamemode.equals[survival]]>
+      - define players <[players].filter[world.name.equals[home_the_end]]>
+      - actionbar "<red>OXYGEN WARNING" targets:<[players]>
+      - hurt 2 <[players]>
+
+    after delta time secondly every:7 server_flagged:behr.essentials.players_online:
+      - define players <server.online_players_flagged[behr.essentials.space_suit_equipped]>
       - cast jump duration:10s amplifier:2 <[players]> hide_particles no_icon no_clear
-
-respira_equipment_task:
-  type: task
-  debug: false
-  script:
-    - while <player.is_online> && <player.equipment.parse[script.name].contains[<[respira_suit]>]>:
-      - cast jump duration:10s amplifier:2 hide_particles no_icon no_clear
-      - wait 7s
-
-space_suits:
-  type: data
-  respira:
-    - respira_space_suit_helmet_WC1
-    - respira_space_suit_top
-    - respira_space_suit_bottom
-    - respira_space_suit_boots
-
-respira_space_package:
-  type: item
-  debug: false
-  material: bundle
-  display name: <&f>Respira Suit Package
-  mechanisms:
-    inventory_contents:
-      - respira_space_suit_helmet_WC1
-      - space_fruit[quantity=64]
-      - space_fruit[quantity=64]
-      - space_fruit[quantity=64]
-
-      - respira_space_suit_top
-      - space_juice
-      - space_juice
-      - space_juice
-
-      - respira_space_suit_bottom
-      - space_juice
-      - space_juice
-      - space_juice
-
-      - respira_space_suit_boots
-      - space_pickaxe
-      - smooth_stone[quantity=64]
-      #- normal_space_flare[quantity=16]
-      #- normal_space_flare[quantity=16]
-
-neptunea_space_package:
-  type: item
-  debug: false
-  material: bundle
-  display name: Neptunea Suit Package
-  mechanisms:
-    inventory_contents:
-      - neptunea_space_suit_helmet
-      - space_fruit[quantity=64]
-      - space_fruit[quantity=64]
-      - space_fruit[quantity=64]
-
-      - neptunea_space_suit_top
-      - space_juice
-      - space_juice
-      - space_juice
-
-      - neptunea_space_suit_bottom
-      - space_juice
-      - space_juice
-      - space_juice
-
-      - neptunea_space_suit_boots
-      - normal_space_flare[quantity=16]
-      - normal_space_flare[quantity=16]
 
 respira_space_suit_helmet_WC1:
   type: item
