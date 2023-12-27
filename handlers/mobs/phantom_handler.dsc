@@ -4,9 +4,9 @@ phantom_hndler:
   events:
     on phantom dies:
       - if <util.random_chance[25]>:
-        - define extra_drops bone[<util.random.int[1].to[5].div[3].round>]
+        - define extra_drops bone[quantity=<util.random.int[1].to[5].div[3].round>]
       - else:
-        - define extra_drops bone_meal[<util.random.int[1].to[5].div[3].round>]
+        - define extra_drops bone_meal[quantity=<util.random.int[1].to[5].div[3].round>]
 
       - determine <context.drops.include[<[extra_drops]>]>
 
