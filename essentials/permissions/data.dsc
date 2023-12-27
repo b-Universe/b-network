@@ -35,6 +35,7 @@ permission_data:
         commands:
           - builder
           - weather
+          - time
           - fly
           - fly_speed
           - gamemode
@@ -78,6 +79,7 @@ permission_data:
           - gmsp
           - world
           - inventory_look
+          - teleport
 
           - kick
     sponsor_1:
@@ -136,6 +138,8 @@ permission_data:
           - creative
           - debug
           - experience
+          - weather
+          - time
 
           - ex
           - npc
@@ -157,6 +161,7 @@ permission_data:
           - admin
         commands:
           - datapack
+          - place
 
   # █  [ invalid testing group ] █:
     test:

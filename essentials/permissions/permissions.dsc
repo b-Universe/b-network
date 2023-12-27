@@ -89,7 +89,7 @@ permission_handler:
       - particle
       - perf
       - pickaxe
-      - place
+      #- place
       - playsound
       - pumpkins
       - range
@@ -133,7 +133,6 @@ permission_handler:
       - superpickaxe
       - tag
       - team
-      - teleport
       - tellraw
       - template
       - thaw
