@@ -1,5 +1,6 @@
 ender_dragon_handler:
   type: world
+  debug: false
   events:
     after player kills ender_dragon:
       - wait 16s
@@ -8,6 +9,7 @@ ender_dragon_handler:
 
 dragon_scales:
   type: item
+  debug: false
   material: phantom_membrane
   display name: <&f>Dragon Scales
   mechanisms:
