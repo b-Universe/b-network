@@ -1,22 +1,3 @@
-elytra_wing_piece:
-  type: item
-  debug: false
-  material: phantom_membrane
-  display name: <&f>Elytra Wing Piece
-  recipes:
-    1:
-      type: shaped
-      input:
-        - phantom_membrane|phantom_membrane|air
-        - phantom_membrane|phantom_membrane|air
-        - phantom_membrane|phantom_membrane|air
-    2:
-      type: shaped
-      input:
-        - air|phantom_membrane|phantom_membrane
-        - air|phantom_membrane|phantom_membrane
-        - air|phantom_membrane|phantom_membrane
-
 add_elytra:
   type: item
   debug: false
@@ -26,9 +7,9 @@ add_elytra:
     1:
       type: shaped
       input:
-        - elytra_wing_piece|bone|elytra_wing_piece
-        - elytra_wing_piece|bone|elytra_wing_piece
-        - elytra_wing_piece|air|elytra_wing_piece
+        - phantom_membrane|bone|phantom_membrane
+        - phantom_membrane|bone|phantom_membrane
+        - phantom_membrane|air|phantom_membrane
 
 add_string:
   type: item
