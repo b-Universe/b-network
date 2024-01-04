@@ -70,7 +70,7 @@ settings_menu_handler:
   debug: false
   events:
     after player clicks settings_commands_button in settings_main_menu:
-      - narrate fire
+      #- narrate fire
       - define inventory <inventory[settings_commands_main_menu]>
       # playsound/others
       - if <player.has_flag[behr.essentials.settings.playsounds]>:
