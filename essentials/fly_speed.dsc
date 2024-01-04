@@ -5,7 +5,7 @@ fly_speed_command:
   usage: /fly_speed (player) <&lt>speed<&gt>
   description: Changes yours or another player<&dq>s fly speed
   tab completions:
-    1: <server.online_players.exclude[<player>].parse[name]>
+    1: <server.players.exclude[<player>].parse[name]>
   script:
     - choose <context.args.size>:
       - case 0:

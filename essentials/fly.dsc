@@ -5,7 +5,7 @@ fly_command:
   description: Toggles flight to yourself or another player
   usage: /fly (player)
   tab completions:
-    1: <server.online_players.exclude[<player>].parse[name]>
+    1: <server.players.exclude[<player>].parse[name]>
   script:
     - if <context.args.size> > 1:
       - inject command_syntax_error

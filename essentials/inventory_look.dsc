@@ -5,7 +5,7 @@ inventory_look_command:
   description: Views another players inventory
   usage: /inventory_look (player)
   tab completions:
-    1: <server.online_players.exclude[<player>].parse[name]>
+    1: <server.players.exclude[<player>].parse[name]>
   aliases:
     - invsee
   script:

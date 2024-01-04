@@ -26,7 +26,7 @@ command_player_verification:
       - narrate <[message.text].on_hover[<[message.hover]>].on_click[/<context.alias> ].type[suggest_command]>
       - stop
 
-    - if !<[player].is_truthy>:
+    - if <[player]> == null:
       - definemap message:
           hover: <&a>Click to insert<&co><n><&6>/<&e><context.alias.proc[command_usage].proc[command_syntax_format]><n><&c>You typed<&co> <underline>/<context.alias> <context.raw_args>
           text: <&e><[player_name]> <&c>is not a valid player
