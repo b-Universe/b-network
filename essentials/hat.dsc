@@ -5,12 +5,12 @@ hat_command:
   description: Wears the item in your hand as a hat
   usage: /hat
   script:
-  # % ██ [ check if tryping arguments               ] ██:
+  # % ██ [ check if typing arguments                ] ██:
     - if !<context.args.is_empty>:
       - inject command_syntax_error
 
   # % ██ [ check if not holding a hat               ] ██:
-    - if <player.item_in_hand.material.name> == air:
+    - if !<player.item_in_hand.is_truthy>:
       - define reason "You have to hold an item"
       - inject command_error
 

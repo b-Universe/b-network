@@ -12,13 +12,11 @@ debugging_command:
     - else:
       - actionbar "<&e>Debug mode is currently <&c>disabled"
   script:
+  # % ██ [ check if typing arguments                ] ██:
     - if !<context.args.is_empty>:
-      - definemap message:
-          text: <&c>Syntax<&co> <&6>//<&e>debug
-          hover: <&a>Click to insert<&co><n><&6>//<&e>debug<n><&c>You typed<&co> <underline>/<context.alias> <context.raw_args>
-      - narrate <[message.text].on_hover[<[message.hover]>].on_click[//debug].type[suggest_command]>
-      - stop
+      - inject command_syntax_error
 
+  # % ██ [ change the server's debug mode           ] ██:
     - if <server.has_flag[behr.developmental.debug_mode]>:
       - flag server behr.developmental.debug_mode:!
       - narrate "<&c>Debug mode disabled"

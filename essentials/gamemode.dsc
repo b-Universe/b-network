@@ -5,10 +5,9 @@ gamemode_command:
   description: Opens the gamemode GUI
   usage: /gamemode
   script:
-  # % ██ [ check if using too many arguments       ] ██:
+  # % ██ [ check if typing arguments               ] ██:
     - if !<context.args.is_empty>:
-      - narrate "<&c>Invalid usage"
-      - stop
+      - inject command_syntax_error
 
   # % ██ [ open the gui                            ] ██:
     - define items <list[air]>
