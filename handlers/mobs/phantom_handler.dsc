@@ -21,7 +21,7 @@ phantom_hndler:
     #  - wait 5t
     #  - push <context.entity> origin:<context.entity.location> destination:<player.eye_location> speed:<util.random.decimal[0.6].to[1.1]>
 
-    on player damaged by phantom chance:100 flagged:!behr.essentials.phantom_kidnapped:
+    on player damaged by phantom chance:10 flagged:!behr.essentials.phantom_kidnapped:
       - flag <player> behr.essentials.phantom_kidnapped expire:5s
       - mount <player>|<context.damager>
       - wait <util.random.int[3].to[5]>s
