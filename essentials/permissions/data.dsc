@@ -9,6 +9,7 @@ permission_data:
         commands:
           - bed
           - discord
+          - dynmap
           - resource
           - settings
           - spawn
