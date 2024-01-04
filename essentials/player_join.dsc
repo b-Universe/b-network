@@ -41,9 +41,14 @@ player_join_handler:
         - define text "<&c>🎊<&6>🎊<&e>🎉 <&b><player.name> joined B for the first time! <&e>🎉<&6>🎊<&c>🎊"
 
         - teleport <player> <server.flag[behr.essentials.spawn_location]>
+        - give space_pickaxe
+        - give elytra
+        - give physics_device
+        - give lime_bed
+        - give lime_shulker_box
+        - give firework_rocket quantity:64
         - give space_fruit quantity:256
         - give space_juice quantity:6
-        - give space_pickaxe
 
         - if <server.has_flag[behr.essentials.uniques.<player.uuid>.space_suit]>:
           - if !<player.has_flag[behr.essentials.ratelimit.unique_space_suit_reward]>:
@@ -71,3 +76,7 @@ player_join_handler:
         - narrate "<&3>Welcome again to B; If you'd like to check out the discord, you can join at <&b><underline>https<&co>//www.behr.dev/Discord <&3>- We<&sq>re accepting feature requests, suggestions, and any kind of feedback you'd like to provide!"
       - else:
         - narrate "<red>Remember, you<&sq>re still muted. You can appeal on the discord at <&b><underline>https<&co>//www.behr.dev/Discord" targets:<player>
+
+      - if <player.is_online>:
+        - adjust <player> discover_recipe:<server.recipe_ids.filter[contains_text[denizen]]>
+        - adjust <player> resend_recipes
