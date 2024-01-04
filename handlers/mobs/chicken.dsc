@@ -4,6 +4,7 @@ chicken_handler:
   events:
     on egg despawns:
       - define location <context.location>
+      - stop if:<[location].find_entities[chicken].within[20].size.is_more_than[8]>
       - repeat <context.item.quantity.div[2].round_up>:
         - repeat next if:!<util.random_chance[12.5]>
         - spawn chicken[age=baby;velocity=<location[0,1,0].random_offset[0.5,0,0.5]>] <[location]>
