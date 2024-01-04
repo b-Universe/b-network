@@ -42,7 +42,7 @@ chat_handler:
       - definemap payload:
           username: <[player_data.name]>
           avatar_url: <[player_data.uuid].proc[player_profiles].context[armor/bust|<[time]>]>
-          content: <[message.text].replace_text[@champagne].with[<&lt>@905309299524382811<&gt>]>
+          content: <[message.text].parse_color.strip_color.replace_text[@champagne].with[<&lt>@905309299524382811<&gt>]>
           allowed_mentions:
             parse: <list>
           tts: true
@@ -64,7 +64,7 @@ chat_handler:
       - stop if:<server.has_flag[champagne.relay_ratelimit]>
       - stop if:!<[message].text.is_truthy>
       - definemap message:
-          text: <context.new_message.text.proc[chat_replacements]>
+          text: <context.new_message.text.proc[chat_replacements].replace_text[&k].parse_color>
           author:
             name: <context.new_message.author.name>
             nickname: <context.new_message.author.nickname[<discord_group[b,901618453356630046]>].if_null[null]>
