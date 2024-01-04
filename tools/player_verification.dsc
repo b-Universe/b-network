@@ -19,6 +19,13 @@ command_player_verification:
   definitions: player_name
   script:
     - define player <server.match_offline_player[<[player_name]>].if_null[null]>
+    - if <[player].name.length> != <[player_name].length>:
+      - definemap message:
+          hover: <&a>Click to insert<&co><n><&6>/<&e><context.alias.proc[command_usage].proc[command_syntax_format]><n><&c>You typed<&co> <underline>/<context.alias> <context.raw_args>
+          text: <&e><[player_name]> <&c>is not a valid player or may be too short of input
+      - narrate <[message.text].on_hover[<[message.hover]>].on_click[/<context.alias> ].type[suggest_command]>
+      - stop
+
     - if !<[player].is_truthy>:
       - definemap message:
           hover: <&a>Click to insert<&co><n><&6>/<&e><context.alias.proc[command_usage].proc[command_syntax_format]><n><&c>You typed<&co> <underline>/<context.alias> <context.raw_args>
