@@ -17,6 +17,7 @@ heal_command:
     - else:
       - inject command_syntax_error
 
+    - playsound <player> entity_player_levelup pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3 if:<player.has_flag[behr.essentials.settings.playsounds]>
     - heal <[player]>
     - adjust <[player]> food_level:20
     - if <[player]> != <player>:

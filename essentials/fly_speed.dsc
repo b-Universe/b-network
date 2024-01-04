@@ -53,6 +53,7 @@ fly_speed_command:
         - default:
           - inject command_syntax_error
 
+      - playsound <player> entity_player_levelup pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3 if:<player.has_flag[behr.essentials.settings.playsounds]>
       - adjust <[player]> fly_speed:<[speed]>
       - if <[player]> != <player>:
         - narrate "<&a>You sent <&e><[player_name]><&a>'s flying at <[speed_name]><&a>!"
@@ -74,6 +75,7 @@ fly_speed_command:
           - narrate <element[<&e>Nothing interesting happens].on_hover[<&a>Your fly speed is already <&e><[speed]>]>
         - stop
 
+      - playsound <player> entity_player_levelup pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3 if:<player.has_flag[behr.essentials.settings.playsounds]>
       - adjust <[player]> fly_speed:<[speed].div[10]>
       - if <[player]> != <player>:
         - narrate "<&e><[player_name]><&a>'s fly speed set to <&e><[speed]>"

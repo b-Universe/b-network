@@ -51,5 +51,6 @@ time_command:
       - if !<[time].is_truthy>:
         - inject command_syntax_error
 
+    - playsound <player> entity_player_levelup pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3 if:<player.has_flag[behr.essentials.settings.playsounds]>
     - time <[time]>
     - narrate "<&a>Time set to <&e><[time_name]>"

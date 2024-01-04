@@ -28,4 +28,5 @@ resource_handler:
     - define url https://download.mc-packs.net/pack/a62acf61a8d1311eb6acad3b348b7dbc02735bde.zip
     - define hash a62acf61a8d1311eb6acad3b348b7dbc02735bde
 
+    - playsound <player> entity_player_levelup pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3 if:<player.has_flag[behr.essentials.settings.playsounds]>
     - resourcepack url:<[url]> hash:<[hash]>

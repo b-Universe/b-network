@@ -11,6 +11,8 @@ ping_command:
     - if <context.args.size> > 1:
       - inject command_syntax_error
 
+    - playsound <player> entity_player_levelup pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3 if:<player.has_flag[behr.essentials.settings.playsounds]>
+
   # % ██ [ check if typing another player or not ] ██
     - if <context.args.is_empty>:
       - narrate "<&a>Your ping is <&e><player.ping><&6>ms"

@@ -98,6 +98,7 @@ teleport_command:
         - define world_name <player.world.name>
         - define location <location[<[x]>,<[y]>,<[z]>,<[world_name]>]>
         - teleport <player> <[location]>
+        - playsound <player> entity_player_levelup pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3 if:<player.has_flag[behr.essentials.settings.playsounds]>
         - narrate "<&a>Teleported you to <&e><[world_name]> <&6>(<&e><[location].round.simple.replace_text[,].with[<&6>,<&e> ]><&6>)"
 
       # /teleport player x y z
@@ -198,6 +199,7 @@ teleport_command:
 
           - define location <location[<[x]>,<[y]>,<[z]>,<[world_name]>]>
           - teleport <[player]> <[location]>
+          - playsound <player> entity_player_levelup pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3 if:<player.has_flag[behr.essentials.settings.playsounds]>
           - if <[player]> != <player>:
             - narrate "<&a>Teleported <&e><[player_name]> <&a>to <&e><[world_name]> <&6>(<&e><[location].round.simple.replace_text[,].with[<&6>,<&e> ]><&6>)"
           - narrate "<&a>Teleported you to <&e><[world_name]> <&6>(<&e><[location].round.simple.replace_text[,].with[<&6>,<&e> ]><&6>)" targets:<[player]>
