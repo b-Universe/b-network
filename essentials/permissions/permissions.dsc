@@ -142,7 +142,7 @@ permission_handler:
       - title
       - toggleeditwand
       - tool
-      - tp
+      #- tp
       - tpl
       - tps
       - tracemask
