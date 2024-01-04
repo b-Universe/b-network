@@ -35,3 +35,13 @@ group_refresh_command:
     - adjust server save
     - wait 1s
     - reload
+
+command_refresh_command:
+  type: command
+  debug: false
+  name: command_refresh
+  usage: /command_refresh <&lt>command<&gt>
+  description: Refreshes a command
+  script:
+    - if <context.args.size> != 1:
+      - inject command_syntax_error

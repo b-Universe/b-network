@@ -7,8 +7,11 @@ permission_data:
       formatted_name: <&b>Newbie
       permissions:
         commands:
+          - bed
+          - discord
+          - resource
           - settings
-
+          - spawn
   # █  [ level two groups   ] █:
     regular:
       level: 2
@@ -31,7 +34,9 @@ permission_data:
       formatted_name:  <&3>[<&b>░Master Builder░<&3>]
       permissions:
         inherits:
+          - newbie
           - regular
+          - sponsor_1
         commands:
           - builder
           - weather
@@ -47,6 +52,7 @@ permission_data:
       disord_role_id: 1162107100177121342
       permissions:
         inherits:
+          - newbie
           - regular
           - sponsor_1
     good_denizzle:
@@ -58,6 +64,7 @@ permission_data:
           - survival
           - spectator
         inherits:
+          - newbie
           - regular
           - sponsor_1
 
@@ -68,6 +75,7 @@ permission_data:
       disord_role_id: 901618453356630047
       permissions:
         inherits:
+          - newbie
           - regular
           - sponsor_1
         commands:
@@ -77,7 +85,6 @@ permission_data:
           - survival
           - gms
           - gmsp
-          - world
           - inventory_look
           - teleport
 
@@ -88,6 +95,7 @@ permission_data:
       disord_role_id: 1072628131598438512
       permissions:
         inherits:
+          - newbie
           - regular
         commands:
           - hat
@@ -97,6 +105,8 @@ permission_data:
       disord_role_id: 1072642156088545371
       permissions:
         inherits:
+          - newbie
+          - regular
           - sponsor_1
     sponsor_3:
       level: 4
@@ -104,6 +114,9 @@ permission_data:
       disord_role_id: 1072643109973938246
       permissions:
         inherits:
+          - newbie
+          - regular
+          - sponsor_1
           - sponsor_2
     wizard_of_alchemy:
       level: 4
@@ -112,6 +125,7 @@ permission_data:
         inherits:
           - newbie
           - regular
+          - sponsor_1
 
   # █  [ level five groups  ] █:
     admin:
@@ -119,14 +133,19 @@ permission_data:
       formatted_name:  <&b>Admin
       permissions:
         inherits:
+          - newbie
+          - regular
           - dnt
           - master_builder
           - elderly_owl
           - good_denizzle
           - moderator
+          - sponsor_1
+          - sponsor_2
           - sponsor_3
           - wizard_of_alchemy
         commands:
+          - command_refresh
           - group_refresh
           - restart
           - heal
@@ -149,6 +168,7 @@ permission_data:
           - save-all
           - chunky
           - dynmap
+          - copy_to_clipboard
     # disord_role_id: 901618453356630047
 
   # █  [ level six groups   ] █:
@@ -158,6 +178,17 @@ permission_data:
       disord_role_id: 901618453356630049
       permissions:
         inherits:
+          - newbie
+          - regular
+          - dnt
+          - master_builder
+          - elderly_owl
+          - good_denizzle
+          - moderator
+          - sponsor_1
+          - sponsor_2
+          - sponsor_3
+          - wizard_of_alchemy
           - admin
         commands:
           - datapack
