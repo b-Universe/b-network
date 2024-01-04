@@ -46,7 +46,7 @@ time_command:
   # % ██ [ Match time with time of day by name ] ██
     - else:
       - define time_name <context.args.first>
-      - define time <script.data_key[data.<[time_name]>].if_null[null]>
+      - define time <script.data_key[data.time_of_day.<[time_name]>].if_null[null]>
 
       - if !<[time].is_truthy>:
         - inject command_syntax_error
