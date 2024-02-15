@@ -17,7 +17,7 @@ restart_command:
 restart_handler:
   type: world
   events:
-    on system time hourly every:48:
+    on system time hourly every:40:
       - run restart_task def:60s|5t
 
     on restart command:
