@@ -17,4 +17,6 @@ player_leave_handler:
 
       # ██ [ announce the player leave    ] ██:
       - determine <[text]> passively
+      - determine cancelled if:<player.has_flag[behr.essentials.ratelimit.discord_leave_announcement]>
+      - flag player behr.essentials.ratelimit.discord_leave_announcement expire:10m
       - inject discord_door_message

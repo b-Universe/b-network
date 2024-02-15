@@ -70,6 +70,8 @@ player_join_handler:
       # ██ [ announce the player join         ] ██:
       - playsound <server.online_players> entity_player_levelup pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3
       - determine <[text]> passively
+      - determine cancelled if:<player.has_flag[behr.essentials.ratelimit.discord_join_announcement]>
+      - flag player behr.essentials.ratelimit.discord_join_announcement expire:10m
       - inject discord_door_message
       - wait 10s
       - if !<player.has_flag[behr.essentials.muted]>:
