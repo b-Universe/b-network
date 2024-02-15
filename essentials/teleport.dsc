@@ -1,13 +1,18 @@
 teleport_command:
   type: command
   name: teleport
-  debug: false
+  debug: true
   usage: /teleport (player) / X Y Z (world)
   description: Teleports you to another destination
+  tab completions:
+    1: <server.players.exclude[<player>].parse[name].include[<server.worlds.parse[name]>]>
+    2: <server.players.exclude[<player>].parse[name].include[<server.worlds.parse[name]>]>
+    4: <server.worlds.parse[name]>
+    5: <server.worlds.parse[name]>
   script:
     - choose <context.args.size>:
-      # /teleport (player)
-      # /teleport (world)
+      # /teleport player
+      # /teleport world
       - case 1:
         - if <context.args.first> in <server.worlds.parse[name]>:
           - define world_name <context.args.first>
@@ -17,12 +22,15 @@ teleport_command:
 
         - else:
           - define player_name <context.args.first>
-          - define player <server.match_player[<[player_name]>].if_null[null]>
+          - if <player.has_flag[behr.essentials.permission.offline_teleporting]>:
+            - define player <server.match_offline_player[<[player_name]>].if_null[null]>
+          - else:
+            - define player <server.match_player[<[player_name]>].if_null[null]>
           - if <[player]> == <player>:
             - narrate "<&e>Nothing interesting happens"
             - stop
 
-          - if !<[player].is_truthy>:
+          - if <[player]> == null:
             - define message.hover "<&a>Click to insert<&co><n><&6>/<&e><context.alias.proc[command_usage].proc[command_syntax_format]><n><&c>You typed<&co> <underline>/<context.alias> <context.raw_args>"
             - if <server.match_offline_player[<[player_name]>].exists>:
               - define message.text "<&e><[player_name]> <&c>is not online"
@@ -35,11 +43,15 @@ teleport_command:
           - teleport <player> <[location]>
           - narrate "<&a>Teleported you to <&e><[player_name]> <&6>(<&e><[location].round.simple.replace_text[,].with[<&6>,<&e> ]><&6>)"
 
-      # /teleport (player one) (player two/world)
+      # /teleport player world
+      # /teleport player_one player_two
       - case 2:
         - define player_one_name <context.args.first>
-        - define player_one <server.match_player[<[player_one_name]>].if_null[null]>
-        - if !<[player_one].is_truthy>:
+        - if <player.has_flag[behr.essentials.permission.offline_teleporting]>:
+          - define player_one <server.match_offline_player[<[player_one_name]>].if_null[null]>
+        - else:
+          - define player_one <server.match_player[<[player_one_name]>].if_null[null]>
+        - if <[player_one]> == null:
           - define message.hover "<&a>Click to insert<&co><n><&6>/<&e><context.alias.proc[command_usage].proc[command_syntax_format]><n><&c>You typed<&co> <underline>/<context.alias> <context.raw_args>"
           - if <server.match_offline_player[<[player_one_name]>].exists>:
             - define message.text "<&e><[player_one_name]> <&c>is not online"
@@ -58,12 +70,15 @@ teleport_command:
 
         - else:
           - define player_two_name <context.args.last>
-          - define player_two <server.match_player[<[player_two_name]>].if_null[null]>
+          - if <player.has_flag[behr.essentials.permission.offline_teleporting]>:
+            - define player_two <server.match_offline_player[<[player_two_name]>].if_null[null]>
+          - else:
+            - define player_two <server.match_player[<[player_two_name]>].if_null[null]>
           - if <[player_one]> == <[player_two]>:
             - narrate "<&e>Nothing interesting happens"
             - stop
 
-          - if !<[player_two].is_truthy>:
+          - if <[player_two]> == null:
             - define message.hover "<&a>Click to insert<&co><n><&6>/<&e><context.alias.proc[command_usage].proc[command_syntax_format]><n><&c>You typed<&co> <underline>/<context.alias> <context.raw_args>"
             - if <server.match_offline_player[<[player_two_name]>].exists>:
               - define message.text "<&e><[player_two_name]> <&c>is not online"
@@ -106,8 +121,11 @@ teleport_command:
       - case 4:
         - if !<context.args.first.is_decimal>:
           - define player_name <context.args.first>
-          - define player <server.match_player[<[player_name]>].if_null[null]>
-          - if !<[player].is_truthy>:
+          - if <player.has_flag[behr.essentials.permission.offline_teleporting]>:
+            - define player <server.match_offline_player[<[player_name]>].if_null[null]>
+          - else:
+            - define player <server.match_player[<[player_name]>].if_null[null]>
+          - if <[player]> == null:
             - define message.hover "<&a>Click to insert<&co><n><&6>/<&e><context.alias.proc[command_usage].proc[command_syntax_format]><n><&c>You typed<&co> <underline>/<context.alias> <context.raw_args>"
             - if <server.match_offline_player[<[player_name]>].exists>:
               - define message.text "<&e><[player_name]> <&c>is not online"
@@ -167,8 +185,11 @@ teleport_command:
       - case 5:
         - if !<context.args.first.is_decimal>:
           - define player_name <context.args.first>
-          - define player <server.match_player[<[player_name]>].if_null[null]>
-          - if !<[player].is_truthy>:
+          - if <player.has_flag[behr.essentials.permission.offline_teleporting]>:
+            - define player <server.match_offline_player[<[player_name]>].if_null[null]>
+          - else:
+            - define player <server.match_player[<[player_name]>].if_null[null]>
+          - if <[player]> == null:
             - define message.hover "<&a>Click to insert<&co><n><&6>/<&e><context.alias.proc[command_usage].proc[command_syntax_format]><n><&c>You typed<&co> <underline>/<context.alias> <context.raw_args>"
             - if <server.match_offline_player[<[player_name]>].exists>:
               - define message.text "<&e><[player_name]> <&c>is not online"
