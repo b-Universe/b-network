@@ -45,7 +45,7 @@ chat_handler:
           content: <[message.text].parse_color.strip_color.replace_text[@champagne].with[<&lt>@905309299524382811<&gt>]>
           allowed_mentions:
             parse: <list>
-          tts: true
+          #: true
 
       # ██ [ construct webhook data     ] ██:
       - definemap data:
