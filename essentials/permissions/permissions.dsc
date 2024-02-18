@@ -5,19 +5,21 @@ permission_handler:
   debug: false
   events:
     on player receives commands:
+      - if <player.name> in <script.list_keys[data.special_people]>:
+        - define complementiary <script.data_key[data.special_people.<player.name>]>
+      - else:
+        - define complementiary <list>
       - if !<player.has_flag[behr.essentials.profile.first_joined]>:
-        - determine <script[permission_data].data_key[groups.newbie.permissions.commands].if_null[<list>]>
+        - determine <script[permission_data].data_key[groups.newbie.permissions.commands].if_null[<list>].include[<[complementiary]>]>
 
       - define commands <context.commands.filter[contains_text[<&co>].not].exclude[<script.data_key[data.blacklist]>]>
-      #- define commands <player.flag[behr.essentials.groups].if_null[<list[newbie]>].parse_tag[<script[permission_data].data_key[groups.<[parse_value]>.permissions.commands].if_null[<list>]>].combine>
-
       - define allowed_commands <list>
       - foreach <[commands]> as:command:
         - if <player.has_flag[behr.essentials.permission.<[command]>]> || <player.uuid> in <server.flag[behr.uuids]>:
           - define allowed_commands <[allowed_commands].include_single[<[command]>]>
-          #- announce to_console <&b>Permission<&3><&co><&a>+<&3><&co><[command]> if:<server.has_flag[behr.developmental.debugging]>
+          - announce to_console <&b>Permission<&3><&co><&a>+<&3><&co><[command]> if:<server.has_flag[behr.developmental.debugging]>
 
-      - determine <[allowed_commands]>
+      - determine <[allowed_commands].include[<[complementiary]>]>
 
     on command priority:-1:
       - stop if:<context.source_type.equals[server]>
@@ -27,6 +29,10 @@ permission_handler:
         - determine fulfilled
 
   data:
+    special_people:
+      rogueeugor:
+        - con
+        - exc
     blacklist:
       - /help
       - citizens

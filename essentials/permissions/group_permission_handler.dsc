@@ -3,29 +3,26 @@ group_permission_handler:
   debug: false
   definitions: player|action|group
   script:
-    # Manage inherited permissions
-    - define player_groups <[player].flag[behr.essentials.groups].if_null[<list>]>
-    - define inheritances <script[permission_data].data_key[groups.<[group]>.permissions.inherits].if_null[null]>
-    - if <[inheritances].is_truthy>:
-      - foreach <[inheritances].exclude[<[player_groups].include[<[group]>]>]> as:inheritance:
-        - definemap data:
-            player: <[player]>
-            action: <[action]>
-            group: <[inheritance]>
-        - run group_permission_handler defmap:<[data]>
+    - if <server.has_flag[behr.developmental.debug]>:
+      - announce to_console "<&e><[player].name> Permissions<&3><&co>"
 
-    - define permissions <script[permission_data].data_key[groups.<[group]>.permissions.commands].if_null[<list>]>
-    - stop if:!<[permissions].is_truthy>
-    - foreach <[permissions]> as:permission:
-      - if <[action]> == grant:
-        - foreach next if:<[player].has_flag[behr.essentials.permission.<[permission]>]>
-        - flag <[player]> behr.essentials.permission.<[permission]>
-        - announce to_console "<&e><[player].name> <&b>permission<&3><&co><&a>+<&3><&co><&e><[permission]>"
+    - flag <[player]> behr.essentials.groups:<-:<[group]>
+    - if <[action]> ==  grant:
+      - announce to_console <&b>Group<&3><&co><&a>+<&3><&co><[group]>
+      - flag <[player]> behr.essentials.groups:->:<[group]>
+    - else:
+      - announce to_console <&b>Group<&3><&co><&c>-<&3><&co><[group]>
+
+    - foreach <script[permission_data].parsed_key[groups.<[group]>.permissions.commands].if_null[<list>]> as:command:
+      - if <[action]> ==  grant:
+        - flag <[player]> behr.essentials.permission.<[command]>
+        - announce to_console <&b>Permission<&3><&co><&a>+<&3><&co><[command]> if:<server.has_flag[behr.developmental.debug]>
       - else:
-        - foreach next if:!<[player].has_flag[behr.essentials.permission.<[permission]>]>
-        - flag <[player]> behr.essentials.permission.<[permission]>:!
-        - announce to_console "<&e><[player].name> <&b>permission<&3><&co><&c>-<&3><&co><&e><[permission]>"
-
-    - adjust server save
-    - wait 1s
-    - reload
+        - flag <[player]> behr.essentials.permission.<[command]>:!
+        - announce to_console <&b>Permission<&3><&co><&c>-<&3><&co><[command]> if:<server.has_flag[behr.developmental.debug]>
+    - foreach <script[permission_data].parsed_key[groups.<[group]>.permissions.inherits].if_null[<list>]> as:inheritance:
+      - definemap data:
+          player: <[player]>
+          action: <[action]>
+          group: <[inheritance]>
+      - run group_permission_handler defmap:<[data]>
