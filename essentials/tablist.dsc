@@ -24,8 +24,8 @@ tablist_handler:
       - <[color_center]> <&rb>
       - <&sp.repeat[10]>
       - <[color_center]><&lb> <&e>
-      - TPS<[color_center]><&l><&co><&e> <list[20|20|20].separated_by[<[color_center]><&l>, <&e>]>
-      #- TPS<[color_center]><&l><&co><&e> <server.recent_tps.parse[round_to_precision[0.1]].separated_by[<[color_center]><&l>,<&e>]>
+      #- TPS<[color_center]><&l><&co><&e> <list[20|20|20].separated_by[<[color_center]><&l>, <&e>]>
+      - TPS<[color_center]><&l><&co><&e> <server.recent_tps.parse[round_to_precision[0.1]].separated_by[<[color_center]><&l>,<&e>]>
       - <[color_center]> <&rb>
 
   events:
