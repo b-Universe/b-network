@@ -18,17 +18,33 @@ resource_command:
 
   # % ██ [ give the player the resource pack        ] ██:
     - playsound <player> entity_player_levelup pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3 if:<player.has_flag[behr.essentials.settings.playsounds]>
-    - define url https://download.mc-packs.net/pack/a62acf61a8d1311eb6acad3b348b7dbc02735bde.zip
-    - define hash a62acf61a8d1311eb6acad3b348b7dbc02735bde
+    - define url https:api.behr.dev/resource/b.zip
+    - define hash <server.flag[behr.essentials.resource.SHA-1]>
     - resourcepack url:<[url]> hash:<[hash]> targets:<[player]>
+    - announce to_console "<&e><player.name> taking pack<&co> <&a><[hash]>"
 
 resource_handler:
   type: world
+  debug: false
   events:
+    after resource pack status:
+      - announce to_console "<&e><player.name> <&3>resource pack status<&b><&co> <&a><context.status>"
+    after server start:
+      - run resource_fetch
     after player joins:
     - wait 1s
 
   # % ██ [ give the player the resource pack        ] ██:
-    - define url https://download.mc-packs.net/pack/a62acf61a8d1311eb6acad3b348b7dbc02735bde.zip
-    - define hash a62acf61a8d1311eb6acad3b348b7dbc02735bde
+    - define url https://api.behr.dev/resource/b.zip
+    - define hash <server.flag[behr.essentials.resource.SHA-1]>
     - resourcepack url:<[url]> hash:<[hash]>
+    - announce to_console "<&e><player.name> taking pack<&co> <&a><[hash]>"
+
+resource_fetch:
+  type: task
+  debug: true
+  script:
+    - ~webget https://api.behr.dev/resource/b.zip headers:[User-Agent=b] save:response
+    - inject web_debug.webget_response
+    - flag server behr.essentials.resource.SHA-1:<entry[response].result_binary.hash[SHA-1].to_hex>
+    - announce to_console <[sha-1]>
