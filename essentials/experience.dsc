@@ -8,19 +8,28 @@ experience_handler:
         - flag player behr.essentials.profile.stats.construction.level:1
 
       - flag player behr.essentials.profile.stats.construction.experience:+:<util.random.int[1].to[5]>
-      - define construction <player.flag[behr.essentials.profile.stats.construction]>
 
-      - define next_level <[construction.level].add[1]>
-      - if <[construction.experience]> > <script[level_chart].data_key[level.<[next_level]>]>:
-        - playsound <player> entity_player_levelup pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3
-        - toast "<&a>Construction Levelup<&co> <&e><[next_level]>" frame:goal icon:bricks
-        - narrate "<&a>You leveled up! Construction level<&co> <&e><[next_level]>"
-        - flag player behr.essentials.profile.stats.construction.level:++
+      - flag player behr.essentials.waitlist.construction_experience expire:5s
+      - waituntil !<player.has_flag[behr.essentials.waitlist.construction_experience]>
+      - inject check_for_levelup
 
-      - definemap data:
-          player: <player>
-          time: <util.time_now>
-      - flag <context.location> behr.essentials.block_data:<[data]>
+      #- definemap data:
+      #    player: <player>
+      #    time: <util.time_now>
+      #- flag <context.location> behr.essentials.block_data:<[data]>
+
+check_for_levelup:
+  type: task
+  debug: false
+  script:
+    - define construction <player.flag[behr.essentials.profile.stats.construction]>
+
+    - define next_level <[construction.level].add[1]>
+    - if <[construction.experience]> > <script[level_chart].data_key[level.<[next_level]>]>:
+      - playsound <player> entity_player_levelup pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3
+      - toast "<&a>Construction Levelup<&co> <&e><[next_level]>" frame:goal icon:bricks
+      - narrate "<&a>You leveled up! Construction level<&co> <&e><[next_level]>"
+      - flag player behr.essentials.profile.stats.construction.level:++
 
 level_chart:
   type: data
