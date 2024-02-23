@@ -6,6 +6,12 @@ player_join_handler:
       # ██ [ let everyone know they joined, if they aren't constantly joining ] ██:
       - determine cancelled if:<player.has_flag[behr.essentials.ratelimit.join_announcement]>
       - flag player behr.essentials.ratelimit.join_announcement expire:10s
+      - if !<player.has_flag[behr.essentials.groups]>:
+        - definemap data:
+            player: <player>
+            action: grant
+            group: newbie
+        - run group_permission_handler defmap:<[data]>
 
         # ██ [ base defintions                ] ██:
       - define time <util.time_now>

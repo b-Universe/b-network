@@ -42,9 +42,9 @@ resource_handler:
 
 resource_fetch:
   type: task
-  debug: true
+  debug: false
   script:
     - ~webget https://api.behr.dev/resource/b.zip headers:[User-Agent=b] save:response
     - inject web_debug.webget_response
+    - stop if:<entry[response].failed>
     - flag server behr.essentials.resource.SHA-1:<entry[response].result_binary.hash[SHA-1].to_hex>
-    - announce to_console <[sha-1]>
