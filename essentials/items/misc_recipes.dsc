@@ -1,16 +1,3 @@
-add_elytra:
-  type: item
-  debug: false
-  material: elytra
-  no_id: true
-  recipes:
-    1:
-      type: shaped
-      input:
-        - phantom_membrane|bone|phantom_membrane
-        - phantom_membrane|bone|phantom_membrane
-        - phantom_membrane|air|phantom_membrane
-
 add_string:
   type: item
   debug: false
