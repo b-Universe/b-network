@@ -24,6 +24,14 @@ permission_data:
           - me
           - ping
           - crafting_table
+
+          - /pos1
+          - /pos2
+          - /bset
+          - /bstack
+          - /center
+          - /frame
+          - /shell
     dnt:
       level: 2
       formatted_name: <&4>[<red>DNT<bold><&chr[2193]><&4>]

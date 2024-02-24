@@ -1,9 +1,9 @@
-bedit_set_command:
+bedit_shell_command:
   type: command
   debug: false
   enabled: true
-  name: /set
-  usage: //set <&lt>material<&gt>
+  name: /shell
+  usage: //shell <&lt>material<&gt>
   description: Sets a selection to a set material
   tab complete:
   - define materials <server.material_types.filter[is_block].parse[name]>
@@ -51,7 +51,7 @@ bedit_set_command:
 
     # % ██ [ Add base definitions       ] ██:
     - define sound <[new_material].as[material].block_sound_data>
-    - define blocks <[cuboid].blocks>
+    - define blocks <[cuboid].shell.exclude[<[cuboid].outline>]>
     - if <[new_material]> == air:
       - define blocks <[blocks].filter[advanced_matches[!air]]>
 
@@ -61,7 +61,7 @@ bedit_set_command:
     - else:
       - define level <player.flag[behr.essentials.profile.stats.construction.level]>
     - define cuboid_size <[cuboid].max.sub[<[cuboid].min>].add[1,1,1]>
-    - define block_count <[cuboid_size].x.mul[<[cuboid_size].y>].mul[<[cuboid_size].z>]>
+    - define block_count <[blocks].size>
 
     - define max_allowed_blocks <[level].div[10].round_down.add[4].power[3]>
     - if <[block_count]> > <[max_allowed_blocks]>:
@@ -69,7 +69,7 @@ bedit_set_command:
       - inject command_error
 
     # % ██ [ Count block requirements   ] ██:
-    - define blocks_unaffected <[cuboid].blocks[<[new_material]>].size>
+    - define blocks_unaffected <[cuboid].shell.exclude[<[cuboid].outline>].filter[advanced_matches[<[new_material]>]].size>
     - if !<player.inventory.contains_item[<[new_material]>].quantity[<[block_count].sub[<[blocks_unaffected]>]>]> && <[new_material]> !matches air && <player.gamemode> == survival:
       - define reason "You don't have enough <&e><[new_material]> <&c>for that <&6>(<&e><player.inventory.quantity_item[<[new_material]>].add[<[blocks_unaffected]>]><&6>/<&e><[block_count]><&6>)"
       - inject command_error

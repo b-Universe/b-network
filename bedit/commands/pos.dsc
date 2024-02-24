@@ -1,9 +1,9 @@
 bedit_pos1_command:
   type: command
   debug: false
-  enabled: false
+  enabled: true
   name: /pos1
-  usage: //pos1 <&ns>/direction
+  usage: //pos1 (<&ns>/direction) (<&ns>)
   description: Manual selectors for positions
   tab completions:
     1: north|northeast|east|southeast|south|southwest|west|northwest|up|down|left|right|forward|backward|cursor_on
@@ -19,34 +19,28 @@ bedit_pos1_command:
       northwest: -1,0,-1
       up: 0,1,0
       down: 0,-1,0
+      left: <location[0,0,0].with_pose[<player>].left>
+      right: <location[0,0,0].with_pose[<player>].right>
+      forward: <location[0,0,0].with_pose[<player>].forward_flat>
+      back: <location[0,0,0].with_pose[<player>].backward_flat>
   script:
     # % ██ [ Define side and color               ] ██
     - define click_type left
     - choose <context.args.size>:
-      # //pos1 | //pos2
+      # //pos
       - case 0:
         - define location <player.location.with_pose[0,0].round_down>
 
-      - default:
-        - inject command_syntax_error
-
       - case 1:
         - choose <context.args.first>:
-          # //ppos1 cursor_on
+          # //pos cursor_on
           - case cursor_on:
             - define location <player.cursor_on>
 
-          - case north northeast east southeast south southwest west northwest up down:
-            - define direction <script.data_key[data.direction.<context.args.first>]>
+          # //pos direction
+          - case north northeast east southeast south southwest west northwest up down left right forward back:
+            - define direction <script.parsed_key[data.direction.<context.args.first>].as[location]>
             - define location <player.flag[behr.essentials.bedit.<[click_type]>.selection].add[<[direction]>].if_null[<player.location.add[<[direction]>].round_down.with_pose[0,0]>]>
-          - case left:
-            - define location <player.flag[behr.essentials.bedit.<[click_type]>.selection].left.if_null[<player.location.left.round_down.with_pose[0,0]>]>
-          - case right:
-            - define location <player.flag[behr.essentials.bedit.<[click_type]>.selection].right.if_null[<player.location.right.round_down.with_pose[0,0]>]>
-          - case forward:
-            - define location <player.flag[behr.essentials.bedit.<[click_type]>.selection].forward_flat.if_null[<player.location.forward_flat.round_down.with_pose[0,0]>]>
-          - case backward:
-            - define location <player.flag[behr.essentials.bedit.<[click_type]>.selection].backward_flat.if_null[<player.location.backward_flat.round_down.with_pose[0,0]>]>
 
           # //pos1 player_name
           - default:
@@ -58,6 +52,34 @@ bedit_pos1_command:
 
           - default:
             - inject command_syntax_error
+
+      # //pos # direction
+      # //pos direction #
+      - case 2:
+        - if <context.args.first.is_integer>:
+          - define length <context.args.first>
+          - if <context.args.last> in <script.parsed_key[data.direction]>:
+            - define direction <script.parsed_key[data.direction.<context.args.last>].as[location]>
+            - define direction <[direction].mul[<[length]>]>
+            - define location <player.flag[behr.essentials.bedit.<[click_type]>.selection].add[<[direction]>].if_null[<player.location.add[<[direction]>].round_down.with_pose[0,0]>]>
+          - else:
+            - inject command_syntax_error
+
+        - else if <context.args.first> in <script.parsed_key[data.direction]>:
+          - define direction <script.parsed_key[data.direction.<context.args.first>].as[location]>
+          - if <context.args.last.is_integer>:
+            - define length <context.args.last>
+            - define direction <[direction].mul[<[length]>]>
+            - define location <player.flag[behr.essentials.bedit.<[click_type]>.selection].add[<[direction]>].if_null[<player.location.add[<[direction]>].round_down.with_pose[0,0]>]>
+          - else:
+            - inject command_syntax_error
+
+        - else:
+          - inject command_syntax_error
+
+      - default:
+        - inject command_syntax_error
+
 
     - define color <[location].map_color>
     - playsound <player> block_amethyst_cluster_place pitch:<util.random.int[7].to[10].div[10]> volume:2
@@ -91,39 +113,44 @@ bedit_pos2_command:
   debug: false
   enabled: true
   name: /pos2
-  usage: //pos2 <&ns>
+  usage: //pos2 <&ns>/direction
   description: Manual selectors for positions
+  tab completions:
+    1: north|northeast|east|southeast|south|southwest|west|northwest|up|down|left|right|forward|backward|cursor_on
+  data:
+    direction:
+      north: 0,0,-1
+      northeast: 1,0,-1
+      east: 1,0,0
+      southeast: 1,0,1
+      south: 0,0,1
+      southwest: -1,0,1
+      west: -1,0,0
+      northwest: -1,0,-1
+      up: 0,1,0
+      down: 0,-1,0
+      left: <location[0,0,0].with_pose[<player>].left>
+      right: <location[0,0,0].with_pose[<player>].right>
+      forward: <location[0,0,0].with_pose[<player>].forward_flat>
+      back: <location[0,0,0].with_pose[<player>].backward_flat>
   script:
-    - if !<context.args.is_empty>:
-      - inject command_syntax_error
-
     # % ██ [ Define side and color                ] ██
     - define click_type right
     - choose <context.args.size>:
-      # //pos1 | //pos2
+      # //pos
       - case 0:
         - define location <player.location.with_pose[0,0].round_down>
 
-      - default:
-        - inject command_syntax_error
-
       - case 1:
         - choose <context.args.first>:
-          # //ppos1 cursor_on
+          # //ppos cursor_on
           - case cursor_on:
             - define location <player.cursor_on>
 
-          - case north northeast east southeast south southwest west northwest up down:
-            - define direction <script.data_key[data.direction.<context.args.first>]>
+          # //pos direction
+          - case north northeast east southeast south southwest west northwest up down left right forward back:
+            - define direction <script.parsed_key[data.direction.<context.args.first>].as[location]>
             - define location <player.flag[behr.essentials.bedit.<[click_type]>.selection].add[<[direction]>].if_null[<player.location.add[<[direction]>].round_down.with_pose[0,0]>]>
-          - case left:
-            - define location <player.flag[behr.essentials.bedit.<[click_type]>.selection].left.if_null[<player.location.left.round_down.with_pose[0,0]>]>
-          - case right:
-            - define location <player.flag[behr.essentials.bedit.<[click_type]>.selection].right.if_null[<player.location.right.round_down.with_pose[0,0]>]>
-          - case forward:
-            - define location <player.flag[behr.essentials.bedit.<[click_type]>.selection].forward_flat.if_null[<player.location.forward_flat.round_down.with_pose[0,0]>]>
-          - case backward:
-            - define location <player.flag[behr.essentials.bedit.<[click_type]>.selection].backward_flat.if_null[<player.location.backward_flat.round_down.with_pose[0,0]>]>
 
           # //pos1 player_name
           - default:
@@ -135,6 +162,34 @@ bedit_pos2_command:
 
           - default:
             - inject command_syntax_error
+
+      # //pos # direction
+      # //pos direction #
+      - case 2:
+        - if <context.args.first.is_integer>:
+          - define length <context.args.first>
+          - if <context.args.last> in <script.parsed_key[data.direction]>:
+            - define direction <script.parsed_key[data.direction.<context.args.last>].as[location]>
+            - define direction <[direction].mul[<[length]>]>
+            - define location <player.flag[behr.essentials.bedit.<[click_type]>.selection].add[<[direction]>].if_null[<player.location.add[<[direction]>].round_down.with_pose[0,0]>]>
+          - else:
+            - inject command_syntax_error
+
+        - else if <context.args.first> in <script.parsed_key[data.direction]>:
+          - define direction <script.parsed_key[data.direction.<context.args.first>].as[location]>
+          - if <context.args.last.is_integer>:
+            - define length <context.args.last>
+            - define direction <[direction].mul[<[length]>]>
+            - define location <player.flag[behr.essentials.bedit.<[click_type]>.selection].add[<[direction]>].if_null[<player.location.add[<[direction]>].round_down.with_pose[0,0]>]>
+          - else:
+            - inject command_syntax_error
+
+        - else:
+          - inject command_syntax_error
+
+      - default:
+        - inject command_syntax_error
+
 
     - define color <[location].map_color>
     - playsound <player> block_amethyst_cluster_place pitch:<util.random.int[7].to[10].div[10]> volume:2
