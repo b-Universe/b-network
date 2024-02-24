@@ -18,7 +18,7 @@ new_enchantments:
       - if <[level]> == 4:
         - explode <[location]> power:1 source:<player>
 
-      - else if <[level]> >= 5:
+      - else if <[level]> == 5:
         - if !<player.has_flag[behr.essentials.combat.cooldown.large_flame_explosion]>:
           - flag <player> behr.essentials.combat.cooldown.large_flame_explosion expire:6s
           - explode <[location]> power:3 source:<player>
