@@ -13,7 +13,7 @@
     <img src=https://img.shields.io/discord/901618453356630046?logo=discord&color=5BCEFA>
   </a>
   <!--- Active Version ---->
-	<a href="https://github.com/b-universe/b-network/archive/refs/heads/main.zip"><img src="https://img.shields.io/badge/Minecraft%20Version-1.19.4-c70039?logo=blueprint&color=F5A9B8" alt="Minecraft Version">
+	<a href="https://github.com/b-universe/b-network/archive/refs/heads/main.zip"><img src="https://img.shields.io/badge/Minecraft%20Version-1.20.4-c70039?logo=blueprint&color=F5A9B8" alt="Minecraft Version">
   <!--- Donation Link ---->
 	<a href="https://paypal.me/TheBearRiley"><img src="https://img.shields.io/badge/Donate-PayPal-green.svg?logo=PayPal&color=5BCEFA" alt="Minecraft Version">
   </a>
