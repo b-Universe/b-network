@@ -30,7 +30,7 @@ pickle_rocket_handler:
     on player damaged by fall flagged:behr.essentials.pickle_launched:
       - determine cancelled
     # Prevention from riptide animation playing while player is mounted
-    on player enters entity:
+    on player enters entity flagged:behr.essentials.pickle_launched:
       - adjust <player> is_using_riptide:false
 
 pickle_launch:
@@ -45,5 +45,5 @@ pickle_launch:
     - adjust <player> is_using_riptide:true
     - wait 5t
     - waituntil <player.is_on_ground> || !<player.is_truthy>
-    - flag player behr.essentials.pickle_launched
+    - flag player behr.essentials.pickle_launched:!
     - adjust <player> is_using_riptide:false if:<player.is_truthy>
