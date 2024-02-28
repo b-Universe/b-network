@@ -17,13 +17,17 @@ new_enchantments:
 
       - if <[level]> == 4:
         - explode <[location]> power:1 source:<player>
+        - playeffect at:<[location].above> effect:explosion_large quantity:10 offset:1 targets:<server.online_players.exclude[<[location].find_players_within[15]>]>
 
       - else if <[level]> == 5:
+        - playeffect at:<[location].above> effect:explosion_large quantity:10 offset:1 targets:<[location].find_players_within[15]>
         - if !<player.has_flag[behr.essentials.combat.cooldown.large_flame_explosion]>:
           - flag <player> behr.essentials.combat.cooldown.large_flame_explosion expire:6s
           - explode <[location]> power:3 source:<player>
+          - playeffect at:<[location]> effect:explosion_huge quantity:1 visibility:112 targets:<server.online_players.exclude[<[location].find_players_within[15]>]>
         - else:
           - explode <[location]> power:2 source:<player>
+          - playeffect at:<[location]> effect:explosion_huge quantity:1 visibility:112 targets:<server.online_players.exclude[<[location].find_players_within[15]>]>
 
     #on player prepares anvil craft bow|crossbow:
     #on player prepares anvil craft enchanted_book:
