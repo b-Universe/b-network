@@ -2,6 +2,7 @@ dynmap_command:
   type: command
   name: dynmap
   debug: false
+  enabled: false
   usage: /dynmap
   description: Gives you the dynmap link
   script:
