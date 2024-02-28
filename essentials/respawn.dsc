@@ -10,7 +10,7 @@ respawn_handler:
     on player respawns elsewhere:
       - determine passively <server.flag[behr.essentials.spawn_location]>
 
-      - give respira_space_package if:!<player.has_flag[package_ratelimit]>
+      #- give respira_space_package if:!<player.has_flag[package_ratelimit]>
       - flag player package_ratelimit expire:1h
 
       - if <server.has_flag[behr.essentials.uniques.<player.uuid>.space_suit]>:
@@ -22,7 +22,7 @@ respawn_handler:
       - else:
         - definemap equipment_map:
             helmet: respira_space_suit_helmet_WC1
-            chest: respira_space_suit_top
+            chest: elytra
             legs: respira_space_suit_boots
 
       - equip head:<[equipment_map.helmet]> chest:<[equipment_map.chest]> boots:<[equipment_map.legs]>

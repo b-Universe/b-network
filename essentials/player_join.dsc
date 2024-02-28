@@ -35,7 +35,7 @@ player_join_handler:
 
       # ██ [ announce the player join and chat announcements                  ] ██:
       - inject player_join_announcement_task
-      - run player_join_discord_announcement_task
+      - run player_join_discord_announcement_task def:true|<[time]>
 
       - wait 10s
       - if !<player.has_flag[behr.essentials.muted]>:
@@ -64,6 +64,8 @@ player_join_items_and_stuff:
     - else:
       - if !<player.has_flag[behr.essentials.ratelimit.starter_kit]>:
         - flag <player> behr.essentials.ratelimit.starter_kit expire:2h
+        - inject create_starter_kit
+        - define kit <[starter_kit]>
         - give starter_kit
 
     - if <server.has_flag[behr.essentials.uniques.<player.uuid>.space_suit]>:
@@ -74,9 +76,14 @@ player_join_items_and_stuff:
     - else:
       - definemap equipment_map:
           helmet: respira_space_suit_helmet_WC1
-          chest: respira_space_suit_top
-          legs: respira_space_suit_boots
-    - equip head:<[equipment_map.helmet]> chest:<[equipment_map.chest]> boots:<[equipment_map.legs]>
+          chest: elytra
+          boots: respira_space_suit_boots
+    - if !<player.inventory.contains_item[<[equipment_map.helmet]>]> && !<player.equipment_map.contains[helmet]>:
+      - equip head:<[equipment_map.helmet]>
+    - if !<player.inventory.contains_item[<[equipment_map.chest]>]> && !<player.equipment_map.contains[chest]>:
+      - equip chest:<[equipment_map.chest]>
+    - if !<player.inventory.contains_item[<[equipment_map.boots]>]> && !<player.equipment_map.contains[boots]>:
+      - equip boots:<[equipment_map.boots]>
 
     - adjust <player> discover_recipe:<server.recipe_ids.filter[contains_text[denizen]]>
     - adjust <player> resend_recipes
@@ -123,12 +130,12 @@ player_join_discord_announcement_task:
     # ██ [ construct webhook message                                        ] ██:
     - definemap payload:
         username: <player.name>
-        avatar_url: https://minotar.net/armor/bust/<[uuid].replace_text[-]>/100.png?date=<[time].format[MM-dd]>
+        avatar_url: https://minotar.net/armor/bust/<[player.uuid].replace_text[-]>/100.png?date=<[time].format[MM-dd]>
         embeds: <list_single[<[embed]>]>
         allowed_mentions:
           parse: <list>
 
-    - define webhook_url <secret[discord_chat_relay]>
+    - define webhook_url <secret[discord_chat_webhook]>
     - define webhook_url <secret[discord_test_webhook]> if:<server.has_flag[behr.developmental.debug_mode]>
 
     - definemap headers:
