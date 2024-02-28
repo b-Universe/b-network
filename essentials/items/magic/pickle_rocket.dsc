@@ -33,10 +33,16 @@ pickle_rocket_handler:
     on player enters entity flagged:behr.essentials.pickle_launched:
       - adjust <player> is_using_riptide:false
 
+    on music_disc_11 moves from hopper to inventory:
+      - determine cancelled if:<context.item.script.name.if_null[null].equals[pickle_rocket]>
+
 pickle_launch:
   type: task
   debug: false
   script:
+    - stop if:<player.has_flag[behr.essentials.ratelimit.pickle_rocket]>
+    - itemcooldown music_disc_11 duration:10t
+    - flag player behr.essentials.ratelimit.pickle_rocket expire:10t
     - playeffect at:<player.location> effect:explosion_large quantity:4
     - playeffect at:<player.location> effect:explosion_normal quantity:10
     - adjust <player> velocity:<player.velocity.div[3].with_y[1].with_pose[<player>].forward_flat[1]>
