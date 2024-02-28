@@ -30,8 +30,8 @@ bug_report_command_handler:
           assignees:
             - BehrRiley
           labels:
-            - Bork
-            - Discord Submission
+            - 🐞Borked
+            - 📄Discord Submission
           #milestone: Number of the milestone to associate the issue with (optional)
 
       - define url https://api.github.com/repos/b-Universe/b-network/issues
@@ -45,21 +45,13 @@ bug_report_command_handler:
   data:
     body_layout:
       - <&gt> **🐞 Describe the Bug**<&co>
-      - <n>
       - <context.values.get[bug_describe]>
-      - <n>
       - <&gt> **🔁 How To Reproduce**<&co>
-      - <n>
       - <context.values.get[bug_reproduce]>
-      - <n>
       - <&gt> **📗 Expected Behavior**<&co>
-      - <n>
       - <context.values.get[bug_expected]>
-      - <n>
       - <&gt> **📒 Additional context**<&co>
-      - <n>
       - <context.values.get[bug_extra]>
-      - <n>
       - <&gt> **📒 Submission Data**<&co>
       - - Report submit from `Discord`
       - - submit by `<context.interaction.user.name>` (`<context.interaction.user.id>`)
