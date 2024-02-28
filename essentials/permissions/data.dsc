@@ -27,11 +27,14 @@ permission_data:
 
           - /pos1
           - /pos2
-          - /bset
-          - /bstack
+          - /set
+          - /stack
           - /center
           - /frame
           - /shell
+          - /walls
+          - /ceiling
+          - /floor
     dnt:
       level: 2
       formatted_name: <&4>[<red>DNT<bold><&chr[2193]><&4>]
@@ -56,6 +59,8 @@ permission_data:
           - survival
           - gms
           - gmb
+
+          - /color_swap
     elderly_owl:
       level: 3
       disord_role_id: 1162107100177121342
