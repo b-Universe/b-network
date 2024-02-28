@@ -19,15 +19,6 @@ suit_handler:
       - if <server.online_players.is_empty>:
         - flag server behr.essentials.players_online:!
 
-    after delta time secondly every:2:
-      - define players <server.online_players_flagged[!behr.essentials.space_suit_equipped].filter[is_truthy].filter[location.is_within[biome_mine].not]>
-      - stop if:<[players].is_empty>
-      # todo: remove
-      - define players <[players].filter[gamemode.equals[survival]]>
-      - define players <[players].filter[world.name.equals[home_the_end]]>
-      - actionbar "<red>OXYGEN WARNING" targets:<[players]>
-      - hurt 2 <[players]>
-
     after delta time secondly every:7 server_flagged:behr.essentials.players_online:
       - define players <server.online_players_flagged[behr.essentials.space_suit_equipped]>
       - cast jump duration:10s amplifier:2 <[players]> hide_particles no_icon no_clear
