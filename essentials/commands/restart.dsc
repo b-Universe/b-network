@@ -17,11 +17,16 @@ restart_command:
 restart_handler:
   type: world
   events:
+    on server prestart:
+      - createworld b
+      - createworld a
+      - createworld flat
     on system time hourly every:40:
       - run restart_task def:60s|5t
 
     on restart command:
       - determine fulfilled passively if:<context.source_type.equals[server]>
+      - stop
       - run restart_task def:<context.args>
 
     after server start:
