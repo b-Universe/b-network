@@ -1,6 +1,6 @@
-discord_mute_user_api:
+discord_rename_user_api:
   type: task
-  definitions: user_id|time|reason
+  definitions: user_id|role_ids|reason
   debug: false
   script:
     # % ██ [ hardcode my guild ID  ] ██
@@ -12,7 +12,12 @@ discord_mute_user_api:
         Content-Type: application/json
     - define headers.X-Audit-Log-Reason.reason <[reason]> if:<[reason].exists>
 
-    - definemap data.communication_disabled_until <util.time_now.add[<[time]>].format[yyyy-MM-dd'T'HH:mm:ss.s'Z']>
+    - foreach <[role_ids]> as:role_id:
+      - if !<[role_id].is_integer>:
+        - narrate "<&c>Invalid role ID<&4><&co> <&e><[role_id]>"
+        - stop
 
-    # % ██ [ send the mute request ] ██
+    - definemap data.roles <[role_ids]>
+
+    # % ██ [ send the timeout request ] ██
     - ~webget https://discord.com/api/guilds/<[guild_id]>/members/<[user_id]> data:<[data].to_json> method:PATCH headers:<[headers]> save:response
