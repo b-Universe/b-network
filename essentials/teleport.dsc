@@ -1,7 +1,7 @@
 teleport_command:
   type: command
   name: teleport
-  debug: true
+  debug: false
   usage: /teleport (player) / X Y Z (world)
   description: Teleports you to another destination
   tab completions:
