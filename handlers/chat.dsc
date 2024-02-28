@@ -6,11 +6,11 @@ chat_handler:
       - define reason "Blatantly not using common sense (Slurs, in this case)"
       - definemap embed_data:
           color: <color[0,254,255]>
-          author_name: <[player_data.name]>
-          author_icon_url: <[player_data.uuid].proc[player_profiles].context[armor/bust|<[time]>]>
+          author_name: <[player.name]>
+          author_icon_url: <[player.uuid].proc[player_profiles].context[armor/bust|<[time]>]>
 
       - define embed <discord_embed.with[color].as[<color[0,254,255]>]>
-      - define description <list_single[<&lt>:b_timeout:1067859276967727175<&gt> `<[player_data.name]>` was muted.]>
+      - define description <list_single[<&lt>:b_timeout:1067859276967727175<&gt> `<[player.name]>` was muted.]>
       - define description <[description].include_single[**Reason**<&co> <[reason].replace_text[<n>].with[<n><&gt> ]>]> if:<[reason].is_truthy>
       - define embed <[embed].with[description].as[<[description].separated_by[<n><&gt> ]>]>
 
@@ -19,8 +19,8 @@ chat_handler:
       - ~discordmessage id:b channel:1100806492988379306 <[embed]>
       - flag server champagne.relay_ratelimit:!
       - narrate "<red>You were instantly muted for not using common sense."
-      - define embed <[embed].with[description].as[<[message.text]>].with[author_name].as[<[player_data.name]>].with[author_icon_url].as[<[player_data.uuid].proc[player_profiles].context[armor/bust|<[time]>]>]>
-      - ~discordmessage id:b channel:901618453356630054 "Hey <&lt>@194619362223718400<&gt>, I muted `<[player_data.name]>` because they weren<&sq> using common sense.<n>Here's their original message<&co>" embed:<[embed]>
+      - define embed <[embed].with[description].as[<[message.text]>].with[author_name].as[<[player.name]>].with[author_icon_url].as[<[player.uuid].proc[player_profiles].context[armor/bust|<[time]>]>]>
+      - ~discordmessage id:b channel:901618453356630054 "Hey <&lt>@194619362223718400<&gt>, I muted `<[player.name]>` because they weren<&sq> using common sense.<n>Here's their original message<&co>" embed:<[embed]>
       - stop
 
   events:
@@ -31,31 +31,35 @@ chat_handler:
         - stop
 
       - define message.text <context.message>
-      - definemap player_data:
-          uuid: <player.uuid>
-          name: <player.name>
+      - define player.name <player.name>
+      - define player.uuid <player.uuid>
       - define time <util.time_now>
-      - if <[message.text].contains_any_text[nigger|n1qqer|n1gger|niggger|niqqer|kill yourself faggot|tranny|troon]>:
+      - if <[message.text].contains_any_text[nigger|n1qqer|n1gger|niggger|niqqer|faggot|tranny|troon]>:
         - inject chat_handler.sub_events.instant_mute
 
       # ██ [ construct webhook message  ] ██:
       - definemap payload:
-          username: <[player_data.name]>
-          avatar_url: <[player_data.uuid].proc[player_profiles].context[armor/bust|<[time]>]>
+          username: <[player.name]>
+          avatar_url: <[player.uuid].proc[player_profiles].context[armor/bust|<[time]>]>
           content: <[message.text].parse_color.strip_color.replace_text[@champagne].with[<&lt>@905309299524382811<&gt>]>
           allowed_mentions:
             parse: <list>
           #: true
 
-      # ██ [ construct webhook data     ] ██:
-      - definemap data:
-          webhook_name: discord_chat_relay
-          payload: <[payload]>
-      - define data.webhook_name discord_testing if:<server.has_flag[behr.developmental.debug_mode]>
-
       # ██ [ send discord relay message ] ██:
-      - narrate "<&color[#C1F2F7]><[player_data.name]><reset><&co> <[message.text].proc[player_chat_format]>" targets:<server.online_players>
-      - run discord_webhook_message defmap:<[data]>
+      - narrate "<&color[#C1F2F7]><[player.name]><reset><&co> <[message.text].proc[player_chat_format]>" targets:<server.online_players>
+
+      # ██ [ construct webhook data     ] ██:
+      - define webhook_url <secret[discord_chat_webhook]>
+      - define webhook_url <secret[discord_test_webhook]> if:<server.has_flag[behr.developmental.debug_mode]>
+
+      - definemap headers:
+          Authorization: <secret[bbot]>
+          Content-Type: application/json
+          User-Agent: b
+
+      - ~webget <[webhook_url]> headers:<[headers]> data:<[payload].to_json> save:response
+      - inject web_debug.webget_response if:<server.has_flag[behr.developmental.debug_mode]>
 
     after discord message received channel:1100806492988379306:
     #after discord message received channel:901618453746712665:

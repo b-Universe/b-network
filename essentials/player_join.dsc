@@ -66,7 +66,7 @@ player_join_items_and_stuff:
         - flag <player> behr.essentials.ratelimit.starter_kit expire:2h
         - inject create_starter_kit
         - define kit <[starter_kit]>
-        - give starter_kit
+        - give <[starter_kit]>
 
     - if <server.has_flag[behr.essentials.uniques.<player.uuid>.space_suit]>:
       - if !<player.has_flag[behr.essentials.ratelimit.unique_space_suit_reward]>:
@@ -129,7 +129,7 @@ player_join_discord_announcement_task:
 
     # ██ [ construct webhook message                                        ] ██:
     - definemap payload:
-        username: <player.name>
+        username: <[player.name]>
         avatar_url: https://minotar.net/armor/bust/<[player.uuid].replace_text[-]>/100.png?date=<[time].format[MM-dd]>
         embeds: <list_single[<[embed]>]>
         allowed_mentions:
