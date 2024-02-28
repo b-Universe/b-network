@@ -31,7 +31,7 @@ discord_door_message:
           payload: <[payload]>
 
       # ██ [ send discord relay message ] ██:
-      - run discord_webhook_message defmap:<[data]>
+      - run discord_webhook_message defmap:<[data]> if:!<server.has_flag[behr.developmental.debug_mode]>
 
 player_death_announcer:
   type: world
@@ -60,4 +60,4 @@ player_death_announcer:
           payload: <[payload]>
 
       # ██ [ send discord relay message ] ██:
-      - run discord_webhook_message defmap:<[data]>
+      - run discord_webhook_message defmap:<[data]> if:!<server.has_flag[behr.developmental.debug_mode]>
