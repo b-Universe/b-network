@@ -13,7 +13,7 @@
     <img src=https://img.shields.io/discord/901618453356630046?logo=discord&color=5BCEFA>
   </a>
   <!--- Active Version ---->
-	<a href="https://github.com/b-universe/b-network/archive/refs/heads/main.zip"><img src="https://img.shields.io/badge/Minecraft%20Version-1.20.4-c70039?logo=blueprint&color=F5A9B8" alt="Minecraft Version">
+	<a href="https://github.com/b-universe/b-network/archive/refs/heads/main.zip"><img src="https://img.shields.io/badge/Minecraft%20Version-1.20.4-c70039?logo=blueprint&color=FFFF00" alt="Minecraft Version">
   <!--- Donation Link ---->
 	<a href="https://paypal.me/TheBearRiley"><img src="https://img.shields.io/badge/Donate-PayPal-green.svg?logo=PayPal&color=5BCEFA" alt="Minecraft Version">
   </a>
@@ -22,7 +22,7 @@
 <p align=center>
 	<!--- Commit Activity ---->
   <a href=https://github.com/b-universe/b-network/pulse>
-    <img src=https://img.shields.io/github/commit-activity/m/b-universe/b-network?logo=read-the-docs&color=FF0000>
+    <img src=https://img.shields.io/github/commit-activity/m/b-universe/b-network?logo=read-the-docs&color=FFA500>
   </a>
 	<!--- License ---->
   <a href=https://unlicense.org>
@@ -44,13 +44,33 @@
     </a>
   <!--- API endpoint Status ---->
     <a href=#>
-        <img src=https://img.shields.io/website?logo=openstreetmap&down_color=lightgrey&down_message=Offline&label=api.behr.dev&up_message=Online&url=https%3A%2F%2Fapi.behr.dev%2Fstatus&color=4B0082>
+        <img src=https://img.shields.io/website?logo=openstreetmap&down_color=lightgrey&down_message=Offline&label=api.behr.dev&up_message=Online&url=https%3A%2F%2Fapi.behr.dev%2Fstatus>
     </a>
   <!--- Server Status ---->
     <a href=#>
-        <img src=https://img.shields.io/website?logo=blueprint&down_color=lightgrey&down_message=Offline&label=Server%20Status&up_message=Online&url=https%3A%2F%2Fapi.behr.dev%2Fstatus&color=EE82EE>
+        <img src=https://img.shields.io/website?logo=blueprint&down_color=lightgrey&down_message=Offline&label=Server%20Status&up_message=Online&url=https%3A%2F%2Fapi.behr.dev%2Fstatus>
     </a>
 </p>
+
+<p align=center>
+    <!--- Bug Tracker ---->
+    <a href=https://github.com/b-Universe/b-network/labels/🐞Borked>
+        <img src=https://img.shields.io/github/issues-raw/b-Universe/b-network/🐞borked?logo=symantec&label=🐞Borked>
+    </a>
+    <!--- Help Wanted Tracker ---->
+    <a href=https://github.com/b-Universe/b-network/labels/🆘help%20wanted>
+        <img src=https://img.shields.io/github/issues-raw/b-Universe/b-network/🆘Help%20Wanted?logo=symantec&label=Help%20Wanted>
+    </a>
+    <!--- To-Do Tracker ---->
+    <a href=https://github.com/b-Universe/b-network/labels/📄To-Do>
+        <img src=https://img.shields.io/github/issues-raw/b-Universe/b-network/📄To-Do?logo=symantec&label=To-Do>
+    </a>
+    <!--- Feature Request Tracker ---->
+    <a href=https://github.com/b-Universe/b-network/labels/⬆️Feature%20Request>
+        <img src=https://img.shields.io/github/issues-raw/b-Universe/b-network/⬆️Feature%20Request?logo=symantec&label=Feature%20Request>
+    </a>
+</p>
+
 
 <p align=center>
 	B is a network based on, well, just having a good time. The theme for the network is futuristic / modern, and there really is no back-story. The scripts made for this network range from simple vanilla gameplay to advanced minigames and optionally modded content.
