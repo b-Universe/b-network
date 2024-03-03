@@ -1,4 +1,4 @@
-discord_api_channel_rename:
+discord_api_rename_channel:
   type: task
   definitions: channel_id|new_name|reason
   script:

@@ -1,38 +1,3 @@
-discord_door_message:
-  type: task
-  debug: false
-  definitions: text|player_data|action|time
-  script:
-      # ██ [ base defintions            ] ██:
-      - define embed.color <color[0,254,255].rgb_integer>
-
-      - choose <[action]>:
-        - case first_join:
-          - define embed.image.url <[player_data.uuid].proc[player_profiles].context[armor/body|<[time]>]>
-          - define embed.title "A new player!"
-          - define text "🎉🎊🎊🎊🎊🎉<n>Everyone welcome<n>**<[player_data.name]>** to b!"
-
-        - case join leave:
-          - define text <[text].strip_color>
-
-      - define embed.description <[text]>
-
-      # ██ [ construct webhook message  ] ██:
-      - definemap payload:
-          username: <[player_data.name]>
-          avatar_url: <[player_data.uuid].proc[player_profiles].context[armor/bust|<[time]>]>
-          embeds: <list_single[<[embed]>]>
-          allowed_mentions:
-            parse: <list>
-
-      # ██ [ construct webhook data     ] ██:
-      - definemap data:
-          webhook_name: discord_chat_relay
-          payload: <[payload]>
-
-      # ██ [ send discord relay message ] ██:
-      - run discord_webhook_message defmap:<[data]> if:!<server.has_flag[behr.developmental.debug_mode]>
-
 player_death_announcer:
   type: world
   debug: true
@@ -42,22 +7,24 @@ player_death_announcer:
       - define embed.color <color[0,254,255].rgb_integer>
       - define embed.description <context.message.strip_color>
       - define time <util.time_now>
-      - definemap player_data:
-          name: <player.name>
-          uuid: <player.uuid>
+      - define player.name <player.name>
+      - define player.uuid <player.uuid>
 
       # ██ [ construct webhook message  ] ██:
       - definemap payload:
-          username: <[player_data.name]>
-          avatar_url: <[player_data.uuid].proc[player_profiles].context[armor/bust|<[time]>]>
+          username: <[player.name]>
+          avatar_url: https://minotar.net/armor/bust/<[player.uuid].replace_text[-]>/100.png?date=<[time].format[MM-dd]>
           embeds: <list_single[<[embed]>]>
           allowed_mentions:
             parse: <list>
 
-      # ██ [ construct webhook data     ] ██:
-      - definemap data:
-          webhook_name: discord_chat_relay
-          payload: <[payload]>
+      - define webhook_url <secret[discord_chat_webhook]>
+      - define webhook_url <secret[discord_test_webhook]> if:<server.has_flag[behr.developmental.debug_mode]>
 
-      # ██ [ send discord relay message ] ██:
-      - run discord_webhook_message defmap:<[data]> if:!<server.has_flag[behr.developmental.debug_mode]>
+      - definemap headers:
+          Authorization: <secret[bbot]>
+          Content-Type: application/json
+          User-Agent: b
+
+      - ~webget <[webhook_url]> headers:<[headers]> data:<[payload].to_json> save:response
+      - inject web_debug.webget_response if:<server.has_flag[behr.developmental.debug_mode]>

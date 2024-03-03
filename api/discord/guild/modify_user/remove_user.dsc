@@ -1,4 +1,4 @@
-discord_ban_player:
+discord_remove_user:
   type: task
   debug: false
   definitions: user_id|guild_id|reason
@@ -14,4 +14,4 @@ discord_ban_player:
     - define headers.X-Audit-Log-Reason.reason <[reason]> if:<[reason].exists>
 
     # % ██ [ send the ban request ] ██
-    - ~webget https://discord.com/api/guilds/<[guild_id]>/bans/<[user_id]> method:PUT headers:<[headers]>
+    - ~webget https://discord.com/api/guilds/<[guild_id]>/members/<[user_id]> method:DELETE headers:<[headers]>
