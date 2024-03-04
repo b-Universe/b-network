@@ -1,3 +1,12 @@
+---
+name: "\U0001F41E Bork report"
+about: Create a report to help us improve
+title: "[ \U0001F41E Bork ] "
+labels: ''
+assignees: BehrRiley
+
+---
+
 <!--- Remove any sections that don't apply or you don't/can't provide more information for. --->
 > **Describe the Bug**:
 <!--- A clear description of what the issue is or what it's causing to happen. --->
