@@ -2,8 +2,13 @@ flight_handler:
   type: world
   debug: false
   events:
-    after player starts sneaking:
+    after player starts gliding flagged:!behr.essentials.airborne:
+      - flag player behr.essentials.airborne
+    after player stops gliding flagged:behr.essentials.airborne:
+      - flag player behr.essentials.airborne:!
+    after player starts sneaking flagged:behr.essentials.airborne:
       - stop if:<player.is_on_ground>
+      - stop if:<player.has_flag[behr.essentials.ratelimit.elytra_charge]>
       - wait 1t
       - define i 0
       - define sp <proc[negative_spacing].context[4].font[spaces]>
@@ -32,6 +37,8 @@ flight_handler:
       - stop if:<player.is_on_ground>
       - stop if:!<player.is_truthy>
 
+      - itemcooldown elytra duration:1m
+      - flag player behr.essentials.ratelimit.elytra_charge expire:1m
       - playeffect effect:explosion_large at:<player.eye_location> quantity:5
       - adjust <player> is_using_riptide:true
       - repeat <[i]> as:i:
