@@ -11,7 +11,6 @@ player_leave_handler:
       - define time <util.time_now>
       - define player.name <player.name>
       - define player.uuid <player.uuid>
-      - define text 
 
       # ██ [ announce the player leave    ] ██:
       - determine "<&b><player.name> left b" passively

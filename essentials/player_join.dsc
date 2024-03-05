@@ -52,6 +52,7 @@ player_join_items_and_stuff:
       - adjust <player> max_health:40
       - heal <player>
 
+    - give b_book
     - if !<[returning_player]>:
       - give elytra
       - give physics_device
@@ -65,7 +66,6 @@ player_join_items_and_stuff:
       - if !<player.has_flag[behr.essentials.ratelimit.starter_kit]>:
         - flag <player> behr.essentials.ratelimit.starter_kit expire:2h
         - inject create_starter_kit
-        - define kit <[starter_kit]>
         - give <[starter_kit]>
 
     - if <server.has_flag[behr.essentials.uniques.<player.uuid>.space_suit]>:
@@ -84,9 +84,6 @@ player_join_items_and_stuff:
       - equip chest:<[equipment_map.chest]>
     - if !<player.inventory.contains_item[<[equipment_map.boots]>]> && !<player.equipment_map.contains[boots]>:
       - equip boots:<[equipment_map.boots]>
-
-    - adjust <player> discover_recipe:<server.recipe_ids.filter[contains_text[denizen]]>
-    - adjust <player> resend_recipes
 
 player_join_announcement_task:
   type: task
@@ -146,3 +143,40 @@ player_join_discord_announcement_task:
     # ██ [ send discord relay message                                       ] ██:
     - ~webget <[webhook_url]> headers:<[headers]> data:<[payload].to_json> save:response
     - inject web_debug.webget_response if:<server.has_flag[behr.developmental.debug_mode]>
+
+
+b_book:
+  type: item
+  material: written_book
+  mechanisms:
+    book:
+      author: B
+      title: <&b>All Things B
+      pages:
+        - <&3>Here on B, you'll find a large number of new, custom, and tweaked features. <n><n>Amongst them are concatenated in this book for you!
+        - <&[fancy_title]><bold>bEdit ● Master Building Tools<n><&3>If you're familiar with WorldEdit, you can familiarize yourself with systematic building tools here called bEdit! Quickly build, construct, and excavate to your hearts desire with this fantastic set of tools
+
+        - <&3>Higher construction levels will allow you to change more blocks at a time and learn new construction commands! The starting commands you receive are<&co><n>● <&6>//pos1 <&3>& <&6>//pos2 <&3>for manual position selection.<n>● <&6>/set <&3>to set the blocks in a selection to another material
+
+        - <&3>To create the <&[fancy_title]>Selection tool<&3> called the <&[fancy_title]>bWand<&3>, use the following ingredients: <n>● Four Molten Gold Blocks<n>● Two Iron Blocks<n>● One Molten Redstone Block<n>● One Perfect Emerald<n>● One Fortified Blaze Rod <n>(1/2)
+        - <&3>Each of these can be crafted by combining or smelting the ingredients from a large quantity. Check your recipe book for help (2/2)
+
+        - <&[fancy_title]><bold>Starting kits<n><&3>When you log in, you'll receive a kit every few hours. It's cram-packed with delicious food and essentials
+
+        - <&[fancy_title]><bold>/dback & /bed command<n><&3>If you die, you'll have some time to return back to your death location once with <&6>/dback<&3> and to your bed location with <&6>/bed<&3>
+
+        - <&[fancy_title]><bold>/spawn command<n><&3>If you're looking for a new home, you can try randomly teleporting again from the spawn using <&6>/spawn<&3>. Don't be scared of the new spawning mechanics in the End, you won't float away from shulker attacks
+
+        - <&[fancy_title]><bold>/resource command<n><&3>If you want the resource pack but declined it the first time, you can use <&6>/resource<&3> to serve it again, or just relog
+
+        - <&[fancy_title]><bold>/settings command<n><&3>You can disable the sounds you hear on commands in your settings. There will be more available as time comes to customize
+
+        - <&[fancy_title]><bold>Flight charging<n><&3>You can save yourself some firework charges (and escape potential danger!) by holding your sneak button while gliding. Remember it has a cooldown!
+
+        - <&[fancy_title]><bold>Obtaining Water<n><&3>You'll notice an abundance of water. You can generate water with infinite water sources or mine ice shards from andesite in The End
+
+        - <&[fancy_title]><bold>Mob effects<n><&3>Chicken eggs may hatch if left unattended!<n>Phantoms are exceptionally grabby!<n>slimes split funny.<n>Skeletons have taken flight!<n><n><&[fancy_title]><bold>Climbing<n><&3>You can climb chains!
+
+        - <&[fancy_title]><bold>Colors n' stuff<n><&3>You can color your chat or signs by using the color codes with your text<n><n><&[fancy_title]><bold>Enchantments<n><&3>There are custom enchantments, such as higher flame levels!
+
+        - <&[fancy_title]><bold>New Foods<bold><n><&3>Enjoy new things to eat like hotdogs, sandwiches, and gyros!<n><n><&[fancy_title]><bold>Dispensers<n><&3>These lovely redstone pieces can now place concrete powder blocks
