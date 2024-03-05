@@ -17,22 +17,25 @@ bedit_location_format:
   script:
     - determine <&[green]>(<&[yellow]><[location].round.xyz.replace[,].with[<&[green]>, <&[yellow]>]><&[green]>)
 
+pos:
+  type: procedure
+  debug: false
+  definitions: click_type
+  script:
+    - determine <player.flag[behr.essentials.bedit.<[click_type]>.selection].if_null[null]>
 lpos:
   type: procedure
   debug: false
-  definitions: player
   script:
     - determine <player.flag[behr.essentials.bedit.left.selection].if_null[null]>
 rpos:
   type: procedure
   debug: false
-  definitions: player
   script:
     - determine <player.flag[behr.essentials.bedit.right.selection].if_null[null]>
 bsel:
   type: procedure
   debug: false
-  definitions: player
   script:
     - determine <player.flag[behr.essentials.bedit.selection.cuboid].if_null[null]>
 
@@ -40,7 +43,6 @@ bedit_hide_selection_corners:
   type: task
   debug: false
   script:
-    #@GREEN@#- remove <player.flag[behr.essentials.bedit.cuboid.selection_entity].if_null[null]> if:<player.flag[behr.essentials.bedit.cuboid.selection_entity].is_truthy>
     - foreach left|right as:corner:
       - define location <player.flag[behr.essentials.bedit.<[corner]>.selection].if_null[null]>
       - foreach next if:!<[location].is_truthy>
@@ -50,7 +52,6 @@ bedit_refresh_selection_corners:
   type: task
   debug: false
   script:
-    #@GREEN@#- remove <player.flag[behr.essentials.bedit.cuboid.selection_entity].if_null[null]> if:<player.flag[behr.essentials.bedit.cuboid.selection_entity].is_truthy>
     - foreach left|right as:corner:
       - define location <player.flag[behr.essentials.bedit.<[corner]>.selection].if_null[null]>
       - foreach next if:!<[location].is_truthy>
@@ -69,12 +70,6 @@ bedit_refresh_selection_corners:
       - flag player behr.essentials.bedit.<[corner]>.quick_release expire:10s
 
       - define cuboid <player.flag[behr.essentials.bedit.selection.cuboid].if_null[null]>
-      #@GREEN@#- if <[cuboid].is_truthy>:
-      #@GREEN@#  - spawn bcuboid[scale=<[cuboid].size.add[<[cuboid].size.div[10]>]>] <[cuboid].center> save:selection_display
-      #@GREEN@#  - define selection_display_display <entry[selection_display].spawned_entity>
-      #@GREEN@#  - flag player behr.essentials.bedit.cuboid.selection_entity:<[selection_display]>
-
-
 
 bedit_check_for_selection:
   type: task
@@ -98,35 +93,34 @@ bedit_check_for_selection:
 
       - inject command_error
 
-
-
-#@GREEN@# ---------------------------------------------------- #@GREEN@#
-test_display:
+bedit_place_block:
   type: task
   debug: false
+  definitions: new_material|location|time
   script:
-    - define left_location <player.flag[behr.essentials.bedit.left.selection].if_null[null]>
-    - define right_location <player.flag[behr.essentials.bedit.right.selection].if_null[null]>
-    - define cuboid <player.flag[behr.essentials.bedit.selection.cuboid].if_null[null]>
-    - spawn bcuboid[scale=<[cuboid].size.add[<[cuboid].size.div[100]>]>] <[cuboid].center> save:block
-    - wait 2s
-    - remove <entry[block].spawned_entity>
+    - define old_material <[location].material>
+    - stop if:<[new_material].equals[<[old_material]>]>
+    - if <player.gamemode> == survival && !<player.inventory.contains_item[<[new_material_name]>]> && <[new_material]> !matches air:
+      - stop
 
-bcuboid:
-  type: entity
-  debug: false
-  entity_type: item_display
-  mechanisms:
-    item: selection_block
-    glowing: true
-    translation: -0.02,-0.02,-0.02
-    brightness:
-      sky: 15
-      block: 15
+    - define sound <[location].material.block_sound_data>
+    - if <[new_material]> matches air && <[old_material]> !matches air:
+      - give <[location].material.item> to:<player.inventory> if:<player.gamemode.equals[survival]>
+      - playsound <[location]> sound:<[sound.break_sound]> volume:<[sound.volume].add[1]> pitch:<[sound.pitch]>
 
-selection_block:
-  type: item
-  debug: false
-  material: music_disc_11
-  mechanisms:
-    custom_model_data: 2001
+    - else:
+      - playsound <[location]> sound:<[sound.place_sound]> volume:<[sound.volume].add[1]> pitch:<[sound.pitch]>
+      - if <[new_material].name> != <[old_material].name> && <player.gamemode.equals[survival]>:
+        - take item:<[new_material].name>
+        - drop <[old_material].name>
+
+    - if <[new_material]> !matches air:
+      - playeffect at:<[location].center> effect:block_dust special_data:<[new_material]> offset:0.25 quantity:50 visibility:100
+    - else:
+      - playeffect at:<[location].center> effect:block_dust special_data:<[old_material]> offset:0.25 quantity:50 visibility:100
+      #- flag <[location]> behr.essentials.bedit.history.<[time]>:<[old_material]> expire:1d
+    - if <[location].material.supports[waterlogged]> && <[location].material.waterlogged> && !<[new_material].name.contains_text[waterlogged=]> && <[new_material].supports[waterlogged]>:
+      - define new_material <[new_material].with_map[waterlogged=true]>
+    - flag player behr.essentials.bedit.undo_history.<[time]>:->:<map.with[location].as[<[location]>].with[material].as[<[old_material]>]> expire:4h
+    - modifyblock <[location]> <[new_material]>
+    - flag player behr.essentials.profile.stats.construction.experience:++
