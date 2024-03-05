@@ -1,4 +1,4 @@
-discord_rename_user_api:
+discord_set_roles_user_api:
   type: task
   definitions: user_id|role_ids|reason
   debug: false

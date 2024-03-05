@@ -1,4 +1,4 @@
-discord_get_guild_application_command_api:
+discord_get_guild_roles_api:
   type: task
   debug: false
   definitions: guild_id
