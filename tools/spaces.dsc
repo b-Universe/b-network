@@ -52,7 +52,7 @@ negative_spacing:
         - define int:-:1
         - define spacing <[spacing].include[<&chr[F801]>]>
 
-    - determine <[spacing].unseparated>
+    - determine <[spacing].unseparated.font[spaces]>
 
 positive_spacing:
   type: procedure
@@ -108,4 +108,4 @@ positive_spacing:
         - define int:-:1
         - define spacing <[spacing].include[<&chr[F821]>]>
 
-    - determine <[spacing].unseparated>
+    - determine <[spacing].unseparated.font[spaces]>
