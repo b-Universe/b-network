@@ -3,6 +3,8 @@ restart_command:
   name: restart
   usage: /restart ((delay) (rate)/instant)/cancel
   description: Restarts the server
+  tab completions:
+    1: instant|cancel
   script:
     - if <context.server>:
       - adjust server restart
@@ -18,9 +20,8 @@ restart_handler:
   type: world
   events:
     on server prestart:
-      - createworld b
-      - createworld a
-      - createworld flat
+      - createworld creative
+
     on system time hourly every:40:
       - run restart_task def:60s|5t
 
