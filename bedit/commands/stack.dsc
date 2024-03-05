@@ -106,34 +106,37 @@ bedit_stack_command:
         - inject command_error
 
     # % ██ [ Run the command            ] ██:
-      - repeat <[frequency]> as:frequency_index:
-        - define x <[size].x.mul[<[direction].x.mul[<[frequency_index]>]>]>
-        - define y <[size].y.mul[<[direction].y.mul[<[frequency_index]>]>]>
-        - define z <[size].z.mul[<[direction].z.mul[<[frequency_index]>]>]>
-        - define offset <[x]>,<[y]>,<[z]>
-        - foreach <[blocks]> key:location as:new_material:
-          - define old_material <[location].add[<[offset]>].material>
-          - if <[new_material].name> matches air && <[old_material].name> matches air:
-            - foreach next
-          - flag <[location].add[<[offset]>]> behr.essentials.bedit.old_material:<[old_material]>
-          - foreach next if:<[new_material].equals[<[old_material].name>]>
-          - if <player.gamemode> == survival && !<player.inventory.contains_item[<[new_material].name>]> && <[new_material]> !matches air:
-            - foreach stop
+    - define time <util.time_now.epoch_millis>
+    - flag player behr.essentials.bedit.undo_history_events:->:<[time]> expire:4h
+    - repeat <[frequency]> as:frequency_index:
+      - define x <[size].x.mul[<[direction].x.mul[<[frequency_index]>]>]>
+      - define y <[size].y.mul[<[direction].y.mul[<[frequency_index]>]>]>
+      - define z <[size].z.mul[<[direction].z.mul[<[frequency_index]>]>]>
+      - define offset <[x]>,<[y]>,<[z]>
+      - foreach <[blocks]> key:location as:new_material:
+        - define old_material <[location].add[<[offset]>].material>
+        - if <[new_material].name> matches air && <[old_material].name> matches air:
+          - foreach next
+        - flag <[location].add[<[offset]>]> behr.essentials.bedit.old_material:<[old_material]>
+        - foreach next if:<[new_material].equals[<[old_material].name>]>
+        - if <player.gamemode> == survival && !<player.inventory.contains_item[<[new_material].name>]> && <[new_material]> !matches air:
+          - foreach stop
 
-          - define sound <[location].add[<[offset]>].material.block_sound_data>
-          - if <[new_material].name> matches air && <[old_material]> !matches air:
-            - playsound <[location].add[<[offset]>]> sound:<[sound.break_sound]> volume:<[sound.volume].add[1]> pitch:<[sound.pitch]>
+        - define sound <[location].add[<[offset]>].material.block_sound_data>
+        - if <[new_material].name> matches air && <[old_material]> !matches air:
+          - playsound <[location].add[<[offset]>]> sound:<[sound.break_sound]> volume:<[sound.volume].add[1]> pitch:<[sound.pitch]>
 
-          - else if <[location].add[<[offset]>]> !matches <[new_material].name>:
-            - playsound <[location].add[<[offset]>]> sound:<[sound.place_sound]> volume:<[sound.volume].add[1]> pitch:<[sound.pitch]>
-            - take item:<[new_material].name> if:<player.gamemode.equals[survival]>
+        - else if <[location].add[<[offset]>]> !matches <[new_material].name>:
+          - playsound <[location].add[<[offset]>]> sound:<[sound.place_sound]> volume:<[sound.volume].add[1]> pitch:<[sound.pitch]>
+          - take item:<[new_material].name> if:<player.gamemode.equals[survival]>
 
-          - if <[location].add[<[offset]>]> !matches air:
-            - if <[location].add[<[offset]>]> !matches <[new_material].name> && <player.gamemode.equals[survival]>:
-              - give <[location].add[<[offset]>].material.item> to:<player.inventory>
-              - playeffect at:<[location].add[<[offset]>].center> effect:block_dust special_data:<[new_material]> offset:0.25 quantity:50 visibility:100
-          - else:
-            - playeffect at:<[location].add[<[offset]>].center> effect:block_dust special_data:<[old_material]> offset:0.25 quantity:50 visibility:100
-          - modifyblock <[location].add[<[offset]>]> <[new_material]>
-          - flag player behr.essentials.profile.stats.construction.experience:++
-          - wait 1t
+        - if <[location].add[<[offset]>]> !matches air:
+          - if <[location].add[<[offset]>]> !matches <[new_material].name> && <player.gamemode.equals[survival]>:
+            - give <[location].add[<[offset]>].material.item> to:<player.inventory>
+            - playeffect at:<[location].add[<[offset]>].center> effect:block_dust special_data:<[new_material]> offset:0.25 quantity:50 visibility:100
+        - else:
+          - playeffect at:<[location].add[<[offset]>].center> effect:block_dust special_data:<[old_material]> offset:0.25 quantity:50 visibility:100
+        - flag player behr.essentials.bedit.undo_history.<[time]>:->:<map.with[location].as[<[location]>].with[material].as[<[old_material]>]> expire:4h
+        - modifyblock <[location].add[<[offset]>]> <[new_material]>
+        - flag player behr.essentials.profile.stats.construction.experience:++
+        - wait 1t

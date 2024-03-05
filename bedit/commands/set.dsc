@@ -1,6 +1,6 @@
 bedit_set_command:
   type: command
-  debug: false
+  debug: true
   enabled: true
   name: /set
   usage: //set <&lt>material<&gt>
@@ -28,7 +28,6 @@ bedit_set_command:
       - define property_input <material[<[material]>].property_map.keys.filter[starts_with[<[input].after[<[current_property]>]>]]>
       - if <[property_input].exists>:
         - if <[input].contains_any_text[;]>:
-          #- determine <[properties]> - works
           - determine <[properties].filter[starts_with[<[input].after_last[;]>]].parse_tag[<[input].before_last[;]>;<[parse_value]>]>
         - else:
 
@@ -36,23 +35,40 @@ bedit_set_command:
 
   - determine <[materials].filter[starts_with[<[input]>]]>
 
+  data:
+    invert_direction:
+      north: south
+      east: west
+      south: north
+      west: east
   script:
     - if <context.args.is_empty>:
       - inject command_syntax_error
 
-    # % ██ [ Check if a player has a selection they can set ] ██:
+    # % ██ [ Check if a player has a selection they can set  ] ██:
     - inject bedit_check_for_selection
 
     # % ██ [ Check material             ] ██:
-    - define new_material <context.args.first>
-    - if !<material[<[new_material]>].exists>:
-      - define reason "<[new_material]> is an invalid material."
+    - define new_material_name <context.args.first>
+    - if !<material[<[new_material_name]>].exists>:
+      - define reason "<[new_material_name]> is an invalid material."
       - inject command_error
 
+    # % ██ [ Check for convenience      ] ██:
+    - define new_material <material[<[new_material_name]>]>
+    - if !<[new_material_name].contains_text[direction=]> && <[new_material].supports[direction]>:
+      - define new_material <[new_material].with_map[direction=<player.location.yaw.simple>]>
+    - if !<[new_material_name].contains_text[half=]> && <[new_material].supports[half]>:
+      - if <player.location.pitch> < 0:
+        - define new_material <[new_material].with_map[half=top]>
+      - else:
+        - define new_material <[new_material].with_map[half=bottom]>
+
     # % ██ [ Add base definitions       ] ██:
-    - define sound <[new_material].as[material].block_sound_data>
+    - define sound <[new_material].block_sound_data>
+    - define time <util.time_now.epoch_millis>
     - define blocks <[cuboid].blocks>
-    - if <[new_material]> == air:
+    - if <[new_material]> matches air:
       - define blocks <[blocks].filter[advanced_matches[!air]]>
 
     # % ██ [ Check for permissions      ] ██:
@@ -70,34 +86,16 @@ bedit_set_command:
 
     # % ██ [ Count block requirements   ] ██:
     - define blocks_unaffected <[cuboid].blocks[<[new_material]>].size>
-    - if !<player.inventory.contains_item[<[new_material]>].quantity[<[block_count].sub[<[blocks_unaffected]>]>]> && <[new_material]> !matches air && <player.gamemode> == survival:
-      - define reason "You don't have enough <&e><[new_material]> <&c>for that <&6>(<&e><player.inventory.quantity_item[<[new_material]>].add[<[blocks_unaffected]>]><&6>/<&e><[block_count]><&6>)"
+    - if !<player.inventory.contains_item[<[new_material_name]>].quantity[<[block_count].sub[<[blocks_unaffected]>]>]> && <[new_material_name]> !matches air && <player.gamemode> == survival:
+      - define reason "You don't have enough <&e><[new_material_name]> <&c>for that <&6>(<&e><player.inventory.quantity_item[<[new_material_name]>].add[<[blocks_unaffected]>]><&6>/<&e><[block_count]><&6>)"
       - inject command_error
 
     # % ██ [ Run the command            ] ██:
     - run bedit_hide_selection_corners
-    - foreach <[blocks].sort_by_value[distance[<player.eye_location>]]> as:location:
-      - define old_material <[location].material>
-      - flag <[location]> behr.essentials.bedit.old_material:<[old_material]>
-      - foreach next if:<[new_material].equals[<[old_material].name>]>
-      - if <player.gamemode> == survival && !<player.inventory.contains_item[<[new_material]>]> && <[new_material]> !matches air:
-        - foreach stop
-
-      - define sound <[location].material.block_sound_data>
-      - if <[new_material]> matches air && <[old_material]> !matches air:
-        - give <[location].material.item> to:<player.inventory> if:<player.gamemode.equals[survival]>
-        - playsound <[location]> sound:<[sound.break_sound]> volume:<[sound.volume].add[1]> pitch:<[sound.pitch]>
-
-      - else:
-        - playsound <[location]> sound:<[sound.place_sound]> volume:<[sound.volume].add[1]> pitch:<[sound.pitch]>
-        - take item:<[new_material]> if:<player.gamemode.equals[survival]>
-
-      - if <[new_material]> !matches air:
-        - playeffect at:<[location].center> effect:block_dust special_data:<[new_material]> offset:0.25 quantity:50 visibility:100
-      - else:
-        - playeffect at:<[location].center> effect:block_dust special_data:<[old_material]> offset:0.25 quantity:50 visibility:100
-      - modifyblock <[location]> <[new_material]>
-      - flag player behr.essentials.profile.stats.construction.experience:++
+    - define blocks <[blocks].filter[advanced_matches[bedrock].not].sort_by_value[distance[<player.eye_location>]]>
+    - flag player behr.essentials.bedit.undo_history_events:->:<[time]> expire:4h
+    - foreach <[blocks]> as:location:
+      - run bedit_place_block def:<list_single[<[new_material]>].include[<[location]>|<[time]>]>
       - wait 1t
 
     - inject check_for_levelup

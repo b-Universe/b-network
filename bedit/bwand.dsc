@@ -45,15 +45,39 @@ obtain_bwand:
 
 bedit_wand_handler:
   type: world
-  debug: false
+  debug: true
   events:
+    after player quits:
+      - foreach left|right as:corner:
+        - flag <player> behr.essentials.bedit.<[corner]>.selection:!
+        - remove <player.flag[behr.essentials.bedit.<[corner]>.selection_entity].if_null[null]> if:<player.flag[behr.essentials.bedit.<[corner]>.selection_entity].is_truthy>
+      - flag <player> behr.essentials.bedit.selection.cuboid:!
+
     after player breaks block location_flagged:behr.essentials.bedit:
-      - flag <context.location> behr.essentials.bedit:!
       - remove <context.location.to_cuboid[<context.location>].entities[display_entity]>
       - if <context.location> == <player.proc[lpos]>:
         - remove <player.flag[behr.essentials.bedit.left.selection_entity].if_null[null]> if:<player.flag[behr.essentials.bedit.left.selection_entity].is_truthy>
+        - spawn bblock[material=glass;glow_color=white] <player.proc[lpos]> save:block_display
+        - define block_display <entry[block_display].spawned_entity>
+        - flag player behr.essentials.bedit.left.selection_entity:<[block_display]>
       - if <context.location> == <player.proc[rpos]>:
         - remove <player.flag[behr.essentials.bedit.right.selection_entity].if_null[null]> if:<player.flag[behr.essentials.bedit.right.selection_entity].is_truthy>
+        - spawn bblock[material=glass;glow_color=white] <player.proc[rpos]> save:block_display
+        - define block_display <entry[block_display].spawned_entity>
+        - flag player behr.essentials.bedit.right.selection_entity:<[block_display]>
+
+    after player places block location_flagged:behr.essentials.bedit:
+      - remove <context.location.to_cuboid[<context.location>].entities[display_entity]>
+      - if <context.location> == <player.proc[lpos]>:
+        - remove <player.flag[behr.essentials.bedit.left.selection_entity].if_null[null]> if:<player.flag[behr.essentials.bedit.left.selection_entity].is_truthy>
+        - spawn bblock[material=<context.location.material.name>;glow_color=<context.location.map_color>] <player.proc[lpos]> save:block_display
+        - define block_display <entry[block_display].spawned_entity>
+        - flag player behr.essentials.bedit.left.selection_entity:<[block_display]>
+      - if <context.location> == <player.proc[rpos]>:
+        - remove <player.flag[behr.essentials.bedit.right.selection_entity].if_null[null]> if:<player.flag[behr.essentials.bedit.right.selection_entity].is_truthy>
+        - spawn bblock[material=<context.location.material.name>;glow_color=<context.location.map_color>] <player.proc[rpos]> save:block_display
+        - define block_display <entry[block_display].spawned_entity>
+        - flag player behr.essentials.bedit.right.selection_entity:<[block_display]>
 
     on player clicks block with:bwand:
       - determine passively cancelled

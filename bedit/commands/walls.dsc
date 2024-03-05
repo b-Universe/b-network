@@ -1,9 +1,9 @@
-bedit_shell_command:
+bedit_walls_command:
   type: command
   debug: false
   enabled: true
-  name: /shell
-  usage: //shell <&lt>material<&gt>
+  name: /walls
+  usage: //walls <&lt>material<&gt>
   description: Sets a selection to a set material
   tab complete:
   - define materials <server.material_types.filter[is_block].parse[name]>
@@ -45,15 +45,15 @@ bedit_shell_command:
 
     # % ██ [ Check material             ] ██:
     - define new_material_name <context.args.first>
-    - define new_material <material[<[new_material_name]>]>
-    - if !<material[<[new_material]>].exists>:
-      - define reason "<[new_material]> is an invalid material."
+    - define new_material <material[<context.args.first>]>
+    - if !<material[<[new_material_name]>].exists>:
+      - define reason "<[new_material_name]> is an invalid material."
       - inject command_error
 
     # % ██ [ Add base definitions       ] ██:
     - define sound <[new_material].block_sound_data>
     - define time <util.time_now.epoch_millis>
-    - define blocks <[cuboid].shell.exclude[<[cuboid].outline>]>
+    - define blocks <[cuboid].walls>
     - if <[new_material_name]> == air:
       - define blocks <[blocks].filter[advanced_matches[!air]]>
 
@@ -71,7 +71,7 @@ bedit_shell_command:
       - inject command_error
 
     # % ██ [ Count block requirements   ] ██:
-    - define blocks_unaffected <[cuboid].shell.exclude[<[cuboid].outline>].filter[advanced_matches[<[new_material_name]>]].size>
+    - define blocks_unaffected <[cuboid].walls.filter[advanced_matches[<[new_material_name]>]].size>
     - if !<player.inventory.contains_item[<[new_material_name]>].quantity[<[block_count].sub[<[blocks_unaffected]>]>]> && <[new_material_name]> !matches air && <player.gamemode> == survival:
       - define reason "You don't have enough <&e><[new_material_name]> <&c>for that <&6>(<&e><player.inventory.quantity_item[<[new_material_name]>].add[<[blocks_unaffected]>]><&6>/<&e><[block_count]><&6>)"
       - inject command_error
