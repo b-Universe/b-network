@@ -52,7 +52,7 @@ player_join_items_and_stuff:
       - adjust <player> max_health:40
       - heal <player>
 
-    - give b_book
+    - give b_book if:!<player.inventory.contains_item[b_book]>
     - if !<[returning_player]>:
       - give elytra
       - give physics_device
@@ -156,7 +156,9 @@ b_book:
         - <&3>Here on B, you'll find a large number of new, custom, and tweaked features. <n><n>Amongst them are concatenated in this book for you!
         - <&[fancy_title]><bold>bEdit ● Master Building Tools<n><&3>If you're familiar with WorldEdit, you can familiarize yourself with systematic building tools here called bEdit! Quickly build, construct, and excavate to your hearts desire with this fantastic set of tools
 
-        - <&3>Higher construction levels will allow you to change more blocks at a time and learn new construction commands! The starting commands you receive are<&co><n>● <&6>//pos1 <&3>& <&6>//pos2 <&3>for manual position selection.<n>● <&6>/set <&3>to set the blocks in a selection to another material
+        - <&3>Higher construction levels will allow you to change more blocks at a time and learn new construction commands! The starting commands you receive are<&co><n><&3>● <&6>//pos1 <&3>& <&6>//pos2 <&3>for manual position selection.<n>● <&6>//set <&3>to set the blocks in a selection to another material
+
+        - <&[fancy_title]><bold>Other bEdit commands<&co><n><n><&3>● <&6>//ceiling<n><&3>● <&6>//floor<n><&3>● <&6>//shell<n><&3>● <&6>//walls<n><&3>● <&6>//center<n><&3>● <&6>//stack<n><&3>● <&6>//frame<n><&3>● <&6>//undo
 
         - <&3>To create the <&[fancy_title]>Selection tool<&3> called the <&[fancy_title]>bWand<&3>, use the following ingredients: <n>● Four Molten Gold Blocks<n>● Two Iron Blocks<n>● One Molten Redstone Block<n>● One Perfect Emerald<n>● One Fortified Blaze Rod <n>(1/2)
         - <&3>Each of these can be crafted by combining or smelting the ingredients from a large quantity. Check your recipe book for help (2/2)
