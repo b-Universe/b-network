@@ -1,6 +1,6 @@
 player_death_announcer:
   type: world
-  debug: true
+  debug: false
   events:
     on player dies:
       # ██ [ base defintions            ] ██:
