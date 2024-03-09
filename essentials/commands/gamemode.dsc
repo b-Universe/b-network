@@ -173,7 +173,7 @@ gamemode_alias_task:
       - stop
 
     - if <[new_gamemode]> == builder:
-      - inject builder_gamemode_task
+      - run builder_gamemode_task def:<[player]>
 
     - flag <[player]> behr.essentials.last_gamemode:<[current_gamemode]>
     - flag <[player]> behr.essentials.gamemode:<[new_gamemode]>
@@ -181,18 +181,3 @@ gamemode_alias_task:
     - if <[player]> != <player>:
       - narrate "<&e><[player_name]><&a>'s gamemode changed to <[new_gamemode]>"
     - narrate "<&a>Changed gamemode to <[new_gamemode]>" targets:<[player]>
-
-builder_gamemode_task:
-  type: task
-  script:
-    - if !<[player].has_flag[behr.essentials.permission.builder]>:
-      - narrate "<&e>Nothing interesting happens"
-      - stop
-
-    - adjust <[player]> gamemode:survival
-    - adjust <[player]> can_fly:true
-    - adjust <[player]> flying:!<[player].is_on_ground>
-    - if <[player]> != <player>:
-      - narrate "<&e><[player_name]><&a>'s gamemode changed to builder"
-    - narrate "<&a>Changed gamemode to builder" targets:<[player]>
-    - stop
