@@ -289,6 +289,14 @@ physics_device_handler:
     after player drops physics_device:
       - adjust <context.entity> item:physics_device
 
+  # check for abuse:
+    after player shoots physics_device:
+      - determine passively cancelled
+      - if <player.inventory.contains_item[physics_device]>:
+        - inventory set slot:<player.inventory.find_item[physics_device]> origin:physics_device
+        - repeat <player.inventory.quantity_item[physics_device].sub[1].max[0]> as:loop_index:
+          - inventory set slot:<player.inventory.exclude_item[physics_device].quantity[<[loop_index]>].find_item[physics_device]> origin:physics_device
+
   # check for placing blocks:
     on player right clicks block with:physics_device:
       - if <player.item_in_hand.custom_model_data.if_null[0]> == 1000 || !<player.is_sneaking>:
@@ -463,6 +471,9 @@ air_placing_display_block:
     translation: 0.5,0.5,0.5
     scale: 0,0,0
     view_range: 300
+    brightness:
+      sky: 15
+      block: 15
 
 water_placing_display_block:
   type: entity
@@ -478,6 +489,9 @@ water_placing_display_block:
     translation: 0.5,0.5,0.5
     scale: 0,0,0
     view_range: 300
+    brightness:
+      sky: 15
+      block: 15
 
 water_block_lol:
   type: item
