@@ -1,6 +1,6 @@
 remindme_command_create:
   type: task
-  debug: true
+  debug: false
   script:
     - definemap options:
         1:
