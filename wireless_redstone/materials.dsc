@@ -55,7 +55,7 @@ wireless_transmitter_block:
   material: dispenser
   display name: <&b>Wireless Transmitter
   mechanisms:
-    custom_model_data: 1004
+    custom_model_data: 1002
   flags:
     wireless_redstone: transmitter
     frequency: 0
@@ -79,7 +79,7 @@ wireless_receiver_block:
   material: dispenser
   display name: <&b>Wireless Receiver
   mechanisms:
-    custom_model_data: 1010
+    custom_model_data: 1004
   flags:
     wireless_redstone: receiver
     frequency: 0
@@ -139,8 +139,8 @@ wireless_redstone_activate_transmitter_task:
 
     - if <[location].switched>:
       # activate both transmitter and receivers in range
-      - adjust <[receivers].parse[flag[behr.essentials.wireless_redstone.entity]]> item:wireless_receiver_block[custom_model_data=1009]
-      - adjust <[location].flag[behr.essentials.wireless_redstone.entity]> item:wireless_transmitter_block[custom_model_data=1003]
+      - adjust <[receivers].parse[flag[behr.essentials.wireless_redstone.entity]]> item:wireless_receiver_block[custom_model_data=1003]
+      - adjust <[location].flag[behr.essentials.wireless_redstone.entity]> item:wireless_transmitter_block[custom_model_data=1001]
 
       - playeffect at:<[location].center> effect:REDSTONE offset:0.5 special_data:1|255,0,0 quantity:10
       - playeffect at:<[location].center> effect:electric_spark offset:0.5 quantity:10
@@ -148,7 +148,7 @@ wireless_redstone_activate_transmitter_task:
 
       - foreach <[receivers].filter[advanced_matches[dispenser]]> as:receiver:
         - flag <[receiver]> behr.essentials.wireless_redstone.ratelimited
-        - adjust <[receiver].flag[behr.essentials.wireless_redstone.entity]> item:wireless_receiver_block[custom_model_data=1009]
+        - adjust <[receiver].flag[behr.essentials.wireless_redstone.entity]> item:wireless_receiver_block[custom_model_data=1003]
         - modifyblock <[receiver]> redstone_block
         - playeffect at:<[receiver].center> effect:REDSTONE offset:0.5 special_data:1|255,0,0 quantity:10
         - playeffect at:<[receiver].center> effect:electric_spark offset:0.5 quantity:10
@@ -156,10 +156,10 @@ wireless_redstone_activate_transmitter_task:
         - flag <[receiver]> behr.essentials.wireless_redstone.ratelimited:!
 
     - else:
-      - adjust <[location].flag[behr.essentials.wireless_redstone.entity]> item:wireless_transmitter_block[custom_model_data=1004]
+      - adjust <[location].flag[behr.essentials.wireless_redstone.entity]> item:wireless_transmitter_block[custom_model_data=1002]
       - foreach <[receivers]> as:receiver:
         - flag <[receiver]> behr.essentials.wireless_redstone.ratelimited
-        - adjust <[receiver].flag[behr.essentials.wireless_redstone.entity]> item:wireless_receiver_block[custom_model_data=1010]
+        - adjust <[receiver].flag[behr.essentials.wireless_redstone.entity]> item:wireless_receiver_block[custom_model_data=1004]
         - modifyblock <[receiver]> dispenser
         - flag <[receiver]> behr.essentials.wireless_redstone.ratelimited:!
 
@@ -172,14 +172,14 @@ wireless_redstone_deactivate_transmitter_task:
     - define frequency <[location].flag[behr.essentials.wireless_redstone.frequency]>
     - define receivers <[location].proc[find_wireless_blocks].context[receiver|<[frequency]>]>
 
-    - adjust <[location].flag[behr.essentials.wireless_redstone.entity]> item:wireless_transmitter_block[custom_model_data=1004]
+    - adjust <[location].flag[behr.essentials.wireless_redstone.entity]> item:wireless_transmitter_block[custom_model_data=1002]
 
     - playeffect at:<[location].center> effect:electric_spark offset:0.5 quantity:10
 
     - foreach <[receivers].filter[advanced_matches[redstone_block]]> as:receiver:
       - foreach next if:!<[location].proc[find_wireless_blocks].context[transmitter|<[frequency]>|true].is_empty>
       - flag <[receiver]> behr.essentials.wireless_redstone.ratelimited
-      - adjust <[receiver].flag[behr.essentials.wireless_redstone.entity]> item:wireless_receiver_block[custom_model_data=1010]
+      - adjust <[receiver].flag[behr.essentials.wireless_redstone.entity]> item:wireless_receiver_block[custom_model_data=1004]
       - modifyblock <[receiver]> dispenser
       - playeffect at:<[receiver].center> effect:electric_spark offset:0.5 quantity:10
       - playsound at:<[receiver]> sound:block_amethyst_cluster_place pitch:<util.random.int[7].to[10].div[10]> volume:2
@@ -208,13 +208,13 @@ wireless_redstone_refresh_receiver_task:
 
     - if <[location]> matches redstone_block && <[transmitters].is_empty>:
       - flag <[location]> behr.essentials.wireless_redstone.ratelimited
-      - adjust <[location].flag[behr.essentials.wireless_redstone.entity]> item:wireless_receiver_block[custom_model_data=1010]
+      - adjust <[location].flag[behr.essentials.wireless_redstone.entity]> item:wireless_receiver_block[custom_model_data=1004]
       - modifyblock <[location]> dispenser
       - flag <[location]> behr.essentials.wireless_redstone.ratelimited:!
 
     - else if <[location]> matches dispenser && !<[transmitters].is_empty>:
       - flag <[location]> behr.essentials.wireless_redstone.ratelimited
-      - adjust <[location].flag[behr.essentials.wireless_redstone.entity]> item:wireless_receiver_block[custom_model_data=1009]
+      - adjust <[location].flag[behr.essentials.wireless_redstone.entity]> item:wireless_receiver_block[custom_model_data=1003]
       - modifyblock <[location]> redstone_block
       - playeffect at:<[location].center> effect:REDSTONE offset:0.5 special_data:1|255,0,0 quantity:10
       - playeffect at:<[location].center> effect:electric_spark offset:0.5 quantity:10
@@ -292,7 +292,7 @@ wireless_redstone_material_handler:
           - define transmitters <[location].proc[find_wireless_blocks].context[transmitter|0|true]>
           - if !<[transmitters].is_empty>:
             - wait 1t
-            - adjust <entry[block].spawned_entity> item:wireless_receiver_block[custom_model_data=1009]
+            - adjust <entry[block].spawned_entity> item:wireless_receiver_block[custom_model_data=1003]
             - playeffect at:<[location].center> effect:REDSTONE offset:0.5 special_data:1|255,0,0 quantity:10
             - playeffect at:<[location].center> effect:electric_spark offset:0.5 quantity:10
             - playsound at:<[location]> sound:block_amethyst_cluster_place pitch:<util.random.int[7].to[10].div[10]> volume:2
@@ -440,7 +440,6 @@ wireless_configuration_gui:
   debug: false
   inventory: chest
   gui: true
-  debug: false
   size: 18
   title: <script.parsed_key[data.title].unseparated>
   data:
