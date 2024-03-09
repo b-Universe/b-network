@@ -1,6 +1,6 @@
 repository_command_create:
   type: task
-  debug: true
+  debug: false
   enabled: false
   script:
     - ~discordcommand id:c create name:repository "description:Serves the repository links for B" group:901618453356630046
