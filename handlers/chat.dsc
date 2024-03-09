@@ -7,7 +7,7 @@ chat_handler:
       - definemap embed_data:
           color: <color[0,254,255]>
           author_name: <[player.name]>
-          author_icon_url: <[player.uuid].proc[player_profiles].context[armor/bust|<[time]>]>
+          author_icon_url: https://minotar.net/armor/bust/<[player.uuid].replace_text[-]>/100.png?date=<[time].format[MM-dd]>
 
       - define embed <discord_embed.with[color].as[<color[0,254,255]>]>
       - define description <list_single[<&lt>:b_timeout:1067859276967727175<&gt> `<[player.name]>` was muted.]>
@@ -19,7 +19,7 @@ chat_handler:
       - ~discordmessage id:b channel:1100806492988379306 <[embed]>
       - flag server champagne.relay_ratelimit:!
       - narrate "<red>You were instantly muted for not using common sense."
-      - define embed <[embed].with[description].as[<[message.text]>].with[author_name].as[<[player.name]>].with[author_icon_url].as[<[player.uuid].proc[player_profiles].context[armor/bust|<[time]>]>]>
+      - define embed <[embed].with[description].as[<[message.text]>].with[author_name].as[<[player.name]>].with[author_icon_url].as[https://minotar.net/armor/bust/<[player.uuid].replace_text[-]>/100.png?date=<[time].format[MM-dd]>]>
       - ~discordmessage id:b channel:901618453356630054 "Hey <&lt>@194619362223718400<&gt>, I muted `<[player.name]>` because they weren<&sq> using common sense.<n>Here's their original message<&co>" embed:<[embed]>
       - stop
 
@@ -40,7 +40,7 @@ chat_handler:
       # ██ [ construct webhook message  ] ██:
       - definemap payload:
           username: <[player.name]>
-          avatar_url: <[player.uuid].proc[player_profiles].context[armor/bust|<[time]>]>
+          avatar_url: https://minotar.net/armor/bust/<[player.uuid].replace_text[-]>/100.png?date=<[time].format[MM-dd]>
           content: <[message.text].parse_color.strip_color.replace_text[@champagne].with[<&lt>@905309299524382811<&gt>]>
           allowed_mentions:
             parse: <list>
