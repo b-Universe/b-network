@@ -1,6 +1,6 @@
 essentials:
   type: world
-  debug: true
+  debug: false
   events:
     after player right clicks potted_*:
       - define old_material <context.location.material.name.after[potted_]>
