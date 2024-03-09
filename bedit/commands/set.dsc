@@ -1,6 +1,6 @@
 bedit_set_command:
   type: command
-  debug: true
+  debug: false
   enabled: true
   name: /set
   usage: //set <&lt>material<&gt>

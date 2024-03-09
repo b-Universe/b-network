@@ -45,13 +45,14 @@ obtain_bwand:
 
 bedit_wand_handler:
   type: world
-  debug: true
+  debug: false
   events:
     after player quits:
       - foreach left|right as:corner:
         - flag <player> behr.essentials.bedit.<[corner]>.selection:!
         - remove <player.flag[behr.essentials.bedit.<[corner]>.selection_entity].if_null[null]> if:<player.flag[behr.essentials.bedit.<[corner]>.selection_entity].is_truthy>
       - flag <player> behr.essentials.bedit.selection.cuboid:!
+
 
     after player breaks block location_flagged:behr.essentials.bedit:
       - remove <context.location.to_cuboid[<context.location>].entities[display_entity]>
@@ -83,6 +84,7 @@ bedit_wand_handler:
       - determine passively cancelled
 
     # % ██ [ Define side and color                 ] ██:
+      - animate <player> animation:start_use_mainhand_item
       - define location <context.location.if_null[<player.cursor_on[100].if_null[<player.location.forward[20].round>]>]>
       # behr.essentials.settings.bedit.selection.right.color
       - if <context.click_type.contains_any_text[left]>:

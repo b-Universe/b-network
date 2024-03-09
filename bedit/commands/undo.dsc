@@ -1,6 +1,6 @@
 bedit_undo_command:
   type: command
-  debug: true
+  debug: false
   enabled: true
   name: /undo
   usage: //undo

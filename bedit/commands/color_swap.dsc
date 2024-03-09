@@ -1,6 +1,6 @@
 bedit_color_swap_command:
   type: command
-  debug: true
+  debug: false
   enabled: false
   name: /color_swap
   usage: //color_swap <&lt>color<&gt> <&lt>color<&gt>
