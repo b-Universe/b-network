@@ -8,6 +8,8 @@ error_handling:
       - if <[script.name]> == error_handling:
         - stop
       - flag server behr.essentials.debug.error.<[script.name]>.count:->:<util.time_now> expire:1h
+      - flag server behr.essentials.debug.error.<[script.name]>.rapid_count:++ expire:5s
+      - stop if:<server.flag[behr.essentials.debug.error.<[script.name]>.rapid_count].is_more_than[50]>
       - stop if:<server.flag[behr.essentials.debug.error.<[script.name]>.<[script.line]>].if_null[<list>].contains[<context.message.strip_color>]>
       - flag server behr.essentials.debug.error.<[script.name]>.<[script.line]>:->:<context.message.strip_color>
       - if <server.has_flag[behr.essentials.debug.error.<[script.name]>.lines.<[script.line]>]>:
@@ -24,13 +26,19 @@ error_handling:
 
       - definemap embed:
           title: "`<&lb>Repo Link<&rb>` <[script.name]>"
-          title_url: https://github.com/bUniverse/b-network/blob/master/<context.script.filename.after[/plugins/Denizen/scripts/].if_null[invalid]>.dsc
+          title_url: https<&co>//github.com/bUniverse/b-network/blob/master/<context.script.filename.after[/plugins/Denizen/scripts/].if_null[invalid]>.dsc
           description: <server.flag[behr.essentials.debug.error.<[script.name]>.errors].separated_by[<n>].substring[0,3000]>
           color: 0,254,255
           footer: Script error count (*/hr)<&co> <server.flag[behr.essentials.debug.error.<[script.name]>.count].filter[is_after[<util.time_now.sub[1h]>]].size>
       - define embed <discord_embed.with_map[<[embed]>]>
-      - define embed <[embed].add_inline_field[**script**].value[`<[script.name]>`]>
-      - define embed <[embed].add_inline_field[**Line**].value[`<[script.line]>`]>
+      - define embed <[embed].add_field[**script**].value[`<[script.name]>`]>
+      - define embed <[embed].add_inline_field[**Path**].value[`<context.script.filename.after[/plugins/Denizen/scripts/].if_null[invalid]>`]>
+      - if <context.queue.player.exists>:
+        - define player <context.queue.player>
+        - define embed <[embed].with[thumbnail].as[https<&co>//minotar.net/helm/<[player].uuid.replace_text[-]>/100.png]>
+        - define embed <[embed].add_inline_field[**Attached Player**].value[`<[player].name>`]>
+        - define embed <[embed].add_inline_field[**Player UUID**].value[`<[player].uuid>`]>
+
       - if !<context.queue.definition_map.if_null[<map>].is_empty>:
         - define embed <[embed].add_field[**Definitions**].value[```yml<n><context.queue.definition_map.to_yaml.if_null[null]><n>```]>
 
