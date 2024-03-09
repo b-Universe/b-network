@@ -15,6 +15,7 @@ update_discord_user_database:
 
 update_profiler_font:
   type: task
+  enabled: false
   data:
     provider:
       type: bitmap
@@ -46,4 +47,4 @@ update_profiler_font:
       - wait 1s
       - define content <map.with[providers].as[<[providers]>]>
 
-    - ~filesave <[content].to_json[native_types=true].utf8_encode> path:<[profiler_file_path]>
+    - ~filewrite <[content].to_json[native_types=true].utf8_encode> path:<[profiler_file_path]>
