@@ -1,6 +1,6 @@
 haste_command_create:
   type: task
-  debug: true
+  debug: false
   enabled: false
   script:
     - ~discordcommand id:c create name:haste "description:Serves the haste link for pasting scripts or code snippets" group:901618453356630046
