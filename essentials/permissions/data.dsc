@@ -9,21 +9,10 @@ permission_data:
         commands:
           - bed
           - discord
-          - dynmap
           - resource
           - settings
           - spawn
-  # █  [ level two groups   ] █:
-    regular:
-      level: 2
-      formatted_name: <&b>Regular
-      permissions:
-        inherits:
-          - newbie
-        commands:
-          - me
-          - ping
-          - crafting_table
+          - dback
 
           - /pos1
           - /pos2
@@ -35,6 +24,18 @@ permission_data:
           - /walls
           - /ceiling
           - /floor
+          - /undo
+  # █  [ level two groups   ] █:
+    regular:
+      level: 2
+      formatted_name: <&b>Regular
+      permissions:
+        inherits:
+          - newbie
+        commands:
+          - me
+          - ping
+          - crafting_table
     dnt:
       level: 2
       formatted_name: <&4>[<red>DNT<bold><&chr[2193]><&4>]
