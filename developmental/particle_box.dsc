@@ -142,6 +142,7 @@ particle_box_gui_effect_menu:
 
 particle_box_active_effect_button:
   type: item
+  debug: false
   material: lime_stained_glass
   display name: <&e>Effect<&6><&co> <&a>Flame
   lore:
@@ -170,6 +171,7 @@ particle_box_page_button:
 generate_particle_box_guis_startup:
   type: world
   debug: false
+  enabled: false
   events:
     after server start:
       - run generate_particle_box_guis
@@ -216,7 +218,7 @@ generate_particle_box_guis:
 
 create_particle_box_guis:
   type: task
-  debug: true
+  debug: false
   definitions: location
   script:
     #- if !<inventory[<[inventory_name]>].is_truthy>
@@ -233,7 +235,8 @@ create_particle_box_guis:
 
 particle_box_handler:
   type: world
-  debug: true
+  debug: false
+  enabled: false
   events:
     after player clicks particle_box_inactive_effect_button in particle_box_effect_menu_*:
       - define location <context.inventory.note_name.after_last[_]>
@@ -360,6 +363,7 @@ particle_box_handler:
 
 player_detector:
   type: assignment
+  debug: false
   actions:
     on assignment:
       - trigger name:proximity state:true radius:<npc.flag[particle_data.visibility]>
@@ -377,8 +381,8 @@ player_detector:
 
 particle_box_player:
   type: task
-  definitions: player_detector
   debug: false
+  definitions: player_detector
   script:
     - while <server.has_flag[particle_boxes.active_detectors.<[player_detector].uuid.if_null[null]>]>:
       - define particle_data <[player_detector].flag[particle_data]>
