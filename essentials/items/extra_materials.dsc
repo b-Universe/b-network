@@ -184,64 +184,6 @@ perfect_emerald:
   debug: false
   material: emerald
 
-steel_ingot:
-  type: item
-  debug: false
-  material: iron_ingot
-  display name: <&f>Steel Ingot
-  recipes:
-    1:
-      type: shapeless
-      input: molten_iron|molten_iron|molten_iron|raw_copper_block|raw_copper_block
-
-steel_bar:
-  type: item
-  debug: false
-  material: obsidian
-  display name: <&f>Steel Bar
-  recipes:
-    1:
-      type: shaped
-      input:
-      - steel_ingot|steel_ingot|steel_ingot
-    2:
-      type: shaped
-      input:
-      - steel_ingot
-      - steel_ingot
-      - steel_ingot
-
-steel_plate:
-  type: item
-  debug: false
-  material: obsidian
-  display name: <&f>Steel Plate
-  recipes:
-    1:
-      type: shaped
-      input:
-        - steel_ingot|steel_ingot|steel_ingot
-        - steel_ingot|steel_ingot|steel_ingot
-    2:
-      type: shaped
-      input:
-        - steel_ingot|steel_ingot
-        - steel_ingot|steel_ingot
-        - steel_ingot|steel_ingot
-
-steel_block:
-  type: item
-  debug: false
-  material: obsidian
-  display name: <&f>Steel Block
-  recipes:
-    1:
-      type: shaped
-      input:
-      - steel_ingot|steel_ingot|steel_ingot
-      - steel_ingot|steel_ingot|steel_ingot
-      - steel_ingot|steel_ingot|steel_ingot
-
 long_burn:
   type: world
   debug: false
