@@ -43,7 +43,7 @@ discord_mute_command_handler:
             color: <color[0,254,255]>
             author_name: <[player_name]>
             author_url: <[message_url]>
-            author_icon_url: <[player].uuid.proc[player_profiles].context[armor/bust|<[time]>]>
+            author_icon_url: https://minotar.net/armor/bust/<[player].uuid.replace_text[-]>/100.png?date=<[time].format[MM-dd]>
 
         - define embed <discord_embed.with[color].as[<color[0,254,255]>]>
         - define description <list_single[<&lt>:b_timeout:1067859276967727175<&gt> `<[player_name]>` was muted for `<[duration].formatted_words>`]>
