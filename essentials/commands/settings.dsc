@@ -1,6 +1,6 @@
 settings_command:
   type: command
-  debug: true
+  debug: false
   name: settings
   usage: /settings
   description: Configures your b settings
