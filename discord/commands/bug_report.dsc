@@ -1,6 +1,6 @@
 bug_report_command_create:
   type: task
-  debug: true
+  debug: false
   script:
     - ~discordcommand id:b create name:bug_report "description:Begins a bug report to submit" group:901618453356630046
 
