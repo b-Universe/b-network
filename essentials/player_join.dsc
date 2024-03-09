@@ -147,6 +147,7 @@ player_join_discord_announcement_task:
 
 b_book:
   type: item
+  debug: false
   material: written_book
   mechanisms:
     book:
