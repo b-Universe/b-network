@@ -4,11 +4,44 @@ bblock:
   entity_type: block_display
   mechanisms:
     glowing: true
-    translation: -0.01,-0.01,-0.01
-    scale: 1.02,1.02,1.02
-    brightness:
-      sky: 15
-      block: 15
+    translation: -0.001,-0.001,-0.001
+    scale: 1.0021,1.0021,1.0021
+
+bblock_handler:
+  type: world
+  debug: false
+  events:
+    on bblock spawns:
+      - define block_entity <context.entity>
+      - flag server behr.essentials.bedit.display_blocks:->:<[block_entity]>
+      - define blocks <list[<[block_entity].location.left>|<[block_entity].location.right>|<[block_entity].location.forward>|<[block_entity].location.backward>|<[block_entity].location.up>]>
+      - define block_light <[blocks].parse[light.blocks].exclude[0]>
+      - if <[block_light].is_empty>:
+        - define block_light 0
+      - else:
+        - define block_light <[block_light].sum.div[<[block_light].size>].round>
+      - define sky_light <[blocks].parse[light.sky].highest.max[<[blocks].parse[light].highest>]>
+      - adjust <[block_entity]> brightness:<map[sky=<[sky_light]>;block=<[block_light]>]>
+
+    on bblock despawns:
+      - flag server behr.essentials.bedit.display_blocks:<-:<context.entity>
+
+    after time changes:
+    - define display_blocks <server.flag[behr.essentials.bedit.display_blocks].filter[is_truthy]>
+    - foreach <[display_blocks]> as:block_entity:
+      - if <[loop_index].mod[25]> == 0:
+        - wait 1t
+      - define blocks <list[<[block_entity].location.left>|<[block_entity].location.right>|<[block_entity].location.forward>|<[block_entity].location.backward>|<[block_entity].location.up>]>
+      - define block_light <[blocks].parse[light.blocks].exclude[0]>
+      - if <[block_light].is_empty>:
+        - define block_light 0
+      - else:
+        - define block_light <[block_light].sum.div[<[block_light].size>].round>
+      - define sky_light <[blocks].parse[light.sky].highest.max[<[blocks].parse[light].highest>]>
+      - define data <[block_entity].brightness>
+      - if <[data.sky]> == <[sky_light]> && <[data.block]> == <[block_light]>:
+        - foreach next
+      - adjust <[block_entity]> brightness:<map[sky=<[sky_light]>;block=<[block_light]>]>
 
 bedit_location_format:
   type: procedure
