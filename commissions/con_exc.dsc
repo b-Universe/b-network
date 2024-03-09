@@ -1,6 +1,6 @@
 construction_command:
   type: command
-  debug: true
+  debug: false
   name: con
   usage: /con
   description: makes blocks
@@ -123,7 +123,7 @@ construction_materials:
 excavate_command:
   type: command
   name: exc
-  debug: true
+  debug: false
   usage: /exc
   description: breaks blocks
   script:
