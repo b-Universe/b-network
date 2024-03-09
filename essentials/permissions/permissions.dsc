@@ -157,7 +157,7 @@ permission_handler:
       - trc
       - tree
       - trigger
-      - undo
+      #- undo
       - unstuck
       - up
       - ver
@@ -191,7 +191,6 @@ permission_handler:
       - /brush
       - /desel
       - /deselect
-      - /sel
       - /toggleplace
       - ;
       - floodfill
@@ -280,7 +279,6 @@ permission_handler:
       - /search
       - /searchitem
       - /selwand
-      - /set
       - /setbiome
       - /shift
       - /size
