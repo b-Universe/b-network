@@ -37,8 +37,7 @@ time_command:
         - inject command_error
 
       - if <[time].contains[.]>:
-        - define reason "Time cannot contain decimals"
-        - inject command_error
+        - define time <[time].round.min[23999].max[0]>
 
       - time <[time]>t
       - define time_name <[time]>
@@ -53,4 +52,4 @@ time_command:
 
     - playsound <player> entity_player_levelup pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3 if:<player.has_flag[behr.essentials.settings.playsounds]>
     - time <[time]>
-    - narrate "<&a>Time set to <&e><[time_name]>"
+    - narrate "<&[green]>Time set to <&[yellow]><[time_name]>"

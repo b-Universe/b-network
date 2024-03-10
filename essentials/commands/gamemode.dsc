@@ -16,15 +16,15 @@ gamemode_command:
       - if <player.has_flag[behr.essentials.permission.<[gamemode]>]>:
         - if <player.flag[behr.essentials.gamemode]> == <[gamemode]>:
           - define item <[item].with[material=lime_stained_glass]>
-          - define item <[item].with[lore=<&a>Current gamemode]>
+          - define item <[item].with[lore=<&[green]>Current gamemode]>
 
         - else:
           - define item <[item].with[material=white_stained_glass]>
-          - define item <[item].with[lore=<&a><&a>Click to change to|<&a><[gamemode]> gamemode]>
+          - define item <[item].with[lore=<&[green]><&[green]>Click to change to|<&[green]><[gamemode]> gamemode]>
 
       - else:
         - define item <[item].with[material=black_stained_glass]>
-        - define item <[item].with[lore=<&c>Unavailable]>
+        - define item <[item].with[lore=<&[red]>Unavailable]>
 
       - define items <[items].include_single[<[item]>].include_single[air]>
       - define inventory <inventory[gamemode_main_menu]>
@@ -43,11 +43,11 @@ gamemode_menu_handler:
       - playsound <player> entity_player_levelup pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3 if:<player.has_flag[behr.essentials.settings.playsounds]>
 
       - if <[current_gamemode]> == <[new_gamemode]>:
-        - narrate "<&c>You're already in <[new_gamemode]>"
+        - narrate "<&[red]>You're already in <[new_gamemode]>"
         - stop
 
       - if !<player.has_flag[behr.essentials.permission.<[new_gamemode]>]>:
-        - narrate "<&c>That gamemode is unavailable"
+        - narrate "<&[red]>That gamemode is unavailable"
         - stop
 
       - if <[new_gamemode]> == builder:
@@ -60,15 +60,15 @@ gamemode_menu_handler:
           8: spectator
 
       - inventory adjust destination:<context.inventory> slot:<context.slot> material:lime_stained_glass
-      - inventory adjust destination:<context.inventory> slot:<context.slot> "lore:<&a>Current gamemode"
+      - inventory adjust destination:<context.inventory> slot:<context.slot> "lore:<&[green]>Current gamemode"
       - define old_slot <[slot_map].invert.get[<[current_gamemode]>]>
       - inventory adjust destination:<context.inventory> slot:<[old_slot]> material:white_stained_glass
-      - inventory adjust destination:<context.inventory> slot:<[old_slot]> "lore:<&a>Click to change to|<&a><[slot_map.<[old_slot]>]> gamemode"
+      - inventory adjust destination:<context.inventory> slot:<[old_slot]> "lore:<&[green]>Click to change to|<&[green]><[slot_map.<[old_slot]>]> gamemode"
 
       - flag <player> behr.essentials.last_gamemode:<[current_gamemode]>
       - flag <player> behr.essentials.gamemode:<[new_gamemode]>
       - adjust <player> gamemode:<[new_gamemode]>
-      - narrate "<&a>Changed gamemode to <[new_gamemode]>"
+      - narrate "<&[green]>Changed gamemode to <[new_gamemode]>"
 
     after player joins flagged:!behr.essentials.gamemode:
       - flag player behr.essentials.gamemode:survival
@@ -141,7 +141,7 @@ gamemode_alias_task:
   script:
   # % ██ [ check if using too many arguments       ] ██
     - if <context.args.size> > 1:
-      - narrate "<&c>Invalid usage"
+      - narrate "<&[red]>Invalid usage"
       - stop
 
     - else if <context.args.is_empty>:
@@ -155,21 +155,21 @@ gamemode_alias_task:
     - define gamemodes <script.data_key[data.alias_map].values>
 
     - if <[new_gamemode]> !in <[gamemodes]>:
-        - narrate "<&c>Invalid usage - <&e>valid options are <[gamemodes].exclude[<[current_gamemode]>].filter_tag[<player.has_flag[behr.essentials.permission.<[filter_value]>]>].comma_separated>"
+        - narrate "<&[red]>Invalid usage - <&[yellow]>valid options are <[gamemodes].exclude[<[current_gamemode]>].filter_tag[<player.has_flag[behr.essentials.permission.<[filter_value]>]>].comma_separated>"
         - stop
 
     - if <[current_gamemode]> == <[new_gamemode]>:
       - if <[player]> == <player>:
-        - narrate "<&c>You're already in <[new_gamemode]>"
+        - narrate "<&[red]>You're already in <[new_gamemode]>"
       - else:
-        - narrate "<&e><[player_name]> <&c>is already in <[new_gamemode]>"
+        - narrate "<&[yellow]><[player_name]> <&[red]>is already in <[new_gamemode]>"
       - stop
 
     - if !<player.has_flag[behr.essentials.permission.<[new_gamemode]>]>:
       - if <[player]> == <player>:
-        - narrate "<&c>That gamemode is unavailable"
+        - narrate "<&[red]>That gamemode is unavailable"
       - else:
-        - narrate "<&c>That gamemode is unavailable for you to change"
+        - narrate "<&[red]>That gamemode is unavailable for you to change"
       - stop
 
     - if <[new_gamemode]> == builder:
@@ -179,5 +179,5 @@ gamemode_alias_task:
     - flag <[player]> behr.essentials.gamemode:<[new_gamemode]>
     - adjust <[player]> gamemode:<[new_gamemode]>
     - if <[player]> != <player>:
-      - narrate "<&e><[player_name]><&a>'s gamemode changed to <[new_gamemode]>"
-    - narrate "<&a>Changed gamemode to <[new_gamemode]>" targets:<[player]>
+      - narrate "<&[yellow]><[player_name]><&[green]>'s gamemode changed to <[new_gamemode]>"
+    - narrate "<&[green]>Changed gamemode to <[new_gamemode]>" targets:<[player]>

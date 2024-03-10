@@ -11,10 +11,10 @@ bed_command:
 
   # % ██ [ check if player owns a respawn location  ] ██:
     - if !<player.bed_spawn.exists>:
-      - narrate "<&c>You have no bed location currently"
-      - stop
+      - define reason "You have no bed location currently"
+      - inject command_error
 
   # % ██ [ teleport to respawn location             ] ██:
     - playsound <player> entity_player_levelup pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3 if:<player.has_flag[behr.essentials.settings.playsounds]>
     - teleport <player> <player.bed_spawn>
-    - narrate "<&a>Teleported you to your bed"
+    - narrate "<&[green]>Teleported you to your bed"

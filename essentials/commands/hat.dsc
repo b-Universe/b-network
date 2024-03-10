@@ -23,4 +23,4 @@ hat_command:
     - playsound <player> entity_player_levelup pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3 if:<player.has_flag[behr.essentials.settings.playsounds]>
     - equip <player> head:<player.item_in_hand.with[quantity=1]>
     - take iteminhand quantity:1
-    - narrate "<&a>And now it's a hat!"
+    - narrate "<&[green]>And now it's a hat!"

@@ -21,26 +21,18 @@ weather_command:
 
     # ██ [ check if using command wrongly         ] ██:
     - if <context.args.size> > 1:
-      - definemap message:
-          text: <&c>Invalid usage - <&6>/<&e>weather <&6><&lt><&e>weather<&6><&gt>
-          hover: <&a>Click to insert<&co><n><&6>/<&e>weather<n><&c>You typed<&co> <underline><context.alias> <context.raw_args>
-      - narrate <[message.text].on_hover[<[message.hover]>].on_click[/weather ].type[suggest_command]>
-      - playsound <player> sound:block_fire_extinguish pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3 if:<player.has_flag[behr.essentials.settings.playsounds]>
-      - stop
+      - inject command_syntax_error
 
     # ██ [ check if specifying an invalid weather ] ██:
     - if !<list[sunny|storm|thunder|clear].contains[<[weather]>]>:
-      - definemap message:
-          text: <&c>Invalid usage - <&e>the only valid weathers are clear or sunny, storm, and thunder
-          hover: <&a>Click to insert<&co><n><&6>/<&e>weather<n><&c>You typed<&co> <underline><context.alias> <context.raw_args>
-      - narrate <[message.text].on_hover[<[message.hover]>].on_click[/weather ].type[suggest_command]>
-      - playsound <player> sound:block_fire_extinguish pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3 if:<player.has_flag[behr.essentials.settings.playsounds]>
-      - stop
+      - define reason "The only valid weathers are clear or sunny, storm, and thunder"
+      - inject command_error
+
 
     # ██ [ change the weather                     ] ██:
     - weather <[weather]> <player.world>
     - playsound <player> entity_player_levelup pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3 if:<player.has_flag[behr.essentials.settings.playsounds]>
-    - narrate "<&a>Weather changed to <[weather].to_titlecase>"
+    - narrate "<&[green]>Weather changed to <[weather].to_titlecase>"
 
     # ██ [ realism for thunder and stormy weather ] ██:
     - wait 1s

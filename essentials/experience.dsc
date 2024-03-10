@@ -27,8 +27,8 @@ check_for_levelup:
     - define next_level <[construction.level].add[1]>
     - if <[construction.experience]> > <script[level_chart].data_key[level.<[next_level]>]>:
       - playsound <player> entity_player_levelup pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3
-      - toast "<&a>Construction Levelup<&co> <&e><[next_level]>" frame:goal icon:bricks
-      - narrate "<&a>You leveled up! Construction level<&co> <&e><[next_level]>"
+      - toast "<&[green]>Construction Levelup<&co> <&[yellow]><[next_level]>" frame:goal icon:bricks
+      - narrate "<&[green]>You leveled up! Construction level<&co> <&[yellow]><[next_level]>"
       - flag player behr.essentials.profile.stats.construction.level:++
 
 level_chart:

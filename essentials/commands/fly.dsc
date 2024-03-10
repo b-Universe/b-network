@@ -20,13 +20,13 @@ fly_command:
     - adjust <[player]> can_fly:<[player].can_fly.not>
     - if <[player]> != <player>:
       - if <[player].can_fly>:
-        - narrate "<&e><[player_name]><&a>'s flight enabled"
-        - narrate "<&a>Flight enabled" targets:<[player]>
+        - narrate "<&[yellow]><[player_name]><&[green]>'s flight enabled"
+        - narrate "<&[green]>Flight enabled" targets:<[player]>
       - else:
-        - narrate "<&e><[player_name]><&a>'s flight disabled"
-        - narrate "<&a>Flight disabled" targets:<[player]>
+        - narrate "<&[yellow]><[player_name]><&[green]>'s flight disabled"
+        - narrate "<&[green]>Flight disabled" targets:<[player]>
     - else:
       - if <player.can_fly>:
-        - narrate "<&a>Flight enabled"
+        - narrate "<&[green]>Flight enabled"
       - else:
-        - narrate "<&a>Flight disabled"
+        - narrate "<&[green]>Flight disabled"

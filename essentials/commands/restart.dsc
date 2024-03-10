@@ -53,17 +53,17 @@ restart_task:
     - else:
       - define rate <duration[5t]>
 
-    - announce "<&a>Server restart in <[initial_duration].formatted_words>"
+    - announce "<&[green]>Server restart in <[initial_duration].formatted_words>"
     - playsound <server.online_players> entity_player_levelup pitch:<util.random.int[8].to[12].div[10]> volume:0.3
     - bossbar players:<server.online_players> id:restart create color:red
     - flag server behr.essentials.restart_queue
 
     - repeat <[initial_duration].in_ticks.div[<[rate].in_ticks>].sub[1]> as:loop_index:
       - define duration <[initial_duration].sub[<duration[<[rate].in_ticks.mul[<[loop_index]>]>t]>]>
-      - bossbar players:<server.online_players> id:restart update "title:<&a>Server restart in <[duration].formatted_words>" progress:<[duration].in_ticks.div[<[initial_duration].in_ticks>]>
+      - bossbar players:<server.online_players> id:restart update "title:<&[green]>Server restart in <[duration].formatted_words>" progress:<[duration].in_ticks.div[<[initial_duration].in_ticks>]>
       - wait <[rate]>
       - if !<server.has_flag[behr.essentials.restart_queue]>:
-        - announce "<&a>Restart cancelled"
+        - announce "<&[green]>Restart cancelled"
         - bossbar players:<server.online_players> id:restart remove
         - stop
 

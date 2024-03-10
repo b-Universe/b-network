@@ -16,9 +16,9 @@ aggro_command:
     - /aggro
   tab complete:
     - if <player.has_flag[behr.essentials.aggro_disabled]>:
-      - actionbar "<&e>Aggro is currently <&c>disabled"
+      - actionbar "<&[yellow]>Aggro is currently <&[red]>disabled"
     - else:
-      - actionbar "<&e>Aggro is currently <&a>enabled"
+      - actionbar "<&[yellow]>Aggro is currently <&[green]>enabled"
     - if <context.args.size> < 2 && <context.args.last.if_null[]> != <empty>
     - determine <server.players.exclude[<player>].parse[name].filter[starts_with[<context.args.first.if_null[]>]]>
   script:
@@ -36,11 +36,11 @@ aggro_command:
     - if <[player].has_flag[behr.essentials.aggro_disabled]>:
       - flag <[player]> behr.essentials.aggro_disabled:!
       - if <[player]> != <player>:
-        - narrate "<&a>Mob aggro enabled for <[player_name]>"
-      - narrate "<&a>Mob aggro enabled" targets:<[player]>
+        - narrate "<&[green]>Mob aggro enabled for <[player_name]>"
+      - narrate "<&[green]>Mob aggro enabled" targets:<[player]>
 
     - else:
       - flag <[player]> behr.essentials.aggro_disabled
       - if <[player]> != <player>:
-        - narrate "<&a>Mob aggro disabled for <[player_name]>"
-      - narrate "<&a>Mob aggro disabled" targets:<[player]>
+        - narrate "<&[green]>Mob aggro disabled for <[player_name]>"
+      - narrate "<&[green]>Mob aggro disabled" targets:<[player]>

@@ -6,12 +6,12 @@ command_error:
     - playsound <player> sound:block_fire_extinguish pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3 if:<player.has_flag[behr.essentials.settings.playsounds]>
     # ██ [ Check if being ran as the server ] ██:
     - if <context.source_type.if_null[invalid]> != player || <context.server.if_null[false]>:
-      - announce to_console "<&c>Command error <&b>| <&6><underline>/<&e><context.alias> <context.raw_args> <&b>| <&c><[reason]>"
+      - announce to_console "<&[red]>Command error <&b>| <&6><underline>/<&e><context.alias> <context.raw_args> <&b>| <&[red]><[reason]>"
       - stop
 
     - definemap message:
-        text: <&c><[reason]>
-        hover: <&a>Click to insert<&co><n><&6>/<&e><context.alias.proc[command_usage].proc[command_syntax_format]><n><&c>You typed<&co> <underline>/<context.alias> <context.raw_args>
+        text: <&[red]><[reason]>
+        hover: <&[green]>Click to insert<&co><n><&6>/<&e><context.alias.proc[command_usage].proc[command_syntax_format]><n><&[red]>You typed<&co> <underline>/<context.alias> <context.raw_args>
     - narrate <[message.text].on_hover[<[message.hover]>].on_click[/<context.alias> ].type[suggest_command]>
     - stop
 
@@ -21,8 +21,8 @@ command_syntax_error:
   script:
     - playsound <player> sound:block_fire_extinguish pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3 if:<player.has_flag[behr.essentials.settings.playsounds]>
     - definemap message:
-        text: <&c>Invalid syntax - <context.alias.proc[command_usage].proc[command_syntax_format]>
-        hover: <&a>Click to insert<&co><n><&6>/<&e><context.alias><n><&c>You typed<&co> <underline>/<context.alias> <context.raw_args>
+        text: <&[red]>Invalid syntax - <context.alias.proc[command_usage].proc[command_syntax_format]>
+        hover: <&[green]>Click to insert<&co><n><&6>/<&e><context.alias><n><&[red]>You typed<&co> <underline>/<context.alias> <context.raw_args>
     - narrate <[message.text].on_hover[<[message.hover]>].on_click[/<context.alias> ].type[suggest_command]>
     - stop
 
@@ -32,8 +32,8 @@ command_permission_error:
   script:
     - playsound <player> sound:block_fire_extinguish pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3 if:<player.has_flag[behr.essentials.settings.playsounds]>
     - definemap message:
-        text: <&c><[reason]>
-        hover: <&c>You don<&sq>t have permission to run that command
+        text: <&[red]><[reason]>
+        hover: <&[red]>You don<&sq>t have permission to run that command
     - narrate <[message.text].on_hover[<[message.hover]>]>
     - stop
 

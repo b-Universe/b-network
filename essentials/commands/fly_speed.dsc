@@ -9,7 +9,7 @@ fly_speed_command:
   script:
     - choose <context.args.size>:
       - case 0:
-        - narrate "<&a>Your fly speed is <&e><player.fly_speed.mul[10].round_to[2]>"
+        - narrate "<&[green]>Your fly speed is <&[yellow]><player.fly_speed.mul[10].round_to[2]>"
         - stop
 
       - case 1:
@@ -17,7 +17,7 @@ fly_speed_command:
         - if !<[speed].is_decimal>:
           - define player <server.match_offline_player[<[speed]>].if_null[invalid]>
           - if <[player]> != invalid:
-            - narrate "<&e><[player].name><&a>'s fly speed is <&e><[player].fly_speed.mul[10].round_to[2]>"
+            - narrate "<&[yellow]><[player].name><&[green]>'s fly speed is <&[yellow]><[player].fly_speed.mul[10].round_to[2]>"
             - stop
 
           - else:
@@ -56,8 +56,8 @@ fly_speed_command:
       - playsound <player> entity_player_levelup pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3 if:<player.has_flag[behr.essentials.settings.playsounds]>
       - adjust <[player]> fly_speed:<[speed]>
       - if <[player]> != <player>:
-        - narrate "<&a>You sent <&e><[player_name]><&a>'s flying at <[speed_name]><&a>!"
-      - narrate targets:<[player]> "<&a>Now flying at <[speed_name]><&a>!"
+        - narrate "<&[green]>You sent <&[yellow]><[player_name]><&[green]>'s flying at <[speed_name]><&[green]>!"
+      - narrate targets:<[player]> "<&[green]>Now flying at <[speed_name]><&[green]>!"
 
     - else:
       - if <[speed]> > 10:
@@ -70,13 +70,13 @@ fly_speed_command:
 
       - else if <[speed]> == <[player].fly_speed.mul[10]>:
         - if <[player]> != <player>:
-          - narrate <element[<&e>Nothing interesting happens].on_hover[<&e><[player_name]><&a>'s fly speed is already <&e><[speed]>]>
+          - narrate <element[<&[yellow]>Nothing interesting happens].on_hover[<&[yellow]><[player_name]><&[green]>'s fly speed is already <&[yellow]><[speed]>]>
         - else:
-          - narrate <element[<&e>Nothing interesting happens].on_hover[<&a>Your fly speed is already <&e><[speed]>]>
+          - narrate <element[<&[yellow]>Nothing interesting happens].on_hover[<&[green]>Your fly speed is already <&[yellow]><[speed]>]>
         - stop
 
       - playsound <player> entity_player_levelup pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3 if:<player.has_flag[behr.essentials.settings.playsounds]>
       - adjust <[player]> fly_speed:<[speed].div[10]>
       - if <[player]> != <player>:
-        - narrate "<&e><[player_name]><&a>'s fly speed set to <&e><[speed]>"
-      - narrate targets:<[player]> "<&a>Fly speed set to <&e><[speed]>"
+        - narrate "<&[yellow]><[player_name]><&[green]>'s fly speed set to <&[yellow]><[speed]>"
+      - narrate targets:<[player]> "<&[green]>Fly speed set to <&[yellow]><[speed]>"
