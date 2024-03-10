@@ -120,6 +120,7 @@ wireless_repeater_block:
         - quartz|iron_ingot|quartz
         - iron_ingot|repeater|iron_ingot
         - quartz|iron_ingot|quartz
+
 wireless_redstone_display_block:
   type: entity
   debug: false
