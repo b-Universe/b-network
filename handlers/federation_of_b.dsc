@@ -1,12 +1,4 @@
-#<location[-851,0,-512,home_the_end].to_cuboid[-451,255,-112,home_the_end]> as:
-biome_mine_rules:
-  type: world
-  debug: false
-  events:
-    on monster spawns in:biome_mine:
-      - determine cancelled
-
-biome_mine_rules_testing:
+galactic_federation_of_b_rules:
   type: world
   debug: false
   data:
@@ -18,15 +10,20 @@ biome_mine_rules_testing:
       - blast_furnace
       - smoker
   events:
-    on player damages player in:biome_mine:
+    on monster|phantom|magma_cube|shulker spawns in:galactic_federation_of_b:
+      - if <cuboid[home_the_end,-4800,345,1703,-4826,332,1675].contains[<context.location>]>:
+        - stop if:<context.entity.entity_type.advanced_matches[zombie|skeleton|shulker]>
       - determine cancelled
 
-    on player places block in:biome_mine:
+    on player breaks block in:galactic_federation_of_b:
       - stop if:<server.flag[behr.uuids].contains[<player.uuid>]>
       - define whitelist <script.data_key[data.whitelisted_blocks]>
       - determine cancelled if:!<context.material.advanced_matches[<[whitelist]>]>
 
-    on player breaks block in:biome_mine:
+    on player places block in:galactic_federation_of_b:
       - stop if:<server.flag[behr.uuids].contains[<player.uuid>]>
       - define whitelist <script.data_key[data.whitelisted_blocks]>
       - determine cancelled if:!<context.material.advanced_matches[<[whitelist]>]>
+
+    on player changes farmland into dirt in:galactic_federation_of_b:
+      - determine cancelled
