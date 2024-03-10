@@ -27,6 +27,10 @@ recipe_list:
     - denizen:shaped_gold_spelunker_helmet_1
     - denizen:shaped_diamond_spelunker_helmet_1
     - denizen:shaped_redstone_crystal_1
+    - denizen:shaped_attuned_lever_1
+    - denizen:shaped_attuned_lever_2
+    - denizen:shaped_attuned_observer_1
+    - denizen:shaped_attuned_observer_2
     - denizen:shaped_wireless_transmitter_block_1
     - denizen:shaped_wireless_transmitter_block_2
     - denizen:shaped_wireless_receiver_block_1
