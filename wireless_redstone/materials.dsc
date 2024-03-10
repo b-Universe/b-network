@@ -393,35 +393,35 @@ wireless_complete_button:
   type: item
   debug: false
   material: player_head
-  display name: set
+  display name: <&color[<proc[prgb]>]>Set Frequency
   mechanisms:
     custom_model_data: 1053
 wireless_up_1_button:
   type: item
   debug: false
   material: player_head
-  display name: plus one
+  display name: <&color[<proc[prgb]>]>Increase Frequency +1
   mechanisms:
     custom_model_data: 1053
 wireless_down_1_button:
   type: item
   debug: false
   material: player_head
-  display name: minus one
+  display name: <&color[<proc[prgb]>]>Decrease Frequency +1
   mechanisms:
     custom_model_data: 1053
 wireless_up_10_button:
   type: item
   debug: false
   material: player_head
-  display name: plus ten
+  display name: <&color[<proc[prgb]>]>Increase Frequency +10
   mechanisms:
     custom_model_data: 1053
 wireless_down_10_button:
   type: item
   debug: false
   material: player_head
-  display name: minus ten
+  display name: <&color[<proc[prgb]>]>Decrease Frequency +10
   mechanisms:
     custom_model_data: 1053
 
@@ -440,14 +440,16 @@ wireless_configuration_gui:
   debug: false
   inventory: chest
   gui: true
-  size: 18
+  size: 27
   title: <script.parsed_key[data.title].unseparated>
   data:
     title:
-      - <proc[negative_spacing].context[8]>
-      - <&f><&chr[E001].font[wireless_redstone]>
-      - <proc[negative_spacing].context[168]>
-      - <&chr[E002].font[wireless_redstone]><&font[minecraft_6]><&sp.repeat[3]>Frequency<&co><&sp>
+      - <proc[bbackground].context[27|e005]>
+      - <proc[positive_spacing].context[48]>
+      - <&chr[E001].font[gui_sprites]>
+      - <proc[negative_spacing].context[50]>
+      - <&color[<proc[prgb]>]><element[Frequency<&co><&sp>].color[<proc[prgb]>].font[minecraft_15.5]>
+      - <&font[minecraft_15.5]>
   definitions:
     1: wireless_up_1_button
     2: wireless_up_10_button
@@ -455,5 +457,6 @@ wireless_configuration_gui:
     3: wireless_down_1_button
     4: wireless_down_10_button
   slots:
+    - [] [] [] [] [] [] [] [] []
     - [] [] [] [] [] [] [] [] []
     - [] [] [4] [3] [c] [1] [2] [] []
