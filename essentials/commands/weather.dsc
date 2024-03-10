@@ -141,7 +141,7 @@ weather_gui_handler:
           - if <server.has_flag[behr.essentials.weather.world.<[world]>.weather]> && <list[stormy|storm].contains[<server.flag[behr.essentials.weather.world.<[world]>.weather]>]>:
             - narrate "<&[red]>Weather for <&[yellow]><[world]> <&[red]>is already set to <&[yellow]><[weather]>"
           - else:
-            - narrate "<&[green]> Weather for <&[yellow]><[world]> <&[green]>set to <&[yellow]><[weather]>"
+            - narrate "<&[green]>Weather for <&[yellow]><[world]> <&[green]>set to <&[yellow]><[weather]>"
 
           - if <server.has_flag[behr.essentials.weather.world.<[world]>.lock]>:
             - weather storm reset:1d
@@ -154,7 +154,7 @@ weather_gui_handler:
           - if <server.has_flag[behr.essentials.weather.world.<[world]>.weather]> && <list[sunny|clear].contains[<server.flag[behr.essentials.weather.world.<[world]>.weather]>]>:
             - narrate "<&[red]>Weather for <&[yellow]><[world]> <&[red]>is already set to <&[yellow]><[weather]>"
           - else:
-            - narrate "<&[green]> Weather for <&[yellow]><[world]> <&[green]>set to <&[yellow]><[weather]>"
+            - narrate "<&[green]>Weather for <&[yellow]><[world]> <&[green]>set to <&[yellow]><[weather]>"
 
           - if <server.has_flag[behr.essentials.weather.world.<[world]>.lock]>:
             - weather sunny reset:1d
@@ -167,7 +167,7 @@ weather_gui_handler:
           - if <server.has_flag[behr.essentials.weather.world.<[world]>.weather]> && <server.flag[behr.essentials.weather.world.<[world]>.weather]> == thunder:
             - narrate "<&[red]>Weather for <&[yellow]><[world]> <&[red]>is already set to <&[yellow]><[weather]>"
           - else:
-            - narrate "<&[green]> Weather for <&[yellow]><[world]> <&[green]>set to <&[yellow]>thunder"
+            - narrate "<&[green]>Weather for <&[yellow]><[world]> <&[green]>set to <&[yellow]>thunder"
 
           - if <server.has_flag[behr.essentials.weather.world.<[world]>.lock]>:
             - weather <[weather]> reset:1d
