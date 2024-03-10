@@ -18,6 +18,7 @@ player_leave_handler:
 
 player_quit_discord_announcement_task:
   type: task
+  debug: false
   definitions: time
   script:
     - stop if:<player.has_flag[behr.essentials.ratelimit.discord_leave_announcement]>

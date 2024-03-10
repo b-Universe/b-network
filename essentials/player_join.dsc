@@ -46,6 +46,7 @@ player_join_handler:
 
 player_join_items_and_stuff:
   type: task
+  debug: false
   definitions: returning_player
   script:
     - if <player.health> != 40:
@@ -87,6 +88,7 @@ player_join_items_and_stuff:
 
 player_join_announcement_task:
   type: task
+  debug: false
   definitions: returning_player
   script:
     # ██ [ let everyone know they joined, if they aren't constantly joining ] ██:
@@ -105,6 +107,7 @@ player_join_announcement_task:
 
 player_join_discord_announcement_task:
   type: task
+  debug: false
   definitions: returning_player|time
   script:
     # ██ [ let everyone know they joined, if they aren't constantly joining ] ██:
