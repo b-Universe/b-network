@@ -24,6 +24,8 @@ extra_recipe_handler:
 recipe_list:
   type: data
   all:
+    - denizen:shaped_gold_spelunker_helmet_1
+    - denizen:shaped_diamond_spelunker_helmet_1
     - denizen:shaped_redstone_crystal_1
     - denizen:shaped_attuned_lever_1
     - denizen:shaped_attuned_lever_2
