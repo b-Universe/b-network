@@ -88,27 +88,3 @@ hotdog:
     1:
       type: shapeless
       input: bread|cooked_mutton
-
-uncooked_fries:
-  type: item
-  debug: false
-  material: cooked_chicken
-  display name: <&f>Uncooked Fries
-  mechanisms:
-    custom_model_data: 1007
-  recipes:
-    1:
-      type: shapeless
-      input: potato
-
-fries:
-  type: item
-  debug: false
-  material: cooked_chicken
-  display name: <&f>Fries
-  mechanisms:
-    custom_model_data: 1008
-  recipes:
-    1:
-      type: shapeless
-      input: baked_potato
