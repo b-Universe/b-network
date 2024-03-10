@@ -49,6 +49,7 @@ wireless_redstone_handler:
       - flag <player> behr.essentials.wireless_redstone_gui.frequency:!
 
     on player clicks wireless_complete_button in inventory:
+      - playsound <player> entity_player_levelup pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3 if:<player.has_flag[behr.essentials.settings.playsounds]>
       - inventory close
 
     on player clicks wireless_up_1_button in inventory:
@@ -56,24 +57,28 @@ wireless_redstone_handler:
       - flag <player> behr.essentials.wireless_redstone_gui.frequency:++
       - adjust <context.inventory> title:<script[wireless_configuration_gui].parsed_key[data.title].unseparated><player.flag[behr.essentials.wireless_redstone_gui.frequency].if_null[0]>
       - inventory open d:<context.inventory>
+      - playsound <player> entity_player_levelup pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3 if:<player.has_flag[behr.essentials.settings.playsounds]>
 
     on player clicks wireless_down_1_button in inventory:
       - determine passively cancelled
       - flag <player> behr.essentials.wireless_redstone_gui.frequency:--
       - adjust <context.inventory> title:<script[wireless_configuration_gui].parsed_key[data.title].unseparated><player.flag[behr.essentials.wireless_redstone_gui.frequency].if_null[0]>
       - inventory open d:<context.inventory>
+      - playsound <player> entity_player_levelup pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3 if:<player.has_flag[behr.essentials.settings.playsounds]>
 
     on player clicks wireless_up_10_button in inventory:
       - determine passively cancelled
       - flag <player> behr.essentials.wireless_redstone_gui.frequency:+:10
       - adjust <context.inventory> title:<script[wireless_configuration_gui].parsed_key[data.title].unseparated><player.flag[behr.essentials.wireless_redstone_gui.frequency].if_null[0]>
       - inventory open d:<context.inventory>
+      - playsound <player> entity_player_levelup pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3 if:<player.has_flag[behr.essentials.settings.playsounds]>
 
     on player clicks wireless_down_10_button in inventory:
       - determine passively cancelled
       - flag <player> behr.essentials.wireless_redstone_gui.frequency:-:10
       - adjust <context.inventory> title:<script[wireless_configuration_gui].parsed_key[data.title].unseparated><player.flag[behr.essentials.wireless_redstone_gui.frequency].if_null[0]>
       - inventory open d:<context.inventory>
+      - playsound <player> entity_player_levelup pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3 if:<player.has_flag[behr.essentials.settings.playsounds]>
 
 
 wireless_complete_button:
