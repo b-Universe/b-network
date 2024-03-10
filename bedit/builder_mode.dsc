@@ -76,6 +76,7 @@ builder_inventory_task:
 
 book_o_builders:
   type: item
+  debug: false
   material: book
   display name: <&b>Book o' Builders
   lore:
