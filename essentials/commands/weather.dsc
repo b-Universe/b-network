@@ -25,6 +25,7 @@ weather_command:
           text: <&c>Invalid usage - <&6>/<&e>weather <&6><&lt><&e>weather<&6><&gt>
           hover: <&a>Click to insert<&co><n><&6>/<&e>weather<n><&c>You typed<&co> <underline><context.alias> <context.raw_args>
       - narrate <[message.text].on_hover[<[message.hover]>].on_click[/weather ].type[suggest_command]>
+      - playsound <player> sound:block_fire_extinguish pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3 if:<player.has_flag[behr.essentials.settings.playsounds]>
       - stop
 
     # ██ [ check if specifying an invalid weather ] ██:
@@ -33,6 +34,7 @@ weather_command:
           text: <&c>Invalid usage - <&e>the only valid weathers are clear or sunny, storm, and thunder
           hover: <&a>Click to insert<&co><n><&6>/<&e>weather<n><&c>You typed<&co> <underline><context.alias> <context.raw_args>
       - narrate <[message.text].on_hover[<[message.hover]>].on_click[/weather ].type[suggest_command]>
+      - playsound <player> sound:block_fire_extinguish pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3 if:<player.has_flag[behr.essentials.settings.playsounds]>
       - stop
 
     # ██ [ change the weather                     ] ██:

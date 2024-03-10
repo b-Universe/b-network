@@ -3,6 +3,7 @@ command_error:
   debug: false
   definitions: reason
   script:
+    - playsound <player> sound:block_fire_extinguish pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3 if:<player.has_flag[behr.essentials.settings.playsounds]>
     # ██ [ Check if being ran as the server ] ██:
     - if <context.source_type.if_null[invalid]> != player || <context.server.if_null[false]>:
       - announce to_console "<&c>Command error <&b>| <&6><underline>/<&e><context.alias> <context.raw_args> <&b>| <&c><[reason]>"
@@ -18,6 +19,7 @@ command_syntax_error:
   type: task
   debug: false
   script:
+    - playsound <player> sound:block_fire_extinguish pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3 if:<player.has_flag[behr.essentials.settings.playsounds]>
     - definemap message:
         text: <&c>Invalid syntax - <context.alias.proc[command_usage].proc[command_syntax_format]>
         hover: <&a>Click to insert<&co><n><&6>/<&e><context.alias><n><&c>You typed<&co> <underline>/<context.alias> <context.raw_args>
@@ -28,6 +30,7 @@ command_permission_error:
   type: task
   debug: false
   script:
+    - playsound <player> sound:block_fire_extinguish pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3 if:<player.has_flag[behr.essentials.settings.playsounds]>
     - definemap message:
         text: <&c><[reason]>
         hover: <&c>You don<&sq>t have permission to run that command
