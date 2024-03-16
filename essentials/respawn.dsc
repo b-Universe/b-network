@@ -8,7 +8,7 @@ respawn_handler:
       - determine <[drops]>
 
     on player respawns elsewhere:
-      #- determine passively <server.flag[behr.essentials.spawn_location]>
+      - determine passively <server.flag[behr.essentials.respawn_location]>
 
       #- give respira_space_package if:!<player.has_flag[package_ratelimit]>
       - flag player package_ratelimit expire:1h
