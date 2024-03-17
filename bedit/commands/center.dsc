@@ -6,6 +6,11 @@ bedit_center_command:
   usage: //center
   description: Changes the material at the center of the selection
   script:
+
+    - if <player.location.is_within[biome_mine]> || <player.location.is_within[galactic_federation_of_b]>:
+      - narrate "<&[red]>This can't be used here"
+      - stop
+
     # % ██ [ Check if a player has a selection they can set ] ██:
     - inject bedit_check_for_selection
 

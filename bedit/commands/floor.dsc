@@ -40,6 +40,10 @@ bedit_floor_command:
     - if <context.args.is_empty>:
       - inject command_syntax_error
 
+    - if <player.location.is_within[biome_mine]> || <player.location.is_within[galactic_federation_of_b]>:
+      - narrate "<&[red]>This can't be used here"
+      - stop
+
     # % ██ [ Check if a player has a selection they can set ] ██:
     - inject bedit_check_for_selection
 

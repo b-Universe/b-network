@@ -65,6 +65,11 @@ pos_task:
       forward: <location[0,0,0].with_pose[<player>].forward_flat>
       back: <location[0,0,0].with_pose[<player>].backward_flat>
   script:
+
+    - if <player.location.is_within[biome_mine]> || <player.location.is_within[galactic_federation_of_b]>:
+      - narrate "<&[red]>This can't be used here"
+      - stop
+
     # % ██ [ define location                       ] ██:
     - choose <context.args.size>:
       # //pos:
