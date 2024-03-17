@@ -21,7 +21,7 @@ resource_command:
     - define url https:api.behr.dev/resource/b.zip
     - define hash <server.flag[behr.essentials.resource.SHA-1]>
     - resourcepack url:<[url]> hash:<[hash]> targets:<[player]>
-    - announce to_console "<&e><player.name> taking pack<&co> <&a><[hash]>"
+    - announce to_console "<&e><player.name> taking pack<&co> <&a><[hash]>" if:<server.has_flag[behr.developmental.debug_mode]>
 
 resource_handler:
   type: world
@@ -38,13 +38,12 @@ resource_handler:
     - define url https://api.behr.dev/resource/b.zip
     - define hash <server.flag[behr.essentials.resource.SHA-1]>
     - resourcepack url:<[url]> hash:<[hash]>
-    - announce to_console "<&e><player.name> taking pack<&co> <&a><[hash]>"
+    - announce to_console "<&e><player.name> taking pack<&co> <&a><[hash]>" if:<server.has_flag[behr.developmental.debug_mode]>
 
 resource_fetch:
   type: task
   debug: false
   script:
     - ~webget https://api.behr.dev/resource/b.zip headers:[User-Agent=b] save:response
-    - inject web_debug.webget_response
     - stop if:<entry[response].failed>
     - flag server behr.essentials.resource.SHA-1:<entry[response].result_binary.hash[SHA-1].to_hex>
