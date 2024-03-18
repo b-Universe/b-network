@@ -42,7 +42,7 @@ hunger_command:
 
   # % ██ [ check food adjustment direction & narrate ] ██
   # % ██ [ satiate hunger                            ] ██
-    - if <[player].food_level> > <[level]>:
+    - if <[player].food_level> < <[level]>:
       - if <[player]> != <player>:
         - narrate "<&[yellow]><[player_name]><&[green]>'s hunger was satiated"
       - narrate targets:<[player]> "<&[green]>Your hunger was satiated"
@@ -55,14 +55,14 @@ hunger_command:
       - stop
 
   # % ██ [ starve the player                         ] ██
-    - else if <[player].food_level> < <[level]>:
+    - else if <[player].food_level> > <[level]>:
       - if <[player]> != <player>:
         - narrate "<&[yellow]><[player].name><&[green]><&sq>s hunger was intensified"
       - narrate targets:<[player]> "<&[red]>Your hunger intensifies"
 
   # % ██ [ adjust the satiation and food level       ] ██
     - adjust <[player]> food_level:<[level]>
-    - feed <[player]> saturation:20
+    - adjust <[player]> saturation:20
 
     - playsound <player> entity_player_levelup pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3 if:<player.has_flag[behr.essentials.settings.playsounds]>
     - repeat 100 as:i:
