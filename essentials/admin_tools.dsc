@@ -3,7 +3,7 @@ prevent_aggro_handler:
   type: world
   debug: false
   events:
-    on monster|slime|magma_cube|shulker targets player flagged:behr.essentials.aggro_disabled:
+    on monster|slime|magma_cube|shulker|phantom targets player flagged:behr.essentials.aggro_disabled:
       - determine cancelled
 
 aggro_command:
