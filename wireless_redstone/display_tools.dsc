@@ -14,7 +14,7 @@ wireless_redstone_activate_transmitter_task:
 
       - playeffect at:<[location].center> effect:REDSTONE offset:0.5 special_data:1|255,0,0 quantity:10
       - playeffect at:<[location].center> effect:electric_spark offset:0.5 quantity:10
-      - playsound at:<[location]> sound:block_amethyst_cluster_place pitch:<util.random.int[7].to[10].div[10]> volume:2
+      - playsound at:<[location]> sound:block_dispenser_dispense pitch:<util.random.int[7].to[10].div[10]> volume:2
 
       - foreach <[receivers].filter[advanced_matches[dispenser]]> as:receiver:
         - flag <[receiver]> behr.essentials.wireless_redstone.ratelimited
@@ -22,7 +22,7 @@ wireless_redstone_activate_transmitter_task:
         - modifyblock <[receiver]> redstone_block
         - playeffect at:<[receiver].center> effect:REDSTONE offset:0.5 special_data:1|255,0,0 quantity:10
         - playeffect at:<[receiver].center> effect:electric_spark offset:0.5 quantity:10
-        - playsound at:<[receiver]> sound:block_amethyst_cluster_place pitch:<util.random.int[7].to[10].div[10]> volume:2
+        - playsound at:<[receiver]> sound:block_dispenser_dispense pitch:<util.random.int[7].to[10].div[10]> volume:2
         - flag <[receiver]> behr.essentials.wireless_redstone.ratelimited:!
 
     - else:
@@ -52,7 +52,7 @@ wireless_redstone_deactivate_transmitter_task:
       - adjust <[receiver].flag[behr.essentials.wireless_redstone.entity]> item:wireless_receiver_block[custom_model_data=1004]
       - modifyblock <[receiver]> dispenser
       - playeffect at:<[receiver].center> effect:electric_spark offset:0.5 quantity:10
-      - playsound at:<[receiver]> sound:block_amethyst_cluster_place pitch:<util.random.int[7].to[10].div[10]> volume:2
+      - playsound at:<[receiver]> sound:block_dispenser_dispense pitch:<util.random.int[7].to[10].div[10]> volume:2
       - flag <[receiver]> behr.essentials.wireless_redstone.ratelimited:!
 
 wireless_redstone_refresh_receivers_task:
@@ -88,7 +88,7 @@ wireless_redstone_refresh_receiver_task:
       - modifyblock <[location]> redstone_block
       - playeffect at:<[location].center> effect:REDSTONE offset:0.5 special_data:1|255,0,0 quantity:10
       - playeffect at:<[location].center> effect:electric_spark offset:0.5 quantity:10
-      - playsound at:<[location]> sound:block_amethyst_cluster_place pitch:<util.random.int[7].to[10].div[10]> volume:2
+      - playsound at:<[location]> sound:block_dispenser_dispense pitch:<util.random.int[7].to[10].div[10]> volume:2
       - flag <[location]> behr.essentials.wireless_redstone.ratelimited:!
 
 find_wireless_blocks:
