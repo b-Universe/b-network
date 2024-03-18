@@ -1,4 +1,6 @@
-negative_spacing:
+##IgnoreWarning short_script_name
+##IgnoreWarning non_alphanumeric_script_name
+-sp:
   type: procedure
   debug: false
   definitions: int
@@ -54,7 +56,7 @@ negative_spacing:
 
     - determine <[spacing].unseparated.font[spaces]>
 
-positive_spacing:
+sp:
   type: procedure
   debug: false
   definitions: int

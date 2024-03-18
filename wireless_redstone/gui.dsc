@@ -8,9 +8,9 @@ wireless_configuration_gui:
   data:
     title:
       - <proc[bbackground].context[27|e005]>
-      - <proc[positive_spacing].context[48]>
+      - <proc[sp].context[48]>
       - <&chr[E001].font[gui_sprites]>
-      - <proc[negative_spacing].context[50]>
+      - <proc[-sp].context[50]>
       - <&color[<proc[prgb]>]><element[Frequency<&co><&sp>].color[<proc[prgb]>].font[minecraft_15.5]>
       - <&font[minecraft_15.5]>
   definitions:
@@ -45,7 +45,7 @@ wireless_redstone_handler:
         - ~run wireless_redstone_refresh_receivers_task def:<[location]>|<[new_frequency]>
 
 
-      - actionbar "<&a>Frequency set to <player.flag[behr.essentials.wireless_redstone_gui.frequency].if_null[0]>"
+      - actionbar "<&[green]>Frequency set to <player.flag[behr.essentials.wireless_redstone_gui.frequency].if_null[0]>"
       - flag <player> behr.essentials.wireless_redstone_gui.frequency:!
 
     on player clicks wireless_complete_button in inventory:

@@ -209,4 +209,4 @@ builder_mode_handler:
     #on player clicks inventory_item in inventory:
     #  - if <context.inventory> == <player.open_inventory> && <list[1|2|3|4|5].contains[<context.raw_slot>]>:
     #    - determine cancelled
-#<proc[negative_spacing].context[40].font[utility:spaci].space_separated>
+#<proc[-sp].context[40].font[utility:spaci].space_separated>
