@@ -143,7 +143,7 @@ permission_handler:
       - template
       - thaw
       - thru
-      - time
+      #- time
       - timings
       - title
       - toggleeditwand
@@ -286,7 +286,7 @@ permission_handler:
       - /snow
       - /solve
       - /sphere
-      - /stack
+      #- /stack
       - /thaw
       - /timeout
       - /walls
