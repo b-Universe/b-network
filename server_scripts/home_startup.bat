@@ -39,6 +39,12 @@ for %%f in (%folders%) do (
 )
 echo [92m[SUCCESS][0m Backups complete
 
+:: Archive the backup folder
+7z a "!backup_folder!.7z" "!backup_folder!\*" && (
+    echo [92m[SUCCESS][0m Archive created successfully: "!backup_folder!.7z"
+) || (
+    echo [91m[ERROR][0m Failed to create archive: "!backup_folder!.7z"
+)
 
 :: Start Minecraft server
 java -Xms12G -Xmx12G -jar paper.jar -nogui
