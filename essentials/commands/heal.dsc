@@ -19,6 +19,8 @@ heal_command:
 
     - heal <[player]>
     - adjust <[player]> food_level:20
+    - foreach blindness|confusion|darkness|poison|slow|slow_digging|weakness|wither as:effect:
+      - cast <[effect]> remove
     - if <[player]> != <player>:
       - narrate "<&[yellow]><[player_name]> <&[green]>was healed"
     - narrate targets:<[player]> "<&[green]>You were healed"
