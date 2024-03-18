@@ -245,7 +245,7 @@ physics_device:
   type: item
   debug: false
   material: crossbow
-  display name: <&f>Physics Device
+  display name: <&[fancy_title]>bPhysics ● Master Building Tool
   lore:
     - <&e>Hold <&f>an item in offhand and
     - <&e>Right-Click <&f>to <&b>load <&f>device

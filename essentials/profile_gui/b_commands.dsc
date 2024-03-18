@@ -42,7 +42,7 @@ b_commands_menu:
     title:
       - <proc[bbackground].context[36|e003]>
       - <&color[<proc[prgb]>]>
-      - <proc[positive_spacing].context[32]>
+      - <proc[sp].context[32]>
       - <element[ Commands].color[<proc[argb]>].font[minecraft_8.5]>
   size: 36
   gui: true
@@ -65,24 +65,3 @@ b_commands_button:
   material: player_head
   mechanisms:
     custom_model_data: 1053
-
-settings_commands_playsound:
-  type: item
-  debug: false
-  material: mojang_banner_pattern
-  display name: <&color[<proc[prgb]>]>Command and Menu Sounds
-  lore:
-    - <&2><strikethrough><proc[positive_spacing].context[53]><&2><&lc> <&a>Enabled <&2><&rc><strikethrough><proc[positive_spacing].context[53]>
-    - <&color[<proc[argb]>]>Changes whether or not you
-    - <&color[<proc[argb]>]>hear command and menu sounds
-    - <&6>*<&8>Excludes bEdit
-    - <&2><strikethrough><proc[positive_spacing].context[162]>
-  data:
-    disabled_lore:
-      - <&4><strikethrough><bold><proc[positive_spacing].context[48]><&4><bold><&lc> <&c>Disabled <&4><bold><&rc><bold><strikethrough><proc[positive_spacing].context[49]>
-      - <&color[<proc[argb]>]>Changes whether or not you
-      - <&color[<proc[argb]>]>hear command and menu sounds
-      - <&6>*<&8>Excludes bEdit
-      - <&4><strikethrough><bold><proc[positive_spacing].context[160]>
-  mechanisms:
-    hides: all

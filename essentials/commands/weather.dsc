@@ -48,7 +48,7 @@ weather_menu_gui:
   data:
     title:
       - <proc[bbackground].context[27|e006]>
-      - <proc[positive_spacing].context[50]>
+      - <proc[sp].context[50]>
       - <element[<player.weather.if_null[Sunny]>].color[<proc[prgb]>].font[minecraft_15.5]>
   definitions:
     clear: weather_clear_button

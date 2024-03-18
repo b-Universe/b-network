@@ -8,11 +8,12 @@ profile_main_menu:
     title:
       - <proc[bbackground].context[36|e001]>
       - <&color[<proc[prgb]>]><element[Profile].color[<proc[argb]>].font[minecraft_8.5]>
-      - <proc[negative_spacing].context[16]>
+      - <proc[-sp].context[16]>
       #- <element[Cheesebehrgeur].color_gradient[from=#FF0000;to=#0000FF;style=hsb].font[minecraft_18]>
       - <element[<player.name>].font[minecraft_18]>
-      - <proc[negative_spacing].context[<player.name.text_width>]>
-      - <element[@Hydra Melody].font[minecraft_27]>
+      - <proc[-sp].context[<player.name.text_width>]>
+      #- <element[@Hydra Melody].font[minecraft_27]>
+      - <element[No Discord].font[minecraft_27]>
     intro_lore:
       1: <&color[<proc[prgb]>]><player.name><&color[<proc[argb]>]><&co> Hey you, it's me, you!~
       2:
@@ -31,7 +32,7 @@ profile_main_menu:
     - define items <[items].include_single[<item[profile_button].with[skull_skin=<player.skull_skin>;display=<&color[<proc[argb]>]>Profile]>]>
     - define items <[items].include[<item[player_head].with[custom_model_data=1053;display=<&color[<proc[argb]>]>Profile].repeat_as_list[2]>]>
     - define items <[items].include_single[<item[color_menu_button].with[display=<&color[<proc[argb]>]>Color Settings]>]>
-    - define items <[items].include_single[<item[b_commands_button].with[display=<&color[<proc[argb]>]>B Command Settings]>]>
+    - define items <[items].include_single[<item[b_commands_settings_button].with[display=<&color[<proc[argb]>]>B Command Settings]>]>
     - define items <[items].include_single[<item[profile_face_angled].with[skull_skin=<player.skull_skin>;display=<[display]>;lore=<[lore]>]>]>
     - define items <[items].include_single[<item[profile_body_suited].with[display=<[display]>;lore=<[lore]>]>]>
     - define equipment_map <player.equipment_map>

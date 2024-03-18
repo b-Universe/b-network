@@ -9,10 +9,12 @@ server_handler:
       - discordconnect id:b token:<secret[b]>
 
     on server list ping:
-      - define text <script.data_key[data.splashes].random>
+      - define text <script.parsed_key[data.splashes].random>
       - define text_length <[text].length>
       - define padding <element[ ★ ].repeat[4]>
       - define motd <[padding]><[text]><[padding]>
+      #- determine passively ICON:https<&co>//api.behr.dev//images/st_patricks_day/<util.random.int[1].to[11]>.png
+      - determine passively icon:icons/st_patricks_day/<util.random.int[1].to[11]>.png
       - determine <[motd].color_gradient[from=#0000FF;to=#FF0000;style=hsb]>
 
     on proxy server list ping:

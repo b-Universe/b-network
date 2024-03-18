@@ -14,10 +14,10 @@ gui_settings_menu_handler:
         - define i 25
       - choose <context.slot>:
         - case 32:
-          - flag player behr.essentials.settings.gui.pattern:<player.flag[behr.essentials.settings.gui.pattern].add[1].mod[24]>
+          - flag player behr.essentials.settings.gui.pattern:<player.flag[behr.essentials.settings.gui.pattern].add[1].mod[24].if_null[1]>
 
         - case 35:
-          - if <player.flag[behr.essentials.settings.gui.pattern].sub[1]> < 0:
+          - if <player.flag[behr.essentials.settings.gui.pattern].sub[1].if_null[1]> < 0:
             - define b 23
           - else:
             - define b <player.flag[behr.essentials.settings.gui.pattern].sub[1]>
@@ -78,11 +78,11 @@ gui_settings_menu:
     title:
       - <proc[bbackground].context[36|e002]>
       - <&color[<proc[prgb]>]>
-      - <proc[positive_spacing].context[17]>
+      - <proc[sp].context[17]>
       - <element[Colors].color[<proc[argb]>].font[minecraft_8.5]>
-      - <proc[positive_spacing].context[28]>
+      - <proc[sp].context[28]>
       - <element[Main Text].color[<proc[prgb]>].font[minecraft_18]>
-      - <proc[negative_spacing].context[45]>
+      - <proc[-sp].context[45]>
       - <element[Accent Text].color[<proc[argb]>].font[minecraft_26]>
   size: 36
   gui: true
@@ -93,7 +93,7 @@ gui_settings_menu:
     - define items <list>
     - define items <[items].include_single[<item[profile_button].with[skull_skin=<player.skull_skin>;display=<&color[<proc[argb]>]>Profile]>]>
     - define items <[items].include[<item[color_menu_button].with[display=<&color[<proc[argb]>]>Color Settings].repeat_as_list[3]>]>
-    - define items <[items].include_single[<item[b_commands_button].with[display=<&color[<proc[argb]>]>B Command Settings]>]>
+    - define items <[items].include_single[<item[b_commands_settings_button].with[display=<&color[<proc[argb]>]>B Command Settings]>]>
 
     - foreach up|active|down as:button:
       - define items <[items].include_single[gui_settings_menu_button_red_<[button]>]>

@@ -20,7 +20,7 @@ flight_handler:
       - adjust <player> is_using_riptide:true
       - actionbar "<&color[<proc[argb]>]>Flight charged!"
       - repeat 10 as:i:
-        - if <player.is_on_ground> || !<player.is_truthy>:
+        - if !<player.is_truthy> || <player.is_on_ground>:
           - adjust <player> is_using_riptide:false
           - stop
         - if <[i].mod[10]> == 0:

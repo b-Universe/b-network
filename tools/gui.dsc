@@ -3,17 +3,17 @@ bbackground:
   debug: false
   data:
     lines:
-      - <proc[negative_spacing].context[8]>
+      - <proc[-sp].context[8]>
       - <&color[<proc[prgb]>]>
       - <&chr[<[character_index].number_to_hex>].font[bgui]>
-      - <proc[negative_spacing].context[176]>
+      - <proc[-sp].context[176]>
 
   definitions: size|menu_character
   script:
     - define base_character 57344
     - define character_index <[size].div[9].sub[1].mul[50].add[57344].add[<player.flag[behr.essentials.settings.gui.pattern].if_null[1]>]>
     - define lines <script.parsed_key[data.lines]>
-    - define lines <[lines].include_single[<&f><&chr[<[menu_character]>].font[bgui]><proc[negative_spacing].context[152]>]>
+    - define lines <[lines].include_single[<&f><&chr[<[menu_character]>].font[bgui]><proc[-sp].context[152]>]>
     - determine <[lines].unseparated>
 
 prgb:

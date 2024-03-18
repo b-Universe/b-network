@@ -8,9 +8,9 @@ debugging_command:
     - /debug
   tab complete:
     - if <server.has_flag[behr.developmental.debug_mode]>:
-      - actionbar "<&e>Debug mode is currently <&a>enabled"
+      - actionbar "<&[yellow]>Debug mode is currently <&[green]>enabled"
     - else:
-      - actionbar "<&e>Debug mode is currently <&c>disabled"
+      - actionbar "<&[yellow]>Debug mode is currently <&[red]>disabled"
   script:
   # % ██ [ check if typing arguments                ] ██:
     - if !<context.args.is_empty>:
@@ -19,8 +19,8 @@ debugging_command:
   # % ██ [ change the server's debug mode           ] ██:
     - if <server.has_flag[behr.developmental.debug_mode]>:
       - flag server behr.developmental.debug_mode:!
-      - narrate "<&c>Debug mode disabled"
+      - narrate "<&[red]>Debug mode disabled"
 
     - else:
       - flag server behr.developmental.debug_mode
-      - narrate "<&a>Debug mode enabled"
+      - narrate "<&[green]>Debug mode enabled"

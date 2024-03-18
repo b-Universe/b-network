@@ -120,5 +120,3 @@ skeleton_scarfed_bottom:
     trim:
       material: diamond
       pattern: custom_armor:skeleton_scarfed
-      
-
