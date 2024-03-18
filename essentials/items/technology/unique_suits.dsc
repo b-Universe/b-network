@@ -69,7 +69,7 @@ toxoclast_exosuit_space_suit_helmet:
   lore:
     - <empty>
     - <&7>Unique to<&co>
-    - <&b>Kadianye
+    - <&b>Aedia
   mechanisms:
     trim:
       material: diamond
@@ -89,7 +89,7 @@ toxoclast_exosuit_space_suit_top:
   lore:
     - <empty>
     - <&7>Unique to<&co>
-    - <&b>Kadianye
+    - <&b>Aedia
   mechanisms:
     trim:
       material: diamond
@@ -109,7 +109,7 @@ toxoclast_exosuit_space_suit_bottom:
   lore:
     - <empty>
     - <&7>Unique to<&co>
-    - <&b>Kadianye
+    - <&b>Aedia
   mechanisms:
     trim:
       material: diamond
