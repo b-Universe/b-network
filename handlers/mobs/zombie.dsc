@@ -95,28 +95,3 @@ zombie_dress_bottom:
     trim:
       material: diamond
       pattern: custom_armor:zombie_dress
-
-skeleton_scarfed_helmet:
-  type: item
-  debug: false
-  material: player_head
-  mechanisms:
-    skull_skin: 7c04d663-bf12-4fe8-b28c-7d86e8dd8256|ewogICJ0aW1lc3RhbXAiIDogMTcxMDY3NTAyMTA2NSwKICAicHJvZmlsZUlkIiA6ICIzZmE5ODRmZDI2NGY0MjU3ODU4ODY3YjM5MzgxZjU0NiIsCiAgInByb2ZpbGVOYW1lIiA6ICJZVFJpbWFudGFzIiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlL2JiNGY5YmQzOGIxNzdkYjkxZGE5NDYzMWUzNDhjYWFiOTc4NTNhMjU4MTY2Y2Q3MDg2NzgxZTViZDE1ZGMxODIiCiAgICB9CiAgfQp9|
-
-skeleton_scarfed_top:
-  type: item
-  debug: false
-  material: chainmail_chestplate
-  mechanisms:
-    trim:
-      material: diamond
-      pattern: custom_armor:skeleton_scarfed
-
-skeleton_scarfed_bottom:
-  type: item
-  debug: false
-  material: chainmail_boots
-  mechanisms:
-    trim:
-      material: diamond
-      pattern: custom_armor:skeleton_scarfed

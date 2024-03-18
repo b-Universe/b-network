@@ -302,12 +302,12 @@ physics_device_handler:
       - if <player.item_in_hand.custom_model_data.if_null[0]> == 1000 || !<player.is_sneaking>:
         - define material <player.item_in_offhand.material.name>
         - if <[material]> == air:
-          - stop
+          - determine cancelled
 
         - define custom_model_data <script[physics_device_data].data_key[material.<[material]>].if_null[null]>
         - if !<[custom_model_data].is_truthy>:
           - narrate "<&c>Unsupported item"
-          - stop
+          - determine cancelled
 
         - inventory adjust slot:hand custom_model_data:<[custom_model_data]>
         - inventory adjust slot:hand charged_projectiles:arrow
@@ -347,6 +347,7 @@ physics_device_handler:
 
       # Enter air placing mode:
       - stop if:<player.has_flag[behr.essetials.bedit.air_place_active]>
+      - stop if:!<player.inventory.contains_item[<[material].name>]>
       - while <player.is_sneaking>:
         - define location <player.proc[air_place_range].round_down>
 
@@ -390,6 +391,10 @@ physics_device_handler:
           - while stop if:!<material[<[material]>].exists>
           - run despawn_air_entity def:<[location]>|<[display_entity]>|<[color]>
           - while next
+
+        - else if !<player.inventory.contains_item[<[material].name>]>:
+          - run despawn_air_entity def:<[location]>|<[display_entity]>|<[color]>
+          - while stop
 
         # Check for movement change:
         - define offset <[location].sub[<[display_entity].location>].xyz>
@@ -451,7 +456,7 @@ despawn_air_entity:
     - adjust <[display_entity]> scale:0,0,0
     - adjust <[display_entity]> translation:<[location].sub[<[display_entity].location>].add[0.5,0.5,0.5]>
     - wait 5t
-    - remove <[display_entity]>
+    - remove <[display_entity]> if:<[display_entity].is_truthy>
 
 air_place_range:
   type: procedure

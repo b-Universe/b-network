@@ -174,6 +174,7 @@ permission_data:
           - experience
           - weather
           - time
+          - queue
 
           - ex
           - npc
