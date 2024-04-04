@@ -3,6 +3,7 @@
 permission_handler:
   type: world
   debug: false
+  enabled: true
   events:
     on player receives commands:
       - if <player.name> in <script.list_keys[data.special_people]>:

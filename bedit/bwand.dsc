@@ -84,8 +84,9 @@ bedit_wand_handler:
       - determine passively cancelled
 
       - if <player.location.is_within[biome_mine]> || <player.location.is_within[galactic_federation_of_b]>:
-        - narrate "<&[red]>This can't be used here"
-        - stop
+        - if <player.uuid> !in <server.flag[behr.uuids]>:
+          - narrate "<&[red]>This can't be used here"
+          - stop
 
     # % ██ [ Define side and color                 ] ██:
       - animate <player> animation:start_use_mainhand_item
