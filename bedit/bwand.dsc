@@ -136,9 +136,9 @@ bedit_wand_handler:
       - flag player behr.essentials.bedit.<[click_type]>.quick_release expire:10s
 
       - if <[location].material.is_occluding>:
-        - playeffect at:<[location].center.above[0.1]> effect:end_rod offset:0.50 quantity:10
+        - playeffect effect:end_rod at:<[location].center.above[0.1]> offset:0.50 quantity:10
       - else:
-        - playeffect at:<[location].center.above[0.1]> effect:end_rod offset:0.25 quantity:10
+        - playeffect effect:end_rod at:<[location].center.above[0.1]> offset:0.25 quantity:10
 
     # % ██ [ Manage flag data and display message  ] ██:
       - flag <[location]> behr.essentials.bedit expire:1d

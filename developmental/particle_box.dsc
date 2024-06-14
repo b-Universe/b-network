@@ -322,7 +322,7 @@ particle_box_handler:
         - foreach <[entities].filter[scripts.first.name.equals[player_detector]]> as:entity:
           - flag server particle_boxes.active_detectors.<[entity].uuid>:!
           - flag server particle_boxes.detectors.<[entity].uuid>:!
-          - playeffect at:<[entity].location.above> effect:explosion_normal quantity:5 offset:0.5
+          - playeffect effect:explosion_normal at:<[entity].location.above> quantity:5 offset:0.5
           - playsound <[entity].location> sound:block_fire_extinguish
           - remove <[entity]>
         - wait 5t

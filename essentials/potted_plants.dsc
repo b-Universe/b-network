@@ -10,7 +10,7 @@ essentials:
 
       - if !<[new_potted_material].is_truthy> || <context.location.material.name> == <[new_potted_material]>:
         - determine passively cancelled
-        - playeffect at:<context.location.center> effect:block_dust special_data:<[old_potted_material]> offset:0.25 quantity:10 if:<[old_potted_material].exists>
+        - playeffect effect:block_dust at:<context.location.center> special_data:<[old_potted_material]> offset:0.25 quantity:10 if:<[old_potted_material].exists>
         - repeat 3:
           - playsound <context.location> sound:block_grass_step pitch:2
           - wait 3t
@@ -23,5 +23,5 @@ essentials:
       - else:
         - animate <player> animation:swing_off_hand
         - take slot:offhand quantity:1 if:<player.gamemode.equals[survival]>
-      - playeffect at:<context.location.center> effect:block_dust special_data:<context.location.material.name.after[potted_].as[material]> offset:0.25 quantity:10
+      - playeffect effect:block_dust at:<context.location.center> special_data:<context.location.material.name.after[potted_].as[material]> offset:0.25 quantity:10
       - modifyblock <context.location> <[new_material]>

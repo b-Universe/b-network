@@ -325,7 +325,7 @@ physics_device_handler:
         - ratelimit <player> 1t
         - modifyblock <[location]> <[material]>
         - playsound <[location]> <material[<[material]>].block_sound_data.get[place_sound]>
-        - playeffect at:<[location]> effect:block_crack special_data:<material[<[material]>]>
+        - playeffect effect:block_crack at:<[location]> special_data:<material[<[material]>]>
         #- if <player.has_flag[behr.essentials.air_place_block_entity]>:
         #  - define display_entity <player.flag[behr.essentials.air_place_block_entity]>
         #  - adjust <[display_entity]> material:air
@@ -417,28 +417,28 @@ air_block_particle_task_block:
   script:
     - define location <player.proc[air_place_range]>
     - if <[material].is_block>:
-      - playeffect at:<[location]> effect:redstone special_data:2|<[color].if_null[white]> quantity:10 offset:0.25
-      - playeffect at:<[location]> effect:redstone special_data:2|white quantity:10 offset:0.25
+      - playeffect effect:red_dust at:<[location]> special_data:2|<[color].if_null[white]> quantity:10 offset:0.25
+      - playeffect effect:red_dust at:<[location]> special_data:2|white quantity:10 offset:0.25
       - while <player.has_flag[behr.essetials.bedit.air_place_active]> && <[display_entity].is_truthy>:
         - wait 1t
         - define location <player.proc[air_place_range]>
-        - playeffect at:<[location]> effect:redstone special_data:1|<[color]> offset:0.1 quantity:3
-        - playeffect at:<[location]> effect:electric_spark offset:0.1
-      - playeffect at:<[location]> effect:redstone special_data:2|<[color].if_null[white]> quantity:10 offset:0.25
-      - playeffect at:<[location]> effect:redstone special_data:2|white quantity:10 offset:0.25
+        - playeffect effect:red_dust at:<[location]> special_data:1|<[color]> offset:0.1 quantity:3
+        - playeffect effect:electric_spark at:<[location]> offset:0.1
+      - playeffect effect:red_dust at:<[location]> special_data:2|<[color].if_null[white]> quantity:10 offset:0.25
+      - playeffect effect:red_dust at:<[location]> special_data:2|white quantity:10 offset:0.25
 
     - else if <[material]> matches water_bucket:
-      - playeffect at:<[location]> effect:water_splash quantity:10 offset:0.5
-      - playeffect at:<[location].center> effect:WATER_SPLASH offset:0.2 quantity:10
+      - playeffect effect:water_splash at:<[location]> quantity:10 offset:0.5
+      - playeffect effect:WATER_SPLASH at:<[location].center> offset:0.2 quantity:10
       - while <player.has_flag[behr.essetials.bedit.air_place_active]> && <[display_entity].is_truthy>:
         - wait 1t
         - define location <player.proc[air_place_range]>
-        - playeffect at:<[location]> effect:water_splash offset:0.1 quantity:1
-        - playeffect at:<[location]> effect:bubble_pop quantity:2 data:0.05 offset:0.1
-        - playeffect at:<[location]> effect:electric_spark offset:0.1
-        - playeffect at:<[location].center> effect:bubble_pop quantity:2 data:0.05 offset:0.5
-        - playeffect at:<[location].center> effect:water_splash quantity:3 offset:0.25
-      - playeffect at:<[location].center.above[0.25]> effect:water_splash quantity:10 offset:0.5
+        - playeffect effect:water_splash at:<[location]> offset:0.1 quantity:1
+        - playeffect effect:bubble_pop at:<[location]> quantity:2 data:0.05 offset:0.1
+        - playeffect effect:electric_spark at:<[location]> offset:0.1
+        - playeffect effect:bubble_pop at:<[location].center> quantity:2 data:0.05 offset:0.5
+        - playeffect effect:water_splash at:<[location].center> quantity:3 offset:0.25
+      - playeffect effect:water_splash at:<[location].center.above[0.25]> quantity:10 offset:0.5
 
 despawn_air_entity:
   type: task
@@ -447,8 +447,8 @@ despawn_air_entity:
   script:
     - flag <player> behr.essetials.bedit.air_place_active:!
     - stop if:!<[display_entity].is_truthy>
-    - playeffect at:<[location].center> effect:redstone special_data:2|<[color].if_null[white]> quantity:10 offset:0.25
-    - playeffect at:<[location].center> effect:redstone special_data:2|white quantity:10 offset:0.25
+    - playeffect effect:red_dust at:<[location].center> special_data:2|<[color].if_null[white]> quantity:10 offset:0.25
+    - playeffect effect:red_dust at:<[location].center> special_data:2|white quantity:10 offset:0.25
     #- playsound <[location].center> sound:block_beehive_work pitch:<util.random.decimal[0.7].to[1.3]>
     - playsound <[location]> sound:entity_puffer_fish_blow_out pitch:0.7
 

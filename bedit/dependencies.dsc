@@ -91,9 +91,9 @@ bedit_refresh_selection_corners:
       - remove <player.flag[behr.essentials.bedit.<[corner]>.selection_entity].if_null[null]> if:<player.flag[behr.essentials.bedit.<[corner]>.selection_entity].is_truthy>
 
       - if <[location].material.is_occluding>:
-        - playeffect at:<[location].center.above[0.1]> effect:end_rod offset:0.50 quantity:10
+        - playeffect effect:end_rod at:<[location].center.above[0.1]> offset:0.50 quantity:10
       - else:
-        - playeffect at:<[location].center.above[0.1]> effect:end_rod offset:0.25 quantity:10
+        - playeffect effect:end_rod at:<[location].center.above[0.1]> offset:0.25 quantity:10
 
       - define color <[location].map_color>
       - playsound <player> block_amethyst_cluster_place pitch:<util.random.int[7].to[10].div[10]> volume:2
@@ -148,9 +148,9 @@ bedit_place_block:
         - drop <[old_material].name>
 
     - if <[new_material]> !matches air:
-      - playeffect at:<[location].center> effect:block_dust special_data:<[new_material]> offset:0.25 quantity:50 visibility:100
+      - playeffect effect:block_dust at:<[location].center> special_data:<[new_material]> offset:0.25 quantity:50 visibility:100
     - else:
-      - playeffect at:<[location].center> effect:block_dust special_data:<[old_material]> offset:0.25 quantity:50 visibility:100
+      - playeffect effect:block_dust at:<[location].center> special_data:<[old_material]> offset:0.25 quantity:50 visibility:100
       #- flag <[location]> behr.essentials.bedit.history.<[time]>:<[old_material]> expire:1d
     - if <[location].material.supports[waterlogged]> && <[location].material.waterlogged> && !<[new_material].name.contains_text[waterlogged=]> && <[new_material].supports[waterlogged]>:
       - define new_material <[new_material].with_map[waterlogged=true]>

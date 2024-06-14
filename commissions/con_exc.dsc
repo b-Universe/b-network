@@ -107,7 +107,7 @@ construction_command:
           - drop <[block].material.item> <[block]>
       - modifyblock <[block]> <[material_name]>
       - playsound <[block]> sound:<material[<[material_name]>].block_sound_data.get[place_sound]>
-      - playeffect at:<[block]> effect:block_dust offset:0.25 quantity:5 special_data:<material[<[material_name]>]>
+      - playeffect effect:block_dust at:<[block]> offset:0.25 quantity:5 special_data:<material[<[material_name]>]>
       - wait 1t
 
 construction_materials:

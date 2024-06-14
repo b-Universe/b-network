@@ -12,7 +12,7 @@ space_material_mining_handler:
       - if <context.relative> != <context.location.above> || <context.location.above> !matches air:
         - stop
 
-      - playeffect at:<context.relative.center.below[0.25]> effect:villager_happy quantity:3 offset:0.2,0.1,0.2
+      - playeffect effect:villager_happy at:<context.relative.center.below[0.25]> quantity:3 offset:0.2,0.1,0.2
       - playsound <context.relative> sound:block_grass_place
       - modifyblock <context.location> grass_block
 

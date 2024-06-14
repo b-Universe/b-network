@@ -142,8 +142,8 @@ testing_soundboard:
 
       - wait 4t
       - if <[disc_entity].is_truthy>:
-        - playeffect at:<[location]> effect:smoke quantity:10 offset:0.2
-        - playeffect at:<[location]> effect:cloud quantity:4 offset:0.2
+        - playeffect effect:smoke at:<[location]> quantity:10 offset:0.2
+        - playeffect effect:cloud at:<[location]> quantity:4 offset:0.2
         - playsound <[location]> pitch:1 block_candle_extinguish
         - wait 2t
         - remove <[disc_entity]> if:<[disc_entity].is_truthy>

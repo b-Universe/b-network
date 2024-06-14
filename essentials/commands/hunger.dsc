@@ -69,4 +69,4 @@ hunger_command:
       - playeffect at:<[player].location.add[<location[1,0,0].rotate_around_y[<[i].mul[183].to_radians>]>].above[<[i].div[40]>]> effect:villager_happy offset:0.05
       - if <[i].mod[10].equals[0]>:
         - wait 1t
-        - playeffect at:<[player].location.above> effect:electric_spark offset:0.5 quantity:10
+        - playeffect effect:electric_spark at:<[player].location.above> offset:0.5 quantity:10

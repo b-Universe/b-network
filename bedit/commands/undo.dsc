@@ -49,9 +49,9 @@ bedit_undo_command:
           - drop <[old_material].name>
 
       - if <[data.material]> !matches air:
-        - playeffect at:<[data.location].center> effect:block_dust special_data:<[data.material]> offset:0.25 quantity:50 visibility:100
+        - playeffect effect:block_dust at:<[data.location].center> special_data:<[data.material]> offset:0.25 quantity:50 visibility:100
       - else:
-        - playeffect at:<[data.location].center> effect:block_dust special_data:<[old_material]> offset:0.25 quantity:50 visibility:100
+        - playeffect effect:block_dust at:<[data.location].center> special_data:<[old_material]> offset:0.25 quantity:50 visibility:100
         #- flag <[data.location]> behr.essentials.bedit.history.<[time]>:<[old_material]> expire:1d
       - flag player behr.essentials.bedit.undo_history.<[old_time]>:<-:<map.with[data.location].as[<[data.location]>].with[material].as[<[old_material]>]> expire:4h
       - if <[data.location].material.supports[waterlogged]> && <[data.location].material.waterlogged> && !<[data.material].name.contains_text[waterlogged=]> && <[data.material].supports[waterlogged]>:

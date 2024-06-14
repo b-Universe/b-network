@@ -61,7 +61,7 @@ villager_help_iron_golem_task:
           - heal <[iron_golem]> 10
           - playsound <[iron_golem].location> sound:ENTITY_IRON_GOLEM_REPAIR
           - repeat 3:
-            - playeffect at:<[iron_golem].location.above[1.5]> effect:villager_happy offset:0.3,0.8,0.3 quantity:<element[20].div[<[value]>].round_up>
+            - playeffect effect:villager_happy at:<[iron_golem].location.above[1.5]> offset:0.3,0.8,0.3 quantity:<element[20].div[<[value]>].round_up>
             - wait 3t
 
         - wait 1s
