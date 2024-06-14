@@ -18,7 +18,7 @@ wireless_redstone_material_handler:
       - adjust <[block_entity]> brightness:<map[sky=<[sky_light]>;block=<[block_light]>]>
 
     after time changes:
-    - define wireless_blocks <server.flag[behr.essentials.wireless_redstone.locations].parse[flag[behr.essentials.wireless_redstone.entity]].filter[is_truthy]>
+    - define wireless_blocks <server.flag[behr.essentials.wireless_redstone.locations].filter[chunk.is_loaded].parse[flag[behr.essentials.wireless_redstone.entity]]>
     - foreach <[wireless_blocks]> as:block_entity:
       - if <[loop_index].mod[25]> == 0:
         - wait 1t
@@ -53,8 +53,8 @@ wireless_redstone_material_handler:
           - if !<[transmitters].is_empty>:
             - wait 1t
             - adjust <entry[block].spawned_entity> item:wireless_receiver_block[custom_model_data=1003]
-            - playeffect at:<[location].center> effect:REDSTONE offset:0.5 special_data:1|255,0,0 quantity:10
-            - playeffect at:<[location].center> effect:electric_spark offset:0.5 quantity:10
+            - playeffect effect:red_dust at:<[location].center> offset:0.5 special_data:1|255,0,0 quantity:10
+            - playeffect effect:electric_spark at:<[location].center> offset:0.5 quantity:10
             - playsound at:<[location]> sound:block_amethyst_cluster_place pitch:<util.random.int[7].to[10].div[10]> volume:2
             - modifyblock <[location]> redstone_block
 
