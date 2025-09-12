@@ -2,6 +2,7 @@ spawn_command:
   type: command
   name: spawn
   debug: false
+  enabled: false
   usage: /spawn
   description: Teleports you to the spawn
   script:

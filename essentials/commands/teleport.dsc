@@ -17,6 +17,8 @@ teleport_command:
         - if <context.args.first> in <server.worlds.parse[name]>:
           - define world_name <context.args.first>
           - define location <world[<[world_name]>].spawn_location>
+          - flag <player> behr.essentials.teleport.last_teleport.location:<player.location>
+          - flag <player> behr.essentials.teleport.last_teleport.world_name:<player.location.world.name>
           - teleport <player> <[location]>
           - narrate "<&a>Teleported you to <&e><[world_name]> <&6>(<&e><[location].round.simple.replace_text[,].with[<&6>,<&e> ]><&6>)"
 
@@ -40,7 +42,9 @@ teleport_command:
             - stop
 
           - define location <[player].location>
-          - teleport <player> <[location]>
+          - flag <player> behr.essentials.teleport.last_teleport.location:<player.location>
+          - flag <player> behr.essentials.teleport.last_teleport.world_name:<player.location.world.name>
+          - teleport <player> <[location].find_spawnable_blocks_within[3].last.if_null[<[location]>]>
           - narrate "<&a>Teleported you to <&e><[player_name]> <&6>(<&e><[location].round.simple.replace_text[,].with[<&6>,<&e> ]><&6>)"
 
       # /teleport player world
@@ -63,6 +67,8 @@ teleport_command:
         - if <context.args.last> in <server.worlds.parse[name]>:
           - define world_name <context.args.first>
           - define location <world[<[world_name]>].spawn_location>
+          - flag <[player_one]> behr.essentials.teleport.last_teleport.location:<[player_one].location>
+          - flag <[player_one]> behr.essentials.teleport.last_teleport.world_name:<[player_one].location.world.name>
           - teleport <[player_one]> <[location]>
           - narrate "<&a>Teleported you to <&e><[world_name]> <&6>(<&e><[location].round.simple.replace_text[,].with[<&6>,<&e> ]><&6>)" targets:<[player_one]>
           - if <[player_one]> != <player>:
@@ -88,7 +94,9 @@ teleport_command:
             - stop
 
           - define location <[player_two].location>
-          - teleport <[player_one]> <[location]>
+          - flag <[player_one]> behr.essentials.teleport.last_teleport.location:<[player_one].location>
+          - flag <[player_one]> behr.essentials.teleport.last_teleport.world_name:<[player_one].location.world.name>
+          - teleport <[player_one]> <[location].find_spawnable_blocks_within[3].last.if_null[<[location]>]>
           - narrate "<&a>Teleported you to <&e><[player_two_name]> <&6>(<&e><[location].round.simple.replace_text[,].with[<&6>,<&e> ]><&6>)" targets:<[player_one]>
           - if <[player_one]> != <player>:
             - narrate "<&a>Teleported <&e><[player_one_name]> <&a>to <&e><[player_two_name]> <&6>(<&e><[location].round.simple.replace_text[,].with[<&6>,<&e> ]><&6>)"
@@ -112,6 +120,8 @@ teleport_command:
 
         - define world_name <player.world.name>
         - define location <location[<[x]>,<[y]>,<[z]>,<[world_name]>]>
+        - flag <player> behr.essentials.teleport.last_teleport.location:<player.location>
+        - flag <player> behr.essentials.teleport.last_teleport.world_name:<player.location.world.name>
         - teleport <player> <[location]>
         - playsound <player> entity_player_levelup pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3 if:<player.has_flag[behr.essentials.settings.playsounds]>
         - narrate "<&a>Teleported you to <&e><[world_name]> <&6>(<&e><[location].round.simple.replace_text[,].with[<&6>,<&e> ]><&6>)"
@@ -151,6 +161,8 @@ teleport_command:
 
           - define world_name <[player].world.name>
           - define location <location[<[x]>,<[y]>,<[z]>,<[world_name]>]>
+          - flag <[player]> behr.essentials.teleport.last_teleport.location:<[player].location>
+          - flag <[player]> behr.essentials.teleport.last_teleport.world_name:<[player].location.world.name>
           - teleport <[player]> <[location]>
           - if <[player]> != <player>:
             - narrate "<&a>Teleported <&e><[player_name]> <&a>to <&e><[world_name]> <&6>(<&e><[location].round.simple.replace_text[,].with[<&6>,<&e> ]><&6>)"
@@ -173,11 +185,13 @@ teleport_command:
             - inject command_error
 
           - define world_name <context.args.last>
-          - if !<[world_name]> in <server.worlds.parse[name]>::
+          - if !<[world_name]> in <server.worlds.parse[name]>:
             - define reason "<[world_name]> is an invalid world"
             - inject command_error
 
           - define location <location[<[x]>,<[y]>,<[z]>,<[world_name]>]>
+          - flag <player> behr.essentials.teleport.last_teleport.location:<player.location>
+          - flag <player> behr.essentials.teleport.last_teleport.world_name:<player.location.world.name>
           - teleport <player> <[location]>
           - narrate "<&a>Teleported you to <&e><[world_name]> <&6>(<&e><[location].round.simple.replace_text[,].with[<&6>,<&e> ]><&6>)"
 
@@ -214,16 +228,54 @@ teleport_command:
             - inject command_error
 
           - define world_name <context.args.last>
-          - if !<[world_name]> in <server.worlds.parse[name]>::
+          - if !<[world_name]> in <server.worlds.parse[name]>:
             - define reason "<[world_name]> is an invalid world"
             - inject command_error
 
           - define location <location[<[x]>,<[y]>,<[z]>,<[world_name]>]>
+          - flag <[player]> behr.essentials.teleport.last_teleport.location:<[player].location>
+          - flag <[player]> behr.essentials.teleport.last_teleport.world_name:<[player].location.world.name>
           - teleport <[player]> <[location]>
           - playsound <player> entity_player_levelup pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3 if:<player.has_flag[behr.essentials.settings.playsounds]>
           - if <[player]> != <player>:
             - narrate "<&a>Teleported <&e><[player_name]> <&a>to <&e><[world_name]> <&6>(<&e><[location].round.simple.replace_text[,].with[<&6>,<&e> ]><&6>)"
           - narrate "<&a>Teleported you to <&e><[world_name]> <&6>(<&e><[location].round.simple.replace_text[,].with[<&6>,<&e> ]><&6>)" targets:<[player]>
 
+      - case 0:
+        - inventory open destination:teleport_menu
       - default:
         - inject command_syntax_error
+
+teleport_menu:
+  type: inventory
+  debug: false
+  inventory: chest
+  title: <script.parsed_key[data.title].unseparated>
+  data:
+    title:
+      - <proc[bbackground].context[36|e003]>
+      - <&color[<proc[prgb]>]>
+      - <proc[sp].context[32]>
+      - <element[Commands].color[<proc[argb]>].font[minecraft_8.5]>
+  size: 36
+  gui: true
+  definitions:
+    x: air
+  procedural items:
+    - define items <list>
+    - define items <[items].include_single[<item[profile_button].with[skull_skin=<player.skull_skin>;display=<&color[<proc[argb]>]>Profile]>]>
+    - define items <[items].include_single[<item[color_menu_button].with[display=<&color[<proc[argb]>]>Color Settings]>]>
+    - define items <[items].include[<item[b_commands_settings_button].with[display=<&color[<proc[argb]>]>B Command Settings].repeat_as_list[4]>]>
+    - determine <[items]>
+  slots:
+    - [] [] [] [] [] [] [] [] []
+    - [settings_commands_playsound] [] [] [] [] [] [] [] []
+    - [] [] [] [] [] [] [] [] []
+    - [] [] [] [] [] [] [] [] []
+
+#dont_rotate:
+#  type: world
+#  events:
+#    on player right clicks item_frame:
+#      - narrate cancelled
+#      - determine cancelled

@@ -23,6 +23,6 @@ suicide_command:
         - if <player.gamemode> != <[gamemode]>:
           - kill <player>
           - while stop
-        - adjust <player> no_damage_duration:1t
         - hurt 1
+        - adjust <player> no_damage_duration:1t
         - wait 2t

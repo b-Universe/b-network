@@ -21,13 +21,14 @@ heal_command:
     - adjust <[player]> food_level:20
     - foreach blindness|confusion|darkness|poison|slow|slow_digging|weakness|wither as:effect:
       - cast <[effect]> remove
+    - burn <[player]> duration:0
     - if <[player]> != <player>:
       - narrate "<&[yellow]><[player_name]> <&[green]>was healed"
     - narrate targets:<[player]> "<&[green]>You were healed"
 
     - playsound <player> entity_player_levelup pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3 if:<player.has_flag[behr.essentials.settings.playsounds]>
     - repeat 100 as:i:
-      - playeffect at:<[player].location.add[<location[1,0,0].rotate_around_y[<[i].mul[183].to_radians>]>].above[<[i].div[40]>]> effect:villager_happy offset:0.05
+      - playeffect effect:happy_villager at:<[player].location.add[<location[1,0,0].rotate_around_y[<[i].mul[183].to_radians>]>].above[<[i].div[40]>]> offset:0.05
       - if <[i].mod[10].equals[0]>:
         - wait 1t
         - playeffect effect:electric_spark at:<[player].location.above> offset:0.5 quantity:10
