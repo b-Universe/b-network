@@ -19,8 +19,6 @@ restart_command:
 restart_handler:
   type: world
   events:
-    on server prestart:
-      - createworld creative
 
     on system time hourly every:40:
       - run restart_task def:60s|5t
