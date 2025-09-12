@@ -7,10 +7,10 @@ suit_handler:
         - flag <player> behr.essentials.space_suit_ratelimit expire:1t
         - flag player behr.essentials.space_suit_equipped
 
-    on player unequips *_space_suit_*:
-      - if <player.equipment.filter[script.name.contains_text[_space_suit_]].size> < 3:
-        - flag player behr.essentials.space_suit_equipped:!
-        - cast jump remove
+    #on player unequips *_space_suit_*:
+    #  - if <player.equipment.filter[script.name.contains_text[_space_suit_]].size> < 3:
+    #    - flag player behr.essentials.space_suit_equipped:!
+    #    - cast jump remove
 
     after player joins flagged:!behr.essentials.players_online:
       - flag server behr.essentials.players_online
@@ -19,9 +19,15 @@ suit_handler:
       - if <server.online_players.is_empty>:
         - flag server behr.essentials.players_online:!
 
-    after delta time secondly every:7 server_flagged:behr.essentials.players_online:
-      - define players <server.online_players_flagged[behr.essentials.space_suit_equipped]>
-      - cast jump duration:10s amplifier:2 <[players]> hide_particles no_icon no_clear
+    on player damaged by fall:
+      - if <context.damage> < 20:
+        - determine passively cancelled
+      - else:
+        - determine 5
+
+    #after delta time secondly every:7 server_flagged:behr.essentials.players_online:
+    #  - define players <server.online_players_flagged[behr.essentials.space_suit_equipped]>
+    #  - cast jump duration:10s amplifier:2 <[players]> hide_particles no_icon no_clear
 
 respira_space_suit_helmet_WC1:
   type: item

@@ -17,7 +17,7 @@ wireless_redstone_material_handler:
       - define sky_light <[blocks].parse[light.sky].highest.max[<[blocks].parse[light].highest>]>
       - adjust <[block_entity]> brightness:<map[sky=<[sky_light]>;block=<[block_light]>]>
 
-    after time changes:
+    after time changes server_flagged:behr.essentials.wireless_redstone.locations:
     - define wireless_blocks <server.flag[behr.essentials.wireless_redstone.locations].filter[chunk.is_loaded].parse[flag[behr.essentials.wireless_redstone.entity]]>
     - foreach <[wireless_blocks]> as:block_entity:
       - if <[loop_index].mod[25]> == 0:

@@ -413,6 +413,7 @@ physics_device_handler:
 air_block_particle_task_block:
   type: task
   debug: false
+  enabled: false
   definitions: display_entity|material|color
   script:
     - define location <player.proc[air_place_range]>
@@ -443,6 +444,7 @@ air_block_particle_task_block:
 despawn_air_entity:
   type: task
   debug: false
+  enabled: false
   definitions: location|display_entity|color
   script:
     - flag <player> behr.essetials.bedit.air_place_active:!

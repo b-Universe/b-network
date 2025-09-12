@@ -26,6 +26,7 @@ resource_command:
 resource_handler:
   type: world
   debug: false
+  enabled: false
   events:
     after resource pack status:
       - announce to_console "<&e><player.name> <&3>resource pack status<&b><&co> <&a><context.status>"

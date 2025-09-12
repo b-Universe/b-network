@@ -6,6 +6,30 @@ castle_wars_hardcode_definitions:
         flag:
           location: <location[-325,339,250,0,135,home]>
           direction: north_west
+        portal_doors:
+          red:
+            displays:
+              1:
+                location: -312.8,321.6,235.99
+                scale: 5.2,4,1
+              2:
+                location: -311.99,321.6,232.7
+                scale: 1,4,4.2
+
+          green:
+            displays:
+              1:
+                location: -310.99,321.3,217.6
+                scale: 1,4,5
+          blue:
+            displays:
+              2:
+                location: -311.99,321.6,202.99,home
+                scale: 1,4,4.8
+              1:
+                location: -312.8,321.6,203.01,home
+                scale: 5.2,4,1
+
         spawn_doors:
           blue:
             displays:
@@ -36,59 +60,59 @@ castle_wars_hardcode_definitions:
         2: <location[-440,342,135,home]>
 
       blue_floor_4:
-        1: -331,336,244
-        2: -321,343,254
+        1: <location[-331,336,244,home]>
+        2: <location[-321,343,254,home]>
       blue_floor_3:
-        1: -338,331,237
-        2: -319,336,256
+        1: <location[-338,331,237,home]>
+        2: <location[-319,336,256,home]>
       blue_floor_2:
-        1: -344,326,231
-        2: -319,331,256
+        1: <location[-344,326,231,home]>
+        2: <location[-319,331,256,home]>
 
       blue_stairs_3_to_4:
-        1: -333,331,244
-        2: -331,343,252
+        1: <location[-333,331,244,home]>
+        2: <location[-331,343,252,home]>
       blue_stairs_2_to_3:
-        1: -327,327,235
-        2: -320,336,237
+        1: <location[-327,327,235,home]>
+        2: <location[-320,336,237,home]>
       blue_stairs_1_to_2:
-        1: -346,321,237
-        2: -344,331,245
+        1: <location[-346,321,237,home]>
+        2: <location[-344,331,245,home]>
       blue_stairs_1_to_center:
-        1: -349,322,244
-        2: -347,332,252
+        1: <location[-349,322,244,home]>
+        2: <location[-347,332,252,home]>
 
       blue_wooden_doors_north:
         1: <location[-329,323,221,home]>
         2: <location[-330,322,221,home]>
       blue_wooden_doors_north_area:
-        1: -331,322,220
-        2: -327,327,224
+        1: <location[-331,322,220,home]>
+        2: <location[-327,327,224,home]>
       blue_wooden_doors_west:
         1: <location[-354,323,252,home]>
         2: <location[-354,322,253,home]>
       blue_wooden_doors_west_area:
-        1: -355,322,251
-        2: -351,327,255
+        1: <location[-355,322,251,home]>
+        2: <location[-351,327,255,home]>
 
       blue_spawn_door_north:
         1: <location[-330,329,237,home]>
         2: <location[-331,327,237,home]>
       blue_spawn_door_north_area:
-        1: -332,326,235
-        2: -328,331,238
+        1: <location[-332,326,235,home]>
+        2: <location[-328,331,238,home]>
       blue_spawn_door_west:
         1: <location[-338,329,246,home]>
         2: <location[-338,327,247,home]>
       blue_spawn_door_west_area:
-        1: -340,326,245
-        2: -337,331,249
+        1: <location[-340,326,245,home]>
+        2: <location[-337,331,249,home]>
       blue_spawn_door_top:
         1: <location[-325,331,250,home]>
         2: <location[-326,331,249,home]>
       blue_spawn_door_top_area:
-        1: -327,331,248
-        2: -323,334,252
+        1: <location[-327,331,248,home]>
+        2: <location[-323,334,252,home]>
 
 
       red_flag_area:
@@ -96,85 +120,85 @@ castle_wars_hardcode_definitions:
         2: <location[-323,342,252,home]>
 
       red_floor_4:
-        1: -445,336,130
-        2: -435,343,140
+        1: <location[-445,336,130,home]>
+        2: <location[-435,343,140,home]>
       red_floor_3:
-        1: -447,331,128
-        2: -428,336,147
+        1: <location[-447,331,128,home]>
+        2: <location[-428,336,147,home]>
       red_floor_2:
-        1: -447,326,128
-        2: -422,331,153
+        1: <location[-447,326,128,home]>
+        2: <location[-422,331,153,home]>
 
       red_stairs_3_to_4:
-        1: -435,331,132
-        2: -433,343,140
+        1: <location[-435,331,132,home]>
+        2: <location[-433,343,140,home]>
       red_stairs_2_to_3:
-        1: -446,326,147
-        2: -438,336,149
+        1: <location[-446,326,147,home]>
+        2: <location[-438,336,149,home]>
       red_stairs_1_to_2:
-        1: -422,321,139
-        2: -420,331,147
+        1: <location[-422,321,139,home]>
+        2: <location[-420,331,147,home]>
       red_stairs_1_to_center:
-        1: -419,321,132
-        2: -417,332,140
+        1: <location[-419,321,132,home]>
+        2: <location[-417,332,140,home]>
 
       red_wooden_door_south:
         1: <location[-438,323,162,home]>
         2: <location[-437,322,162,home]>
       red_wooden_doors_south_area:
-        1: -439,322,160
-        2: -435,327,164
+        1: <location[-439,322,160,home]>
+        2: <location[-435,327,164,home]>
       red_wooden_door_east:
         1: <location[-413,322,131,home]>
         2: <location[-413,322,130,home]>
       red_wooden_doors_east_area:
-        1: -416,321,128
-        2: -411,327,133
+        1: <location[-416,321,128,home]>
+        2: <location[-411,327,133,home]>
 
       red_spawn_door_south:
         1: <location[-437,329,146,home]>
         2: <location[-436,327,146,home]>
       red_spawn_door_south_area:
-        1: -438,326,146
-        2: -434,331,149
+        1: <location[-438,326,146,home]>
+        2: <location[-434,331,149,home]>
       red_spawn_door_east:
         1: <location[-429,329,137,home]>
         2: <location[-429,327,136,home]>
       red_spawn_door_east_area:
-        1: -429,326,135
-        2: -426,331,139
+        1: <location[-429,326,135,home]>
+        2: <location[-426,331,139,home]>
       red_spawn_door_top:
         1: <location[-443,331,132,home]>
         2: <location[-442,331,133,home]>
       red_spawn_door_top_area:
-        1: -444,331,131
-        2: -440,334,135
+        1: <location[-444,331,131,home]>
+        2: <location[-440,334,135,home]>
 
       red_lobby_portal:
-        1: -312,321,232
-        2: -307,325,237
+        1: <location[-312,321,232,home]>
+        2: <location[-307,325,237,home]>
       green_lobby_portal:
-        1: -312,321,217
-        2: -308,325,223
+        1: <location[-312,321,217,home]>
+        2: <location[-308,325,223,home]>
       blue_lobby_portal:
-        1: -312,321,203
-        2: -307,325,208
+        1: <location[-312,321,203,home]>
+        2: <location[-307,325,208,home]>
 
     noted_multi_cuboids:
       blue_center:
-        1: -355,326,227
-        2: -349,322,251
-        3: -359,326,216
-        4: -348,332,227
-        5: -348,326,220
-        6: -331,332,226
+        1: <location[-355,326,227,home]>
+        2: <location[-349,322,251,home]>
+        3: <location[-359,326,216,home]>
+        4: <location[-348,332,227,home]>
+        5: <location[-348,326,220,home]>
+        6: <location[-331,332,226,home]>
       red_center:
-        1: -435,326,158
-        2: -418,332,164
-        3: -417,326,133
-        4: -411,332,157
-        5: -418,326,157
-        6: -407,332,168
+        1: <location[-435,326,158,home]>
+        2: <location[-418,332,164,home]>
+        3: <location[-417,326,133,home]>
+        4: <location[-411,332,157,home]>
+        5: <location[-418,326,157,home]>
+        6: <location[-407,332,168,home]>
 
 
   script:
@@ -185,32 +209,76 @@ castle_wars_hardcode_definitions:
 
     # save the special locations:
     - flag server behr.minigames.castle_wars:<script.parsed_key[data.team]>
-    #- foreach <script.parsed_key[data.noted_locations]> key:name as:object:
-    #  - note <[object].as[location]> as:castle_wars_<[name]>
+    - foreach <script.parsed_key[data.noted_locations]> key:name as:object:
+      - note <[object].as[location]> as:castle_wars_<[name]>
 
     # save the special areas:
     - foreach <script.parsed_key[data.noted_single_cuboids]> key:name as:location:
       - note <[location.1].as[location].to_cuboid[<[location.2].as[location]>]> as:castle_wars_<[name]>
 
     # save the special areas:
-    #- foreach <script.parsed_key[data.noted_multi_cuboids].parsed_key[data.]> key:name as:location:
-    #  - define cuboid <[location.1].as[location].to_cuboid[<[location.2].as[location]>]>
-    #  - repeat <[location].size.div[2].sub[1]> as:loop_index:
-    #    - define sub_cuboid <[location.<[loop_index].mul[2].sub[1]>].as[location].to_cuboid[<[location.<[loop_index].mul[2]>].as[location]>]>
-    #    - define cuboid <[cuboid].add_member[<[sub_cuboid]>]>
-    #  - note <[cuboid]> as:castle_wars_<[name]>
+    - foreach <script.parsed_key[data.noted_multi_cuboids]> key:name as:location:
+      - define cuboid <[location.1].as[location].to_cuboid[<[location.2].as[location]>]>
+      - repeat <[location].size.div[2].sub[1]> as:loop_index:
+        - define sub_cuboid <[location.<[loop_index].mul[2].sub[1]>].as[location].to_cuboid[<[location.<[loop_index].mul[2]>].as[location]>]>
+        - define cuboid <[cuboid].add_member[<[sub_cuboid]>]>
+      - note <[cuboid]> as:castle_wars_<[name]>
 
-cast_test:
+castle_wars_entity_creator:
   type: task
   script:
-    - define location <player.cursor_on.above.with_pose[0,0]>
-    - spawn block_display[glowing=true;material=spruce_door[half=top]] <[location].above> save:door_entity1
-    - spawn block_display[glowing=true;material=spruce_door[half=bottom]] <[location]> save:door_entity2
-    - define door_entity1 <entry[door_entity1].spawned_entity>
-    - define door_entity2 <entry[door_entity2].spawned_entity>
-    - wait 1s
-    - remove <[door_entity1]>
-    - remove <[door_entity2]>
+    - run castle_wars_hardcode_definitions
+
+    # create game time entity
+    - if !<server.has_flag[behr.minigames.castle_wars.text_displays.game_time].is_truthy>:
+      - define location <script[castle_wars_hardcode_definitions].parsed_Key[data.text_displays.game_time]>
+      - spawn castle_wars_game_time_text_display <[location]> save:text_entity
+      - flag server behr.minigames.castle_wars.text_displays.game_time:<entry[text_entity].spawned_entity>
+
+    # create spawn door entities
+    - if !<server.has_flag[behr.minigames.castle_wars.display_entitys.blue_spawn_doors.north].is_truthy>:
+      - define location <script[castle_wars_hardcode_definitions].parsed_Key[data.text_displays.game_time]>
+
+castle_wars_handler:
+  type: world
+  events:
+    after player quits flagged:behr.minigames.castle_wars.team:
+      - define team <player.flag[behr.minigames.castle_wars.team]>
+      - flag <player> behr.minigames.castle_wars.team:!
+      - flag server behr.minigames.castle_wars.<[team]>:<-:<player>
+      - team name:<[team]> remove:<player>
+
+    after player enters *_lobby_portal:
+      - stop
+      - define lobby_color <context.area.note_name.after[castle_wars_].before[_]>
+      - choose <[lobby_color]>:
+        - case red:
+          - flag <player> behr.minigames.castle_wars.team:red
+          - flag server behr.minigames.csatle_wars.red.players:->:<player>
+          - glow <player>
+          - team name:red add:<player>
+
+        - case blue:
+          - flag <player> behr.minigames.castle_wars.team:blue
+          - flag server behr.minigames.csatle_wars.blue.players:->:<player>
+          - glow <player>
+          - team name:blue add:<player>
+
+        - case green:
+          - define red_player_count <server.flag[behr.minigames.castle_wars.red.players].size.if_null[0]>
+          - define blue_player_count <server.flag[behr.minigames.castle_wars.blue.players].size.if_null[0]>
+          - if <[red_player_count]> == <[blue_player_count]>:
+            - define color <list[red|blue].random>
+          - else if <[blue_player_count]> > <[red_player_count]>:
+            - define color red
+          - else:
+            - define color blue
+
+          - flag <player> behr.minigames.castle_wars.team:<[color]>
+          - flag server behr.minigames.csatle_wars.<[color]>.players:->:<player>
+          - team name:<[color]> add:<player>
+
+      - teleport <cuboid[home,-395,303,187,382,306,199].blocks.random.find_spawnable_blocks_within[5].first>
 
     # save the special cuboids
 castle_wars_flag_animation:
@@ -218,6 +286,7 @@ castle_wars_flag_animation:
   debug: false
   definitions: animation|team
   script:
+    #- stop if:!<server.flag[behr.minigames.castle_wars.<[team]>.flag.entity].is_truthy>
     - define location <server.flag[behr.minigames.castle_wars.<[team]>.flag.location]>
     - define center_location <[location].center.below[1.5]>
 
@@ -225,6 +294,8 @@ castle_wars_flag_animation:
       - case return:
         - playsound <[location]> ENTITY_PHANTOM_FLAP volume:2
         - spawn <[team]>_flag_block_display <[location]> save:flag_entity
+        - define flag_entity <entry[flag_entity].spawned_entity>
+        - flag server behr.minigames.castle_wars.<[team]>.flag.entity:<[flag_entity]>
         - wait 3t
         - definemap properties:
             scale: 0.9,0.9,0.9
@@ -235,16 +306,16 @@ castle_wars_flag_animation:
           - define x <[loop_index].div[4].round_up.power[1.1].div[30]>
           - define y <[loop_index].div[30]>
           - define particle_location <[center_location].add[<location[<[x]>,<[y]>,0].rotate_around_y[<[loop_index].to_radians.mul[92]>]>]>
-          - playeffect effect:redstone at:<[particle_location]> special_data:1.4|<[team]> visibility:250 offset:0
+          - playeffect effect:red_dust at:<[particle_location]> special_data:1.4|<[team]> visibility:250 offset:0
           - if <[loop_index].mod[7]> == 0:
-            - playeffect at:<[particle_location]> effect:crit visibility:250 quantity:2 offset:0.3 velocity:0,1,0
-            - playeffect at:<[particle_location]> effect:end_rod visibility:250 quantity:2 offset:0.3 velocity:0,0.1,0
+            - playeffect effect:crit at:<[particle_location]> visibility:250 quantity:2 offset:0.3 velocity:0,1,0
+            - playeffect effect:end_rod at:<[particle_location]> visibility:250 quantity:2 offset:0.3 velocity:0,0.1,0
             - playeffect effect:cloud at:<[center_location].above[2]>  visibility:250 offset:0.2,0.5,0.2
 
             - wait 1t
         - playsound <[location]> ENTITY_PHANTOM_FLAP volume:2
         - wait 2s
-        - remove <entry[flag_entity].spawned_entity>
+        - remove <[flag_entity]>
 
 red_flag_block_display:
   type: entity

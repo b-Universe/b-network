@@ -1,6 +1,7 @@
 fishing_handler:
   type: world
   debug: false
+  enabled: false
   data:
     pufferfish:
       - allah
@@ -112,7 +113,7 @@ fishing_handler:
 
       - playsound <player> entity_player_levelup pitch:<util.random.decimal[0.8].to[1.2]> volume:0.3 if:<player.has_flag[behr.essentials.settings.playsounds]>
       - repeat 100 as:i:
-        - playeffect at:<player.location.add[<location[1,0,0].rotate_around_y[<[i].mul[183].to_radians>]>].above[<[i].div[40]>]> effect:villager_happy offset:0.05
+        - playeffect at:<player.location.add[<location[1,0,0].rotate_around_y[<[i].mul[183].to_radians>]>].above[<[i].div[40]>]> effect:happy_villager offset:0.05
         - if <[i].mod[10].equals[0]>:
           - wait 1t
           - playeffect effect:electric_spark at:<player.location.above> offset:0.5 quantity:10

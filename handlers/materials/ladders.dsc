@@ -1,6 +1,7 @@
 ladder_handler:
   type: world
   debug: false
+  enabled: false
   events:
     on player right clicks block with:ladder:
       - stop if:<context.relative.advanced_matches[ladder]>

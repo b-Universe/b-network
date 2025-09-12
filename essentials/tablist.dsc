@@ -1,6 +1,7 @@
 tablist_handler:
   type: world
   debug: false
+  enabled: false
   data:
     header:
       - <&chr[E001].font[banner]><n><n><n><n><n><n><n><n>
