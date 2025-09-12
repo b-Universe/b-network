@@ -1,6 +1,7 @@
 zombie_handler:
   type: world
   debug: false
+  enabled: false
   events:
     on zombie spawns:
       - define chance <util.random.int[1].to[100]>
