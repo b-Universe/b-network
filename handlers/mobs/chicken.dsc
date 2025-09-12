@@ -1,6 +1,7 @@
 chicken_handler:
   type: world
   debug: false
+  enabled: false
   events:
     on egg despawns:
       - define location <context.location>
