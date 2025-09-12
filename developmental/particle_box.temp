@@ -521,7 +521,7 @@ particle_box_data:
     #drip_water:
     #drip_lava:
     #villager_angry:
-    #villager_happy:
+    #happy_villager:
     #town_aura:
     #note:
     #portal:
