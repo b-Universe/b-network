@@ -52,83 +52,83 @@ add_bell:
         - gold_ingot|gold_ingot|gold_ingot
         - gold_ingot|gold_ingot|gold_ingot
 
-more_redstone_repeaters:
-  type: item
-  debug: false
-  material: repeater
-  no_id: true
-  recipes:
-    1:
-      type: shaped
-      input:
-        - air|air|air
-        - redstone_torch|redstone|redstone_torch
-        - smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite|smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite|smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite
-
-more_redstone_comparators:
-  type: item
-  debug: false
-  material: comparator
-  no_id: true
-  recipes:
-    1:
-      type: shaped
-      input:
-        - air|redstone_torch|air
-        - redstone_torch|quartz|redstone_torch
-        - smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite|smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite|smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite
-
-more_dispensers:
-  type: item
-  debug: false
-  material: dispenser
-  no_id: true
-  recipes:
-    1:
-      type: shaped
-      input:
-        - smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite|smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite|smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite
-        - smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite|bow|smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite
-        - smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite|redstone|smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite
-
-more_droppers:
-  type: item
-  debug: false
-  material: dropper
-  no_id: true
-  recipes:
-    1:
-      type: shaped
-      input:
-        - smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite|smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite|smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite
-        - smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite|air|smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite
-        - smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite|redstone|smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite
-
-more_observers:
-  type: item
-  debug: false
-  material: observer
-  no_id: true
-  recipes:
-    1:
-      type: shaped
-      input:
-        - smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite|smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite|smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite
-        - redstone|redstone|quartz
-        - smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite|smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite|smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite
-
-more_pistons:
-  type: item
-  debug: false
-  material: piston
-  no_id: true
-  recipes:
-    1:
-      type: shaped
-      input:
-        - *_planks|*_planks|*_planks
-        - smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite|iron_ingot|smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite
-        - smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite|redstone|smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite
+#more_redstone_repeaters:
+#  type: item
+#  debug: false
+#  material: repeater
+#  no_id: true
+#  recipes:
+#    1:
+#      type: shaped
+#      input:
+#        - air|air|air
+#        - redstone_torch|redstone|redstone_torch
+#        - smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite|smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite|smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite
+#
+#more_redstone_comparators:
+#  type: item
+#  debug: false
+#  material: comparator
+#  no_id: true
+#  recipes:
+#    1:
+#      type: shaped
+#      input:
+#        - air|redstone_torch|air
+#        - redstone_torch|quartz|redstone_torch
+#        - smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite|smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite|smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite
+#
+#more_dispensers:
+#  type: item
+#  debug: false
+#  material: dispenser
+#  no_id: true
+#  recipes:
+#    1:
+#      type: shaped
+#      input:
+#        - smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite|smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite|smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite
+#        - smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite|bow|smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite
+#        - smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite|redstone|smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite
+#
+#more_droppers:
+#  type: item
+#  debug: false
+#  material: dropper
+#  no_id: true
+#  recipes:
+#    1:
+#      type: shaped
+#      input:
+#        - smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite|smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite|smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite
+#        - smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite|air|smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite
+#        - smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite|redstone|smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite
+#
+#more_observers:
+#  type: item
+#  debug: false
+#  material: observer
+#  no_id: true
+#  recipes:
+#    1:
+#      type: shaped
+#      input:
+#        - smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite|smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite|smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite
+#        - redstone|redstone|quartz
+#        - smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite|smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite|smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite
+#
+#more_pistons:
+#  type: item
+#  debug: false
+#  material: piston
+#  no_id: true
+#  recipes:
+#    1:
+#      type: shaped
+#      input:
+#        - *_planks|*_planks|*_planks
+#        - smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite|iron_ingot|smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite
+#        - smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite|redstone|smooth_stone/andesite/granite/diorite/polished_andesite/polished_granite/polished_diorite
 
 bottled_allay:
   type: item

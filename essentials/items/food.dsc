@@ -1,13 +1,19 @@
-space_food_handler:
+food_handler:
   type: world
   debug: false
   events:
     on player teleports cause:chorus_fruit:
       - determine cancelled
     on player consumes space_fruit:
-      - feed <player> amount:10 saturation:10
+      - feed <player> amount:10 saturation:7
     on player consumes space_juice:
-      - feed <player> amount:6 saturation:18
+      - feed <player> amount:6 saturation:7
+    on player consumes gyro|hamburger|sandwich|hotdog:
+      - feed <player> amount:8 saturation:7
+    on player consumes sweet_gyro|spicy_gyro:
+      - feed <player> amount:10 saturation:7
+    on player consumes golden_gyro:
+      - feed <player> amount:12 saturation:7
 
 space_fruit:
   type: item

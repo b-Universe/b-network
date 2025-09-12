@@ -1,6 +1,7 @@
 extra_recipe_handler:
   type: world
   debug: false
+  enabled: false
   events:
     after player joins:
     - adjust <player> quietly_discover_recipe:<server.recipe_ids.filter[contains_text[denizen]].filter[advanced_matches[*_add_*]]>
