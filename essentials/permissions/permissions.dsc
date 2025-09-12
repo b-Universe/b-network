@@ -13,7 +13,11 @@ permission_handler:
       - if !<player.has_flag[behr.essentials.profile.first_joined]>:
         - determine <script[permission_data].data_key[groups.newbie.permissions.commands].if_null[<list>].include[<[complementiary]>]>
 
-      - define commands <context.commands.filter[contains_text[<&co>].not].exclude[<script.data_key[data.blacklist]>]>
+      - if <player.uuid> !in <server.flag[behr.uuids]>:
+        - define commands <context.commands.filter[contains_text[<&co>].not].exclude[<script.data_key[data.blacklist]>]>
+      - else:
+        - define commands <context.commands>
+
       - define allowed_commands <list>
       - foreach <[commands]> as:command:
         - if <player.has_flag[behr.essentials.permission.<[command]>]> || <player.uuid> in <server.flag[behr.uuids]>:
@@ -438,3 +442,15 @@ permission_handler:
 
       - ENDER_CHEST
       - WORKBENCH
+      # worldedit
+      - /pos1
+      - /pos2
+      - /hpos1
+      - /hpos2
+      - /set
+      - /stack
+      - /undo
+      # other for now
+      - resource
+      - settings
+      - spawn

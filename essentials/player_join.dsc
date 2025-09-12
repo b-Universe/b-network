@@ -31,22 +31,23 @@ player_join_handler:
         - run group_permission_handler defmap:<[data]>
 
       # ██ [ give the available starting and kit items                        ] ██:
-      - run player_join_items_and_stuff def:<[returning_player]>
+      #- run player_join_items_and_stuff def:<[returning_player]>
 
       # ██ [ announce the player join and chat announcements                  ] ██:
       - inject player_join_announcement_task
       - run player_join_discord_announcement_task def:true|<[time]>
 
-      - wait 10s
-      - if !<player.has_flag[behr.essentials.muted]>:
-        - narrate "<&3>Welcome again to B; If you'd like to check out the discord, you can join at <&b><underline>https<&co>//www.behr.dev/Discord <&3>- We<&sq>re accepting feature requests, suggestions, and any kind of feedback you'd like to provide!"
-      - else:
-        - narrate "<&[red]>Remember, you<&sq>re still muted. You can appeal on the discord at <&b><underline>https<&co>//www.behr.dev/Discord" targets:<player>
+      #- wait 10s
+      #- if !<player.has_flag[behr.essentials.muted]>:
+      #  - narrate "<&3>Welcome again to B; If you'd like to check out the discord, you can join at <&b><underline>https<&co>//www.behr.dev/Discord <&3>- We<&sq>re accepting feature requests, suggestions, and any kind of feedback you'd like to provide!"
+      #- else:
+      #  - narrate "<&[red]>Remember, you<&sq>re still muted. You can appeal on the discord at <&b><underline>https<&co>//www.behr.dev/Discord" targets:<player>
 
 
 player_join_items_and_stuff:
   type: task
   debug: false
+  enabled: false
   definitions: returning_player
   script:
     - if <player.health> != 40:
@@ -55,8 +56,8 @@ player_join_items_and_stuff:
 
     - give b_book if:!<player.inventory.contains_item[b_book]>
     - if !<[returning_player]>:
-      - give elytra
-      - give physics_device
+      - give elytra[enchantments=[unbreaking=5]]
+      #- give physics_device
       - give bwand
       - give lime_bed
       - give lime_shulker_box
@@ -77,7 +78,7 @@ player_join_items_and_stuff:
     - else:
       - definemap equipment_map:
           helmet: respira_space_suit_helmet_WC1
-          chest: elytra
+          chest: elytra[enchantments=[unbreaking=5]]
           boots: respira_space_suit_boots
     - if !<player.inventory.contains_item[<[equipment_map.helmet]>]> && !<player.equipment_map.contains[helmet]>:
       - equip head:<[equipment_map.helmet]>
@@ -85,6 +86,7 @@ player_join_items_and_stuff:
       - equip chest:<[equipment_map.chest]>
     - if !<player.inventory.contains_item[<[equipment_map.boots]>]> && !<player.equipment_map.contains[boots]>:
       - equip boots:<[equipment_map.boots]>
+    - give golden_sword if:!<player.inventory.contains_item[golden_sword]>
 
 player_join_announcement_task:
   type: task
@@ -186,3 +188,5 @@ b_book:
         - <&[fancy_title]><bold>Colors n' stuff<n><&3>You can color your chat or signs by using the color codes with your text<n><n><&[fancy_title]><bold>Enchantments<n><&3>There are custom enchantments, such as higher flame levels!
 
         - <&[fancy_title]><bold>New Foods<bold><n><&3>Enjoy new things to eat like hotdogs, sandwiches, and gyros!<n><n><&[fancy_title]><bold>Dispensers<n><&3>These lovely redstone pieces can now place concrete powder blocks
+
+        - <&[fancy_title]><bold>All Dogs are Good Dogs<bold><n><&3>Pet wolves will give you special effects when you<&sq>re with them. What a good boy!

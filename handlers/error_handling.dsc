@@ -1,6 +1,7 @@
 error_handling:
   type: world
   debug: false
+  enabled: true
   events:
     after script generates error:
       - define script.name <context.script.name.if_null[null]>

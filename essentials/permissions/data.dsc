@@ -9,22 +9,28 @@ permission_data:
         commands:
           - bed
           - discord
-          - resource
-          - settings
-          - spawn
           - dback
+          - me
+          - ping
+          - heads
 
-          - /pos1
-          - /pos2
-          - /set
-          - /stack
-          - /center
-          - /frame
-          - /shell
-          - /walls
-          - /ceiling
-          - /floor
-          - /undo
+          # disabled until later
+          #- crafting_table
+          #- settings
+          #- spawn
+          #- resource
+          #- /pos1
+          #- /pos2
+          #- /set
+          #- /stack
+          #- /center
+          #- /frame
+          #- /shell
+          #- /walls
+          #- /ceiling
+          #- /floor
+          #- /undo
+
   # █  [ level two groups   ] █:
     regular:
       level: 2
