@@ -37,7 +37,7 @@ server_start_handler:
           allowed_mentions:
             parse: <list>
 
-      - if <server.has_flag[behr.essentials.last_startup_notification]>:
+      - if <server.has_flag[behr.essentials.last_startup_notification]> && <server.flag[behr.essentials.last_startup_notification].is_truthy>:
         - adjust <server.flag[behr.essentials.last_startup_notification]> delete
         - flag server behr.essentials.last_startup_notification:!
 
