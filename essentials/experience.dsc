@@ -1,6 +1,7 @@
 experience_handler:
   type: world
   debug: false
+  enabled: false
   events:
     on player breaks block in:!biome_mine:
       - if !<player.has_flag[behr.essentials.profile.stats.construction]>:
