@@ -38,10 +38,3 @@ ladder_handler:
 
     on block physics adjacent:ladder:
       - determine cancelled
-
-    #on player steps on !*air| flagged:behr.essentials.location.biome.toxic_water:
-    #  - if <context.location> !matches water || <context.location.above> !matches water:
-    #    - define toxification <player.flag[behr.essentials.intoxicated].if_null[0]>
-    #    - if <[toxification]> < 5:
-    #      - flag <player> behr.essentials.intoxicated:++ expire:10s
-    #      - cast poison duration:7s amplifier:<[toxification]>

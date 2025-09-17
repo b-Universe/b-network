@@ -121,7 +121,7 @@ bedit_stack_command:
           - inject command_error
 
     # % ██ [ let's get to stackin'                            ] ██:
-    - inject hide_bedit_display_entity
+    - inject bedit_hide_display_entity
 
     - define time <util.time_now.epoch_millis>
     - define origin_blocks <[cuboid].blocks>
@@ -155,7 +155,7 @@ bedit_stack_command:
         - flag <player> behr.essentials.bedit.history.<[time]>.block.<[location].simple>:<[old_material]> expire:1d
         - flag <player> behr.essentials.bedit.history.<[time]>.action:stack expire:1d
 
-    - inject show_bedit_display_entity
+    - inject bedit_show_display_entity
     - if <player.flag[behr.essentials.bedit.history].size> > 10:
       - define time <player.flag[behr.essentials.bedit.history].keys.lowest>
       - flag <player> behr.essentials.bedit.history.<[time]>:!

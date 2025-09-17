@@ -81,7 +81,7 @@ bedit_set_command:
         - inject command_error
 
     # % ██ [ ship it, place the stuff   ] ██:
-    - inject hide_bedit_display_entity
+    - inject bedit_hide_display_entity
 
     - define time <util.time_now.epoch_millis>
     - foreach <[blocks].sort_by_value[distance[<player.eye_location>]]> as:location:
@@ -105,7 +105,7 @@ bedit_set_command:
       - flag <player> behr.essentials.bedit.history.<[time]>.block.<[location].simple>:<[old_material]> expire:1d
       - flag <player> behr.essentials.bedit.history.<[time]>.action:set expire:1d
 
-    - inject show_bedit_display_entity
+    - inject bedit_show_display_entity
 
     - if <player.flag[behr.essentials.bedit.history].size> > 10:
       - define time <player.flag[behr.essentials.bedit.history].keys.lowest>

@@ -19,7 +19,7 @@ bedit_redo_command:
     - define time <[times].highest>
 
     # Hide the display entities
-    - inject hide_bedit_display_entity
+    - inject bedit_hide_display_entity
 
     # Loop through the blocks
     - foreach <player.flag[behr.essentials.bedit.history.<[time]>.block]> key:location as:new_material:
@@ -45,7 +45,7 @@ bedit_redo_command:
       - flag <player> behr.essentials.bedit.history.<[time]>.block.<[location].simple>:<[old_material]> expire:1d
       - flag <player> behr.essentials.bedit.history.<[time]>.action:redo expire:1d
 
-    - inject show_bedit_display_entity
+    - inject bedit_show_display_entity
 
     - if <player.flag[behr.essentials.bedit.history].size> > 10:
       - define time <player.flag[behr.essentials.bedit.history].keys.lowest>
