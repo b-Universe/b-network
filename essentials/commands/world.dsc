@@ -44,7 +44,7 @@ world_command:
   script:
     # % ██ [  check args ] ██
     - if <context.args.is_empty> || <context.args.size> > 3:
-      - inject command_syntax
+      - inject command_syntax_error
 
     - define loaded_worlds <server.worlds.parse[name]>
     - define world_name <context.args.last>

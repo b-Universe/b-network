@@ -16,7 +16,7 @@ max_health_command:
   # % ██ [ check if specifying another player       ] ██
     - if <context.args.size> == 2:
       - define player_name <context.args.first>
-      - inject player_verification
+      - inject command_player_verification
       - define max_hp <context.args.last>
 
     # % ██ [ default to using themself              ] ██
