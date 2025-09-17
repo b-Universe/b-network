@@ -82,39 +82,39 @@ error_formatter:
 
     # @ ██ [ ref from: https://github.com/DenizenScript/Denizen-Core/blob/master/src/main/java/com/denizenscript/denizencore/tags/TagManager.java ] ██
     # % ██ [ ie: Debug.echoError(context, "Tag " + tagStr + " is invalid!"); ] ██
-    - if "<[text].starts_with[Tag <&lt>]>" && "<[text].ends_with[<&gt> is invalid!]>":
+    - if <[text].starts_with[Tag <&lt>]> && <[text].ends_with[<&gt> is invalid!]>:
       - determine "Tag `<[text].after[Tag ].before_last[ is invalid!]>` returned invalid."
 
     # % ██ [ ie: Debug.echoError(event.getScriptEntry(), "Unfilled or unrecognized sub-tag(s) '<R>" + attribute.unfilledString() + "<W>' for tag <LG><" + attribute.origin + "<LG>><W>!"); ] ██
-    - else if "<[text].starts_with[Unfilled or unrecognized sub-tag(s) ']>":
-      - define string "<[text].after[sub-tag(s) '].before_last[' for tag <&lt>]>"
+    - else if <[text].starts_with[Unfilled or unrecognized sub-tag(s) ']>:
+      - define string <[text].after[sub-tag(s) '].before_last[' for tag <&lt>]>
       - determine "Unfilled or borked sub-tag(s) `<[string]>` <[text].after[<[string]>].before[' for tag <&lt>]> for tag<&co> `<&lt><[text].after[<[string]>].after[<&lt>].before_last[!]>`."
 
     # % ██ [ ie: Debug.echoError(event.getScriptEntry(), "The returned value from initial tag fragment '<LG>" + attribute.filledString() + "<W>' was: '<LG>" + attribute.lastValid.debuggable() + "<W>'."); ] ██
-    - else if "<[text].starts_with[The returned value from initial tag fragment]>":
-      - define tag "<[text].after[fragment '].before[' was<&co> '].replace[`].with[']>"
-      - define parse_value "<[text].after_last[' was<&co> '].before_last['.]>"
+    - else if <[text].starts_with[The returned value from initial tag fragment]>:
+      - define tag <[text].after[fragment '].before[' was<&co> '].replace[`].with[']>
+      - define parse_value <[text].after_last[' was<&co> '].before_last['.]>
       - determine "The returned value from initial tag fragment<&co> `<&lt><[tag]><&gt>` returned<&co> `<[parse_value]>`"
 
-    - else if "<[text].after[ ].starts_with[is an invalid command! Are you sure it loaded?]>":
-      - define command "<[text].before[ ]>"
+    - else if <[text].after[ ].starts_with[is an invalid command! Are you sure it loaded?]>:
+      - define command <[text].before[ ]>
       - if <script[external_denizen_commands].data_key[commands].contains[<[command]>]>:
         - determine "`<[command]>` failed to register as a valid command. Verify that <script[external_denizen_commands].data_key[commands.<[command]>].parse_tag[`<[parse_value]>`].formatted> loaded properly."
       - else:
         - determine "`<[command]>` is an invalid command."
 
     # % ██ [ ie: Debug.echoError("No tag-base handler for '" + event.getName() + "'."); ] ██
-    - if "<[text].starts_with[No tag-base handler for ']>":
-      - define tag "<[text].after[no tag-base handler for '].before_last['.]>"
+    - if <[text].starts_with[No tag-base handler for ']>:
+      - define tag <[text].after[no tag-base handler for '].before_last['.]>
       - determine "No tag-base handler for `<[tag]>`."
 
     # % ██ [ ie: attribute.echoError("Tag-base '" + base + "' returned null."); ] ██
-    - if "<[text].starts_with[Tag-base ']>" && "<[text].ends_with[' returned null.]>":
-      - define tag "<[text].after[Tag-base '].before_last[' returned null.]>"
+    - if <[text].starts_with[Tag-base ']> && <[text].ends_with[' returned null.]>:
+      - define tag <[text].after[Tag-base '].before_last[' returned null.]>
       - determine "Tag-base `<[tag]>` returned null."
 
     # % ██ [ ie: Debug.echoError(context, "'ObjectTag' notation is for documentation purposes, and not to be used literally." ] ██
-    - else if "<[text].starts_with['ObjectTag' notation is for documentation purposes]>":
+    - else if <[text].starts_with['ObjectTag' notation is for documentation purposes]>:
       - determine "<&co>warning<&co> **<[text]>**"
 
     # % ██ [ ie: Debug.echoError(event.getScriptEntry(), "Almost matched but failed (missing [context] parameter?): " + almost); ] ██
