@@ -340,8 +340,7 @@ server_handler:
     - Who put it there?
     - You can't explain that!
     - if not ok then return end
-    - §1C§2o§3l§4o§5r§6m§7a§8t§9i§ac
-    - §kFUNKY LOL
+    - <&1>C<&2>O<&3>l<&4>o<&5>r<&6>m<&7>a<&8>t<&9>i<&a>c
     - Big Pointy Teeth!
     - Bekarton guards the gate!
     - Mmmph, mmph!
@@ -445,7 +444,7 @@ server_handler:
     - Honey, I grew the bees!
     - Find your claw!
     - Everybody do the Leif!
-    - <3 Max & 99 & Ducky!
+    - <&lt>3 Max & 99 & Ducky!
     - Bushy eyebrows!
     - Edit is a name!
     - From free range developers!
@@ -470,7 +469,7 @@ server_handler:
     - [this splash text is now available]
     - Contains simulated goats!
     - Home-made!
-    - There's <<a cat on ,my keyboard!~
+    - There's <&lt><&lt>a cat on ,my keyboard!~
     - The cutest predator you'll ever meet!
     - Now you are thinking with pistons!
     - Get to the coppah!
