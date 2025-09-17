@@ -1,3 +1,4 @@
+##ignorewarning short_script_name
 bblock:
   type: entity
   debug: false
