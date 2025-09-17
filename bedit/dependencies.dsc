@@ -135,7 +135,7 @@ bedit_place_block:
   script:
     - define old_material <[location].material>
     - stop if:<[new_material].equals[<[old_material]>]>
-    - if <player.gamemode> == survival && !<player.inventory.contains_item[<[new_material_name]>]> && <[new_material]> !matches air:
+    - if <player.gamemode> == survival && !<player.inventory.contains_item[<[new_material].name>]> && <[new_material]> !matches air:
       - stop
 
     - define sound <[location].material.block_sound_data>
