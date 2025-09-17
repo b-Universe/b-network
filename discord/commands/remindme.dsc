@@ -27,20 +27,9 @@ remindme_command_handler:
   debug: false
   events:
     on discord slash command name:remindme group:901618453356630046:
-      - announce cancel
-
       # check if the duration is valid
-      - define duration <context.options.get[duration].proc[verify_duration]>
-      - if !<duration[<[duration]>].is_truthy>:
-        - definemap embed_data:
-            title: <&lt>/remindme<&co>1201903940476878900<&gt> Invalid Duration
-            description: For reference on using this properly<&co><n>`t`=ticks (0.05 seconds), `s`=seconds, <n>`m`=minutes (60 seconds), `h`=hours (60 minutes),<n> `d`=days (24 hours), and `w`=weeks (7 days)
-            color: 100,0,0
-            footer: <context.options.get[duration]> is an invalid duration.
-            footer_icon: https://cdn.discordapp.com/emojis/901634983867842610.gif
-        - define embed <discord_embed.with_map[<[embed_data]>]>
-        - ~discordinteraction reply interaction:<context.interaction> <[embed]> save:message ephemeral
-        - stop
+      - define duration_input <context.options.get[duration]>
+      - inject verify_duration_discord
 
       - definemap reminder_data:
           channel: <context.channel>
