@@ -13,7 +13,7 @@ discord_remove_user_role:
         User-Agent: b
     - define headers.X-Audit-Log-Reason.reason <[reason]> if:<[reason].exists>
 
-    - ~webget method:GET https://discord.com/api/guilds/guilds/<[guild_id]>/roles headers:<[headers]> save:response
+    - ~webget method:GET https://discord.com/api/guilds/<[guild_id]>/roles headers:<[headers]> save:response
     - if <entry[response].failed>:
       - narrate "<&c>Failed to get list of guild role IDs"
       - stop
@@ -23,5 +23,5 @@ discord_remove_user_role:
       - narrate "<&c>Role ID <&e><[role_id]> <&c>is an invalid role available"
       - stop
 
-    # % ██ [ send the ban request ] ██
+    # % ██ [ send the role removal request ] ██
     - ~webget https://discord.com/api/guilds/<[guild_id]>/members/<[user_id]>/roles/<[role_id]> method:DELETE headers:<[headers]>
